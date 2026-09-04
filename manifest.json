@@ -1,7 +1,7 @@
 {
   "id": "awesome-format-bar",
   "name": "Awesome Format Bar",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "minAppVersion": "1.13.7",
   "description": "A Markdown formatting bar for your notes.",
   "author": "AwesomeDog",
