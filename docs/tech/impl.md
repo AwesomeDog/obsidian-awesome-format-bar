@@ -4,10 +4,10 @@
 
 ## 1. Baseline
 
-- **Obsidian 1.13.7+** (`isDesktopOnly: false`), mobile acceptance on 1.13.8.
+- **Obsidian 1.13.7+**.
 - The minimum version is a contract: no feature detection, no version comparisons, no dual API paths.
 - Official sample-plugin shape: TypeScript ESM, `strict`, `target ES2021`, esbuild → CommonJS `main.js`.
-- `obsidian`, Electron built-ins and CodeMirror stay external. No Node/Electron API in plugin code, so mobile works.
+- `obsidian`, Electron built-ins and CodeMirror stay external. No Node/Electron API in plugin code.
 - Forbidden: `any`, `@ts-ignore`, decorators, polyfills, `requireApiVersion()`, the deprecated `display()` settings path, CodeMirror 5 branches, `activeLeaf` as a business entry point, private `.cm-*` DOM for reading or writing text. Single exception: the registered-command bridge (§3.2).
 
 ## 2. Structure
@@ -66,13 +66,13 @@ Buttons, palette and future shortcuts all run `executeSpec(spec, context)`: chec
 `normalizeSettings()` is the only read path.
 
 - A default is substituted only when a field's *type* is wrong, so an explicit `false` survives.
-- Platforms merge independently; a broken `desktop` cannot damage `mobile`.
+- Platforms merge independently; a broken `desktop` cannot damage the rest.
 - A version mismatch resets everything — no migration table.
 - The result is written back once at load, so nothing downstream handles dirty data.
 - `pinned` and `charUsage` never bump the version: a mismatch wipes the file, far worse than one empty list.
 - Interaction state (active tab, overflow, selection snapshots) stays in memory.
 
-`enabledToolbarPositions()` derives visibility without mutating storage, so disabling mobile hides the toolbars without clearing the three switches.
+`enabledToolbarPositions()` derives visibility without mutating storage, so disabling hides the toolbars without clearing the three switches.
 
 ## 4. Lifecycle and rendering
 
@@ -102,7 +102,7 @@ Only the non-obvious ones.
 - **Sort Lines** — stable `Intl.Collator` with `numeric: true`; never crosses a code fence or paragraph boundary.
 - **Merge / Split Lines** — pure functions over whole lines. Merging takes `collapsed-paragraph` blocks and flushes the run at a blank line or fence, so a code block never collapses into prose; splitting breaks at the punctuation the selection uses most and drops it. A line neither can act on passes through verbatim, so neither trims in passing, and a break touching CJK on *either* side joins bare — the reference tests both sides, which leaves a space after a line ending in `，`.
 - **Indent / Undo / Redo** — public `editor.exec()` and `editor.undo()`; no hand-computed list spacing, no simulated keystrokes.
-- **Paste** — prefer Electron's `paste()` / `pasteAndMatchStyle()`, the only path converting `text/html` to Markdown and what Obsidian's own context menu uses; fall back on mobile to `readText()` plus verbatim insertion. Cut deletes only after a successful write. Never `document.execCommand()`.
+- **Paste** — prefer Electron's `paste()` / `pasteAndMatchStyle()`, the only path converting `text/html` to Markdown and what Obsidian's own context menu uses; fall back to `readText()` plus verbatim insertion. Cut deletes only after a successful write. Never `document.execCommand()`.
 - **Block Reference** — `crypto.randomUUID()`, avoiding a Node dependency.
 - **Emoji & Symbols** — three sources normalized to one `CharEntry`. Search scores in three tiers (name prefix > word start > substring); `Array.sort` is stable, so equal scores keep dataset order — free popularity fallback, no fuzzy matching. Arrow keys navigate by grid arithmetic, not measured DOM. Insertion collapses the selection after the inserted text so consecutive picks line up. `charUsage` is pruned **per source** on open: a global ranking would let emoji squeeze kaomoji out, and per-source pruning caps the map at what can be displayed.
 - **Focus / Zen Mode** — Focus is a plugin-owned `body` class collapsed down to the two sidebars. Zen is real fullscreen on `view.containerEl`, so nothing in Obsidian's layout is written to and quitting restores it as it was; unload exits fullscreen rather than leaving the window stuck. No vendor-prefixed `requestFullscreen` branches: Obsidian desktop is Chromium, and other branches would be dead code. Both are removed unconditionally on unload. A `body`-mounted popup would be invisible while fullscreen renders only its own subtree, so the floating layer mounts into `doc.fullscreenElement` when there is one.
@@ -129,8 +129,8 @@ Unavailable commands set both `disabled` and `aria-disabled`. The toolbar handle
 ## 8. Testing and gate
 
 - **`editor-ops`** — overlapping selections; wrap/unwrap over existing wrappers; Renumber List nesting, blank lines, paragraph boundaries, mixed delimiters; Sort Lines stability and fences; Merge / Split Lines over fences, lone lines and CJK; color removal touching only its own property.
-- **`settings`** — per-field defaulting, explicit all-`false` surviving, bad version reset, mobile values preserved when disabled; `pinned` round-trip, dedupe, name fallback; the layout contract.
-- **Integration** on exactly 1.13.7 / 1.13.8 — platform defaults; all 8 position combinations without overlap; splits and pop-outs; deferred tabs; Following never covering the selection; all 78 commands executing with no missing forwarded mapping; one undo per transform; settings search and persistence; Pinned staying in sync and greying out when its source plugin is disabled; nothing left behind after unload.
+- **`settings`** — per-field defaulting, explicit all-`false` surviving, bad version reset, values preserved when disabled; `pinned` round-trip, dedupe, name fallback; the layout contract.
+- **Integration** on exactly 1.13.7 — platform defaults; all 8 position combinations without overlap; splits and pop-outs; deferred tabs; Following never covering the selection; all 78 commands executing with no missing forwarded mapping; one undo per transform; settings search and persistence; Pinned staying in sync and greying out when its source plugin is disabled; nothing left behind after unload.
 - **Gate** — `lint`, `test`, `build` pass; no source map; release contains only `main.js`, `manifest.json`, `styles.css`.
 
 ## 9. Maintenance map

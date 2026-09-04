@@ -48,7 +48,7 @@ The three positions are not mutually exclusive: each can be toggled independentl
 | **Following** | Compact | Floats above the selection when text is selected; never covers it |
 | **Fixed** | Compact | Always, pinned to the bottom of the editor |
 
-Defaults: Desktop = Top only, Mobile = Fixed only. Existing settings are never overwritten when switching platforms, and turning every position off keeps it off.
+Defaults: Top only. Turning every position off keeps it off.
 
 ### Layouts
 
@@ -150,8 +150,7 @@ The character data ships with the plugin — emoji from `@emoji-mart/data`, kaom
 
 | Section | Contents |
 |---|---|
-| **Toolbar** | Independent toggles for Top / Following / Fixed, one row for Desktop and one for Mobile |
-| **General** | Enable on Mobile |
+| **Toolbar** | Independent toggles for Top / Following / Fixed |
 | **Pinned** | List of pinned commands: add (pick a command, then an icon), change icon, drag to reorder, delete |
 | **Table** | Enter moves to the next row (on); pad cell width with spaces (on); sort by clicking a header in Reading view (on) |
 
@@ -188,7 +187,7 @@ The Table options govern editing behavior and text output, not toolbar layout, s
 
 | Term | Meaning |
 |---|---|
-| **Position** | Where a toolbar renders: **Top**, **Following**, **Fixed**. Three independent toggles, configured separately for Desktop and Mobile. |
+| **Position** | Where a toolbar renders: **Top**, **Following**, **Fixed**. Three independent toggles. |
 | **Layout** | How a position renders: **Ribbon** (Top) or **Compact** (Following / Fixed). |
 | **Tab · Group · Button** | Ribbon structure. A **drop-down** button holds several commands; a Compact **overflow menu** (`⋯`) holds the buttons that don't fit. |
 | **Command** | An action the toolbar runs. **78 built-in commands** plus any **pinned command**. |

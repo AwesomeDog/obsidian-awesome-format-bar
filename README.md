@@ -10,7 +10,7 @@ Obsidian is efficient for people fluent in Markdown, but newcomers face a syntax
 
 ## Highlights
 
-- **Three positions, freely combined** — a full **Ribbon** pinned above the editor (Top), a compact bar floating above the selection (Following), and a compact bar pinned to the bottom of the editor (Fixed). Desktop defaults to Top, mobile to Fixed.
+- **Three positions, freely combined** — a full **Ribbon** pinned above the editor (Top), a compact bar floating above the selection (Following), and a compact bar pinned to the bottom of the editor (Fixed). Defaults to Top.
 - **78 built-in commands** across 5 tabs — Home, Insert, View, Table and Utilities — using Word terminology you already know.
 - **Emoji & Symbols** — a searchable, offline panel of about 2,150 emoji, kaomoji and symbols, bundled with the plugin. No network, no accounts.
 - **Pinned tab** — pin _any_ command from the command palette (core commands, other plugins' commands, or this plugin's own) to the toolbar with an icon of your choice.
@@ -59,7 +59,7 @@ Picking an entry inserts the character at the caret or over the selection, as on
 
 ## Installation
 
-Requires Obsidian **1.13.7 or later**. Works on desktop and mobile.
+Requires Obsidian **1.13.7 or later**.
 
 **From Community Plugins** — Settings → Community plugins → Browse, search for _Awesome Format Bar_, install and enable.
 
@@ -69,7 +69,7 @@ Requires Obsidian **1.13.7 or later**. Works on desktop and mobile.
 
 ## Usage
 
-- Toggle each position independently in **Settings → Awesome Format Bar**, separately for desktop and mobile.
+- Toggle each position independently in **Settings → Awesome Format Bar**.
 - The **Ribbon** (Top) has six tabs; the last one, **Pinned**, holds the commands you pinned yourself. When it is empty it shows a hint pointing you to Settings.
 - The **Compact** bars (Following / Fixed) carry a fixed subset of commands; anything that doesn't fit collapses into the `⋯` overflow menu.
 - Pin commands under **Settings → Pinned**: add (pick a command, then an icon), change the icon, drag to reorder, or delete. Pinned commands run exactly like their command-palette counterparts; if the source plugin is disabled, the button greys out but the pin is kept.
@@ -78,8 +78,7 @@ Requires Obsidian **1.13.7 or later**. Works on desktop and mobile.
 
 | Section     | Contents                                                                                                                |
 | ----------- | ----------------------------------------------------------------------------------------------------------------------- |
-| **Toolbar** | Independent toggles for Top / Following / Fixed, one row each for Desktop and Mobile                                    |
-| **General** | Enable on Mobile                                                                                                        |
+| **Toolbar** | Independent toggles for Top / Following / Fixed                                                                          |
 | **Pinned**  | Your pinned commands                                                                                                    |
 | **Table**   | Enter moves to the next row; pad cell width with spaces; sort on header click in Reading view (never modifies the file) |
 
