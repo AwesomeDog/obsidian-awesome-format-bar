@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Awesome Format Bar — Obsidian Plugin</title>
+    <style>
+        *{box-sizing:border-box;margin:0;padding:0}
+        :root{
+            --ink:#1d1d1f;--sub:#86868b;--line:#d2d2d7;--blue:#06c;--alt:#f5f5f7;
+            --font:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Helvetica Neue",Helvetica,Arial,sans-serif;
+            --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+        }
+        html{scroll-behavior:smooth}
+        body{font-family:var(--font);color:var(--ink);background:#fff;-webkit-font-smoothing:antialiased;line-height:1.46}
+        .wrap{max-width:980px;margin:0 auto;padding:0 22px}
+        .wide{max-width:1160px;margin:0 auto;padding:0 22px}
+        a{text-decoration:none;color:var(--blue)}
+
+        nav{position:sticky;top:0;z-index:99;background:rgba(255,255,255,.82);backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid rgba(0,0,0,.1)}
+        nav .wide{display:flex;align-items:center;height:52px;gap:26px;font-size:12px}
+        .brand{font-size:16px;font-weight:600;letter-spacing:-.012em;color:var(--ink)}
+        nav a{color:var(--ink);opacity:.85}nav a:hover{opacity:.5}
+        .sp{flex:1}
+        .pill{background:var(--blue);color:#fff;border-radius:980px;padding:6px 15px;font-size:12px}
+        .pill.big{font-size:17px;padding:12px 26px}
+        .pill.line{background:#fff;color:var(--blue);border:1px solid var(--blue)}
+
+        .hero{background:var(--alt);padding:72px 0 0;text-align:center}
+        .eyebrow{font-size:17px;font-weight:600;color:var(--blue);letter-spacing:-.01em}
+        h1{font-size:clamp(40px,7.4vw,80px);font-weight:700;letter-spacing:-.03em;line-height:1.04;margin-top:10px}
+        .hero .tag{font-size:clamp(18px,2.2vw,25px);color:#4b4b50;max-width:660px;margin:18px auto 0;letter-spacing:-.008em}
+        .cta{margin-top:26px;display:flex;gap:16px;justify-content:center;flex-wrap:wrap;align-items:center}
+
+        .shot{max-width:1120px;margin:52px auto 0;padding:0 22px 72px}
+        .shot-in{aspect-ratio:16/9;border-radius:20px;background:#fff;border:1px solid var(--line);
+            box-shadow:0 30px 60px -40px rgba(0,0,0,.45);overflow:hidden}
+        .shot-in img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block}
+
+        section{padding:88px 0}
+        section.alt{background:var(--alt)}
+        h2{font-size:clamp(30px,4.2vw,48px);font-weight:700;letter-spacing:-.024em;line-height:1.08}
+        h3{font-size:24px;font-weight:600;letter-spacing:-.015em}
+        .lead{font-size:clamp(16px,1.5vw,19px);color:var(--sub);max-width:620px;margin-top:14px}
+        .center{text-align:center}.center .lead{margin-inline:auto}
+        .kick{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--sub);font-weight:600;margin-bottom:12px}
+
+        /* segmented explorer */
+        .seg{display:flex;gap:4px;background:#eaeaee;border-radius:12px;padding:4px;margin:36px auto 0;width:max-content;max-width:100%;overflow:auto}
+        .seg button{border:0;background:transparent;font-family:inherit;font-size:14px;padding:9px 18px;border-radius:9px;cursor:pointer;color:#4b4b50;white-space:nowrap}
+        .seg button.on{background:#fff;color:var(--ink);font-weight:600;box-shadow:0 1px 3px rgba(0,0,0,.14)}
+
+        .ribbon{margin-top:26px;border:1px solid var(--line);border-radius:16px;background:#fff;overflow:hidden}
+        .rb-body{display:flex;padding:14px 12px;overflow-x:auto}
+        .grp{padding:0 14px;border-right:1px solid #ececf0;flex:0 0 auto;display:flex;flex-direction:column}
+        .grp:last-child{border-right:0}
+        .grp .btns{display:flex;flex-wrap:wrap;gap:4px;max-width:370px}
+        .grp .nm{font-size:10.5px;color:var(--sub);text-align:center;margin-top:auto;padding-top:9px}
+        .b{width:30px;height:28px;border-radius:6px;display:grid;place-items:center;color:#2b2b30;font-size:11px;font-weight:600}
+        .b:hover{background:#eef0f5}
+        .ic{width:16px;height:16px;flex:none}
+        .grp.dis .b{opacity:.3}
+        .desc{padding:16px 20px;border-top:1px solid #ececf0;background:#fbfbfd;font-size:14.5px;color:#4b4b50}
+        .desc b{color:var(--ink);font-weight:600}
+
+        /* before after */
+        .ba{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:40px}
+        .pane{border:1px solid var(--line);border-radius:16px;overflow:hidden;background:#fff}
+        .pane .hd{font-size:11.5px;text-transform:uppercase;letter-spacing:.07em;color:var(--sub);padding:12px 18px;border-bottom:1px solid var(--line);background:#fbfbfd}
+        .pane pre{font-family:var(--mono);font-size:12.5px;line-height:1.9;padding:18px;color:#3a3a40;overflow:auto}
+        .pane .body{padding:18px}
+        table.md{width:100%;border-collapse:collapse;font-size:14px}
+        table.md th,table.md td{padding:9px 14px;border-bottom:1px solid #f0f0f3;text-align:left}
+        table.md th{font-weight:600;font-size:13px;cursor:pointer;user-select:none}
+        table.md th:hover{background:#f7f7fa}
+        .car{font-size:9px;letter-spacing:-2px;margin-left:6px;color:#b9b9c1}
+        th.asc .car,th.desc .car{color:var(--blue)}
+
+        .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:26px}
+        .chips span{font-size:13px;background:#fff;border:1px solid var(--line);border-radius:980px;padding:7px 14px;color:#3a3a40;display:inline-flex;gap:7px;align-items:center}
+        section.alt .chips span{background:#fff}
+
+        /* emoji */
+        .eg{display:grid;grid-template-columns:minmax(0,400px) 1fr;gap:50px;align-items:start;margin-top:44px}
+        .panel{border:1px solid var(--line);border-radius:16px;background:#fff;overflow:hidden;box-shadow:0 26px 50px -40px rgba(0,0,0,.5)}
+        .panel .src{display:flex;gap:3px;padding:10px 10px 0}
+        .panel .src button{flex:1;border:0;background:#f2f2f5;font-family:inherit;font-size:13px;padding:8px;border-radius:9px;cursor:pointer;color:#4b4b50}
+        .panel .src button.on{background:var(--blue);color:#fff;font-weight:600}
+        .panel .search{margin:10px;background:#f2f2f5;border-radius:9px;padding:8px 12px;font-size:13px;color:#9a9aa2;display:flex;gap:8px;align-items:center}
+        .panel .groups{display:flex;gap:6px;padding:0 10px 9px;overflow:auto}
+        .panel .groups span{font-size:11px;padding:4px 10px;border-radius:980px;background:#f2f2f5;color:#5a5a62;white-space:nowrap}
+        .panel .groups span.on{background:var(--ink);color:#fff}
+        .ge{display:grid;grid-template-columns:repeat(9,1fr);gap:2px;padding:0 9px 10px;max-height:196px;overflow:auto}
+        .ge i{font-style:normal;font-size:20px;text-align:center;padding:6px 0;border-radius:8px}
+        .ge i:hover{background:#f2f2f5}
+        .gk{display:grid;grid-template-columns:repeat(2,1fr);gap:5px;padding:0 9px 10px;max-height:196px;overflow:auto}
+        .gk i{font-style:normal;font-family:var(--mono);font-size:11.5px;padding:10px 4px;text-align:center;border-radius:8px;background:#f2f2f5;white-space:nowrap;overflow:hidden;color:#3a3a40}
+        .gs{display:grid;grid-template-columns:repeat(9,1fr);gap:2px;padding:0 9px 10px;max-height:196px;overflow:auto}
+        .gs i{font-style:normal;font-size:16px;text-align:center;padding:7px 0;border-radius:8px}
+        .gs i:hover{background:#f2f2f5}
+        .panel .ft{border-top:1px solid var(--line);padding:9px 14px;font-size:11px;color:var(--sub);display:flex;justify-content:space-between}
+        .srow{display:flex;gap:16px;align-items:baseline;padding:15px 0;border-bottom:1px solid var(--line)}
+        .srow b{font-size:27px;font-weight:700;letter-spacing:-.02em;min-width:80px}
+        .srow div{font-size:13.5px;color:var(--sub)}
+        .srow div strong{display:block;color:var(--ink);font-size:15px;font-weight:600;margin-bottom:2px}
+
+        .three{display:grid;grid-template-columns:repeat(3,1fr);gap:36px;margin-top:46px}
+        .three h4{font-size:18px;font-weight:600;letter-spacing:-.01em}
+        .three p{font-size:14.5px;color:var(--sub);margin-top:8px}
+
+        /* install steps */
+        .steps{list-style:none;max-width:540px;margin:38px auto 0;text-align:left}
+        .steps li{display:flex;gap:16px;align-items:baseline;padding:17px 0;border-top:1px solid var(--line)}
+        .steps li:last-child{border-bottom:1px solid var(--line)}
+        .steps li b{width:24px;height:24px;flex:none;border-radius:50%;background:var(--blue);color:#fff;font-size:12px;font-weight:600;display:grid;place-items:center;transform:translateY(2px)}
+        .steps li div{font-size:14px;color:var(--sub)}
+        .steps li em{font-style:normal;color:var(--ink);font-weight:600}
+        .steps li strong{display:block;font-size:16px;font-weight:600;color:var(--ink);margin-bottom:3px}
+
+        /* specs list */
+        .speclist{margin-top:34px}
+        .srow2{display:grid;grid-template-columns:210px 1fr;gap:14px 36px;padding:20px 0;border-top:1px solid var(--line);font-size:15px}
+        .srow2 .k{color:var(--sub)}
+        .srow2 .v{color:var(--ink)}
+        .srow2 .v em{font-style:normal;color:var(--sub)}
+        .cmdlist{display:flex;flex-wrap:wrap;gap:6px}
+        .cmdlist span{font-size:12.5px;color:#3a3a40;background:var(--alt);border-radius:6px;padding:4px 9px}
+
+        @media(max-width:880px){
+            .ba,.three,.eg{grid-template-columns:1fr}
+            .srow2{grid-template-columns:1fr;gap:6px}
+            .hidem{display:none}
+        }
+    </style>
+</head>
+<body>
+
+<nav><div class="wide">
+    <span class="brand">Awesome Format Bar</span>
+    <a href="#explore" class="hidem">Explore</a><a href="#table" class="hidem">Table</a><a href="#emoji" class="hidem">Emoji</a><a href="#settings" class="hidem">Settings</a><a href="#install" class="hidem">Install</a><a href="#specs" class="hidem">Specs</a>
+    <span class="sp"></span><a href="#install" class="pill">Install</a>
+</div></nav>
+
+<header class="hero">
+    <div class="wrap">
+        <p class="eyebrow">Obsidian Plugin</p>
+        <h1>The toolbar Obsidian<br>was missing.</h1>
+        <p class="tag">78 commands across six tabs. A table tab that actually edits tables. And 2,140 characters Markdown has no syntax for.</p>
+        <div class="cta"><a href="#install" class="pill big">Install</a><a href="#explore" class="pill big line">Explore the tabs</a></div>
+    </div>
+
+    <div class="shot"><div class="shot-in"><img src="img/light.png" alt="Awesome Format Bar in Obsidian"></div></div>
+</header>
+
+<section id="explore">
+    <div class="wide center">
+        <p class="kick">Explore</p>
+        <h2>Six tabs. Fourteen groups.<br>Nothing to configure.</h2>
+        <p class="lead">Pick a tab and see exactly what's on it. Word terminology, initial capitals, no <em>Toggle</em> prefix — because you already know these names.</p>
+        <div class="seg" id="seg"></div>
+    </div>
+    <div class="wide">
+        <div class="ribbon"><div class="rb-body" id="rbBody"></div><div class="desc" id="rbDesc"></div></div>
+    </div>
+</section>
+
+<section class="alt" id="table">
+    <div class="wide">
+        <p class="kick">Tab 4 · Table</p>
+        <h2>Markdown tables, edited<br>the way Word does it.</h2>
+        <p class="lead">Button placement follows the parts of Word's Table Layout tab that apply to Markdown tables. Column-level names — <em>Align Column…</em>, <em>Sort Rows…</em> — keep them distinct from the paragraph-level Align and Sort Lines on Home.</p>
+
+        <div class="chips" id="tableChips"></div>
+
+        <div class="ba">
+            <div class="pane"><div class="hd">Before · Format Table</div>
+                <pre>|Region|Q3|Growth|
+|-|-|-|
+|APAC|4,210|+12%|
+|EMEA|3,880|+4%|
+|Americas|6,120|+9%|</pre></div>
+            <div class="pane"><div class="hd">After · padded and aligned</div>
+                <pre>| Region   |    Q3 | Growth |
+|:---------|------:|:------:|
+| APAC     | 4,210 |  +12%  |
+| EMEA     | 3,880 |   +4%  |
+| Americas | 6,120 |   +9%  |</pre></div>
+        </div>
+
+        <div class="ba">
+            <div class="pane"><div class="hd">Reading view · click a header to sort</div>
+                <table class="md" id="mdt">
+                    <thead><tr><th data-c="0">Region<span class="car">⌃⌄</span></th><th data-c="1">Q3<span class="car">⌃⌄</span></th><th data-c="2">Growth<span class="car">⌃⌄</span></th></tr></thead>
+                    <tbody><tr><td>APAC</td><td>4,210</td><td>+12%</td></tr><tr><td>EMEA</td><td>3,880</td><td>+4%</td></tr><tr><td>Americas</td><td>6,120</td><td>+9%</td></tr></tbody>
+                </table>
+            </div>
+            <div class="pane"><div class="hd">What it does — and doesn't</div>
+                <div class="body">
+                    <p style="font-size:14.5px;color:#4b4b50">Clicking cycles <b>ascending → descending → original</b>. Only the rendered rows reorder — the file on disk is never modified, and the state resets whenever the note is re-rendered.</p>
+                    <p style="font-size:14.5px;color:#4b4b50;margin-top:14px">Two faint carets sit on every header so the feature is discoverable; the sorted column shows the live direction. Turn the setting off and the arrows disappear with the behavior.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="three">
+            <div><h4>Paste as Table</h4><p>Tab- or comma-separated clipboard text becomes an aligned Markdown table at the cursor. An explicit command — regular Paste is untouched, and this one stays enabled even outside a table.</p></div>
+            <div><h4>Context aware</h4><p>The whole tab is disabled when the cursor isn't inside a table, so you never wonder which button applies to what.</p></div>
+            <div><h4>Editing behavior</h4><p>Enter moves to the next row and cells pad with spaces — both on by default, both under Settings → Table.</p></div>
+        </div>
+    </div>
+</section>
+
+<section id="emoji">
+    <div class="wide">
+        <p class="kick">Insert · Media &amp; Symbols</p>
+        <h2>2,140 characters<br>Markdown has no syntax for.</h2>
+        <p class="lead">An emoji. An arrow. An en dash. Markdown can't express any of them — so the plugin carries its own library, bundled and fully offline.</p>
+
+        <div class="eg">
+            <div class="panel" id="panel">
+                <div class="src"><button class="on" data-s="emoji">Emoji</button><button data-s="kao">Kaomoji</button><button data-s="sym">Symbols</button></div>
+                <div class="search"><i data-lucide="search" class="ic"></i><span id="ph"></span></div>
+                <div class="groups" id="grp"></div><div id="host"></div>
+                <div class="ft"><span>Frequently used · per source</span><span>Esc to close</span></div>
+            </div>
+            <div>
+                <div class="srow"><b>1,870</b><div><strong>Emoji</strong>Smileys &amp; People · Animals &amp; Nature · Food &amp; Drink · Activity · Travel &amp; Places · Objects · Symbols · Flags</div></div>
+                <div class="srow"><b>71</b><div><strong>Kaomoji</strong>Emotion · Animal · Behavior · People · Holiday · Food</div></div>
+                <div class="srow" style="border:0"><b>199</b><div><strong>Symbols</strong>Arrows · Math · Typographic · Currency · Enclosed · Dingbats</div></div>
+                <p class="lead" style="font-size:16px;margin-top:20px">One search box over the active source, matching an entry's name and keywords. Each source keeps its <em>own</em> Frequently used group — per source, not global, so kaomoji never get crowded out by emoji.</p>
+            </div>
+        </div>
+
+        <div class="three">
+            <div><h4>Pick several in a row</h4><p>The panel stays open after each insert, then closes on Escape or an outside click and returns focus to the editor.</p></div>
+            <div><h4>One undo step</h4><p>Each entry inserts over the selection or at the caret as a single undo step, with the default skin tone. Raw Unicode — no <span style="font-family:var(--mono);font-size:13px">:shortcodes:</span>, no autocomplete.</p></div>
+            <div><h4>Available everywhere</h4><p>Wherever the editor is in source mode, in every position including the Compact overflow menu. It isn't in the command palette — its only job is to open the panel.</p></div>
+        </div>
+    </div>
+</section>
+
+<section class="alt" id="settings">
+    <div class="wide">
+        <p class="kick">Settings</p>
+        <h2>Five sections.<br>That's the whole thing.</h2>
+        <div class="three" style="grid-template-columns:repeat(2,1fr);margin-top:34px">
+            <div><h4>Desktop &amp; Mobile</h4><p>Independent toggles for Top, Following and Fixed — one set each. Desktop defaults to Top, mobile to Fixed. Switching platforms never overwrites what you already chose.</p></div>
+            <div><h4>General</h4><p>Enable on Mobile.</p></div>
+            <div><h4>Pinned</h4><p>Add a command, choose a Lucide icon, drag to reorder, delete. Pinning is one-time, low-frequency setup — so it lives here, not on the toolbar, where a <span style="font-family:var(--mono)">+</span> would eat scarce horizontal space.</p></div>
+            <div><h4>Table</h4><p>Enter moves to the next row. Pad cell width with spaces. Sort by clicking a header in Reading view. All on by default; all about editing behavior and text output, never toolbar layout.</p></div>
+        </div>
+    </div>
+</section>
+
+<section id="specs" style="padding-bottom:64px">
+    <div class="wrap">
+        <h2 style="font-size:32px">Tech Specs</h2>
+        <div class="speclist">
+            <div class="srow2"><div class="k">Commands</div><div class="v">78 built-in across 5 tabs and 15 groups, plus the Pinned tab. <em>6 live inside drop-down buttons, 1 opens the Emoji &amp; Symbols panel, and the other 71 are registered in the command palette — so you can assign your own shortcuts.</em></div></div>
+            <div class="srow2"><div class="k">Home</div><div class="v"><div class="cmdlist"><span>Paste</span><span>Cut</span><span>Copy</span><span>Paste as Plain Text</span><span>Bold</span><span>Italic</span><span>Underline</span><span>Strikethrough</span><span>Subscript</span><span>Superscript</span><span>Inline Code</span><span>Inline Math</span><span>Highlight</span><span>Highlight Color</span><span>Font Color</span><span>Clear Formatting</span><span>Change Case</span><span>Heading 1–6</span><span>Remove Heading</span><span>Bullet List</span><span>Numbered List</span><span>Task List</span><span>Quote</span><span>Decrease Indent</span><span>Increase Indent</span><span>Renumber List</span><span>Sort Lines</span><span>Swap Line Up</span><span>Swap Line Down</span><span>Align Left</span><span>Align Center</span><span>Align Right</span><span>Align Justify</span><span>Horizontal Rule</span><span>Undo</span><span>Redo</span><span>Find and Replace</span></div></div></div>
+            <div class="srow2"><div class="k">Insert</div><div class="v"><div class="cmdlist"><span>Internal Link</span><span>External Link</span><span>Embed</span><span>Tag</span><span>Block Reference</span><span>Callout</span><span>Code Block</span><span>Math Block</span><span>Table</span><span>Comment</span><span>Attach File</span><span>Emoji &amp; Symbols</span><span>Date and Time</span></div></div></div>
+            <div class="srow2"><div class="k">View · Utilities</div><div class="v"><div class="cmdlist"><span>Focus Mode</span><span>Zen Mode</span><span>Merge Lines</span><span>Split Lines</span></div></div></div>
+            <div class="srow2"><div class="k">Table</div><div class="v"><div class="cmdlist"><span>Delete Rows</span><span>Delete Columns</span><span>Insert Rows Above</span><span>Insert Columns to the Left</span><span>Move Row Up</span><span>Move Row Down</span><span>Move Column Left</span><span>Move Column Right</span><span>Format Table</span><span>Format All Tables</span><span>Align Column Left</span><span>Align Column Center</span><span>Align Column Right</span><span>Sort Rows A to Z</span><span>Sort Rows Z to A</span><span>Paste as Table</span></div></div></div>
+            <div class="srow2"><div class="k">Layouts</div><div class="v">Ribbon (Top) · Compact (Following, Fixed)</div></div>
+            <div class="srow2"><div class="k">Output</div><div class="v">Standard Markdown → Obsidian Markdown → inline HTML <em>(Underline, Superscript, Subscript, alignment, Font Color, Highlight Color)</em></div></div>
+            <div class="srow2"><div class="k">Characters</div><div class="v">2,140 entries — 1,870 emoji, 71 kaomoji, 199 symbols. <em>Bundled, offline, plain Unicode.</em></div></div>
+            <div class="srow2"><div class="k">Icons</div><div class="v">Obsidian's built-in Lucide set + 3 custom <em>(delete row, delete column, and the fallback drawn when a name resolves to nothing)</em></div></div>
+            <div class="srow2" style="border-bottom:1px solid var(--line)"><div class="k">Privacy</div><div class="v">No network calls. No accounts. Nothing to sync.</div></div>
+        </div>
+    </div>
+</section>
+
+<section class="alt" id="install">
+    <div class="wrap center">
+        <p class="kick">Install</p>
+        <h2>From Community Plugins.</h2>
+        <p class="lead">Requires Obsidian 1.13.7 or later. Works on desktop and mobile.</p>
+        <ol class="steps">
+            <li><b>1</b><div><strong>Open Community plugins</strong>Settings → Community plugins</div></li>
+            <li><b>2</b><div><strong>Browse</strong>Search for <em>Awesome Format Bar</em></div></li>
+            <li><b>3</b><div><strong>Install, then enable</strong>Turn on restricted mode if Obsidian asks</div></li>
+        </ol>
+    </div>
+</section>
+
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<script>
+    /* ---- Lucide helpers ---- */
+    const I=n=>`<i data-lucide="${n}" class="ic"></i>`;
+    const draw=()=>lucide.createIcons({attrs:{'stroke-width':1.8}});
+
+    /* ---- Table tab chips ---- */
+    const CHIPS=[['trash-2','Delete Rows or Columns ▾'],['plus','Insert Rows Above'],['plus','Insert Columns to the Left'],
+        ['arrow-up','Move Row Up'],['arrow-down','Move Row Down'],['arrow-left','Move Column Left'],['arrow-right','Move Column Right'],
+        ['align-left','Align Column Left'],['align-center','Align Column Center'],['align-right','Align Column Right'],
+        ['arrow-down-narrow-wide','Sort Rows ▾'],['sparkles','Format Tables ▾'],['clipboard','Paste as Table']];
+    document.getElementById('tableChips').innerHTML=CHIPS.map(([i,l])=>`<span>${I(i)}${l}</span>`).join('');
+
+    /* ---- Ribbon explorer ---- */
+    const B=(ic,l)=>`<div class="b" title="${l}">${ic.startsWith('t:')?ic.slice(2):I(ic)}</div>`;
+    const TABS={
+        Home:{d:'<b>Home</b> — Clipboard, Font, Paragraph, Styles and Editing. The formatting you touch a hundred times a day, in the order Word puts it.',g:[
+                ["Clipboard",[["clipboard","Paste"],["scissors","Cut"],["copy","Copy"],["type","Paste as Plain Text"]]],
+                ["Font",[["bold","Bold"],["italic","Italic"],["underline","Underline"],["strikethrough","Strikethrough"],["subscript","Subscript"],["superscript","Superscript"],["code","Inline Code"],["sigma","Inline Math"],["highlighter","Highlight"],["highlighter","Highlight Color"],["palette","Font Color"],["eraser","Clear Formatting"],["case-sensitive","Change Case"]]],
+                ["Paragraph",[["list","Bullet List"],["list-ordered","Numbered List"],["list-checks","Task List"],["text-quote","Quote"],["indent-decrease","Decrease Indent"],["indent-increase","Increase Indent"],["list-ordered","Renumber List"],["arrow-down-narrow-wide","Sort Lines"],["arrow-up","Swap Line Up"],["arrow-down","Swap Line Down"],["align-left","Align Left"],["align-center","Align Center"],["align-right","Align Right"],["align-justify","Align Justify"],["minus","Horizontal Rule"]]],
+                ["Styles",[["t:H1","Heading 1"],["t:H2","Heading 2"],["t:H3","Heading 3"],["t:H4","Heading 4"],["t:H5","Heading 5"],["t:H6","Heading 6"],["remove-formatting","Remove Heading"]]],
+                ["Editing",[["undo-2","Undo"],["redo-2","Redo"],["search","Find and Replace"]]]]},
+        Insert:{d:'<b>Insert</b> — Links, Blocks, Media &amp; Symbols. Where Obsidian already provides a command, the toolbar forwards to it instead of rebuilding it.',g:[
+                ["Links",[["link","Internal Link"],["external-link","External Link"],["image","Embed"],["hash","Tag"],["brackets","Block Reference"]]],
+                ["Blocks",[["message-square-warning","Callout"],["square-code","Code Block"],["square-sigma","Math Block"],["table","Table"],["message-square","Comment"]]],
+                ["Media & Symbols",[["paperclip","Attach File"],["smile","Emoji & Symbols"],["calendar","Date and Time"]]]]},
+        View:{d:'<b>View</b> — two depths of getting the interface out of the way.',g:[["View",[["fold-horizontal","Focus Mode"],["maximize","Zen Mode"]]]]},
+        Table:{d:'<b>Table</b> — disabled unless the cursor is inside a table. Paste as Table stays available regardless.',dim:1,g:[
+                ["Rows & Columns",[["trash-2","Delete Rows or Columns ▾"],["plus","Insert Rows Above"],["plus","Insert Columns to the Left"],["arrow-up","Move Row Up"],["arrow-down","Move Row Down"],["arrow-left","Move Column Left"],["arrow-right","Move Column Right"]]],
+                ["Format",[["sparkles","Format Tables ▾"]]],
+                ["Alignment",[["align-left","Align Column Left"],["align-center","Align Column Center"],["align-right","Align Column Right"]]],
+                ["Data",[["arrow-down-narrow-wide","Sort Rows ▾"]]],
+                ["Clipboard",[["clipboard","Paste as Table"]]]]},
+        Utilities:{d:'<b>Merge Lines</b> joins a run of lines into one; <b>Split Lines</b> breaks them at the punctuation the selection uses most.',g:[["Utilities",[["merge","Merge Lines"],["split","Split Lines"]]]]},
+        Pinned:{d:'<b>Pinned</b> — any command from the command palette, with any Lucide icon. Always the last tab; always a single unnamed group.',g:[]}
+    };
+    const seg=document.getElementById('seg'),body=document.getElementById('rbBody'),desc=document.getElementById('rbDesc');
+    Object.keys(TABS).forEach((k,i)=>{const b=document.createElement('button');b.textContent=k;if(!i)b.className='on';
+        b.onclick=()=>{[...seg.children].forEach(c=>c.className='');b.className='on';render(k)};seg.appendChild(b)});
+    function render(k){const t=TABS[k];desc.innerHTML=t.d;
+        if(!t.g.length){body.innerHTML=`<div class="grp" style="border:0"><div class="btns"><div class="b">${I('pin')}</div></div></div><div style="padding:14px 6px;font-size:13px;color:var(--sub)">Nothing pinned yet. Add one under Settings → Pinned.</div>`;}
+        else body.innerHTML=t.g.map(([nm,btns])=>`<div class="grp ${t.dim&&nm!=='Clipboard'?'dis':''}"><div class="btns">${btns.map(b=>B(b[0],b[1])).join('')}</div><div class="nm">${nm}</div></div>`).join('');
+        draw();}
+    render('Home');
+
+    /* ---- Reading-view sortable table ---- */
+    const t=document.getElementById('mdt');
+    [...t.tBodies[0].rows].forEach((r,i)=>r.dataset.i=i);
+    t.querySelectorAll('th').forEach(th=>th.onclick=()=>{
+        const c=+th.dataset.c,tb=t.tBodies[0],rows=[...tb.rows],cur=th.className;
+        const next=cur==='asc'?'desc':cur==='desc'?'':'asc';
+        t.querySelectorAll('th').forEach(x=>x.className='');
+        if(!next)rows.sort((a,b)=>a.dataset.i-b.dataset.i);
+        else{rows.sort((a,b)=>{const x=a.cells[c].textContent,y=b.cells[c].textContent;
+            const nx=parseFloat(x.replace(/[^\d.-]/g,'')),ny=parseFloat(y.replace(/[^\d.-]/g,''));
+            const r=(!isNaN(nx)&&!isNaN(ny))?nx-ny:x.localeCompare(y);return next==='asc'?r:-r});th.className=next}
+        rows.forEach(r=>tb.appendChild(r));
+    });
+
+    /* ---- Emoji & Symbols panel ---- */
+    const D={
+        emoji:{ph:'Search 1,870 emoji…',g:['Frequently used','Smileys & People','Animals & Nature','Food & Drink','Activity','Travel & Places','Objects','Symbols','Flags'],c:'ge',
+            i:'😀 😂 🥰 😎 🤔 😴 🙃 🥳 😇 🤯 😭 🤝 👍 👏 🙌 🧠 🫶 🐱 🐶 🦊 🐼 🌿 🌸 🍄 🍎 🍜 ☕️ 🍰 ⚽️ 🎧 🎬 ✈️ 🏔 🌍 💡 📚 🔑 ⏰ 🧩 📌 ⭐️ ✅ ❤️ 🔥 🎯 🚀 🏁 🇯🇵 🇫🇷 🇺🇸'.split(' ')},
+        kao:{ph:'Search 71 kaomoji…',g:['Frequently used','emotion','animal','behavior','people','holiday','food'],c:'gk',
+            i:['(｡♥‿♥｡)','¯\\_(ツ)_/¯','(╯°□°）╯︵ ┻━┻','ʕ•ᴥ•ʔ','(＾▽＾)','(｡•́︿•̀｡)','(¬‿¬)','ლ(ಠ益ಠ)ლ','(づ｡◕‿‿◕｡)づ','┬─┬ ノ( ゜-゜ノ)']},
+        sym:{ph:'Search 199 symbols…',g:['Frequently used','Arrows','Math','Typographic','Currency','Enclosed','Dingbats'],c:'gs',
+            i:'→ ← ↑ ↓ ↔ ⇒ ⇔ ↦ ± × ÷ ≈ ≠ ≤ ≥ ∞ ∑ √ ∫ ∂ – — … • ‰ § ¶ † ‡ € £ ¥ ₩ ¢ ① ② ③ Ⓐ ★ ☆ ✓ ✗ ❤ ✦ ✱ © ® ™'.split(' ')}
+    };
+    const grp=document.getElementById('grp'),host=document.getElementById('host'),ph=document.getElementById('ph');
+    function paint(s){const d=D[s];ph.textContent=d.ph;
+        grp.innerHTML=d.g.map((x,i)=>`<span class="${i===1?'on':''}">${x}</span>`).join('');
+        host.innerHTML=`<div class="${d.c}">${d.i.map(x=>`<i>${x}</i>`).join('')}</div>`}
+    document.querySelectorAll('#panel .src button').forEach(b=>b.onclick=()=>{
+        document.querySelectorAll('#panel .src button').forEach(x=>x.className='');b.className='on';paint(b.dataset.s)});
+    paint('emoji');
+
+    draw();
+</script>
+</body>
+</html>
