@@ -13,7 +13,7 @@ export const DEFAULT_SETTINGS = {
   version: CURRENT_SETTINGS_VERSION,
   desktop: { top: true, following: false, fixed: false },
   mobile: { top: false, following: false, fixed: true },
-  enableOnMobile: true,
+  enableOnMobile: false,
   bindEnterToNextRow: true,
   padCellWidthWithSpaces: true,
   sortTableOnHeaderClick: true,

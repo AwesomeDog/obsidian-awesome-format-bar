@@ -77,7 +77,7 @@ describe("normalizeSettings", () => {
       enableOnMobile: 1,
     });
     expect(result.desktop.top).toBe(true);
-    expect(result.enableOnMobile).toBe(true);
+    expect(result.enableOnMobile).toBe(false);
   });
 });
 
