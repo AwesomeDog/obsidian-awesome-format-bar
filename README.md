@@ -5,7 +5,7 @@ A Markdown formatting bar for [Obsidian](https://obsidian.md).
 Obsidian is efficient for people fluent in Markdown, but newcomers face a syntax barrier. Awesome Format Bar overlays a Word-like toolbar on the editor, so you can apply everyday formatting by clicking a button — while your notes stay plain text. Everything it produces is standard Markdown, Obsidian Markdown, or — where Markdown falls short (Underline, Superscript, Subscript, alignment, colors) — inline HTML.
 
 <p>
-  <img src="docs/img/light.png" width="50%" alt="Awesome Format Bar, light theme">
+  <img src="docs/img/light.png" alt="Awesome Format Bar, light theme">
 </p>
 
 ## Highlights
