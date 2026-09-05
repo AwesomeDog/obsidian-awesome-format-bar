@@ -203,6 +203,22 @@ const PARAGRAPH_ALIGNMENTS: Readonly<Record<string, ParagraphAlignment>> = {
   "align-right": "right",
 };
 
+/** Obsidian's twelve callout types, one command each under the Callout button. */
+const CALLOUT_TYPES: Readonly<Record<string, string>> = {
+  "callout-note": "note",
+  "callout-abstract": "abstract",
+  "callout-info": "info",
+  "callout-tip": "tip",
+  "callout-success": "success",
+  "callout-question": "question",
+  "callout-warning": "warning",
+  "callout-failure": "failure",
+  "callout-danger": "danger",
+  "callout-bug": "bug",
+  "callout-example": "example",
+  "callout-quote": "quote",
+};
+
 /** The local half of the command table; registered commands forward instead. */
 export function planFor(context: CommandContext, id: string): Plan | null {
   const { editor, format, optionValue } = context;
@@ -216,6 +232,9 @@ export function planFor(context: CommandContext, id: string): Plan | null {
 
   const align = PARAGRAPH_ALIGNMENTS[id];
   if (align) return toggleParagraphAlignment(doc, ranges, align);
+
+  const callout = CALLOUT_TYPES[id];
+  if (callout) return insertCallout(doc, ranges, callout);
 
   switch (id) {
     case "renumber-list":
@@ -234,8 +253,6 @@ export function planFor(context: CommandContext, id: string): Plan | null {
       return splitLines(doc, ranges);
     case "horizontal-rule":
       return insertHorizontalRule(doc, ranges);
-    case "callout":
-      return insertCallout(doc, ranges);
     case "block-reference":
       return insertBlockReference(
         doc,

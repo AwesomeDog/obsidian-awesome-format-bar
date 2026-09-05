@@ -42,6 +42,7 @@ type CommandPopup =
   | "highlight-color"
   | "case"
   | "character-panel"
+  | "callout"
   | "table-delete"
   | "table-format"
   | "table-sort";

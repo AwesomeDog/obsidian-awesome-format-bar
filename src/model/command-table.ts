@@ -297,7 +297,74 @@ export const COMMANDS = [
   },
 
   // Insert · Blocks
-  { id: "callout", name: "Callout", icon: "info", kind: "editor" },
+  {
+    id: "callout",
+    name: "Callout",
+    icon: "info",
+    kind: "editor",
+    popup: "callout",
+    commandPalette: false,
+  },
+  // Drop-down items: one command per Obsidian callout type, in the order
+  // Obsidian lists them. Aliases (`summary`, `hint`, `error`…) write the same
+  // type under another name, so they get no button of their own.
+  {
+    id: "callout-note",
+    name: "Note Callout",
+    icon: "sticky-note",
+    kind: "editor",
+  },
+  {
+    id: "callout-abstract",
+    name: "Abstract Callout",
+    icon: "clipboard-list",
+    kind: "editor",
+  },
+  { id: "callout-info", name: "Info Callout", icon: "info", kind: "editor" },
+  { id: "callout-tip", name: "Tip Callout", icon: "lightbulb", kind: "editor" },
+  {
+    id: "callout-success",
+    name: "Success Callout",
+    icon: "circle-check",
+    kind: "editor",
+  },
+  {
+    id: "callout-question",
+    name: "Question Callout",
+    icon: "circle-help",
+    kind: "editor",
+  },
+  {
+    id: "callout-warning",
+    name: "Warning Callout",
+    icon: "triangle-alert",
+    kind: "editor",
+  },
+  {
+    id: "callout-failure",
+    name: "Failure Callout",
+    icon: "circle-x",
+    kind: "editor",
+  },
+  {
+    id: "callout-danger",
+    name: "Danger Callout",
+    icon: "zap",
+    kind: "editor",
+  },
+  { id: "callout-bug", name: "Bug Callout", icon: "bug", kind: "editor" },
+  {
+    id: "callout-example",
+    name: "Example Callout",
+    icon: "flask-conical",
+    kind: "editor",
+  },
+  {
+    id: "callout-quote",
+    name: "Quote Callout",
+    icon: "quote",
+    kind: "editor",
+  },
   {
     id: "code-block",
     name: "Code Block",
@@ -612,9 +679,21 @@ export const COMMANDS = [
 export type CommandId = (typeof COMMANDS)[number]["id"];
 
 /** Drop-down items: no Ribbon group lists them, but each has a palette entry. */
-export const TABLE_DROPDOWN_ITEMS: Readonly<
-  Record<string, readonly CommandId[]>
-> = {
+export const DROPDOWN_ITEMS: Readonly<Record<string, readonly CommandId[]>> = {
+  callout: [
+    "callout-note",
+    "callout-abstract",
+    "callout-info",
+    "callout-tip",
+    "callout-success",
+    "callout-question",
+    "callout-warning",
+    "callout-failure",
+    "callout-danger",
+    "callout-bug",
+    "callout-example",
+    "callout-quote",
+  ],
   "table-delete": ["table-delete-rows", "table-delete-columns"],
   "table-format": ["table-format-table", "table-format-all-tables"],
   "table-sort": ["table-sort-az", "table-sort-za"],

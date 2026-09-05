@@ -11,8 +11,12 @@ const ICON_FALLBACKS: Readonly<Record<string, readonly string[]>> = {
   "arrow-up-down": ["chevrons-up-down", "repeat"],
   brackets: ["braces", "brackets-contain"],
   "case-upper": ["case-sensitive", "a-large-small"],
+  "circle-check": ["check-circle-2", "check-circle"],
+  "circle-help": ["help-circle"],
+  "circle-x": ["x-circle"],
   "clipboard-paste": ["clipboard-copy", "clipboard"],
   "file-input": ["file-symlink", "file-plus"],
+  "flask-conical": ["flask"],
   "fold-horizontal": ["panel-left-close", "columns-2"],
   heading: ["heading-1", "heading-3"],
   "heading-1": ["header-1"],
@@ -30,6 +34,7 @@ const ICON_FALLBACKS: Readonly<Record<string, readonly string[]>> = {
   "paint-bucket": ["paintbucket", "palette"],
   percent: ["percent-circle", "message-square"],
   "square-code": ["file-code", "code-2"],
+  "triangle-alert": ["alert-triangle"],
 };
 
 /** Obsidian registers its own Lucide set under a `lucide-` prefix. */

@@ -1,7 +1,7 @@
 import { setTooltip } from "obsidian";
 import Picker from "vanilla-picker/csp";
 import { t } from "../i18n/i18n";
-import { commandById, TABLE_DROPDOWN_ITEMS } from "../model/command-table";
+import { commandById, DROPDOWN_ITEMS } from "../model/command-table";
 import { CASE_OPTIONS, STANDARD_COLORS } from "../model/palettes";
 import type { CommandSpec } from "../model/types";
 import { openFloatingLayer } from "./floating";
@@ -137,12 +137,13 @@ export function popoverSectionsFor(
           })),
         },
       ];
+    case "callout":
     case "table-delete":
     case "table-format":
     case "table-sort":
       return [
         {
-          items: (TABLE_DROPDOWN_ITEMS[spec.popup ?? ""] ?? []).map((id) => {
+          items: (DROPDOWN_ITEMS[spec.popup ?? ""] ?? []).map((id) => {
             const item = commandById(id);
             return {
               icon: item.icon,

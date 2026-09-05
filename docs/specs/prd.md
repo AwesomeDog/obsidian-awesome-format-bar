@@ -66,7 +66,7 @@ A fixed built-in subset of commands, grouped by dividers. Buttons that don't fit
 
 ## 5. Commands
 
-**92 built-in commands** across 5 tabs and 19 groups, plus the Pinned tab. Six live inside drop-down buttons and one opens the Emoji & Symbols panel; the other 85 are registered in the command palette, so users can assign their own shortcuts.
+**104 built-in commands** across 5 tabs and 19 groups, plus the Pinned tab. Seven live inside drop-down buttons and one opens the Emoji & Symbols panel; the other 96 are registered in the command palette, so users can assign their own shortcuts.
 
 ### Tab 1 · Home
 
@@ -79,7 +79,7 @@ A fixed built-in subset of commands, grouped by dividers. Buttons that don't fit
 ### Tab 2 · Insert
 
 - **Links** — Internal Link, External Link, Embed, Tag, Block Reference
-- **Blocks** — Callout, Code Block, Math Block, Table, Comment
+- **Blocks** — Callout ▼ (Note Callout, Abstract Callout, Info Callout, Tip Callout, Success Callout, Question Callout, Warning Callout, Failure Callout, Danger Callout, Bug Callout, Example Callout, Quote Callout), Code Block, Math Block, Table, Comment
 - **Media & Symbols** — Attach File, Emoji & Symbols, Date and Time
 
 ### Tab 3 · View
@@ -184,7 +184,7 @@ The Table options govern editing behavior and text output, not toolbar layout, s
 - User-created commands — Pinned surfaces existing commands, it doesn't create new ones.
 - Emoji shortcodes: no `:smile:` expansion, no autocomplete while typing; the panel inserts raw characters.
 - Skin-tone selection, custom emoji sets, user-editable character lists.
-- Reordering, hiding or showing the 89 built-in commands.
+- Reordering, hiding or showing the 104 built-in commands.
 - Toolbar appearance customization: background or icon color pickers, theme variants.
 
 ---
@@ -196,7 +196,7 @@ The Table options govern editing behavior and text output, not toolbar layout, s
 | **Position** | Where a toolbar renders: **Top**, **Following**, **Fixed**. Three independent toggles. |
 | **Layout** | How a position renders: **Ribbon** (Top) or **Compact** (Following / Fixed). |
 | **Tab · Group · Button** | Ribbon structure. A **drop-down** button holds several commands; a Compact **overflow menu** (`⋯`) holds the buttons that don't fit. |
-| **Command** | An action the toolbar runs. **89 built-in commands** plus any **pinned command**. |
+| **Command** | An action the toolbar runs. **104 built-in commands** plus any **pinned command**. |
 | **Source · Group · Entry** | Emoji & Symbols panel structure: three sources (Emoji, Kaomoji, Symbols) → groups → entries. Picking an entry inserts a character. |
 | **Word terminology** | Display names follow Microsoft Word (*Bold*, *Clear Formatting*), initial capitals, no `Toggle` prefix. |
 | **Plugin icon** | The plugin's icon in Obsidian's left sidebar. "Ribbon" on its own always means the toolbar layout. |

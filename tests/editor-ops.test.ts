@@ -425,8 +425,11 @@ describe("insertions", () => {
   });
 
   it("quotes a selection into a callout", () => {
-    expect(apply("[a\nb]", (d, r) => insertCallout(d, r))).toBe(
+    expect(apply("[a\nb]", (d, r) => insertCallout(d, r, "note"))).toBe(
       "> [!note]\n> a\n> b",
+    );
+    expect(apply("[a]", (d, r) => insertCallout(d, r, "tip"))).toBe(
+      "> [!tip]\n> a",
     );
   });
 

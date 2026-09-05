@@ -72,7 +72,7 @@ export function insertHorizontalRule(
 export function insertCallout(
   doc: string,
   ranges: readonly Range[],
-  type = "note",
+  type: string,
 ): Plan {
   const lines = new Lines(doc);
   const changes: Change[] = [];

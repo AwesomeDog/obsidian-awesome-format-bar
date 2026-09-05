@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   commandById,
   COMMANDS,
-  TABLE_DROPDOWN_ITEMS,
+  DROPDOWN_ITEMS,
 } from "../src/model/command-table";
 import {
   BUILT_IN_COMMAND_TABS,
@@ -209,7 +209,7 @@ describe("command table contract", () => {
 
   it("places every ribbon command in exactly one group", () => {
     // Drop-down items live in the popover, so no group lists them.
-    const inDropdown = new Set(Object.values(TABLE_DROPDOWN_ITEMS).flat());
+    const inDropdown = new Set(Object.values(DROPDOWN_ITEMS).flat());
     const expected = COMMANDS.map((spec) => spec.id).filter(
       (id) => !inDropdown.has(id),
     );
@@ -247,10 +247,8 @@ describe("command table contract", () => {
         continue;
       }
       expect(spec.commandPalette).toBe(false);
-      if (spec.popup in TABLE_DROPDOWN_ITEMS)
-        expect(TABLE_DROPDOWN_ITEMS[spec.popup]?.length ?? 0).toBeGreaterThan(
-          0,
-        );
+      if (spec.popup in DROPDOWN_ITEMS)
+        expect(DROPDOWN_ITEMS[spec.popup]?.length ?? 0).toBeGreaterThan(0);
     }
   });
 });
