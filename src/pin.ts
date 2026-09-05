@@ -6,6 +6,7 @@ import {
   type FuzzyMatch,
 } from "obsidian";
 import { registeredCommands } from "./commands/registered";
+import { t } from "./i18n/i18n";
 import { DEFAULT_PIN_ICON } from "./model/pinned";
 import type { PinnedCommand } from "./model/types";
 import { allIconNames } from "./toolbar/icons";
@@ -64,7 +65,7 @@ class CommandPicker extends Picker<Command> {
     onPick: (command: Command) => void,
     onDismiss: () => void,
   ) {
-    super(app, "Search commands to pin", onDismiss);
+    super(app, t("Search commands to pin"), onDismiss);
     this.pinned = pinned;
     this.onPick = onPick;
   }
@@ -98,7 +99,7 @@ class IconPicker extends Picker<string> {
     onPick: (icon: string) => void,
     onDismiss: () => void,
   ) {
-    super(app, `Icon for ${commandName}`, onDismiss);
+    super(app, t("Icon for {name}", { name: commandName }), onDismiss);
     this.onPick = onPick;
   }
 

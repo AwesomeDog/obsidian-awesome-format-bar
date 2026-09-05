@@ -137,7 +137,7 @@ Unavailable commands set both `disabled` and `aria-disabled`. The toolbar handle
 
 | Task | Only place to edit |
 |---|---|
-| Add or adjust a command | `COMMANDS`, plus its slot in `BUILT_IN_COMMAND_TABS` |
+| Add or adjust a command | `COMMANDS`, plus its slot in `BUILT_IN_COMMAND_TABS`, plus every dictionary in `src/i18n/` |
 | Change Compact order | `COMPACT_GROUPS` (`COMPACT_ORDER` is derived, and exists for the contract test) |
 | Add a Markdown transform | Pure function in `editor-ops/` + `COMMANDS` entry + `planFor()` branch |
 | Adjust buttons or positioning | `toolbar/surface.ts` / `styles.css` |
@@ -146,3 +146,14 @@ Unavailable commands set both `disabled` and `aria-disabled`. The toolbar handle
 | Change Pinned behaviour | `src/pin.ts` (pickers) / `pinnedSpecs()` (buttons) |
 
 Never touch a button callback, the settings tab and an event listener for one feature. The command table is the behaviour entry point, `ViewToolbar` the view entry point, `Plugin` the lifecycle entry point; no further layers.
+
+## 10. i18n
+
+`getLanguage()` (public since 1.8.7) is the only input; no dependency, no user-facing setting — the plugin follows the app.
+
+- **Tables rename in place.** `COMMANDS`, the tabs, the groups and `PINNED_TAB` carry English, and `setLanguage()` rewrites their `name` at load.
+- **`t()` covers the rest** — settings, notices, panel and picker literals — keyed by their own English, falling back to it when a key is missing. `{name}` placeholders let a language reorder the sentence.
+- **A missing or empty key degrades to English, never to a blank.**
+- **Dictionaries hold display text, never identifiers.**
+- **Adding a language** is one file in `src/i18n/` plus one line in `DICTS`. Nothing else changes.
+- **Not translated:** the ~2,150 emoji / kaomoji / symbol names.

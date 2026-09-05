@@ -1,4 +1,5 @@
 import { setTooltip } from "obsidian";
+import { t } from "../i18n/i18n";
 import { commandById } from "../model/command-table";
 import {
   BUILT_IN_COMMAND_TABS,
@@ -137,7 +138,7 @@ export class ToolbarSurface {
     for (const spec of specs)
       this.buttons.set(createButton(row, spec, this.host), spec);
     if (specs.length === 0)
-      groupEl.createDiv({ cls: "group-empty", text: PINNED_EMPTY });
+      groupEl.createDiv({ cls: "group-empty", text: t(PINNED_EMPTY) });
     this.refresh();
   }
 
@@ -190,11 +191,11 @@ export class ToolbarSurface {
     });
 
     const overflow = this.el.createEl("button", {
-      attr: { "aria-label": "More commands", type: "button" },
+      attr: { "aria-label": t("More commands"), type: "button" },
       cls: "format-button",
     });
     resolveIcon(overflow, "more-horizontal");
-    setTooltip(overflow, "More commands", { placement: "top" });
+    setTooltip(overflow, t("More commands"), { placement: "top" });
     overflow.addEventListener("pointerdown", (event) => event.preventDefault());
     overflow.addEventListener("click", () => this.openOverflow(overflow));
     this.overflowEl = overflow;
@@ -285,7 +286,7 @@ export class ToolbarSurface {
         items: this.overflowed
           .filter((spec) => state.isEnabled(spec))
           .map(toItem),
-        title: "Hidden by width",
+        title: t("Hidden by width"),
       });
     }
 
@@ -297,7 +298,10 @@ export class ToolbarSurface {
           .filter((spec) => state.isEnabled(spec))
           .map(toItem);
         if (items.length)
-          sections.push({ items, title: `${tab.name} · ${group.name}` });
+          sections.push({
+            items,
+            title: t("{tab} · {group}", { tab: tab.name, group: group.name }),
+          });
       }
     }
 

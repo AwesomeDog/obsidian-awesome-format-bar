@@ -1,4 +1,4 @@
-import { MarkdownView, Platform, Plugin, addIcon } from "obsidian";
+import { MarkdownView, Platform, Plugin, addIcon, getLanguage } from "obsidian";
 import { commit, hasSelection } from "./commands/apply";
 import { exitFullscreen } from "./commands/dispatch";
 import {
@@ -12,6 +12,7 @@ import {
   registeredCommandName,
 } from "./commands/registered";
 import { planTableEnter, type TableFormat } from "./editor-ops/table";
+import { setLanguage } from "./i18n/i18n";
 import { COMMANDS } from "./model/command-table";
 import {
   DEFAULT_SETTINGS,
@@ -66,6 +67,8 @@ export default class AwesomeFormatBarPlugin extends Plugin {
     this.settings = normalizeSettings(await this.loadData());
     // Normalized on load, so nothing downstream ever sees raw data.
     await this.saveData(this.settings);
+    // Before anything reads a name: it renames the command table in place.
+    setLanguage(getLanguage());
     addIcon("format-bar-placeholder", PLACEHOLDER_SVG);
     addIcon("table-row-delete", TABLE_ROW_DELETE);
     addIcon("table-column-delete", TABLE_COLUMN_DELETE);

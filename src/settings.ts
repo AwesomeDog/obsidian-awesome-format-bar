@@ -7,6 +7,7 @@ import {
   type SettingDefinitionItem,
   type SettingGroupItem,
 } from "obsidian";
+import { t } from "./i18n/i18n";
 import type AwesomeFormatBarPlugin from "./main";
 import { TOOLBAR_POSITIONS } from "./model/preferences";
 import type {
@@ -32,7 +33,7 @@ function isTableKey(key: string): key is TableKey {
 }
 
 function toggle(key: SettingKey, name: string, desc: string): SettingGroupItem {
-  return { control: { key, type: "toggle" }, desc, name };
+  return { control: { key, type: "toggle" }, desc: t(desc), name: t(name) };
 }
 
 const POSITION_LABELS: Record<ToolbarPosition, string> = {
@@ -59,12 +60,12 @@ export class FormatBarSettingTab extends PluginSettingTab {
   override getSettingDefinitions(): SettingDefinitionItem[] {
     return [
       {
-        heading: "Toolbar",
+        heading: t("Toolbar"),
         items: [this.platformRow("desktop"), this.platformRow("mobile")],
         type: "group",
       },
       {
-        heading: "General",
+        heading: t("General"),
         items: [
           toggle(
             "enableOnMobile",
@@ -79,10 +80,10 @@ export class FormatBarSettingTab extends PluginSettingTab {
           action: () => {
             void this.plugin.pinCommand().then(() => this.update());
           },
-          name: "Pin a command",
+          name: t("Pin a command"),
         },
-        emptyState: "No pinned commands yet.",
-        heading: "Pinned",
+        emptyState: t("No pinned commands yet."),
+        heading: t("Pinned"),
         items: this.pinnedItems(),
         onDelete: (index: number) => {
           void this.plugin.removePinnedAt(index).then(() => this.update());
@@ -93,7 +94,7 @@ export class FormatBarSettingTab extends PluginSettingTab {
         type: "list",
       },
       {
-        heading: "Table",
+        heading: t("Table"),
         items: [
           toggle(
             "bindEnterToNextRow",
@@ -119,15 +120,15 @@ export class FormatBarSettingTab extends PluginSettingTab {
   /** Independent toggles, not one choice: Positions combine freely. */
   private platformRow(platform: PlatformKey): SettingGroupItem {
     return {
-      name: platform === "desktop" ? "Desktop" : "Mobile",
+      name: t(platform === "desktop" ? "Desktop" : "Mobile"),
       render: (setting: Setting): void => {
         for (const position of TOOLBAR_POSITIONS) {
           const key: SettingKey = `${platform}.${position}`;
           const label = setting.controlEl.createEl("label", {
             cls: "awesome-format-bar-position",
           });
-          label.createSpan({ text: POSITION_LABELS[position] });
-          setTooltip(label, POSITION_HINTS[position]);
+          label.createSpan({ text: t(POSITION_LABELS[position]) });
+          setTooltip(label, t(POSITION_HINTS[position]));
           new ToggleComponent(label)
             .setValue(readSettingKey(this.plugin.settings, key))
             .onChange(async (value) => {
@@ -148,7 +149,7 @@ export class FormatBarSettingTab extends PluginSettingTab {
         setting.addButton((button) =>
           button
             .setIcon(entry.icon)
-            .setTooltip("Change icon")
+            .setTooltip(t("Change icon"))
             .onClick(() => {
               void this.plugin.pickPinnedIcon(index).then(() => this.update());
             }),

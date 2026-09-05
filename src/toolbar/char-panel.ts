@@ -1,4 +1,5 @@
 import { Platform, setTooltip } from "obsidian";
+import { t } from "../i18n/i18n";
 import {
   frequentlyUsed,
   groupsOf,
@@ -45,8 +46,8 @@ export async function openCharPanel(
 
   const searchEl = layer.el.createEl("input", {
     attr: {
-      "aria-label": "Search characters",
-      placeholder: "Search…",
+      "aria-label": t("Search characters"),
+      placeholder: t("Search…"),
       type: "search",
     },
     cls: "char-search",
@@ -108,13 +109,13 @@ export async function openCharPanel(
     const names = groupsOf(source.entries);
     const frequent = searching ? [] : frequentlyUsed(source.entries, usage);
     const activeGroup =
-      group || (frequent.length > 0 ? FREQUENT : (names[0] ?? ""));
+      group || (frequent.length > 0 ? t(FREQUENT) : (names[0] ?? ""));
     // Sticky, or the first pick makes Frequently used appear under the cursor.
     group = activeGroup;
 
     items = searching
       ? searchCharacters(source.entries, query)
-      : activeGroup === FREQUENT
+      : activeGroup === t(FREQUENT)
         ? frequent
         : source.entries.filter((c) => c.group === activeGroup);
 
@@ -135,7 +136,7 @@ export async function openCharPanel(
     // No chips while searching: results already span the whole source.
     renderTabs(
       groupsEl,
-      searching ? [] : frequent.length > 0 ? [FREQUENT, ...names] : names,
+      searching ? [] : frequent.length > 0 ? [t(FREQUENT), ...names] : names,
       activeGroup,
       (label) => {
         group = label;
@@ -147,7 +148,7 @@ export async function openCharPanel(
     gridEl.replaceChildren();
     cells = [];
     if (items.length === 0) {
-      gridEl.createDiv({ cls: "char-empty", text: "No matches" });
+      gridEl.createDiv({ cls: "char-empty", text: t("No matches") });
       return;
     }
     for (const candidate of items) {

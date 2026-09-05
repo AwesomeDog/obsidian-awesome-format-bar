@@ -1,5 +1,6 @@
 import { setTooltip } from "obsidian";
 import Picker from "vanilla-picker/csp";
+import { t } from "../i18n/i18n";
 import { commandById, TABLE_DROPDOWN_ITEMS } from "../model/command-table";
 import { CASE_OPTIONS, STANDARD_COLORS } from "../model/palettes";
 import type { CommandSpec } from "../model/types";
@@ -112,12 +113,12 @@ export function popoverSectionsFor(
           items: [
             {
               icon: "ban",
-              label: "No Color",
+              label: t("No Color"),
               onChoose: () => host.execute(spec, `${property}:none`),
             },
             {
               icon: "pipette",
-              label: "More colors…",
+              label: t("More colors…"),
               onChoose: () =>
                 openColorPicker(anchor, host, (hex) =>
                   host.execute(spec, `${property}:${hex}`),
@@ -131,7 +132,7 @@ export function popoverSectionsFor(
       return [
         {
           items: CASE_OPTIONS.map((option) => ({
-            label: option.label,
+            label: t(option.label),
             onChoose: () => host.execute(spec, option.mode),
           })),
         },

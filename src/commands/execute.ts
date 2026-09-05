@@ -1,4 +1,5 @@
 import { MarkdownView, Notice, type App, type Editor } from "obsidian";
+import { t } from "../i18n/i18n";
 import type { CommandSpec } from "../model/types";
 import { isTableLine } from "../editor-ops/table";
 import type { TableFormat } from "../editor-ops/table";
@@ -94,7 +95,11 @@ export async function executeSpec(
     throw new Error(`No implementation for command: ${spec.id}`);
   } catch (error) {
     console.error(`[${ORIGIN}] ${spec.id} failed`, error);
-    new Notice(`${spec.name} failed. See the developer console for details.`);
+    new Notice(
+      t("{name} failed. See the developer console for details.", {
+        name: spec.name,
+      }),
+    );
   }
 }
 

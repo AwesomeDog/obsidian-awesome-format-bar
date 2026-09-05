@@ -5,6 +5,7 @@ import {
   type Editor,
   type MarkdownView,
 } from "obsidian";
+import { t } from "../i18n/i18n";
 import {
   insertBlockReference,
   insertCallout,
@@ -163,7 +164,9 @@ export async function runClipboard(
     const table = tableFromClipboard(text, context.format);
     if (!table) {
       new Notice(
-        "Clipboard is not a table. Copy two or more rows of tab- or comma-separated values first.",
+        t(
+          "Clipboard is not a table. Copy two or more rows of tab- or comma-separated values first.",
+        ),
       );
       return;
     }

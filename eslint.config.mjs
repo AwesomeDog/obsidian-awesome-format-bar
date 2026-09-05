@@ -28,4 +28,9 @@ export default defineConfig(
     },
   },
   ...obsidianmd.configs.recommended,
+  {
+    // Tests never ship; the i18n orphan check has to read the sources.
+    files: ["tests/**/*.ts"],
+    rules: { "obsidianmd/no-nodejs-modules": "off" },
+  },
 );
