@@ -61,7 +61,10 @@ export class FormatBarSettingTab extends PluginSettingTab {
     return [
       {
         heading: t("Toolbar"),
-        items: [this.platformRow("desktop"), this.platformRow("mobile")],
+        items: [
+          this.platformRow("desktop"),
+          // this.platformRow("mobile"),
+        ],
         type: "group",
       },
       {
