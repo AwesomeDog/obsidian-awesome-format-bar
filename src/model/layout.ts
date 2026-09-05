@@ -101,8 +101,21 @@ export const BUILT_IN_COMMAND_TABS = [
     id: "view",
     name: "View",
     groups: [
-      { name: "Show", commands: ["show-whitespace", "show-line-numbers"] },
-      { name: "View", commands: ["focus-mode", "zen-mode"] },
+      { name: "Immersive", commands: ["focus-mode", "zen-mode"] },
+      {
+        name: "Show",
+        commands: [
+          "show-whitespace",
+          "show-line-numbers",
+          "readable-line-length",
+          "navigation-pane",
+        ],
+      },
+      { name: "Zoom", commands: ["zoom-in", "zoom-out", "zoom-reset"] },
+      {
+        name: "Outlining",
+        commands: ["collapse", "expand", "collapse-all", "expand-all"],
+      },
     ],
   },
   {

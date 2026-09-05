@@ -13,7 +13,7 @@ Obsidian is efficient for people fluent in Markdown, but newcomers face a syntax
 ## Highlights
 
 - **Three positions, freely combined** — a full **Ribbon** pinned above the editor (Top), a compact bar floating above the selection (Following), and a compact bar pinned to the bottom of the editor (Fixed). Defaults to Top.
-- **80 built-in commands** across 5 tabs — Home, Insert, View, Table and Utilities — using Word terminology you already know.
+- **89 built-in commands** across 5 tabs — Home, Insert, View, Table and Utilities — using Word terminology you already know.
 - **Emoji & Symbols** — a searchable, offline panel of about 2,150 emoji, kaomoji and symbols, bundled with the plugin. No network, no accounts.
 - **Pinned tab** — pin _any_ command from the command palette (core commands, other plugins' commands, or this plugin's own) to the toolbar with an icon of your choice.
 - **Table editing** — insert and delete rows and columns, move rows and columns, align columns, sort rows, re-format tables, and paste tab- or comma-separated text as an aligned Markdown table.
@@ -21,7 +21,7 @@ Obsidian is efficient for people fluent in Markdown, but newcomers face a syntax
 
 ## Commands
 
-73 of the 80 commands are registered in the command palette, so you can assign your own shortcuts. (Drop-down containers and the Emoji & Symbols panel are toolbar-only.)
+82 of the 89 commands are registered in the command palette, so you can assign your own shortcuts. (Drop-down containers and the Emoji & Symbols panel are toolbar-only.)
 
 ### Home
 
@@ -37,7 +37,13 @@ Internal Link, External Link, Embed, Tag, Block Reference, Callout, Code Block, 
 
 ### View
 
-**Show Whitespace** marks every space with a dot and every tab with an arrow in Source mode, and draws any space that isn't a plain one — NBSP, ideographic, EN/EM — in orange. **Show Line Numbers** is Obsidian's own setting. **Focus Mode** collapses both sidebars; **Zen Mode** puts the note into real fullscreen.
+**Show** — **Show Whitespace** marks every space with a dot and every tab with an arrow in Source mode, NBSP, ideographic, EN/EM — in orange. **Show Line Numbers** and **Readable Line Length** are Obsidian's own settings. **Navigation Pane** opens Obsidian's Outline, Word's name for that panel of headings.
+
+**Zoom** — **Zoom In**, **Zoom Out**, **100%**.
+
+**Outlining** — **Collapse**, **Expand**, **Collapse All**, **Expand All**.
+
+**Immersive** — **Focus Mode** collapses both sidebars; **Zen Mode** puts the note into real fullscreen.
 
 ### Table
 

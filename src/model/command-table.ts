@@ -345,6 +345,16 @@ export const COMMANDS = [
   },
   { id: "date-time", name: "Date and Time", icon: "calendar", kind: "editor" },
 
+  // View · Immersive
+  {
+    id: "focus-mode",
+    name: "Focus Mode",
+    icon: "fold-horizontal",
+    kind: "view",
+  },
+  // Real fullscreen on the view, so Obsidian's own layout is left alone.
+  { id: "zen-mode", name: "Zen Mode", icon: "maximize", kind: "view" },
+
   // View · Show
   {
     id: "show-whitespace",
@@ -359,15 +369,78 @@ export const COMMANDS = [
     kind: "registered",
     registeredCommandId: "editor:toggle-line-numbers",
   },
-  // View
+  // Office has no equivalent: Page Width there is a zoom level, not a text width.
   {
-    id: "focus-mode",
-    name: "Focus Mode",
-    icon: "fold-horizontal",
-    kind: "view",
+    id: "readable-line-length",
+    name: "Readable Line Length",
+    icon: "ruler",
+    kind: "registered",
+    registeredCommandId: "editor:toggle-readable-line-length",
   },
-  // Real fullscreen on the view, so Obsidian's own layout is left alone.
-  { id: "zen-mode", name: "Zen Mode", icon: "maximize", kind: "view" },
+  // Word's Outline is a view mode; its side panel of headings is this one.
+  {
+    id: "navigation-pane",
+    name: "Navigation Pane",
+    icon: "list",
+    kind: "registered",
+    registeredCommandId: "outline:open",
+  },
+
+  // View · Zoom
+  {
+    id: "zoom-in",
+    name: "Zoom In",
+    icon: "zoom-in",
+    kind: "registered",
+    registeredCommandId: "window:zoom-in",
+  },
+  {
+    id: "zoom-out",
+    name: "Zoom Out",
+    icon: "zoom-out",
+    kind: "registered",
+    registeredCommandId: "window:zoom-out",
+  },
+  // Word's Zoom group calls this 100%.
+  {
+    id: "zoom-reset",
+    name: "100%",
+    icon: "rotate-ccw",
+    kind: "registered",
+    registeredCommandId: "window:reset-zoom",
+  },
+
+  // View · Outlining
+  {
+    id: "collapse",
+    name: "Collapse",
+    icon: "fold-vertical",
+    kind: "registered",
+    registeredCommandId: "editor:toggle-fold",
+  },
+  // Obsidian has no unfold-one command; fold-less is the closest direction.
+  {
+    id: "expand",
+    name: "Expand",
+    icon: "unfold-vertical",
+    kind: "registered",
+    registeredCommandId: "editor:fold-less",
+  },
+  {
+    id: "collapse-all",
+    name: "Collapse All",
+    icon: "minimize-2",
+    kind: "registered",
+    registeredCommandId: "editor:fold-all",
+  },
+  {
+    id: "expand-all",
+    name: "Expand All",
+    icon: "maximize-2",
+    kind: "registered",
+    registeredCommandId: "editor:unfold-all",
+  },
+
   // Utilities
   { id: "merge-lines", name: "Merge Lines", icon: "merge", kind: "editor" },
   { id: "split-lines", name: "Split Lines", icon: "split", kind: "editor" },
