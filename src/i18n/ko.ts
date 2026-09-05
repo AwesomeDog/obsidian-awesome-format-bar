@@ -69,6 +69,9 @@ export default {
   "Expand All": "모두 펼치기",
   "Merge Lines": "줄 병합",
   "Split Lines": "줄 분할",
+  "Reverse Lines": "줄 순서 뒤집기",
+  "Sort List": "목록 정렬",
+  "Sort Headings": "제목 정렬",
   "Delete Rows or Columns": "행 또는 열 삭제",
   "Delete Rows": "행 삭제",
   "Delete Columns": "열 삭제",
@@ -111,6 +114,8 @@ export default {
   Format: "서식",
   Alignment: "맞춤",
   Data: "데이터",
+  Lines: "줄",
+  Sort: "정렬",
 
   // Positions
   Fixed: "아래쪽",

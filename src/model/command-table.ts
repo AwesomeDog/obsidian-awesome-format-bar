@@ -441,9 +441,24 @@ export const COMMANDS = [
     registeredCommandId: "editor:unfold-all",
   },
 
-  // Utilities
+  // Utilities · Lines
   { id: "merge-lines", name: "Merge Lines", icon: "merge", kind: "editor" },
   { id: "split-lines", name: "Split Lines", icon: "split", kind: "editor" },
+  {
+    id: "reverse-lines",
+    name: "Reverse Lines",
+    icon: "arrow-up-down",
+    kind: "editor",
+  },
+
+  // Utilities · Sort
+  { id: "sort-list", name: "Sort List", icon: "list-tree", kind: "editor" },
+  {
+    id: "sort-headings",
+    name: "Sort Headings",
+    icon: "heading",
+    kind: "editor",
+  },
 
   // Table · Rows & Columns
   {

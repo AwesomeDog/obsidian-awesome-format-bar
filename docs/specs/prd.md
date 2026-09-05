@@ -66,7 +66,7 @@ A fixed built-in subset of commands, grouped by dividers. Buttons that don't fit
 
 ## 5. Commands
 
-**89 built-in commands** across 5 tabs and 18 groups, plus the Pinned tab. Six live inside drop-down buttons and one opens the Emoji & Symbols panel; the other 82 are registered in the command palette, so users can assign their own shortcuts.
+**92 built-in commands** across 5 tabs and 19 groups, plus the Pinned tab. Six live inside drop-down buttons and one opens the Emoji & Symbols panel; the other 85 are registered in the command palette, so users can assign their own shortcuts.
 
 ### Tab 1 · Home
 
@@ -105,11 +105,12 @@ Column-level names (*Align Column…*, *Sort Rows…*) distinguish these from th
 
 ### Tab 5 · Utilities
 
-**Merge Lines** joins a run of lines into one; **Split Lines** breaks them at the punctuation the selection uses most, out of `、 ， , ; ； | ·`. Neither crosses a blank line or a code fence, and a line with nothing to do is left alone.
+- **Lines** — **Merge Lines** joins a run of lines into one; **Split Lines** breaks them at the punctuation the selection uses most, out of `、 ， , ; ； | ·`; **Reverse Lines** flips the order of each run. None of the three crosses a blank line or a code fence, and a line with nothing to do is left alone.
+- **Sort** — two sorts that read structure rather than lines. **Sort List** sorts a list level by level: an item keeps its own body and its own children, and ordered items come out renumbered. **Sort Headings** reorders each level of the note's outline and carries every section's body along with it; its scope is the whole note, and a heading quoted in a callout or written inside a code fence counts as body text, not as a heading.
 
 ### Tab 6 · Pinned
 
-Pin **any command from the command palette** — core commands, other plugins' commands, or this plugin's own 89 — to the toolbar with an icon of your choice. The built-in set is the intersection of what most people use often; the one or two commands a given user can't live without usually fall outside it.
+Pin **any command from the command palette** — core commands, other plugins' commands, or this plugin's own 92 — to the toolbar with an icon of your choice. The built-in set is the intersection of what most people use often; the one or two commands a given user can't live without usually fall outside it.
 
 | Item | Convention |
 |---|---|

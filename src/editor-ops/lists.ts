@@ -1,5 +1,19 @@
-import { NO_CHANGE, order, type Change, type Plan, type Range } from "./plan";
-import { blocksFor, FENCE, Lines, replaceBlock, type Block } from "./lines";
+import {
+  NO_CHANGE,
+  applyChanges,
+  order,
+  type Change,
+  type Plan,
+  type Range,
+} from "./plan";
+import {
+  blocksFor,
+  compareText,
+  FENCE,
+  Lines,
+  replaceBlock,
+  type Block,
+} from "./lines";
 
 /** Renumbering, sorting, joining and splitting are local; headings and lists are not. */
 const ORDERED = /^(\s*)(\d+)([.)])(\s+)(.*)$/;
@@ -128,13 +142,12 @@ export function renumberList(doc: string, ranges: readonly Range[]): Plan {
   return { changes: order(changes) };
 }
 
-/** Sorts runs of non-blank lines; blank lines and fences stay put as dividers. */
-export function sortLines(doc: string, ranges: readonly Range[]): Plan {
-  const lines = new Lines(doc);
-  const collator = new Intl.Collator("en-US", {
-    numeric: true,
-    sensitivity: "base",
-  });
+/** Reorders each run of lines; blank lines and fences stay put as dividers. */
+function reorderRuns(
+  lines: Lines,
+  ranges: readonly Range[],
+  reorder: (run: readonly string[]) => string[],
+): Plan {
   const changes: Change[] = [];
 
   for (const [a, b] of blocksFor(lines, ranges, "collapsed-paragraph")) {
@@ -144,10 +157,7 @@ export function sortLines(doc: string, ranges: readonly Range[]): Plan {
     const result: string[] = [];
     let run: string[] = [];
     const flush = (): void => {
-      if (run.length === 0) return;
-      result.push(
-        ...run.slice().sort((x, y) => collator.compare(x.trim(), y.trim())),
-      );
+      if (run.length > 0) result.push(...reorder(run));
       run = [];
     };
     for (const text of source) {
@@ -162,6 +172,106 @@ export function sortLines(doc: string, ranges: readonly Range[]): Plan {
 
     if (result.some((text, index) => text !== source[index]))
       changes.push(replaceBlock(lines, a, b, result.join("\n")));
+  }
+  return { changes: order(changes) };
+}
+
+/** Sorts runs of non-blank lines; blank lines and fences stay put as dividers. */
+export function sortLines(doc: string, ranges: readonly Range[]): Plan {
+  return reorderRuns(new Lines(doc), ranges, (run) =>
+    run.slice().sort((x, y) => compareText(x.trim(), y.trim())),
+  );
+}
+
+export function reverseLines(doc: string, ranges: readonly Range[]): Plan {
+  return reorderRuns(new Lines(doc), ranges, (run) => run.slice().reverse());
+}
+
+interface ListItem {
+  indent: number;
+  /** The item's own line, plus any line that is not a marker of its own. */
+  lines: string[];
+  children: ListItem[];
+}
+
+/** Content after the marker, so `2. a` sorts by `a` and not by its number. */
+const ITEM_TEXT = /^\s*(?:\d+[.)]|[-*+])\s*(.*)$/;
+
+function itemText(item: ListItem): string {
+  return (ITEM_TEXT.exec(item.lines[0] ?? "")?.[1] ?? "").trim();
+}
+
+/** Items begin at a marker; any other line rides with the item above it. */
+function parseItems(lines: Lines, from: number, to: number): ListItem[] {
+  const roots: ListItem[] = [];
+  const stack: ListItem[] = [];
+
+  for (let line = from; line <= to; line++) {
+    const text = lines.at(line);
+    const marker = ORDERED.exec(text) ?? BULLET.exec(text);
+    if (!marker) {
+      stack[stack.length - 1]?.lines.push(text);
+      continue;
+    }
+    const indent = (marker[1] ?? "").length;
+    const item: ListItem = { indent, lines: [text], children: [] };
+    while (stack.length > 0 && (stack[stack.length - 1]?.indent ?? 0) >= indent)
+      stack.pop();
+    const parent = stack[stack.length - 1];
+    (parent ? parent.children : roots).push(item);
+    stack.push(item);
+  }
+  return roots;
+}
+
+function sortItems(items: readonly ListItem[]): ListItem[] {
+  return items
+    .map((item) => ({ ...item, children: sortItems(item.children) }))
+    .sort((a, b) => compareText(itemText(a), itemText(b)));
+}
+
+function flattenItems(items: readonly ListItem[]): string[] {
+  return items.flatMap((item) => [
+    ...item.lines,
+    ...flattenItems(item.children),
+  ]);
+}
+
+/** Sorting leaves ordered items out of sequence, so they are renumbered. */
+function renumber(text: string): string {
+  const changes = renumberList(text, [{ from: 0, to: text.length }]).changes;
+  return applyChanges(text, changes);
+}
+
+/** The first list item in `a..b`, or -1 when there is none to sort. */
+function firstListLine(lines: Lines, a: number, b: number): number {
+  for (let line = a; line <= b; line++)
+    if (isListLine(lines.at(line))) return line;
+  return -1;
+}
+
+/** Sorts a list level by level; each item keeps its own lines and its children. */
+export function sortList(doc: string, ranges: readonly Range[]): Plan {
+  const lines = new Lines(doc);
+  const changes: Change[] = [];
+
+  for (const [a, b] of blocksFor(lines, ranges)) {
+    // A selection bounds the sort; a bare cursor takes in the whole list.
+    const [first, last] = a === b ? listBlock(lines, a, b) : [a, b];
+    let start = firstListLine(lines, first, last);
+    while (start >= 0) {
+      // A blank line ends a list, so two lists never sort into each other.
+      let end = start;
+      while (end < last && lines.at(end + 1).trim() !== "") end++;
+      const source = lines.slice(start, end);
+      const result = renumber(
+        flattenItems(sortItems(parseItems(lines, start, end))).join("\n"),
+      );
+      if (result !== source)
+        changes.push(replaceBlock(lines, start, end, result));
+      // Skip the blank line that ends this run.
+      start = firstListLine(lines, end + 2, last);
+    }
   }
   return { changes: order(changes) };
 }

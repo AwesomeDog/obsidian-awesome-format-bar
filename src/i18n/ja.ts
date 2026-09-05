@@ -69,6 +69,9 @@ export default {
   "Expand All": "すべて展開",
   "Merge Lines": "行の結合",
   "Split Lines": "行の分割",
+  "Reverse Lines": "行を逆順に",
+  "Sort List": "リストを並べ替え",
+  "Sort Headings": "見出しを並べ替え",
   "Delete Rows or Columns": "行または列の削除",
   "Delete Rows": "行の削除",
   "Delete Columns": "列の削除",
@@ -111,6 +114,8 @@ export default {
   Format: "書式",
   Alignment: "配置",
   Data: "データ",
+  Lines: "行",
+  Sort: "並べ替え",
 
   // Positions
   Fixed: "下部",

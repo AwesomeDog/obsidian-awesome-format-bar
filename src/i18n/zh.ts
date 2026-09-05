@@ -69,6 +69,9 @@ export default {
   "Expand All": "全部展开",
   "Merge Lines": "合并行",
   "Split Lines": "拆分行",
+  "Reverse Lines": "反转行",
+  "Sort List": "排序列表",
+  "Sort Headings": "排序标题",
   "Delete Rows or Columns": "删除行或列",
   "Delete Rows": "删除行",
   "Delete Columns": "删除列",
@@ -111,6 +114,8 @@ export default {
   Format: "格式",
   Alignment: "对齐方式",
   Data: "数据",
+  Lines: "行",
+  Sort: "排序",
 
   // Positions
   Fixed: "底部",

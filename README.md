@@ -13,7 +13,7 @@ Obsidian is efficient for people fluent in Markdown, but newcomers face a syntax
 ## Highlights
 
 - **Three positions, freely combined** — a full **Ribbon** pinned above the editor (Top), a compact bar floating above the selection (Following), and a compact bar pinned to the bottom of the editor (Fixed). Defaults to Top.
-- **89 built-in commands** across 5 tabs — Home, Insert, View, Table and Utilities — using Word terminology you already know.
+- **92 built-in commands** across 5 tabs — Home, Insert, View, Table and Utilities — using Word terminology you already know.
 - **Emoji & Symbols** — a searchable, offline panel of about 2,150 emoji, kaomoji and symbols, bundled with the plugin. No network, no accounts.
 - **Pinned tab** — pin _any_ command from the command palette (core commands, other plugins' commands, or this plugin's own) to the toolbar with an icon of your choice.
 - **Table editing** — insert and delete rows and columns, move rows and columns, align columns, sort rows, re-format tables, and paste tab- or comma-separated text as an aligned Markdown table.
@@ -51,7 +51,9 @@ Available whenever the cursor is inside a table: Delete Rows or Columns, Insert 
 
 ### Utilities
 
-**Merge Lines** joins a run of lines into one; **Split Lines** breaks them at the punctuation the selection uses most.
+**Merge Lines** joins a run of lines into one; **Split Lines** breaks them at the punctuation the selection uses most; **Reverse Lines** flips the order of each run. None of the three crosses a blank line or a code fence.
+
+**Sort List** sorts a list level by level — an item keeps its own body and its own children, and ordered items come out renumbered. **Sort Headings** reorders each level of the note's outline and carries every section's body along with it.
 
 ### Emoji & Symbols
 

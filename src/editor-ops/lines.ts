@@ -3,6 +3,16 @@ import { normalizeRanges, type Change, type Range } from "./plan";
 /** A fence is a divider for renumbering, sorting, joining and splitting alike. */
 export const FENCE = /^\s*(?:```|~~~)/;
 
+const collator = new Intl.Collator("en-US", {
+  numeric: true,
+  sensitivity: "base",
+});
+
+/** Shared by every sort, so `Item 2` comes before `Item 10`. */
+export function compareText(a: string, b: string): number {
+  return collator.compare(a, b);
+}
+
 export class Lines {
   readonly text: string;
   private readonly starts: number[] = [0];

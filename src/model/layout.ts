@@ -150,7 +150,13 @@ export const BUILT_IN_COMMAND_TABS = [
   {
     id: "utilities",
     name: "Utilities",
-    groups: [{ name: "Utilities", commands: ["merge-lines", "split-lines"] }],
+    groups: [
+      {
+        name: "Lines",
+        commands: ["merge-lines", "split-lines", "reverse-lines"],
+      },
+      { name: "Sort", commands: ["sort-list", "sort-headings"] },
+    ],
   },
 ] as const satisfies readonly RibbonTab[];
 

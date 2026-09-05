@@ -69,6 +69,9 @@ export default {
   "Expand All": "Expandir todo",
   "Merge Lines": "Combinar líneas",
   "Split Lines": "Dividir líneas",
+  "Reverse Lines": "Invertir líneas",
+  "Sort List": "Ordenar lista",
+  "Sort Headings": "Ordenar títulos",
   "Delete Rows or Columns": "Eliminar filas o columnas",
   "Delete Rows": "Eliminar filas",
   "Delete Columns": "Eliminar columnas",
@@ -111,6 +114,8 @@ export default {
   Format: "Formato",
   Alignment: "Alineación",
   Data: "Datos",
+  Lines: "Líneas",
+  Sort: "Ordenar",
 
   // Positions
   Fixed: "Inferior",

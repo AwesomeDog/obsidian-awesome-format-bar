@@ -10,6 +10,7 @@ import {
   insertBlockReference,
   insertCallout,
   insertHorizontalRule,
+  sortHeadings,
   toggleParagraphAlignment,
   type ParagraphAlignment,
 } from "../editor-ops/blocks";
@@ -18,7 +19,9 @@ import { toggleInlinePair } from "../editor-ops/inline";
 import {
   mergeLines,
   renumberList,
+  reverseLines,
   sortLines,
+  sortList,
   splitLines,
 } from "../editor-ops/lists";
 import { NO_CHANGE, type Plan } from "../editor-ops/plan";
@@ -219,6 +222,12 @@ export function planFor(context: CommandContext, id: string): Plan | null {
       return renumberList(doc, ranges);
     case "sort-lines":
       return sortLines(doc, ranges);
+    case "reverse-lines":
+      return reverseLines(doc, ranges);
+    case "sort-list":
+      return sortList(doc, ranges);
+    case "sort-headings":
+      return sortHeadings(doc);
     case "merge-lines":
       return mergeLines(doc, ranges);
     case "split-lines":

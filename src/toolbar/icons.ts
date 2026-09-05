@@ -8,11 +8,13 @@ let sortedIcons: string[] | null = null;
 /** Lucide renames icons between releases; a rename degrades to a synonym. */
 const ICON_FALLBACKS: Readonly<Record<string, readonly string[]>> = {
   "arrow-down-a-z": ["sort-asc", "arrow-down-az"],
+  "arrow-up-down": ["chevrons-up-down", "repeat"],
   brackets: ["braces", "brackets-contain"],
   "case-upper": ["case-sensitive", "a-large-small"],
   "clipboard-paste": ["clipboard-copy", "clipboard"],
   "file-input": ["file-symlink", "file-plus"],
   "fold-horizontal": ["panel-left-close", "columns-2"],
+  heading: ["heading-1", "heading-3"],
   "heading-1": ["header-1"],
   "heading-2": ["header-2"],
   "heading-3": ["header-3"],
@@ -23,6 +25,7 @@ const ICON_FALLBACKS: Readonly<Record<string, readonly string[]>> = {
   "indent-decrease": ["outdent"],
   "indent-increase": ["indent"],
   "list-start": ["list-ordered", "list-restart"],
+  "list-tree": ["list", "list-ordered"],
   "more-horizontal": ["ellipsis", "more-vertical"],
   "paint-bucket": ["paintbucket", "palette"],
   percent: ["percent-circle", "message-square"],

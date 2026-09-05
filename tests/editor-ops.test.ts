@@ -3,6 +3,7 @@ import {
   insertBlockReference,
   insertCallout,
   insertHorizontalRule,
+  sortHeadings,
   toggleParagraphAlignment,
 } from "../src/editor-ops/blocks";
 import { changeCase, convertCase } from "../src/editor-ops/case";
@@ -11,7 +12,9 @@ import { Lines, blocksFor } from "../src/editor-ops/lines";
 import {
   mergeLines,
   renumberList,
+  reverseLines,
   sortLines,
+  sortList,
   splitLines,
 } from "../src/editor-ops/lists";
 import {
@@ -58,6 +61,11 @@ function apply(
 ): string {
   const { doc, ranges } = parse(input);
   return run(doc, fn(doc, ranges));
+}
+
+/** `sortHeadings` works on the note as a whole, so it takes no range. */
+function sortNote(doc: string): string {
+  return run(doc, sortHeadings(doc));
 }
 
 describe("ranges", () => {
@@ -245,6 +253,102 @@ describe("sortLines", () => {
     expect(apply("[c\na\n```\nz\nb\n```]", sortLines)).toBe(
       "a\nc\n```\nb\nz\n```",
     );
+  });
+});
+
+describe("reverseLines", () => {
+  it("reverses the selected lines", () => {
+    expect(apply("[a\nb\nc]", reverseLines)).toBe("c\nb\na");
+  });
+
+  it("reverses each side of a blank line", () => {
+    expect(apply("[a\nb\n\nc\nd]", reverseLines)).toBe("b\na\n\nd\nc");
+  });
+
+  it("does not reorder across a code fence", () => {
+    expect(apply("[a\nb\n```\nc\nd\n```]", reverseLines)).toBe(
+      "b\na\n```\nd\nc\n```",
+    );
+  });
+});
+
+describe("sortList", () => {
+  it("sorts a list level by level", () => {
+    expect(apply("[- b\n  - z\n  - a\n- a]", sortList)).toBe(
+      "- a\n- b\n  - a\n  - z",
+    );
+  });
+
+  it("keeps a continuation line with its item", () => {
+    expect(apply("[- b\n  note\n- a]", sortList)).toBe("- a\n- b\n  note");
+  });
+
+  it("sorts by the item's text and renumbers ordered items", () => {
+    expect(apply("[1. b\n2. a]", sortList)).toBe("1. a\n2. b");
+  });
+
+  it("leaves a selection that holds no list alone", () => {
+    expect(apply("[b\na]", sortList)).toBe("b\na");
+  });
+
+  it("leaves the paragraph above the list alone", () => {
+    expect(apply("intro\n[- b\n- a]", sortList)).toBe("intro\n- a\n- b");
+  });
+
+  it("sorts only the selected items", () => {
+    expect(apply("[- c\n- a]\n- z\n- b", sortList)).toBe("- a\n- c\n- z\n- b");
+  });
+
+  it("sorts the whole list from a bare cursor", () => {
+    expect(apply("|- c\n- a", sortList)).toBe("- a\n- c");
+  });
+
+  it("keeps two lists separated by a blank line apart", () => {
+    expect(apply("[- d\n- c\n\n- b\n- a]", sortList)).toBe(
+      "- c\n- d\n\n- a\n- b",
+    );
+  });
+
+  it("leaves a loose list alone rather than moving its blank lines", () => {
+    expect(apply("[- d\n\n- c\n\n- b]", sortList)).toBe("- d\n\n- c\n\n- b");
+  });
+});
+
+describe("sortHeadings", () => {
+  it("sorts sibling headings and carries their sections along", () => {
+    expect(sortNote("# B\nbody B\n# A\nbody A")).toBe(
+      "# A\nbody A\n# B\nbody B",
+    );
+  });
+
+  it("sorts each level on its own", () => {
+    expect(sortNote("# B\n## z\n## a\n# A")).toBe("# A\n# B\n## a\n## z");
+  });
+
+  it("leaves what sits above the first heading alone", () => {
+    expect(sortNote("---\ntitle: x\n---\n# B\n# A")).toBe(
+      "---\ntitle: x\n---\n# A\n# B",
+    );
+  });
+
+  it("does not sort a heading inside a code fence", () => {
+    expect(sortNote("# B\n```\n# z\n# a\n```\n# A")).toBe(
+      "# A\n# B\n```\n# z\n# a\n```",
+    );
+  });
+
+  it("does not sort a heading quoted in a callout", () => {
+    expect(sortNote("# B\n> [!note]\n> ## z\n> ## a\n# A")).toBe(
+      "# A\n# B\n> [!note]\n> ## z\n> ## a",
+    );
+  });
+
+  it("keeps the note's trailing newline", () => {
+    expect(sortNote("# B\n# A\n")).toBe("# A\n# B\n");
+  });
+
+  it("does nothing in a note without headings", () => {
+    expect(sortNote("b\na")).toBe("b\na");
   });
 });
 
