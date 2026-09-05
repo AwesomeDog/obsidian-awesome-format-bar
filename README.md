@@ -1,5 +1,7 @@
 # Awesome Format Bar
 
+Available in English, 简体中文, 繁體中文, 日本語, 한국어, Deutsch, Français and Español — follows your Obsidian language setting.
+
 A Markdown formatting bar for [Obsidian](https://obsidian.md).
 
 Obsidian is efficient for people fluent in Markdown, but newcomers face a syntax barrier. Awesome Format Bar overlays a Word-like toolbar on the editor, so you can apply everyday formatting by clicking a button — while your notes stay plain text. Everything it produces is standard Markdown, Obsidian Markdown, or — where Markdown falls short (Underline, Superscript, Subscript, alignment, colors) — inline HTML.

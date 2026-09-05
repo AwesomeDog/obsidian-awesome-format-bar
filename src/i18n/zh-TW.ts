@@ -1,7 +1,3 @@
-/**
- * Microsoft Word / Excel (繁體中文 – 台灣) terminology; see docs/specs/prd.md §3.1.
- * Note the row / column inversion: 列 is a row here, 欄 is a column.
- */
 export default {
   // Commands
   Paste: "貼上",

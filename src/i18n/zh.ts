@@ -1,4 +1,3 @@
-/** Microsoft Word / Excel (简体中文) terminology; see docs/specs/prd.md §3.1. */
 export default {
   // Commands
   Paste: "粘贴",

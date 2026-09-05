@@ -1,5 +1,10 @@
 import { COMMANDS } from "../model/command-table";
 import { BUILT_IN_COMMAND_TABS, PINNED_TAB } from "../model/layout";
+import de from "./de";
+import es from "./es";
+import fr from "./fr";
+import ja from "./ja";
+import ko from "./ko";
 import zh from "./zh";
 import zhTW from "./zh-TW";
 
@@ -8,7 +13,7 @@ type Dict = Readonly<Record<string, string>>;
 type Named = { name: string };
 
 /** Keyed by what `getLanguage()` returns; English is the source text. */
-const DICTS: Record<string, Dict> = { zh, "zh-TW": zhTW };
+const DICTS: Record<string, Dict> = { de, es, fr, ja, ko, zh, "zh-TW": zhTW };
 
 const EMPTY: Dict = {};
 let current: Dict = EMPTY;
