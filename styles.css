@@ -127,7 +127,6 @@
   border-inline-end: 1px solid var(--background-modifier-border);
   display: flex;
   flex-direction: column;
-  max-inline-size: 340px;
   padding: 0 var(--size-4-2);
 }
 
