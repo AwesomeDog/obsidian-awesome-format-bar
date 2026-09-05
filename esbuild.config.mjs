@@ -43,7 +43,14 @@ const slimEmojiData = {
 const options = {
   entryPoints: ["src/main.ts"],
   bundle: true,
-  external: ["obsidian", "electron", ...nodeBuiltins],
+  // Obsidian resolves CodeMirror at runtime
+  external: [
+    "obsidian",
+    "electron",
+    "@codemirror/state",
+    "@codemirror/view",
+    ...nodeBuiltins,
+  ],
   format: "cjs",
   logLevel: "info",
   minify: production,

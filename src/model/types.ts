@@ -17,6 +17,8 @@ export interface Settings {
   padCellWidthWithSpaces: boolean;
   /** Reading view: click a table header to sort its rows. */
   sortTableOnHeaderClick: boolean;
+  /** Source mode: mark every space and tab, and every odd space in orange. */
+  showWhitespace: boolean;
   /** Inserted character -> how many times it was picked. Drives Frequently used. */
   charUsage: Record<string, number>;
   /** Obsidian commands the user pinned onto the Ribbon's Pinned tab. */

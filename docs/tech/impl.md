@@ -16,6 +16,7 @@
 src/
   main.ts       lifecycle and wiring        settings.ts  declarative settings tab
   pin.ts        the two pickers for Pinned
+  whitespace.ts the Show Whitespace CodeMirror extension
   model/        types, command-table, layout, palettes, preferences, pinned,
                 characters (+ symbols, kaomoji, emoji-mart types)     — DOM-free
   editor-ops/   pure transforms returning a Plan
@@ -40,7 +41,7 @@ Pinned commands stay out of both tables:
 - `pinnedSpecs()` synthesizes ordinary `kind: 'registered'` specs at runtime, reusing the existing button and execution code.
 - **Pinned adds a data source, not an execution path.**
 
-Contract tests in `tests/settings.test.ts` pin what the tables promise: 78 commands; `BUILT_IN_COMMAND_TABS` = 5 tabs / 15 groups with each command in exactly one group; `COMPACT_ORDER` free of duplicate or unknown IDs. Startup itself only warns — `reportStartupGaps()` checks icon names and forwarded command IDs.
+Contract tests in `tests/settings.test.ts` pin what the tables promise: 80 commands; `BUILT_IN_COMMAND_TABS` = 5 tabs / 16 groups with each command in exactly one group; `COMPACT_ORDER` free of duplicate or unknown IDs. Startup itself only warns — `reportStartupGaps()` checks icon names and forwarded command IDs.
 
 ### 3.2 Registered-command bridge
 
@@ -106,6 +107,8 @@ Only the non-obvious ones.
 - **Block Reference** — `crypto.randomUUID()`, avoiding a Node dependency.
 - **Emoji & Symbols** — three sources normalized to one `CharEntry`. Search scores in three tiers (name prefix > word start > substring); `Array.sort` is stable, so equal scores keep dataset order — free popularity fallback, no fuzzy matching. Arrow keys navigate by grid arithmetic, not measured DOM. Insertion collapses the selection after the inserted text so consecutive picks line up. `charUsage` is pruned **per source** on open: a global ranking would let emoji squeeze kaomoji out, and per-source pruning caps the map at what can be displayed.
 - **Focus / Zen Mode** — Focus is a plugin-owned `body` class collapsed down to the two sidebars. Zen is real fullscreen on `view.containerEl`, so nothing in Obsidian's layout is written to and quitting restores it as it was; unload exits fullscreen rather than leaving the window stuck. No vendor-prefixed `requestFullscreen` branches: Obsidian desktop is Chromium, and other branches would be dead code. Both are removed unconditionally on unload. A `body`-mounted popup would be invisible while fullscreen renders only its own subtree, so the floating layer mounts into `doc.fullscreenElement` when there is one.
+- **Show Whitespace** — `highlightWhitespace()` from CodeMirror already marks every U+0020 and Tab, so only the odd spaces are ours: one `MatchDecorator` over NBSP / Ogham / EN–EM / ideographic / BOM, one character per match so a run draws a dot each. The marks are always on; Source-mode-only and every color are CSS `.cm-highlightSpace` rules, because Obsidian already puts `is-live-preview` on the view and switching extensions per mode would drop the decorations on every mode change. The tab arrow is a data-URI SVG, which no theme variable can reach, so it becomes a `mask` over `background-color`. Selectors carry three classes to outrank CodeMirror's base theme, which hardcodes `#aaa` and is injected after `styles.css`. The extension lives in a mutable array registered once: `updateOptions()` is what reconfigures.
+- **Show Line Numbers** — forwarded to `editor:toggle-line-numbers`. Line numbers are a global editor setting; a second copy of the state would drift.
 - **Reference project** is a behavioral sample, not a template: never copy `setLine()`, `setValue()`, deferred `setTimeout()` writes, private `.cm-*` access or its Modals.
 
 ## 6. Settings tab
@@ -122,7 +125,7 @@ Only `getSettingDefinitions()` is overridden; the framework owns rendering, sear
 
 Lucide via `setIcon()`, nothing bundled; a placeholder icon on lookup failure so no button is blank. The 3 custom SVGs (placeholder, delete row, delete column) are code constants in `main.ts`; Heading 1–6 come from Lucide, and `toolbar/icons.ts` carries a fallback chain for names a release may rename.
 
-All selectors start with `.awesome-format-bar` and use Obsidian variables; the palette's document colors are the only literal hex. Stable `min-width` / `min-height` keep measurement from jittering. ≥32px hit areas under `pointer: coarse`. `prefers-reduced-motion` honoured, and no state change waits on an animation.
+All selectors start with `.awesome-format-bar` and use Obsidian variables, except the whitespace marks, which have to target CodeMirror's own `.cm-highlight*` classes; the palette's document colors are the only literal hex. Stable `min-width` / `min-height` keep measurement from jittering. ≥32px hit areas under `pointer: coarse`. `prefers-reduced-motion` honoured, and no state change waits on an animation.
 
 Unavailable commands set both `disabled` and `aria-disabled`. The toolbar handles keys only while one of its buttons has focus.
 
@@ -130,7 +133,7 @@ Unavailable commands set both `disabled` and `aria-disabled`. The toolbar handle
 
 - **`editor-ops`** — overlapping selections; wrap/unwrap over existing wrappers; Renumber List nesting, blank lines, paragraph boundaries, mixed delimiters; Sort Lines stability and fences; Merge / Split Lines over fences, lone lines and CJK; color removal touching only its own property.
 - **`settings`** — per-field defaulting, explicit all-`false` surviving, bad version reset, values preserved when disabled; `pinned` round-trip, dedupe, name fallback; the layout contract.
-- **Integration** on exactly 1.13.7 — platform defaults; all 8 position combinations without overlap; splits and pop-outs; deferred tabs; Following never covering the selection; all 78 commands executing with no missing forwarded mapping; one undo per transform; settings search and persistence; Pinned staying in sync and greying out when its source plugin is disabled; nothing left behind after unload.
+- **Integration** on exactly 1.13.7 — platform defaults; all 8 position combinations without overlap; splits and pop-outs; deferred tabs; Following never covering the selection; all 80 commands executing with no missing forwarded mapping; one undo per transform; settings search and persistence; Pinned staying in sync and greying out when its source plugin is disabled; nothing left behind after unload.
 - **Gate** — `lint`, `test`, `build` pass; no source map; release contains only `main.js`, `manifest.json`, `styles.css`.
 
 ## 9. Maintenance map

@@ -526,6 +526,46 @@
   border-block-start-color: var(--text-normal);
 }
 
+/* ---------------------------- Show Whitespace ----------------------------- */
+/* CodeMirror draws the marks; these rules only recolor and gate them. */
+/* Three classes, to outrank CodeMirror's base theme and its hardcoded colors. */
+
+.markdown-source-view:not(.is-live-preview) .cm-editor .cm-highlightSpace {
+  background-image: radial-gradient(
+    circle at 50% 55%,
+    var(--text-faint) 20%,
+    transparent 5%
+  );
+  background-position: center;
+}
+
+/* The arrow is a data-URI SVG, so it wears `background-color` through a mask. */
+.markdown-source-view:not(.is-live-preview) .cm-editor .cm-highlightTab {
+  background-color: var(--text-faint);
+  background-image: none;
+  mask-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="20"><path stroke="%23888" stroke-width="1" fill="none" d="M1 10H196L190 5M190 15L196 10M197 4L197 16"/></svg>');
+  mask-position: right 90%;
+  mask-repeat: no-repeat;
+  mask-size: auto 100%;
+}
+
+/* Same dot, warning color: a space that is not U+0020 is a bug in the making. */
+.markdown-source-view:not(.is-live-preview) .cm-editor .cm-highlightOddSpace {
+  background-image: radial-gradient(
+    circle at 50% 55%,
+    var(--text-warning) 20%,
+    transparent 5%
+  );
+  background-position: center;
+}
+
+/* Live Preview spaces the text itself; marks there would only be noise. */
+.markdown-source-view.is-live-preview .cm-highlightSpace,
+.markdown-source-view.is-live-preview .cm-highlightTab,
+.markdown-source-view.is-live-preview .cm-highlightOddSpace {
+  background-image: none;
+}
+
 /* -------------------------------- Settings -------------------------------- */
 /* Outside the root: the settings tab is Obsidian's own DOM. */
 

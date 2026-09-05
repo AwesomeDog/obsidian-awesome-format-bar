@@ -17,6 +17,7 @@ export const DEFAULT_SETTINGS = {
   bindEnterToNextRow: true,
   padCellWidthWithSpaces: true,
   sortTableOnHeaderClick: true,
+  showWhitespace: false,
   charUsage: {},
   pinned: [],
 } as const satisfies Settings;
@@ -102,6 +103,7 @@ export function normalizeSettings(raw: unknown): Settings {
       source["sortTableOnHeaderClick"],
       "sortTableOnHeaderClick",
     ),
+    showWhitespace: normalizeFlag(source["showWhitespace"], "showWhitespace"),
     charUsage: normalizeUsage(source["charUsage"]),
     pinned: normalizePinned(source["pinned"]),
   };

@@ -345,6 +345,20 @@ export const COMMANDS = [
   },
   { id: "date-time", name: "Date and Time", icon: "calendar", kind: "editor" },
 
+  // View · Show
+  {
+    id: "show-whitespace",
+    name: "Show Whitespace",
+    icon: "space",
+    kind: "view",
+  },
+  {
+    id: "show-line-numbers",
+    name: "Show Line Numbers",
+    icon: "list-ordered",
+    kind: "registered",
+    registeredCommandId: "editor:toggle-line-numbers",
+  },
   // View
   {
     id: "focus-mode",

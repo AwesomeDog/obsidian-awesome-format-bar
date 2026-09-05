@@ -100,7 +100,10 @@ export const BUILT_IN_COMMAND_TABS = [
   {
     id: "view",
     name: "View",
-    groups: [{ name: "View", commands: ["focus-mode", "zen-mode"] }],
+    groups: [
+      { name: "Show", commands: ["show-whitespace", "show-line-numbers"] },
+      { name: "View", commands: ["focus-mode", "zen-mode"] },
+    ],
   },
   {
     id: "table",

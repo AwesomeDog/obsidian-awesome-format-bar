@@ -1,3 +1,4 @@
+import type { Extension } from "@codemirror/state";
 import { MarkdownView, Platform, Plugin, addIcon, getLanguage } from "obsidian";
 import { commit, hasSelection } from "./commands/apply";
 import { exitFullscreen } from "./commands/dispatch";
@@ -33,6 +34,7 @@ import type { ToolbarHost, ToolbarState } from "./toolbar/host";
 import { missingIcons } from "./toolbar/icons";
 import { closeFloating } from "./toolbar/floating";
 import { ViewToolbar } from "./toolbar/view";
+import { SHOW_WHITESPACE } from "./whitespace";
 
 const PLACEHOLDER_SVG =
   '<circle cx="50" cy="50" r="34" fill="none" stroke="currentColor" stroke-width="8"/><path d="M50 32v24" stroke="currentColor" stroke-width="8" stroke-linecap="round"/><circle cx="50" cy="68" r="4" fill="currentColor"/>';
@@ -63,6 +65,9 @@ export default class AwesomeFormatBarPlugin extends Plugin {
   /** Pop-out windows bind their own; `window-close` drops theirs. */
   private readonly boundDocuments = new Set<Document>();
 
+  /** Mutable on purpose: Obsidian re-reads this array on `updateOptions()`. */
+  private readonly editorExtensions: Extension[] = [];
+
   override async onload(): Promise<void> {
     this.settings = normalizeSettings(await this.loadData());
     // Normalized on load, so nothing downstream ever sees raw data.
@@ -74,6 +79,8 @@ export default class AwesomeFormatBarPlugin extends Plugin {
     addIcon("table-column-delete", TABLE_COLUMN_DELETE);
     this.registerCommands();
     this.addSettingTab(new FormatBarSettingTab(this.app, this));
+    this.applyWhitespace();
+    this.registerEditorExtension(this.editorExtensions);
 
     const reload = (): void => {
       void this.refreshToolbars();
@@ -114,6 +121,12 @@ export default class AwesomeFormatBarPlugin extends Plugin {
   /** The arrow is CSS, so the setting reaches it as a body class. */
   private markSortable(doc: Document): void {
     doc.body.toggleClass(SORTABLE_CLASS, this.settings.sortTableOnHeaderClick);
+  }
+
+  private applyWhitespace(): void {
+    this.editorExtensions.length = 0;
+    if (this.settings.showWhitespace)
+      this.editorExtensions.push(SHOW_WHITESPACE);
   }
 
   refreshToolbars(): Promise<void> {
@@ -256,6 +269,14 @@ export default class AwesomeFormatBarPlugin extends Plugin {
     }
   }
 
+  /** Extensions are read once per editor, so a toggle has to reconfigure them. */
+  private async setShowWhitespace(show: boolean): Promise<void> {
+    this.settings.showWhitespace = show;
+    this.applyWhitespace();
+    await this.saveData(this.settings);
+    this.app.workspace.updateOptions();
+  }
+
   /** Rebuilt per render, so a label follows the registry. */
   private pinnedSpecs(): CommandSpec[] {
     return pinnedSpecs(this.settings.pinned, (commandId) =>
@@ -312,6 +333,11 @@ export default class AwesomeFormatBarPlugin extends Plugin {
     optionValue?: string,
   ): Promise<void> {
     const format = this.tableFormat();
+    // Its own state, not an editor write: no context to resolve.
+    if (spec.id === "show-whitespace") {
+      await this.setShowWhitespace(!this.settings.showWhitespace);
+      return;
+    }
     // View commands must run in Reading view without focusing the editor.
     if (spec.kind === "view") {
       const target =
