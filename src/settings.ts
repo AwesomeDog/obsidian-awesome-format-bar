@@ -65,17 +65,6 @@ export class FormatBarSettingTab extends PluginSettingTab {
         type: "group",
       },
       {
-        heading: t("General"),
-        items: [
-          toggle(
-            "enableOnMobile",
-            "Enable on Mobile",
-            "Hides every bar on mobile without clearing its positions.",
-          ),
-        ],
-        type: "group",
-      },
-      {
         addItem: {
           action: () => {
             void this.plugin.pinCommand().then(() => this.update());
@@ -114,6 +103,17 @@ export class FormatBarSettingTab extends PluginSettingTab {
         ],
         type: "group",
       },
+      // {
+      //   heading: t("General"),
+      //   items: [
+      //     toggle(
+      //       "enableOnMobile",
+      //       "Enable on Mobile",
+      //       "Hides every bar on mobile without clearing its positions.",
+      //     ),
+      //   ],
+      //   type: "group",
+      // },
     ];
   }
 
