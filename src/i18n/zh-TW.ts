@@ -68,6 +68,7 @@ export default {
   "Attach File": "附加檔案",
   "Emoji & Symbols": "表情符號與符號",
   "Date and Time": "日期與時間",
+  "Table of Contents": "目錄",
   "Show Whitespace": "顯示空格",
   "Show Line Numbers": "顯示行號",
   "Focus Mode": "專注模式",
@@ -184,4 +185,5 @@ export default {
     "{name} 執行失敗。詳細資料請參閱開發人員主控台。",
   "Clipboard is not a table. Copy two or more rows of tab- or comma-separated values first.":
     "剪貼簿內容不是表格。請先複製兩列或以上以 Tab 或逗號分隔的資料。",
+  "This note has no headings to list.": "此筆記沒有可列出的標題。",
 } satisfies Record<string, string>;

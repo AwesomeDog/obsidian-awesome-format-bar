@@ -66,7 +66,7 @@ A fixed built-in subset of commands, grouped by dividers. Buttons that don't fit
 
 ## 5. Commands
 
-**106 built-in commands** across 5 tabs and 19 groups, plus the Pinned tab. Seven live inside drop-down buttons and one opens the Emoji & Symbols panel; the other 98 are registered in the command palette, so users can assign their own shortcuts.
+**107 built-in commands** across 5 tabs and 20 groups, plus the Pinned tab. Seven live inside drop-down buttons and one opens the Emoji & Symbols panel; the other 99 are registered in the command palette, so users can assign their own shortcuts.
 
 ### Tab 1 · Home
 
@@ -196,7 +196,7 @@ The Table options govern editing behavior and text output, not toolbar layout, s
 | **Position** | Where a toolbar renders: **Top**, **Following**, **Fixed**. Three independent toggles. |
 | **Layout** | How a position renders: **Ribbon** (Top) or **Compact** (Following / Fixed). |
 | **Tab · Group · Button** | Ribbon structure. A **drop-down** button holds several commands; a Compact **overflow menu** (`⋯`) holds the buttons that don't fit. |
-| **Command** | An action the toolbar runs. **106 built-in commands** plus any **pinned command**. |
+| **Command** | An action the toolbar runs. **107 built-in commands** plus any **pinned command**. |
 | **Source · Group · Entry** | Emoji & Symbols panel structure: three sources (Emoji, Kaomoji, Symbols) → groups → entries. Picking an entry inserts a character. |
 | **Word terminology** | Display names follow Microsoft Word (*Bold*, *Clear Formatting*), initial capitals, no `Toggle` prefix. |
 | **Plugin icon** | The plugin's icon in Obsidian's left sidebar. "Ribbon" on its own always means the toolbar layout. |

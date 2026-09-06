@@ -68,6 +68,7 @@ export default {
   "Attach File": "Joindre un fichier",
   "Emoji & Symbols": "Emoji et symboles",
   "Date and Time": "Date et heure",
+  "Table of Contents": "Table des matières",
   "Show Whitespace": "Afficher les espaces",
   "Show Line Numbers": "Afficher les numéros de ligne",
   "Focus Mode": "Mode focus",
@@ -188,4 +189,6 @@ export default {
     "{name} a échoué. Consultez la console de développement pour plus de détails.",
   "Clipboard is not a table. Copy two or more rows of tab- or comma-separated values first.":
     "Le presse-papiers n'est pas un tableau. Copiez d'abord deux lignes ou plus de valeurs séparées par des tabulations ou des virgules.",
+  "This note has no headings to list.":
+    "Cette note ne contient aucun titre à lister.",
 } satisfies Record<string, string>;

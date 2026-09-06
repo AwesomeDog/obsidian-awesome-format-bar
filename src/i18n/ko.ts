@@ -68,6 +68,7 @@ export default {
   "Attach File": "파일 첨부",
   "Emoji & Symbols": "이모지 및 기호",
   "Date and Time": "날짜 및 시간",
+  "Table of Contents": "목차",
   "Show Whitespace": "공백 표시",
   "Show Line Numbers": "줄 번호 표시",
   "Focus Mode": "집중 모드",
@@ -185,4 +186,5 @@ export default {
     "{name}이(가) 실패했습니다. 자세한 내용은 개발자 콘솔을 확인하세요.",
   "Clipboard is not a table. Copy two or more rows of tab- or comma-separated values first.":
     "클립보드 내용이 표가 아닙니다. 탭이나 쉼표로 구분된 값을 두 행 이상 먼저 복사하세요.",
+  "This note has no headings to list.": "이 노트에는 나열할 제목이 없습니다.",
 } satisfies Record<string, string>;

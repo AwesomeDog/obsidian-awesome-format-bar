@@ -89,19 +89,13 @@ export const BUILT_IN_COMMAND_TABS = [
       },
       {
         name: "Blocks",
-        commands: [
-          "callout",
-          "code-block",
-          "math-block",
-          "table",
-          "comment",
-          "footnote",
-        ],
+        commands: ["callout", "code-block", "math-block", "table", "comment"],
       },
       {
         name: "Media & Symbols",
         commands: ["attach-file", "emoji", "date-time"],
       },
+      { name: "Reference", commands: ["toc", "footnote"] },
     ],
   },
   {

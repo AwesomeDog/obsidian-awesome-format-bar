@@ -68,6 +68,7 @@ export default {
   "Attach File": "Datei anfügen",
   "Emoji & Symbols": "Emoji und Symbole",
   "Date and Time": "Datum und Uhrzeit",
+  "Table of Contents": "Inhaltsverzeichnis",
   "Show Whitespace": "Leerzeichen anzeigen",
   "Show Line Numbers": "Zeilennummern anzeigen",
   "Focus Mode": "Fokusmodus",
@@ -187,4 +188,6 @@ export default {
     "{name} ist fehlgeschlagen. Details finden Sie in der Entwicklerkonsole.",
   "Clipboard is not a table. Copy two or more rows of tab- or comma-separated values first.":
     "Die Zwischenablage enthält keine Tabelle. Kopieren Sie zuerst zwei oder mehr Zeilen mit tabulator- oder kommagetrennten Werten.",
+  "This note has no headings to list.":
+    "Diese Notiz enthält keine Überschriften.",
 } satisfies Record<string, string>;

@@ -101,6 +101,10 @@ The **Pinned** tab turns the toolbar into your own launcher: pick any command fr
 
 **Show Whitespace** (dots for spaces, arrows for tabs, orange markers for NBSP / ideographic / EN & EM spaces), **Show Line Numbers**, **Readable Line Length**, **Navigation Pane** (Obsidian's Outline), **Zoom In / Out / 100%**, **Collapse / Expand (All)**, **Focus Mode** (collapse both sidebars) and **Zen Mode** (true fullscreen).
 
+### 📑 Table of contents in one click
+
+**Table of Contents** writes your note's outline after the paragraph at the caret: a bold `**Table of Contents**` title, then one nested `- [[#Heading|Heading]]` link per heading. Headings inside a code fence or quoted into a callout are ignored. It's a snapshot, not a live field — re-run it after editing and delete the old one.
+
 ### 🧹 Line & list utilities
 
 **Merge Lines**, **Split Lines** (at the punctuation the selection uses most), **Reverse Lines** — none of which cross a blank line or a code fence — plus **Sort List** (level by level, children and bodies preserved, ordered items renumbered) and **Sort Headings** (reorders the outline and carries every section's body along).
@@ -125,7 +129,7 @@ Fixed, opinionated layout that inherits your active Obsidian theme in light and 
 
 ### Insert
 
-Internal Link, External Link, Embed, Tag, Block Reference, **Callout ▼** (Note, Abstract, Info, Tip, Success, Question, Warning, Failure, Danger, Bug, Example, Quote), Code Block, Math Block, Table, Comment, Attach File, **Emoji & Symbols**, Date and Time.
+Internal Link, External Link, Embed, Tag, Block Reference, **Callout ▼** (Note, Abstract, Info, Tip, Success, Question, Warning, Failure, Danger, Bug, Example, Quote), Code Block, Math Block, Table, Comment, Attach File, **Emoji & Symbols**, Date and Time, **Table of Contents**, Footnote.
 
 ### View
 
@@ -258,7 +262,7 @@ Pushing the tag runs `.github/workflows/release.yml`, which builds the plugin an
 
 ## Keywords
 
-Obsidian toolbar plugin · Obsidian formatting toolbar · Obsidian format bar · Markdown toolbar · Markdown formatting buttons · Word-like ribbon for Obsidian · rich text toolbar · WYSIWYG-style editing bar · editor toolbar · floating selection toolbar · text color and highlight in Obsidian · underline / superscript / subscript in Markdown · text alignment · callout picker · emoji picker · kaomoji · symbol picker · Markdown table editor · sort table · paste as table · pin commands · beginner-friendly Obsidian · no-syntax Markdown editing
+Obsidian toolbar plugin · Obsidian formatting toolbar · Obsidian format bar · Markdown toolbar · Markdown formatting buttons · Word-like ribbon for Obsidian · rich text toolbar · WYSIWYG-style editing bar · editor toolbar · floating selection toolbar · text color and highlight in Obsidian · underline / superscript / subscript in Markdown · text alignment · callout picker · emoji picker · kaomoji · symbol picker · Markdown table editor · sort table · paste as table · table of contents generator · pin commands · beginner-friendly Obsidian · no-syntax Markdown editing
 
 **其他语言 / Other languages:**
 Obsidian 工具栏插件、格式栏、富文本工具栏、Markdown 快捷按钮、表情符号选择器、表格编辑 ·

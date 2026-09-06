@@ -68,6 +68,7 @@ export default {
   "Attach File": "Adjuntar archivo",
   "Emoji & Symbols": "Emoji y símbolos",
   "Date and Time": "Fecha y hora",
+  "Table of Contents": "Índice",
   "Show Whitespace": "Mostrar espacios",
   "Show Line Numbers": "Mostrar números de línea",
   "Focus Mode": "Modo de enfoque",
@@ -185,4 +186,6 @@ export default {
     "{name} ha fallado. Consulte la consola de desarrollador para más detalles.",
   "Clipboard is not a table. Copy two or more rows of tab- or comma-separated values first.":
     "El portapapeles no es una tabla. Copie primero dos o más filas de valores separados por tabulaciones o comas.",
+  "This note has no headings to list.":
+    "Esta nota no tiene títulos que mostrar.",
 } satisfies Record<string, string>;

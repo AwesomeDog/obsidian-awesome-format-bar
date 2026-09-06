@@ -11,6 +11,7 @@ import {
   insertCallout,
   insertHorizontalRule,
   sortHeadings,
+  tableOfContents,
   toggleParagraphAlignment,
   type ParagraphAlignment,
 } from "../editor-ops/blocks";
@@ -264,6 +265,12 @@ export function planFor(context: CommandContext, id: string): Plan | null {
       );
     case "date-time":
       return insertText(doc, ranges, formatDateTime(new Date()));
+    case "toc": {
+      const plan = tableOfContents(doc, ranges, t("Table of Contents"));
+      if (plan.changes.length === 0)
+        new Notice(t("This note has no headings to list."));
+      return plan;
+    }
 
     case "table-insert-rows-above":
       return insertRowAbove(doc, caret, format);

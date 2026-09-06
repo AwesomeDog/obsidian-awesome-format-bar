@@ -393,13 +393,6 @@ export const COMMANDS = [
     kind: "registered",
     registeredCommandId: "editor:toggle-comments",
   },
-  {
-    id: "footnote",
-    name: "Footnote",
-    icon: "file-signature",
-    kind: "registered",
-    registeredCommandId: "editor:insert-footnote",
-  },
 
   // Insert · Media & Symbols
   {
@@ -418,6 +411,21 @@ export const COMMANDS = [
     commandPalette: false,
   },
   { id: "date-time", name: "Date and Time", icon: "calendar", kind: "editor" },
+
+  // Insert · Reference
+  {
+    id: "toc",
+    name: "Table of Contents",
+    icon: "list-tree",
+    kind: "editor",
+  },
+  {
+    id: "footnote",
+    name: "Footnote",
+    icon: "file-signature",
+    kind: "registered",
+    registeredCommandId: "editor:insert-footnote",
+  },
 
   // View · Immersive
   {

@@ -182,6 +182,40 @@ export function sortHeadings(doc: string): Plan {
     : { changes: [replaceBlock(lines, start, end, result)] };
 }
 
+/** One `- [[#Heading|Heading]]` per heading, indented two spaces per level. */
+function outlineEntries(sections: readonly Section[], depth: number): string[] {
+  return sections.flatMap((section) => {
+    const text = headingText(section);
+    const entry =
+      text === "" ? [] : [`${"  ".repeat(depth)}- [[#${text}|${text}]]`];
+    return [...entry, ...outlineEntries(section.children, depth + 1)];
+  });
+}
+
+/** A note's outline as links, under a bold title, after the current paragraph. */
+export function tableOfContents(
+  doc: string,
+  ranges: readonly Range[],
+  title: string,
+): Plan {
+  const lines = new Lines(doc);
+  const outline = outlineRange(lines);
+  if (!outline) return NO_CHANGE;
+  const [start, end] = outline;
+  const entries = outlineEntries(parseSections(lines, start, end), 0);
+  if (entries.length === 0) return NO_CHANGE;
+
+  const blocks = blocksFor(lines, ranges, "paragraph");
+  const block = blocks[blocks.length - 1];
+  if (!block) return NO_CHANGE;
+  const at = lines.end(block[1]);
+  return {
+    changes: [
+      { from: at, to: at, text: `\n\n**${title}**\n\n${entries.join("\n")}` },
+    ],
+  };
+}
+
 /** Appends `^id` to the block under the cursor, Obsidian block-reference style. */
 export function insertBlockReference(
   doc: string,
