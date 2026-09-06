@@ -3,7 +3,7 @@
   "name": "Awesome Format Bar",
   "version": "0.1.9",
   "minAppVersion": "1.13.7",
-  "description": "A Markdown formatting bar for your notes.",
+  "description": "Word-style formatting toolbar and ribbon for the Markdown editor: bold, italic, underline, highlight, text color, headings, lists, tables, callouts, emoji and symbol picker, table editor, 100+ one-click commands. No Markdown syntax needed.",
   "author": "AwesomeDog",
   "authorUrl": "https://github.com/AwesomeDog",
   "isDesktopOnly": false
