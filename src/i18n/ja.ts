@@ -64,6 +64,7 @@ export default {
   "Math Block": "数式ブロック",
   Table: "テーブル",
   Comment: "コメント",
+  Footnote: "脚注",
   "Attach File": "ファイルの添付",
   "Emoji & Symbols": "絵文字と記号",
   "Date and Time": "日付と時刻",

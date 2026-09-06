@@ -64,6 +64,7 @@ export default {
   "Math Block": "수식 블록",
   Table: "표",
   Comment: "메모",
+  Footnote: "각주",
   "Attach File": "파일 첨부",
   "Emoji & Symbols": "이모지 및 기호",
   "Date and Time": "날짜 및 시간",

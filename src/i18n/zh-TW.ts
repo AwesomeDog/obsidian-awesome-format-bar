@@ -64,6 +64,7 @@ export default {
   "Math Block": "公式區塊",
   Table: "表格",
   Comment: "註解",
+  Footnote: "腳注",
   "Attach File": "附加檔案",
   "Emoji & Symbols": "表情符號與符號",
   "Date and Time": "日期與時間",

@@ -66,7 +66,7 @@ A fixed built-in subset of commands, grouped by dividers. Buttons that don't fit
 
 ## 5. Commands
 
-**104 built-in commands** across 5 tabs and 19 groups, plus the Pinned tab. Seven live inside drop-down buttons and one opens the Emoji & Symbols panel; the other 96 are registered in the command palette, so users can assign their own shortcuts.
+**105 built-in commands** across 5 tabs and 19 groups, plus the Pinned tab. Seven live inside drop-down buttons and one opens the Emoji & Symbols panel; the other 97 are registered in the command palette, so users can assign their own shortcuts.
 
 ### Tab 1 · Home
 
@@ -179,7 +179,7 @@ The Table options govern editing behavior and text output, not toolbar layout, s
 
 - A rich-text editor or any proprietary format.
 - A replacement for the command palette — the toolbar covers frequent actions only.
-- Word features Markdown has no concept of: font family and size, line spacing, margins, headers and footers, page numbers, shapes, charts, table of contents, footnotes.
+- Word features Markdown has no concept of: font family and size, line spacing, margins, headers and footers, page numbers, shapes, charts, table of contents.
 - Features needing capabilities Obsidian doesn't expose: spell check, grammar check, thesaurus, translation.
 - User-created commands — Pinned surfaces existing commands, it doesn't create new ones.
 - Emoji shortcodes: no `:smile:` expansion, no autocomplete while typing; the panel inserts raw characters.
@@ -196,7 +196,7 @@ The Table options govern editing behavior and text output, not toolbar layout, s
 | **Position** | Where a toolbar renders: **Top**, **Following**, **Fixed**. Three independent toggles. |
 | **Layout** | How a position renders: **Ribbon** (Top) or **Compact** (Following / Fixed). |
 | **Tab · Group · Button** | Ribbon structure. A **drop-down** button holds several commands; a Compact **overflow menu** (`⋯`) holds the buttons that don't fit. |
-| **Command** | An action the toolbar runs. **104 built-in commands** plus any **pinned command**. |
+| **Command** | An action the toolbar runs. **105 built-in commands** plus any **pinned command**. |
 | **Source · Group · Entry** | Emoji & Symbols panel structure: three sources (Emoji, Kaomoji, Symbols) → groups → entries. Picking an entry inserts a character. |
 | **Word terminology** | Display names follow Microsoft Word (*Bold*, *Clear Formatting*), initial capitals, no `Toggle` prefix. |
 | **Plugin icon** | The plugin's icon in Obsidian's left sidebar. "Ribbon" on its own always means the toolbar layout. |

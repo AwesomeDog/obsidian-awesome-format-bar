@@ -393,6 +393,13 @@ export const COMMANDS = [
     kind: "registered",
     registeredCommandId: "editor:toggle-comments",
   },
+  {
+    id: "footnote",
+    name: "Footnote",
+    icon: "file-signature",
+    kind: "registered",
+    registeredCommandId: "editor:insert-footnote",
+  },
 
   // Insert · Media & Symbols
   {

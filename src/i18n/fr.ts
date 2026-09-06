@@ -64,6 +64,7 @@ export default {
   "Math Block": "Bloc de formule",
   Table: "Tableau",
   Comment: "Commentaire",
+  Footnote: "Note de bas de page",
   "Attach File": "Joindre un fichier",
   "Emoji & Symbols": "Emoji et symboles",
   "Date and Time": "Date et heure",
