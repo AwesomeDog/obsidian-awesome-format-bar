@@ -20,4 +20,8 @@ export const CASE_OPTIONS = [
   { label: "lowercase", mode: "lower" },
   { label: "Capitalize Each Word", mode: "capitalize" },
   { label: "tOGGLE cASE", mode: "toggle" },
+  { label: "camelCase", mode: "camel" },
+  { label: "PascalCase", mode: "pascal" },
+  { label: "snake_case", mode: "snake" },
+  { label: "kebab-case", mode: "kebab" },
 ] as const;
