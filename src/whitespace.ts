@@ -1,4 +1,5 @@
 import type { Extension } from "@codemirror/state";
+/* eslint-disable-next-line import/no-extraneous-dependencies -- provided by Obsidian at runtime via peerDependency; declaring it would risk version drift from Obsidian's bundled CodeMirror */
 import {
   Decoration,
   MatchDecorator,
