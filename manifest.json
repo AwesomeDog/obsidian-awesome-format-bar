@@ -1,7 +1,7 @@
 {
   "id": "awesome-format-bar",
   "name": "Awesome Format Bar",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "minAppVersion": "1.13.7",
   "description": "Word-style formatting toolbar and ribbon for the Markdown editor: bold, italic, underline, highlight, text color, headings, lists, tables, callouts, emoji and symbol picker, table editor, 100+ one-click commands. No Markdown syntax needed.",
   "author": "AwesomeDog",
