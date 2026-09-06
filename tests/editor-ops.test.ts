@@ -10,6 +10,7 @@ import { changeCase, convertCase } from "../src/editor-ops/case";
 import { toggleInlinePair } from "../src/editor-ops/inline";
 import { Lines, blocksFor } from "../src/editor-ops/lines";
 import {
+  duplicate,
   mergeLines,
   renumberList,
   reverseLines,
@@ -381,6 +382,40 @@ describe("splitLines", () => {
 
   it("does nothing where there is no separator", () => {
     expect(apply("[a\nb]", splitLines)).toBe("a\nb");
+  });
+});
+
+describe("duplicate", () => {
+  it("copies the line below the caret", () => {
+    expect(apply("a|\nb", duplicate)).toBe("a\na\nb");
+    expect(apply("ab|", duplicate)).toBe("ab\nab");
+  });
+
+  it("puts the caret on the copy, at the same column", () => {
+    const { doc, ranges } = parse("ab|cd");
+    expect(duplicate(doc, ranges).select).toEqual({ from: 7, to: 7 });
+  });
+
+  it("copies the selection right after itself", () => {
+    expect(apply("买 [咖啡] 和茶", duplicate)).toBe("买 咖啡咖啡 和茶");
+  });
+
+  /** VS Code joins a selection spanning lines the same way; no line break. */
+  it("selects the copy of a selection", () => {
+    const { doc, ranges } = parse("[ab]cd");
+    expect(duplicate(doc, ranges).select).toEqual({ from: 2, to: 4 });
+    expect(apply("[- 甲\n- 乙]", duplicate)).toBe("- 甲\n- 乙- 甲\n- 乙");
+  });
+
+  it("duplicates an empty line", () => {
+    expect(apply("a\n|\n", duplicate)).toBe("a\n\n\n");
+  });
+
+  it("duplicates each cursor's line", () => {
+    const { doc, ranges } = parse("a|\nb|");
+    // `Plan.select` holds one range, so the editor maps the cursors itself.
+    expect(duplicate(doc, ranges).select).toBeUndefined();
+    expect(run(doc, duplicate(doc, ranges))).toBe("a\na\nb\nb");
   });
 });
 

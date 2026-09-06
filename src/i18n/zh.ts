@@ -83,6 +83,7 @@ export default {
   "Merge Lines": "合并行",
   "Split Lines": "拆分行",
   "Reverse Lines": "反转行",
+  Duplicate: "重复",
   "Sort List": "排序列表",
   "Sort Headings": "排序标题",
   "Delete Rows or Columns": "删除行或列",

@@ -83,6 +83,7 @@ export default {
   "Merge Lines": "Zeilen zusammenführen",
   "Split Lines": "Zeilen teilen",
   "Reverse Lines": "Zeilen umkehren",
+  Duplicate: "Duplizieren",
   "Sort List": "Liste sortieren",
   "Sort Headings": "Überschriften sortieren",
   "Delete Rows or Columns": "Zeilen oder Spalten löschen",

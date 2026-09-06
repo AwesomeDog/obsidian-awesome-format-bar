@@ -17,6 +17,7 @@ import {
 import { changeCase, type CaseMode } from "../editor-ops/case";
 import { toggleInlinePair } from "../editor-ops/inline";
 import {
+  duplicate,
   mergeLines,
   renumberList,
   reverseLines,
@@ -251,6 +252,8 @@ export function planFor(context: CommandContext, id: string): Plan | null {
       return mergeLines(doc, ranges);
     case "split-lines":
       return splitLines(doc, ranges);
+    case "duplicate":
+      return duplicate(doc, ranges);
     case "horizontal-rule":
       return insertHorizontalRule(doc, ranges);
     case "block-reference":

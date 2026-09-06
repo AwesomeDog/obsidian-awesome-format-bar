@@ -524,6 +524,9 @@ export const COMMANDS = [
     icon: "arrow-up-down",
     kind: "editor",
   },
+  // VS Code's Duplicate Selection: a line below the caret, or a copy of the
+  // selection right after it.
+  { id: "duplicate", name: "Duplicate", icon: "copy-plus", kind: "editor" },
 
   // Utilities · Sort
   { id: "sort-list", name: "Sort List", icon: "list-tree", kind: "editor" },

@@ -160,7 +160,7 @@ export const BUILT_IN_COMMAND_TABS = [
     groups: [
       {
         name: "Lines",
-        commands: ["merge-lines", "split-lines", "reverse-lines"],
+        commands: ["merge-lines", "split-lines", "reverse-lines", "duplicate"],
       },
       { name: "Sort", commands: ["sort-list", "sort-headings"] },
     ],

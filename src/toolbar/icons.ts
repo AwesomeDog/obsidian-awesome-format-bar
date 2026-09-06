@@ -15,6 +15,7 @@ const ICON_FALLBACKS: Readonly<Record<string, readonly string[]>> = {
   "circle-help": ["help-circle"],
   "circle-x": ["x-circle"],
   "clipboard-paste": ["clipboard-copy", "clipboard"],
+  "copy-plus": ["square-plus", "copy"],
   "file-input": ["file-symlink", "file-plus"],
   "flask-conical": ["flask"],
   "fold-horizontal": ["panel-left-close", "columns-2"],

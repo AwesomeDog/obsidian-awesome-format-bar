@@ -83,6 +83,7 @@ export default {
   "Merge Lines": "行の結合",
   "Split Lines": "行の分割",
   "Reverse Lines": "行を逆順に",
+  Duplicate: "複製",
   "Sort List": "リストを並べ替え",
   "Sort Headings": "見出しを並べ替え",
   "Delete Rows or Columns": "行または列の削除",

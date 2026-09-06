@@ -83,6 +83,7 @@ export default {
   "Merge Lines": "줄 병합",
   "Split Lines": "줄 분할",
   "Reverse Lines": "줄 순서 뒤집기",
+  Duplicate: "복제",
   "Sort List": "목록 정렬",
   "Sort Headings": "제목 정렬",
   "Delete Rows or Columns": "행 또는 열 삭제",

@@ -66,7 +66,7 @@ A fixed built-in subset of commands, grouped by dividers. Buttons that don't fit
 
 ## 5. Commands
 
-**105 built-in commands** across 5 tabs and 19 groups, plus the Pinned tab. Seven live inside drop-down buttons and one opens the Emoji & Symbols panel; the other 97 are registered in the command palette, so users can assign their own shortcuts.
+**106 built-in commands** across 5 tabs and 19 groups, plus the Pinned tab. Seven live inside drop-down buttons and one opens the Emoji & Symbols panel; the other 98 are registered in the command palette, so users can assign their own shortcuts.
 
 ### Tab 1 · Home
 
@@ -105,12 +105,12 @@ Column-level names (*Align Column…*, *Sort Rows…*) distinguish these from th
 
 ### Tab 5 · Utilities
 
-- **Lines** — **Merge Lines** joins a run of lines into one; **Split Lines** breaks them at the punctuation the selection uses most, out of `、 ， , ; ； | ·`; **Reverse Lines** flips the order of each run. None of the three crosses a blank line or a code fence, and a line with nothing to do is left alone.
+- **Lines** — **Merge Lines** joins a run of lines into one; **Split Lines** breaks them at the punctuation the selection uses most, out of `、 ， , ; ； | ·`; **Reverse Lines** flips the order of each run. None of the three crosses a blank line or a code fence, and a line with nothing to do is left alone. **Duplicate** copies the line at the caret, or the selection.
 - **Sort** — two sorts that read structure rather than lines. **Sort List** sorts a list level by level: an item keeps its own body and its own children, and ordered items come out renumbered. **Sort Headings** reorders each level of the note's outline and carries every section's body along with it; its scope is the whole note, and a heading quoted in a callout or written inside a code fence counts as body text, not as a heading.
 
 ### Tab 6 · Pinned
 
-Pin **any command from the command palette** — core commands, other plugins' commands, or this plugin's own 92 — to the toolbar with an icon of your choice. The built-in set is the intersection of what most people use often; the one or two commands a given user can't live without usually fall outside it.
+Pin **any command from the command palette** — core commands, other plugins' commands, or this plugin's own 98 — to the toolbar with an icon of your choice. The built-in set is the intersection of what most people use often; the one or two commands a given user can't live without usually fall outside it.
 
 | Item | Convention |
 |---|---|
@@ -184,7 +184,7 @@ The Table options govern editing behavior and text output, not toolbar layout, s
 - User-created commands — Pinned surfaces existing commands, it doesn't create new ones.
 - Emoji shortcodes: no `:smile:` expansion, no autocomplete while typing; the panel inserts raw characters.
 - Skin-tone selection, custom emoji sets, user-editable character lists.
-- Reordering, hiding or showing the 104 built-in commands.
+- Reordering, hiding or showing the 105 built-in commands.
 - Toolbar appearance customization: background or icon color pickers, theme variants.
 
 ---
@@ -196,7 +196,7 @@ The Table options govern editing behavior and text output, not toolbar layout, s
 | **Position** | Where a toolbar renders: **Top**, **Following**, **Fixed**. Three independent toggles. |
 | **Layout** | How a position renders: **Ribbon** (Top) or **Compact** (Following / Fixed). |
 | **Tab · Group · Button** | Ribbon structure. A **drop-down** button holds several commands; a Compact **overflow menu** (`⋯`) holds the buttons that don't fit. |
-| **Command** | An action the toolbar runs. **105 built-in commands** plus any **pinned command**. |
+| **Command** | An action the toolbar runs. **106 built-in commands** plus any **pinned command**. |
 | **Source · Group · Entry** | Emoji & Symbols panel structure: three sources (Emoji, Kaomoji, Symbols) → groups → entries. Picking an entry inserts a character. |
 | **Word terminology** | Display names follow Microsoft Word (*Bold*, *Clear Formatting*), initial capitals, no `Toggle` prefix. |
 | **Plugin icon** | The plugin's icon in Obsidian's left sidebar. "Ribbon" on its own always means the toolbar layout. |

@@ -1,6 +1,7 @@
 import {
   NO_CHANGE,
   applyChanges,
+  normalizeRanges,
   order,
   type Change,
   type Plan,
@@ -330,6 +331,43 @@ function joinRun(run: readonly string[]): string {
     out += bridge + part;
   }
   return out;
+}
+
+/** VS Code's Duplicate Selection: the line under the caret, or the selection. */
+export function duplicate(doc: string, ranges: readonly Range[]): Plan {
+  const lines = new Lines(doc);
+  const list = normalizeRanges(ranges);
+  const changes: Change[] = [];
+
+  for (const range of list) {
+    if (range.from === range.to) {
+      const line = lines.lineOf(range.from);
+      changes.push({
+        from: lines.end(line),
+        to: lines.end(line),
+        text: "\n" + lines.at(line),
+      });
+    } else {
+      changes.push({
+        from: range.to,
+        to: range.to,
+        text: doc.slice(range.from, range.to),
+      });
+    }
+  }
+
+  // `Plan.select` carries one range, so a multi-cursor keeps the editor's own.
+  const only = list.length === 1 ? list[0] : undefined;
+  if (!only) return { changes: order(changes) };
+  if (only.from !== only.to)
+    return {
+      changes,
+      select: { from: only.to, to: only.to + (only.to - only.from) },
+    };
+
+  const line = lines.lineOf(only.from);
+  const caret = lines.end(line) + 1 + (only.from - lines.start(line));
+  return { changes, select: { from: caret, to: caret } };
 }
 
 /** Blank lines and fences stay put, so a paragraph stays a paragraph. */
