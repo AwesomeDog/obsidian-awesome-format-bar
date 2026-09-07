@@ -95,7 +95,7 @@ Group order follows Word's own View tab.
 
 Button placement follows the parts of Word's **Table Layout** tab that apply to Markdown tables.
 
-- **Rows & Columns** — Delete Rows or Columns ▼ (Delete Rows, Delete Columns), Insert Rows Above, Insert Columns to the Left, Move Row Up, Move Row Down, Move Column Left, Move Column Right
+- **Rows & Columns** — Delete Rows or Columns ▼ (Delete Rows, Delete Columns), Insert Rows Above, Insert Rows Below, Insert Columns to the Left, Insert Columns to the Right, Move Row Up, Move Row Down, Move Column Left, Move Column Right
 - **Format** — Format Tables ▼ (Format Table, Format All Tables)
 - **Alignment** — Align Column Left, Align Column Center, Align Column Right
 - **Data** — Sort Rows ▼ (Sort Rows A to Z, Sort Rows Z to A)

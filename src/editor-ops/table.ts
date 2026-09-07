@@ -325,6 +325,24 @@ export function insertRowAbove(
   return { changes: plan.changes, select: { from: caret, to: caret } };
 }
 
+/** Below the last row appends; below the header is the first body row. */
+export function insertRowBelow(
+  doc: string,
+  offset: number,
+  format: TableFormat,
+): Plan {
+  const hit = findTableEditContext(doc, offset);
+  if (!hit) return NO_CHANGE;
+  const { cell, columns, table } = hit;
+  const at = cell.row + 1;
+  const plan = edit(table, format, insertAt(table.rows, at, blank(columns)));
+  const change = plan.changes[0];
+  if (!change) return NO_CHANGE;
+  // Rendered line 0 is the header and line 1 the rule, so row `at` is `at + 1`.
+  const caret = change.from + cellOffset(change.text, at + 1, 0);
+  return { changes: plan.changes, select: { from: caret, to: caret } };
+}
+
 export function insertColumnLeft(
   doc: string,
   offset: number,
@@ -338,6 +356,24 @@ export function insertColumnLeft(
     format,
     table.rows.map((row) => insertAt(row, cell.column, "")),
     insertAt(table.align, cell.column, "none"),
+  );
+}
+
+/** Right of the last column appends. */
+export function insertColumnRight(
+  doc: string,
+  offset: number,
+  format: TableFormat,
+): Plan {
+  const hit = findTableEditContext(doc, offset);
+  if (!hit) return NO_CHANGE;
+  const { cell, table } = hit;
+  const at = cell.column + 1;
+  return edit(
+    table,
+    format,
+    table.rows.map((row) => insertAt(row, at, "")),
+    insertAt(table.align, at, "none"),
   );
 }
 

@@ -56,7 +56,7 @@ Obsidian is fast **if** you already speak Markdown. For everyone else — studen
 | | |
 | --- | --- |
 | **Toolbar positions** | Top ribbon, floating bar above the selection, fixed bottom bar — combine freely |
-| **Commands** | **104** built-in, **96** available in the command palette for custom hotkeys |
+| **Commands** | **109** built-in, **101** available in the command palette for custom hotkeys |
 | **Tabs** | Home · Insert · View · Table · Utilities · **Pinned** |
 | **Callouts** | All 12 Obsidian callout types in one drop-down |
 | **Emoji & symbols** | ~2,150 emoji, kaomoji and symbols, fully offline |
@@ -77,7 +77,7 @@ Obsidian is fast **if** you already speak Markdown. For everyone else — studen
 
 Each position is toggled independently, so you can run just the floating bar, just the ribbon, or all three.
 
-### 🅰️ 104 formatting commands in a familiar layout
+### 🅰️ 109 formatting commands in a familiar layout
 
 Bold, italic, underline, strikethrough, inline code, inline math, highlight (with color), font color, clear formatting, change case, headings 1–6, bullet / numbered / task lists, quotes, indentation, horizontal rules, undo/redo, find & replace, paragraph alignment — grouped exactly where a Word user expects them.
 
@@ -117,7 +117,7 @@ Fixed, opinionated layout that inherits your active Obsidian theme in light and 
 
 ## Full command reference
 
-96 of the 104 commands are registered in the **command palette**, so you can assign your own keyboard shortcuts. (Drop-down containers and the Emoji & Symbols panel are toolbar-only.)
+101 of the 109 commands are registered in the **command palette**, so you can assign your own keyboard shortcuts. (Drop-down containers and the Emoji & Symbols panel are toolbar-only.)
 
 ### Home
 
@@ -140,7 +140,7 @@ Internal Link, External Link, Embed, Tag, Block Reference, **Callout ▼** (Note
 
 ### Table
 
-Available whenever the cursor is inside a table: Delete Rows or Columns, Insert Rows Above, Insert Columns to the Left, Move Row Up / Down, Move Column Left / Right, Format Tables, Align Column Left / Center / Right, Sort Rows.
+Available whenever the cursor is inside a table: Delete Rows or Columns, Insert Rows Above / Below, Insert Columns Left / Right, Move Row Up / Down, Move Column Left / Right, Format Tables, Align Column Left / Center / Right, Sort Rows.
 **Paste as Table** works anywhere: it converts tab- or comma-separated clipboard text into an aligned Markdown table.
 
 ### Utilities
@@ -183,7 +183,7 @@ Download `main.js`, `manifest.json` and `styles.css` from a release into `<vault
 2. The **Ribbon (Top)** has six tabs; the last one, **Pinned**, holds the commands you pin yourself. While it is empty it shows a hint pointing back to Settings.
 3. The **compact bars** (Following / Fixed) carry a fixed subset of commands; anything that doesn't fit collapses into the `⋯` overflow menu.
 4. Pin commands under **Settings → Pinned**: add (pick a command, then an icon), change the icon, drag to reorder, or delete. Pinned commands behave exactly like their command-palette counterparts.
-5. Prefer the keyboard? Assign hotkeys to any of the 96 palette-registered commands in **Settings → Hotkeys**.
+5. Prefer the keyboard? Assign hotkeys to any of the 101 palette-registered commands in **Settings → Hotkeys**.
 
 ## Settings
 
@@ -214,7 +214,7 @@ No. Bold, headings, lists, links, tables, callouts, code blocks and math are all
 Standard Markdown and Obsidian-flavoured Markdown. Only where Markdown has no syntax — underline, superscript, subscript, paragraph alignment, text and highlight colors — does the plugin emit small, standard inline HTML tags, which Obsidian renders natively.
 
 **Can I keep using my keyboard shortcuts?**
-Yes. 96 of the 104 commands appear in the command palette and can be bound to any hotkey.
+Yes. 101 of the 109 commands appear in the command palette and can be bound to any hotkey.
 
 **Can I add buttons for commands from other plugins?**
 Yes — that's the **Pinned** tab. Pin any command from the palette and choose an icon. If the owning plugin is disabled, the button greys out and the pin is preserved.

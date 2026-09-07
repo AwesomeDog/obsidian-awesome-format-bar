@@ -128,7 +128,9 @@ export const BUILT_IN_COMMAND_TABS = [
         commands: [
           "table-delete",
           "table-insert-rows-above",
+          "table-insert-rows-below",
           "table-insert-columns-left",
+          "table-insert-columns-right",
           "table-move-row-up",
           "table-move-row-down",
           "table-move-column-left",

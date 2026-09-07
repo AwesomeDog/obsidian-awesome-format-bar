@@ -577,9 +577,23 @@ export const COMMANDS = [
     requiresTable: true,
   },
   {
+    id: "table-insert-rows-below",
+    name: "Insert Rows Below",
+    icon: "panel-bottom-close",
+    kind: "editor",
+    requiresTable: true,
+  },
+  {
     id: "table-insert-columns-left",
     name: "Insert Columns to the Left",
     icon: "panel-left-close",
+    kind: "editor",
+    requiresTable: true,
+  },
+  {
+    id: "table-insert-columns-right",
+    name: "Insert Columns to the Right",
+    icon: "panel-right-close",
     kind: "editor",
     requiresTable: true,
   },

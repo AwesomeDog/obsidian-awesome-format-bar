@@ -7,7 +7,9 @@ import {
   formatAllTables,
   formatTable,
   insertColumnLeft,
+  insertColumnRight,
   insertRowAbove,
+  insertRowBelow,
   moveColumn,
   planTableEnter,
   moveRow,
@@ -180,6 +182,40 @@ describe("insertRowAbove", () => {
   });
 });
 
+describe("insertRowBelow", () => {
+  it("inserts below the row holding the caret", () => {
+    expect(
+      run("|a|b|\n|-|-|\n|c^|d|\n|e|f|", (doc, at) =>
+        insertRowBelow(doc, at, PADDED),
+      ),
+    ).toBe(
+      [
+        "| a   | b   |",
+        "| --- | --- |",
+        "| c   | d   |",
+        "|     |     |",
+        "| e   | f   |",
+      ].join("\n"),
+    );
+  });
+
+  it("appends after the last row", () => {
+    expect(
+      run("|a|b|\n|-|-|\n|c|d|\n|e^|f|", (doc, at) =>
+        insertRowBelow(doc, at, PADDED),
+      ),
+    ).toBe(
+      [
+        "| a   | b   |",
+        "| --- | --- |",
+        "| c   | d   |",
+        "| e   | f   |",
+        "|     |     |",
+      ].join("\n"),
+    );
+  });
+});
+
 describe("insertColumnLeft", () => {
   it("inserts to the left of the column holding the caret", () => {
     expect(
@@ -191,6 +227,36 @@ describe("insertColumnLeft", () => {
         "|     | a   | b   |",
         "| --- | --- | --- |",
         "|     | c   | d   |",
+      ].join("\n"),
+    );
+  });
+});
+
+describe("insertColumnRight", () => {
+  it("inserts to the right of the column holding the caret", () => {
+    expect(
+      run("|a^|b|\n|-|-|\n|c|d|", (doc, at) =>
+        insertColumnRight(doc, at, PADDED),
+      ),
+    ).toBe(
+      [
+        "| a   |     | b   |",
+        "| --- | --- | --- |",
+        "| c   |     | d   |",
+      ].join("\n"),
+    );
+  });
+
+  it("appends after the last column", () => {
+    expect(
+      run("|a|b^|\n|-|-|\n|c|d|", (doc, at) =>
+        insertColumnRight(doc, at, PADDED),
+      ),
+    ).toBe(
+      [
+        "| a   | b   |     |",
+        "| --- | --- | --- |",
+        "| c   | d   |     |",
       ].join("\n"),
     );
   });

@@ -35,7 +35,9 @@ import {
   formatAllTables,
   formatTable,
   insertColumnLeft,
+  insertColumnRight,
   insertRowAbove,
+  insertRowBelow,
   moveColumn,
   moveRow,
   sortRows,
@@ -274,8 +276,12 @@ export function planFor(context: CommandContext, id: string): Plan | null {
 
     case "table-insert-rows-above":
       return insertRowAbove(doc, caret, format);
+    case "table-insert-rows-below":
+      return insertRowBelow(doc, caret, format);
     case "table-insert-columns-left":
       return insertColumnLeft(doc, caret, format);
+    case "table-insert-columns-right":
+      return insertColumnRight(doc, caret, format);
     case "table-delete-rows":
       return deleteRow(doc, caret, format);
     case "table-delete-columns":
