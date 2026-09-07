@@ -187,5 +187,6 @@ export default {
     "{name} に失敗しました。詳細は開発者コンソールで確認してください。",
   "Clipboard is not a table. Copy two or more rows of tab- or comma-separated values first.":
     "クリップボードの内容はテーブルではありません。タブまたはコンマで区切られたデータを 2 行以上コピーしてください。",
-  "This note has no headings to list.": "このノートには一覧表示できる見出しがありません。",
+  "This note has no headings to list.":
+    "このノートには一覧表示できる見出しがありません。",
 } satisfies Record<string, string>;

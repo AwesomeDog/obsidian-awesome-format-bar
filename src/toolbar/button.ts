@@ -32,3 +32,37 @@ export function createButton(
   });
   return button;
 }
+
+export interface TabButtonOptions {
+  cls: string;
+  text: string;
+  active: boolean;
+  tabindex?: number;
+  onClick?: (event: MouseEvent) => void;
+  onKeydown?: (event: KeyboardEvent) => void;
+}
+
+/** Helper for segmented controls and tabs ensuring proper ARIA roles and styling. */
+export function createTabButton(
+  parent: HTMLElement,
+  options: TabButtonOptions,
+): HTMLButtonElement {
+  const button = parent.createEl("button", {
+    attr: {
+      "aria-selected": String(options.active),
+      role: "tab",
+      tabindex:
+        options.tabindex !== undefined
+          ? String(options.tabindex)
+          : options.active
+            ? "0"
+            : "-1",
+      type: "button",
+    },
+    cls: `${options.cls}${options.active ? " is-active" : ""}`,
+    text: options.text,
+  });
+  if (options.onClick) button.addEventListener("click", options.onClick);
+  if (options.onKeydown) button.addEventListener("keydown", options.onKeydown);
+  return button;
+}

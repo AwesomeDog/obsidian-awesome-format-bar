@@ -1,678 +1,597 @@
-/* Scoped to `.awesome-format-bar`; color comes only from theme variables. */
+/* ==========================================================================
+   Awesome Format Bar - Design Tokens & Unified Stylesheet
+   All colors delegate to Obsidian theme CSS custom properties.
+   ========================================================================== */
 
 .awesome-format-bar {
-  --formatbar-icon-size: var(--icon-size);
+  /* Design Tokens: Sizing, Hit Targets & Dimensions */
   --formatbar-hit: 26px;
   --formatbar-swatch: 20px;
-  /* Clears the status bar and mobile nav, which sit outside the view. */
+  --formatbar-icon-size: var(--icon-size);
+  --formatbar-separator-size: 18px;
+  --formatbar-control-h: 26px;
+  --formatbar-search-h: 30px;
+  --formatbar-cell-size: 36px;
+  --formatbar-footer-h: 38px;
+  --formatbar-char-w: 350px;
+  --formatbar-char-h: 420px;
+  --formatbar-picker-w: 220px;
+  --formatbar-picker-sl-h: 160px;
   --formatbar-lift: var(--size-4-6);
-  box-sizing: border-box;
+  --formatbar-side-margin: var(--size-4-4);
+  --formatbar-border: 1px solid var(--background-modifier-border);
+
+  &,
+  & * {
+    box-sizing: border-box;
+  }
   color: var(--text-normal);
   font-size: var(--font-ui-smaller);
   user-select: none;
+
+  /* ------------------------------- Clickables ------------------------------- */
+  & button {
+    align-items: center;
+    background: transparent;
+    border: none;
+    border-radius: var(--radius-s);
+    box-shadow: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    display: inline-flex;
+    flex: 0 0 auto;
+    gap: var(--size-4-2);
+    justify-content: center;
+    padding: 0;
+
+    &:hover:not(:disabled) {
+      background: var(--background-modifier-hover);
+      color: var(--text-normal);
+    }
+    &:active:not(:disabled) {
+      background: var(--background-modifier-active-hover);
+    }
+    &:focus-visible {
+      box-shadow: 0 0 0 2px var(--background-modifier-border-focus);
+      outline: none;
+    }
+    &:disabled {
+      color: var(--text-faint);
+      cursor: default;
+    }
+  }
+
+  & .format-button {
+    block-size: var(--formatbar-hit);
+    inline-size: var(--formatbar-hit);
+    min-block-size: var(--formatbar-hit);
+    min-inline-size: var(--formatbar-hit);
+    position: relative;
+  }
+
+  & .svg-icon {
+    block-size: var(--formatbar-icon-size);
+    inline-size: var(--formatbar-icon-size);
+  }
+
+  & .has-menu::after {
+    border: 3px solid transparent;
+    border-block-end: 0;
+    border-block-start-color: currentcolor;
+    content: "";
+    inset: auto 2px 3px auto;
+    position: absolute;
+  }
+
+  & .is-hidden {
+    display: none !important;
+  }
+
+  /* --------------------------------- Ribbon --------------------------------- */
+  &.awesome-format-bar--ribbon {
+    background: var(--background-secondary);
+    border-block-end: var(--formatbar-border);
+    flex: 0 0 auto;
+
+    & .tab-row {
+      display: flex;
+      gap: var(--size-2-1);
+      padding: var(--size-2-2) var(--size-4-2) 0;
+    }
+    & .tab {
+      border-radius: var(--radius-s) var(--radius-s) 0 0;
+      padding: var(--size-2-1) var(--size-4-2);
+    }
+    & .tab-panel {
+      background: var(--background-primary);
+      display: flex;
+      padding: var(--size-2-2) var(--size-4-2) var(--size-2-1);
+    }
+
+    & .group {
+      border-inline-end: var(--formatbar-border);
+      display: flex;
+      flex-direction: column;
+      padding: 0 var(--size-4-2);
+      &:last-child {
+        border-inline-end: none;
+      }
+    }
+    & .group-buttons {
+      align-content: flex-start;
+      display: flex;
+      flex: 1 1 auto;
+      flex-wrap: wrap;
+      gap: 1px;
+    }
+    & .group-name,
+    & .group-empty {
+      color: var(--text-faint);
+      padding-block-start: var(--size-2-1);
+      text-align: center;
+    }
+    & .group-empty {
+      padding-block: var(--size-2-1);
+    }
+  }
+
+  /* ----------------------- Compact Bars & Shared Panels --------------------- */
+  &.awesome-format-bar--compact,
+  &.awesome-format-bar--menu {
+    background: var(--background-secondary);
+    border: var(--formatbar-border);
+    border-radius: var(--radius-m);
+  }
+
+  &.awesome-format-bar--compact {
+    align-items: center;
+    box-shadow: var(--shadow-s);
+    display: flex;
+    gap: var(--size-2-1);
+    overflow: hidden;
+    padding: var(--size-2-1) var(--size-2-2);
+
+    & .button-row {
+      align-items: center;
+      display: flex;
+      flex: 1 1 auto;
+      gap: 1px;
+      overflow: hidden;
+    }
+    & .separator {
+      background: var(--background-modifier-border);
+      block-size: var(--formatbar-separator-size);
+      flex: 0 0 1px;
+      margin-inline: var(--size-2-1);
+    }
+  }
+
+  &.awesome-format-bar--following {
+    inset: 0 auto auto 0;
+    max-inline-size: calc(100% - 2 * var(--formatbar-side-margin));
+    position: absolute;
+    z-index: var(--layer-popover);
+  }
+
+  &.awesome-format-bar--fixed {
+    align-self: center;
+    flex: 0 0 auto;
+    margin: var(--size-2-2) var(--formatbar-side-margin)
+      calc(var(--formatbar-lift) + env(safe-area-inset-bottom));
+    max-inline-size: calc(100% - 2 * var(--formatbar-side-margin));
+  }
+
+  /* ---------------------------------- Menu ---------------------------------- */
+  &.awesome-format-bar--menu {
+    box-shadow: var(--shadow-l);
+    max-block-size: 60vh;
+    overflow-y: auto;
+    padding: var(--size-2-2);
+    position: fixed;
+    z-index: var(--layer-menu);
+
+    & .menu-section + .menu-section {
+      border-block-start: var(--formatbar-border);
+      margin-block-start: var(--size-2-2);
+      padding-block-start: var(--size-2-2);
+    }
+    & .menu-title {
+      color: var(--text-faint);
+      padding: var(--size-2-1) var(--size-2-2);
+    }
+    & .menu-item {
+      color: var(--text-normal);
+      display: flex;
+      inline-size: 100%;
+      justify-content: flex-start;
+      padding: var(--size-2-1) var(--size-2-3);
+      white-space: nowrap;
+    }
+    & .menu-grid {
+      display: grid;
+      gap: var(--size-2-1);
+      grid-template-columns: repeat(var(--formatbar-menu-columns, 8), 1fr);
+    }
+    & .swatch {
+      block-size: var(--formatbar-swatch);
+      border: var(--formatbar-border);
+      inline-size: var(--formatbar-swatch);
+      &:hover {
+        outline: 2px solid var(--background-modifier-border-focus);
+      }
+    }
+  }
+
+  /* ------------------------- Emoji & Symbols Panel -------------------------- */
+  &.awesome-format-bar--menu.is-char-panel {
+    block-size: var(--formatbar-char-h);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-2-2);
+    inline-size: var(--formatbar-char-w);
+    max-block-size: min(var(--formatbar-char-h), calc(100vh - 32px));
+    max-inline-size: calc(100vw - 16px);
+    overflow: hidden;
+    padding: var(--size-4-2);
+
+    & .char-search-wrapper {
+      align-items: center;
+      background: var(--background-modifier-form-field);
+      border: var(--formatbar-border);
+      border-radius: var(--radius-s);
+      block-size: var(--formatbar-search-h);
+      display: flex;
+      flex: 0 0 auto;
+      padding: 0 var(--size-2-2);
+    }
+    & .char-search-icon {
+      color: var(--text-faint);
+      display: inline-flex;
+      margin-inline-end: var(--size-2-1);
+    }
+    & .char-search-input {
+      background: transparent;
+      border: none;
+      color: var(--text-normal);
+      flex: 1 1 auto;
+      font-size: var(--font-ui-small);
+      padding: var(--size-2-1) 0;
+    }
+    & .char-source-tabs {
+      background: var(--background-modifier-form-field);
+      border-radius: var(--radius-s);
+      display: flex;
+      flex: 0 0 auto;
+      gap: 2px;
+      padding: 2px;
+    }
+    & .char-source-tab {
+      block-size: var(--formatbar-control-h);
+      flex: 1 1 0;
+      padding: 0 var(--size-2-1);
+    }
+    & .char-category-nav {
+      align-items: center;
+      display: flex;
+      flex: 0 0 auto;
+      flex-wrap: nowrap;
+      gap: var(--size-2-2);
+      min-block-size: 28px;
+      overflow-x: auto;
+      overflow-y: hidden;
+      scrollbar-width: none;
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
+    & .char-category-chip {
+      block-size: var(--formatbar-control-h);
+      border-radius: var(--radius-s);
+      flex: 0 0 auto;
+      font-size: var(--font-ui-smaller);
+      padding: 0 var(--size-2-3);
+      white-space: nowrap;
+      &.is-active {
+        background: var(--background-modifier-active-hover);
+        color: var(--text-normal);
+        font-weight: var(--font-semibold);
+      }
+    }
+    & .menu-grid {
+      flex: 1 1 auto;
+      min-block-size: 0;
+      overflow-y: auto;
+    }
+    & .char-cell {
+      block-size: var(--formatbar-cell-size);
+      font-size: 21px;
+    }
+    & .menu-grid.is-wide .char-cell {
+      font-size: var(--font-ui-smaller);
+      justify-content: flex-start;
+      padding: 0 var(--size-2-2);
+    }
+    & .char-empty {
+      color: var(--text-faint);
+      grid-column: 1 / -1;
+      padding: var(--size-4-2);
+      text-align: center;
+    }
+    & .char-preview-footer {
+      align-items: center;
+      block-size: var(--formatbar-footer-h);
+      border-block-start: var(--formatbar-border);
+      box-sizing: border-box;
+      display: flex;
+      flex: 0 0 auto;
+      gap: var(--size-2-3);
+      overflow: hidden;
+      padding-block-start: var(--size-2-2);
+      white-space: nowrap;
+    }
+    & .char-preview-icon {
+      align-items: center;
+      display: flex;
+      flex: 0 0 auto;
+      font-size: 20px;
+      justify-content: center;
+      max-inline-size: 130px;
+    }
+    & .char-preview-details {
+      display: flex;
+      flex: 1 1 0;
+      flex-direction: column;
+      justify-content: center;
+      min-inline-size: 0;
+    }
+    & .char-preview-name {
+      font-weight: var(--font-semibold);
+      line-height: 1.3;
+    }
+    & .char-preview-meta {
+      color: var(--text-faint);
+      font-size: var(--font-ui-smaller);
+      line-height: 1.3;
+      &.is-status {
+        color: var(--text-accent);
+        font-weight: var(--font-medium);
+      }
+    }
+  }
+
+  /* Shared active tab state for Ribbon and Character panel */
+  & :is(.tab, .char-source-tab).is-active {
+    background: var(--background-primary);
+    color: var(--text-normal);
+    font-weight: var(--font-semibold);
+  }
+
+  /* ------------------------------ Color Picker ------------------------------ */
+  &.awesome-format-bar--menu.is-color-picker {
+    & .picker_wrapper {
+      box-sizing: border-box;
+      display: grid;
+      gap: var(--size-2-2);
+      grid-template-areas:
+        "hue hue"
+        "square square"
+        "field preview"
+        "ok cancel";
+      grid-template-columns: 1fr 1fr;
+      inline-size: var(--formatbar-picker-w);
+      padding: var(--size-2-2);
+    }
+
+    & :is(.picker_arrow, .picker_alpha) {
+      display: none;
+    }
+
+    & .picker_hue {
+      background-image: linear-gradient(
+        90deg,
+        red,
+        yellow,
+        lime,
+        cyan,
+        blue,
+        magenta,
+        red
+      );
+      block-size: var(--size-4-3);
+      border: var(--formatbar-border);
+      border-radius: var(--radius-s);
+      grid-area: hue;
+      position: relative;
+      & .picker_selector {
+        top: 50%;
+      }
+    }
+
+    & .picker_sl {
+      background-image:
+        linear-gradient(180deg, #fff, rgb(255 255 255 / 0) 50%),
+        linear-gradient(0deg, #000, rgb(255 255 255 / 0) 50%),
+        linear-gradient(90deg, #808080, rgb(128 128 128 / 0));
+      block-size: var(--formatbar-picker-sl-h);
+      border: var(--formatbar-border);
+      border-radius: var(--radius-s);
+      grid-area: square;
+      position: relative;
+    }
+
+    & .picker_selector {
+      background: currentcolor;
+      block-size: var(--size-4-3);
+      border: 2px solid var(--background-primary);
+      border-radius: 100%;
+      box-shadow: 0 0 0 1px var(--background-modifier-border);
+      inline-size: var(--size-4-3);
+      position: absolute;
+      translate: -50% -50%;
+    }
+
+    & .picker_editor {
+      grid-area: field;
+      & input {
+        background: var(--background-modifier-form-field);
+        border: var(--formatbar-border);
+        border-radius: var(--radius-s);
+        color: var(--text-normal);
+        font-family: var(--font-monospace);
+        font-size: var(--font-ui-smaller);
+        inline-size: 100%;
+        padding: var(--size-2-1) var(--size-2-2);
+        &:focus-visible {
+          outline: 2px solid var(--background-modifier-border-focus);
+        }
+      }
+    }
+
+    & .picker_sample {
+      border: var(--formatbar-border);
+      border-radius: var(--radius-s);
+      grid-area: preview;
+      position: relative;
+      &::before {
+        background: currentcolor;
+        border-radius: inherit;
+        content: "";
+        inset: 0;
+        position: absolute;
+      }
+    }
+
+    & .picker_done {
+      grid-area: ok;
+    }
+    & .picker_cancel {
+      grid-area: cancel;
+    }
+
+    & :is(.picker_done, .picker_cancel) button {
+      background: var(--interactive-normal);
+      color: var(--text-normal);
+      display: flex;
+      inline-size: 100%;
+      justify-content: center;
+      min-block-size: var(--formatbar-hit);
+      padding: var(--size-2-1) var(--size-2-3);
+      &:hover {
+        background: var(--interactive-hover);
+      }
+    }
+  }
 }
 
-/* `relative` anchors Following; the column keeps Top and Fixed in flow. */
+/* ---------------------- Truncation Shared Utility ------------------------- */
+.awesome-format-bar
+  :is(
+    .menu-grid.is-wide .char-cell,
+    .char-preview-icon,
+    .char-preview-details,
+    .char-preview-name,
+    .char-preview-meta
+  ) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ---------------------- Host Container & Editor Pane ---------------------- */
 .awesome-format-bar-host {
   display: flex;
   flex-direction: column;
   position: relative;
+  & > :not(.awesome-format-bar) {
+    flex: 1 1 auto;
+    min-block-size: 0;
+  }
 }
 
-/* The editor absorbs the leftover height, or the bars push it out of view. */
-.awesome-format-bar-host > :not(.awesome-format-bar) {
-  flex: 1 1 auto;
-  min-block-size: 0;
-}
-
-/* ------------------------------- Clickables ------------------------------- */
-/* One reset covers every button: commands, tabs, menu rows and swatches. */
-
-.awesome-format-bar button {
-  align-items: center;
-  background: transparent;
-  border: none;
-  border-radius: var(--radius-s);
-  box-shadow: none;
-  color: var(--text-muted);
-  cursor: pointer;
-  display: inline-flex;
-  flex: 0 0 auto;
-  gap: var(--size-4-2);
-  justify-content: center;
-  padding: 0;
-}
-
-.awesome-format-bar button:hover:not(:disabled) {
-  background: var(--background-modifier-hover);
-  color: var(--text-normal);
-}
-
-.awesome-format-bar button:active:not(:disabled) {
-  background: var(--background-modifier-active-hover);
-}
-
-.awesome-format-bar button:focus-visible {
-  box-shadow: 0 0 0 2px var(--background-modifier-border-focus);
-  outline: none;
-}
-
-.awesome-format-bar button:disabled {
-  color: var(--text-faint);
-  cursor: default;
-}
-
-/* Square icon buttons: every command, plus the overflow menu trigger. */
-.awesome-format-bar .format-button {
-  block-size: var(--formatbar-hit);
-  inline-size: var(--formatbar-hit);
-  min-block-size: var(--formatbar-hit);
-  min-inline-size: var(--formatbar-hit);
-  position: relative;
-}
-
-.awesome-format-bar .svg-icon {
-  block-size: var(--formatbar-icon-size);
-  inline-size: var(--formatbar-icon-size);
-}
-
-/* Drop-down buttons carry a caret in the corner. */
-.awesome-format-bar .has-menu::after {
-  border: 3px solid transparent;
-  border-block-end: 0;
-  border-block-start-color: currentColor;
-  content: "";
-  inset: auto 2px 3px auto;
-  position: absolute;
-}
-
-/* Set on buttons folded away by width, and on separators left dangling. */
-.awesome-format-bar .is-hidden {
-  display: none;
-}
-
-/* --------------------------------- Ribbon --------------------------------- */
-
-.awesome-format-bar--ribbon {
-  background: var(--background-secondary);
-  border-block-end: 1px solid var(--background-modifier-border);
-  flex: 0 0 auto;
-}
-
-.awesome-format-bar .tab-row {
-  display: flex;
-  gap: var(--size-2-1);
-  padding: var(--size-2-2) var(--size-4-2) 0;
-}
-
-.awesome-format-bar .tab {
-  border-radius: var(--radius-s) var(--radius-s) 0 0;
-  padding: var(--size-2-1) var(--size-4-2);
-}
-
-.awesome-format-bar .tab.is-active {
-  background: var(--background-primary);
-  color: var(--text-normal);
-  font-weight: var(--font-semibold);
-}
-
-.awesome-format-bar .tab-panel {
-  background: var(--background-primary);
-  display: flex;
-  padding: var(--size-2-2) var(--size-4-2) var(--size-2-1);
-}
-
-/* Buttons absorb the leftover height, so group names land on one line. */
-.awesome-format-bar .group {
-  border-inline-end: 1px solid var(--background-modifier-border);
-  display: flex;
-  flex-direction: column;
-  padding: 0 var(--size-4-2);
-}
-
-.awesome-format-bar .group:last-child {
-  border-inline-end: none;
-}
-
-.awesome-format-bar .group-buttons {
-  align-content: flex-start;
-  display: flex;
-  flex: 1 1 auto;
-  flex-wrap: wrap;
-  gap: 1px;
-}
-
-.awesome-format-bar .group-name {
-  color: var(--text-faint);
-  padding-block-start: var(--size-2-1);
-  text-align: center;
-}
-
-/* Pinned is the one group with no name; when it is empty it says so instead. */
-.awesome-format-bar .group-empty {
-  color: var(--text-faint);
-  padding-block: var(--size-2-1);
-}
-
-/* ----------------------- Compact bars, and the menu ----------------------- */
-/* The two Compact bars and the menu share one panel treatment. */
-
-.awesome-format-bar--compact,
-.awesome-format-bar--menu {
-  background: var(--background-secondary);
-  border: 1px solid var(--background-modifier-border);
-  border-radius: var(--radius-m);
-}
-
-.awesome-format-bar--compact {
-  align-items: center;
-  box-shadow: var(--shadow-s);
-  display: flex;
-  gap: var(--size-2-1);
-  overflow: hidden;
-  padding: var(--size-2-1) var(--size-2-2);
-}
-
-/* Buttons and separators are flat siblings here — no per-group wrapper. */
-.awesome-format-bar .button-row {
-  align-items: center;
-  display: flex;
-  flex: 1 1 auto;
-  gap: 1px;
-  overflow: hidden;
-}
-
-.awesome-format-bar .separator {
-  background: var(--background-modifier-border);
-  block-size: 18px;
-  flex: 0 0 1px;
-  margin-inline: var(--size-2-1);
-}
-
-/* Following floats; Fixed stays in flow, so no spacer is needed. */
-.awesome-format-bar--following {
-  inset: 0 auto auto 0;
-  max-inline-size: calc(100% - 2 * var(--size-4-4));
-  position: absolute;
-  z-index: var(--layer-popover);
-}
-
-.awesome-format-bar--fixed {
-  align-self: center;
-  flex: 0 0 auto;
-  margin: var(--size-2-2) var(--size-4-4)
-    calc(var(--formatbar-lift) + env(safe-area-inset-bottom));
-  max-inline-size: calc(100% - 2 * var(--size-4-4));
-}
-
-/* ---------------------------------- Menu ---------------------------------- */
-/* One layer serves the overflow menu, the palettes and the Emoji & Symbols panel. */
-
-.awesome-format-bar--menu {
-  box-shadow: var(--shadow-l);
-  max-block-size: 60vh;
-  overflow-y: auto;
-  padding: var(--size-2-2);
-  position: fixed;
-  z-index: var(--layer-menu);
-}
-
-.awesome-format-bar .menu-section + .menu-section {
-  border-block-start: 1px solid var(--background-modifier-border);
-  margin-block-start: var(--size-2-2);
-  padding-block-start: var(--size-2-2);
-}
-
-.awesome-format-bar .menu-title {
-  color: var(--text-faint);
-  padding: var(--size-2-1) var(--size-2-2);
-}
-
-.awesome-format-bar .menu-item {
-  color: var(--text-normal);
-  display: flex;
-  inline-size: 100%;
-  justify-content: flex-start;
-  padding: var(--size-2-1) var(--size-2-3);
-  white-space: nowrap;
-}
-
-.awesome-format-bar .menu-grid {
-  display: grid;
-  gap: var(--size-2-1);
-  grid-template-columns: repeat(var(--formatbar-menu-columns, 8), 1fr);
-}
-
-.awesome-format-bar .swatch {
-  block-size: var(--formatbar-swatch);
-  border: 1px solid var(--background-modifier-border);
-  inline-size: var(--formatbar-swatch);
-}
-
-.awesome-format-bar .swatch:hover {
-  outline: 2px solid var(--background-modifier-border-focus);
-}
-
-/* ------------------------- Emoji & Symbols panel -------------------------- */
-/* Stabilized layout: search, segmented tabs, category chips, grid, preview footer */
-
-.awesome-format-bar--menu.is-char-panel {
-  block-size: 420px;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  gap: var(--size-2-2);
-  inline-size: 350px;
-  max-block-size: min(420px, calc(100vh - 32px));
-  max-inline-size: calc(100vw - 16px);
-  overflow: hidden;
-  padding: var(--size-4-2);
-}
-
-/* Search bar with icon, input and clear button */
-.awesome-format-bar .char-search-wrapper {
-  align-items: center;
-  background: var(--background-modifier-form-field);
-  border: 1px solid var(--background-modifier-border);
-  border-radius: var(--radius-s);
-  block-size: 30px;
-  display: flex;
-  flex: 0 0 auto;
-  padding: 0 var(--size-2-2);
-}
-
-.awesome-format-bar .char-search-icon {
-  color: var(--text-faint);
-  display: inline-flex;
-  margin-inline-end: var(--size-2-1);
-}
-
-.awesome-format-bar .char-search-input {
-  background: transparent;
-  border: none;
-  color: var(--text-normal);
-  flex: 1 1 auto;
-  font-size: var(--font-ui-small);
-  padding: var(--size-2-1) 0;
-}
-
-.awesome-format-bar .char-search-clear.is-hidden {
-  display: none;
-}
-
-/* Source tabs: segmented control */
-.awesome-format-bar .char-source-tabs {
-  background: var(--background-modifier-form-field);
-  border-radius: var(--radius-s);
-  display: flex;
-  flex: 0 0 auto;
-  gap: 2px;
-  padding: 2px;
-}
-
-.awesome-format-bar .char-source-tab {
-  block-size: 26px;
-  flex: 1 1 0;
-  padding: 0 var(--size-2-1);
-}
-
-.awesome-format-bar .char-source-tab.is-active {
-  background: var(--background-primary);
-  color: var(--text-normal);
-  font-weight: var(--font-semibold);
-}
-
-/* Category navigation chips: single-row horizontal scroll */
-.awesome-format-bar .char-category-nav {
-  align-items: center;
-  display: flex;
-  flex: 0 0 auto;
-  flex-wrap: nowrap;
-  gap: var(--size-2-2);
-  min-block-size: 28px;
-  overflow-x: auto;
-  overflow-y: hidden;
-  scrollbar-width: none;
-}
-
-.awesome-format-bar .char-category-nav::-webkit-scrollbar {
-  display: none;
-}
-
-.awesome-format-bar .char-category-nav.is-hidden {
-  display: none;
-}
-
-.awesome-format-bar .char-category-chip {
-  block-size: 26px;
-  border-radius: var(--radius-s);
-  flex: 0 0 auto;
-  font-size: var(--font-ui-smaller);
-  padding: 0 var(--size-2-3);
-  white-space: nowrap;
-}
-
-.awesome-format-bar .char-category-chip.is-active {
-  background: var(--background-modifier-active-hover);
-  color: var(--text-normal);
-  font-weight: var(--font-semibold);
-}
-
-/* Character grid & cells */
-.awesome-format-bar--menu.is-char-panel .menu-grid {
-  flex: 1 1 auto;
-  min-block-size: 0;
-  overflow-y: auto;
-}
-
-.awesome-format-bar .char-cell {
-  block-size: 36px;
-  font-size: 21px;
-}
-
-.awesome-format-bar .menu-grid.is-wide .char-cell {
-  font-size: var(--font-ui-smaller);
-  justify-content: flex-start;
-  overflow: hidden;
-  padding: 0 var(--size-2-2);
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.awesome-format-bar .char-empty {
-  color: var(--text-faint);
-  grid-column: 1 / -1;
-  padding: var(--size-4-2);
-  text-align: center;
-}
-
-/* Preview & details footer: strictly single-line, never wraps */
-.awesome-format-bar .char-preview-footer {
-  align-items: center;
-  block-size: 38px;
-  border-block-start: 1px solid var(--background-modifier-border);
-  box-sizing: border-box;
-  display: flex;
-  flex: 0 0 auto;
-  gap: var(--size-2-3);
-  min-block-size: 38px;
-  overflow: hidden;
-  padding-block-start: var(--size-2-2);
-  white-space: nowrap;
-}
-
-.awesome-format-bar .char-preview-icon {
-  align-items: center;
-  display: flex;
-  flex: 0 0 auto;
-  font-size: 20px;
-  justify-content: center;
-  max-inline-size: 130px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.awesome-format-bar .char-preview-details {
-  display: flex;
-  flex: 1 1 0;
-  flex-direction: column;
-  justify-content: center;
-  min-inline-size: 0;
-  overflow: hidden;
-  white-space: nowrap;
-}
-
-.awesome-format-bar .char-preview-name {
-  font-weight: var(--font-semibold);
-  line-height: 1.3;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.awesome-format-bar .char-preview-meta {
-  color: var(--text-faint);
-  font-size: var(--font-ui-smaller);
-  line-height: 1.3;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.awesome-format-bar .char-preview-meta.is-status {
-  color: var(--text-accent);
-  font-weight: var(--font-medium);
-}
-
-/* ------------------------------ Color picker ------------------------------ */
-/* Only the skin is ours; grid, not its flex-wrap, which needs a spacer. */
-
-.awesome-format-bar--menu.is-color-picker .picker_wrapper {
-  box-sizing: border-box;
-  display: grid;
-  gap: var(--size-2-2);
-  grid-template-areas:
-    "hue hue"
-    "square square"
-    "field preview"
-    "ok cancel";
-  grid-template-columns: 1fr 1fr;
-  inline-size: 220px;
-  padding: var(--size-2-2);
-}
-
-/* Unused popup arrow and alpha; their hiding rule ships in the skipped sheet. */
-.awesome-format-bar--menu.is-color-picker .picker_arrow,
-.awesome-format-bar--menu.is-color-picker .picker_alpha {
-  display: none;
-}
-
-.awesome-format-bar--menu.is-color-picker .picker_hue {
-  background-image: linear-gradient(
-    90deg,
-    red,
-    yellow,
-    lime,
-    cyan,
-    blue,
-    magenta,
-    red
-  );
-  block-size: var(--size-4-3);
-  border: 1px solid var(--background-modifier-border);
-  border-radius: var(--radius-s);
-  grid-area: hue;
-  position: relative;
-}
-
-/* Veils over the hue: the square then reads as saturation and value. */
-.awesome-format-bar--menu.is-color-picker .picker_sl {
-  background-image:
-    linear-gradient(180deg, #fff, rgb(255 255 255 / 0) 50%),
-    linear-gradient(0deg, #000, rgb(255 255 255 / 0) 50%),
-    linear-gradient(90deg, #808080, rgb(128 128 128 / 0));
-  block-size: 160px;
-  border: 1px solid var(--background-modifier-border);
-  border-radius: var(--radius-s);
-  grid-area: square;
-  position: relative;
-}
-
-/* `currentcolor`: the script only positions the dot. */
-.awesome-format-bar--menu.is-color-picker .picker_selector {
-  background: currentcolor;
-  block-size: var(--size-4-3);
-  border: 2px solid var(--background-primary);
-  border-radius: 100%;
-  box-shadow: 0 0 0 1px var(--background-modifier-border);
-  inline-size: var(--size-4-3);
-  position: absolute;
-  translate: -50% -50%;
-}
-
-.awesome-format-bar--menu.is-color-picker .picker_hue .picker_selector {
-  top: 50%;
-}
-
-.awesome-format-bar--menu.is-color-picker .picker_editor {
-  grid-area: field;
-}
-
-.awesome-format-bar--menu.is-color-picker .picker_editor input {
-  background: var(--background-modifier-form-field);
-  border: 1px solid var(--background-modifier-border);
-  border-radius: var(--radius-s);
-  color: var(--text-normal);
-  font-family: var(--font-monospace);
-  font-size: var(--font-ui-smaller);
-  inline-size: 100%;
-  padding: var(--size-2-1) var(--size-2-2);
-}
-
-.awesome-format-bar--menu.is-color-picker .picker_editor input:focus-visible {
-  outline: 2px solid var(--background-modifier-border-focus);
-}
-
-.awesome-format-bar--menu.is-color-picker .picker_sample {
-  border: 1px solid var(--background-modifier-border);
-  border-radius: var(--radius-s);
-  grid-area: preview;
-  position: relative;
-}
-
-.awesome-format-bar--menu.is-color-picker .picker_sample::before {
-  background: currentcolor;
-  border-radius: inherit;
-  content: "";
-  inset: 0;
-  position: absolute;
-}
-
-.awesome-format-bar--menu.is-color-picker .picker_done {
-  grid-area: ok;
-}
-
-.awesome-format-bar--menu.is-color-picker .picker_cancel {
-  grid-area: cancel;
-}
-
-.awesome-format-bar--menu.is-color-picker .picker_done button,
-.awesome-format-bar--menu.is-color-picker .picker_cancel button {
-  background: var(--interactive-normal);
-  color: var(--text-normal);
-  display: flex;
-  inline-size: 100%;
-  justify-content: center;
-  min-block-size: var(--formatbar-hit);
-  padding: var(--size-2-1) var(--size-2-3);
-}
-
-.awesome-format-bar--menu.is-color-picker .picker_done button:hover,
-.awesome-format-bar--menu.is-color-picker .picker_cancel button:hover {
-  background: var(--interactive-hover);
-}
-
+/* ----------------------- Touch Scaling (Coarse Pointer) ------------------- */
 @media (pointer: coarse) {
   .awesome-format-bar {
     --formatbar-hit: 32px;
     --formatbar-swatch: 28px;
+    --formatbar-control-h: 30px;
+    --formatbar-search-h: 34px;
     --formatbar-lift: var(--size-4-12);
   }
 }
 
-/* ----------------------- Sort by clicking a header ------------------------ */
-/* The arrow is the only sign a header sorts; borders, not an SVG. */
-
+/* ----------------------- Sort by Clicking a Header ------------------------ */
 .awesome-format-bar-sortable .markdown-preview-view th {
   cursor: pointer;
   padding-inline-end: 16px;
   position: relative;
-}
 
-/* Two boxes: one border triangle tapers inwards and draws an hourglass. */
-.awesome-format-bar-sortable .markdown-preview-view th::before,
-.awesome-format-bar-sortable .markdown-preview-view th::after {
-  block-size: 0;
-  border: 4px solid transparent;
-  box-sizing: content-box;
-  content: "";
-  inline-size: 0;
-  inset-block: 0;
-  inset-inline-end: 4px;
-  /* Auto margins center the caret; `translate` pushes the pair apart. */
-  margin-block: auto;
-  position: absolute;
-}
-
-.awesome-format-bar-sortable .markdown-preview-view th::before {
-  border-block-end-color: var(--text-faint);
-  border-block-start: 0;
-  translate: 0 -3.5px;
-}
-
-.awesome-format-bar-sortable .markdown-preview-view th::after {
-  border-block-end: 0;
-  border-block-start-color: var(--text-faint);
-  translate: 0 3.5px;
-}
-
-/* Both carets stay put, so the arrow never shifts between states. */
-.awesome-format-bar-sortable
-  .markdown-preview-view
-  th[data-format-bar-sort="asc"]::before {
-  border-block-end-color: var(--text-normal);
-}
-
-.awesome-format-bar-sortable
-  .markdown-preview-view
-  th[data-format-bar-sort="desc"]::after {
-  border-block-start-color: var(--text-normal);
+  &::before,
+  &::after {
+    block-size: 0;
+    border: 4px solid transparent;
+    box-sizing: content-box;
+    content: "";
+    inline-size: 0;
+    inset-block: 0;
+    inset-inline-end: 4px;
+    margin-block: auto;
+    position: absolute;
+  }
+  &::before {
+    border-block-end-color: var(--text-faint);
+    border-block-start: 0;
+    translate: 0 -3.5px;
+  }
+  &::after {
+    border-block-end: 0;
+    border-block-start-color: var(--text-faint);
+    translate: 0 3.5px;
+  }
+  &[data-format-bar-sort="asc"]::before {
+    border-block-end-color: var(--text-normal);
+  }
+  &[data-format-bar-sort="desc"]::after {
+    border-block-start-color: var(--text-normal);
+  }
 }
 
 /* ---------------------------- Show Whitespace ----------------------------- */
-/* CodeMirror draws the marks; these rules only recolor and gate them. */
-/* Three classes, to outrank CodeMirror's base theme and its hardcoded colors. */
+.markdown-source-view {
+  &:not(.is-live-preview) .cm-editor {
+    & .cm-highlightSpace {
+      background-image: radial-gradient(
+        circle at 50% 55%,
+        var(--text-faint) 20%,
+        transparent 5%
+      );
+      background-position: center;
+    }
+    & .cm-highlightTab {
+      background-color: var(--text-faint);
+      background-image: none;
+      mask-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="20"><path stroke="%23888" stroke-width="1" fill="none" d="M1 10H196L190 5M190 15L196 10M197 4L197 16"/></svg>');
+      mask-position: right 90%;
+      mask-repeat: no-repeat;
+      mask-size: auto 100%;
+    }
+    & .cm-highlightOddSpace {
+      background-image: radial-gradient(
+        circle at 50% 55%,
+        var(--text-warning) 20%,
+        transparent 5%
+      );
+      background-position: center;
+    }
+  }
 
-.markdown-source-view:not(.is-live-preview) .cm-editor .cm-highlightSpace {
-  background-image: radial-gradient(
-    circle at 50% 55%,
-    var(--text-faint) 20%,
-    transparent 5%
-  );
-  background-position: center;
-}
-
-/* The arrow is a data-URI SVG, so it wears `background-color` through a mask. */
-.markdown-source-view:not(.is-live-preview) .cm-editor .cm-highlightTab {
-  background-color: var(--text-faint);
-  background-image: none;
-  mask-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="20"><path stroke="%23888" stroke-width="1" fill="none" d="M1 10H196L190 5M190 15L196 10M197 4L197 16"/></svg>');
-  mask-position: right 90%;
-  mask-repeat: no-repeat;
-  mask-size: auto 100%;
-}
-
-/* Same dot, warning color: a space that is not U+0020 is a bug in the making. */
-.markdown-source-view:not(.is-live-preview) .cm-editor .cm-highlightOddSpace {
-  background-image: radial-gradient(
-    circle at 50% 55%,
-    var(--text-warning) 20%,
-    transparent 5%
-  );
-  background-position: center;
-}
-
-/* Live Preview spaces the text itself; marks there would only be noise. */
-.markdown-source-view.is-live-preview .cm-highlightSpace,
-.markdown-source-view.is-live-preview .cm-highlightTab,
-.markdown-source-view.is-live-preview .cm-highlightOddSpace {
-  background-image: none;
+  &.is-live-preview
+    :is(.cm-highlightSpace, .cm-highlightTab, .cm-highlightOddSpace) {
+    background-image: none;
+  }
 }
 
 /* -------------------------------- Settings -------------------------------- */
-/* Outside the root: the settings tab is Obsidian's own DOM. */
-
 .awesome-format-bar-position {
   align-items: center;
   cursor: pointer;

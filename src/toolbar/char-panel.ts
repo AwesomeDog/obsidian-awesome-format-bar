@@ -9,6 +9,7 @@ import {
   type CharEntry,
 } from "../model/characters";
 import type { CommandSpec } from "../model/types";
+import { createTabButton } from "./button";
 import { openFloatingLayer } from "./floating";
 import type { ToolbarHost } from "./host";
 import { resolveIcon } from "./icons";
@@ -233,22 +234,17 @@ export async function openCharPanel(
     for (let i = 0; i < sources.length; i++) {
       const candidateSource = sources[i];
       if (!candidateSource) continue;
-      const isSourceActive = i === sourceIndex;
-      const tab = sourceTabsEl.createEl("button", {
-        attr: {
-          "aria-selected": String(isSourceActive),
-          role: "tab",
-          type: "button",
+      createTabButton(sourceTabsEl, {
+        active: i === sourceIndex,
+        cls: "char-source-tab",
+        onClick: () => {
+          if (sourceIndex === i) return;
+          sourceIndex = i;
+          group = "";
+          focusIndex = -1;
+          render();
         },
-        cls: `char-source-tab${isSourceActive ? " is-active" : ""}`,
         text: candidateSource.label,
-      });
-      tab.addEventListener("click", () => {
-        if (sourceIndex === i) return;
-        sourceIndex = i;
-        group = "";
-        focusIndex = -1;
-        render();
       });
     }
 
@@ -262,26 +258,21 @@ export async function openCharPanel(
         frequent.length > 0 ? [t(FREQUENT), ...names] : names;
       for (const cat of categoryList) {
         const isCatActive = cat === activeGroup;
-        const chip = categoryNavEl.createEl("button", {
-          attr: {
-            "aria-selected": String(isCatActive),
-            role: "tab",
-            type: "button",
+        const chip = createTabButton(categoryNavEl, {
+          active: isCatActive,
+          cls: "char-category-chip",
+          onClick: () => {
+            if (group === cat) return;
+            group = cat;
+            focusIndex = -1;
+            render();
+            chip.scrollIntoView({
+              behavior: "smooth",
+              block: "nearest",
+              inline: "nearest",
+            });
           },
-          cls: `char-category-chip${isCatActive ? " is-active" : ""}`,
           text: cat,
-        });
-
-        chip.addEventListener("click", () => {
-          if (group === cat) return;
-          group = cat;
-          focusIndex = -1;
-          render();
-          chip.scrollIntoView({
-            behavior: "smooth",
-            block: "nearest",
-            inline: "nearest",
-          });
         });
 
         if (isCatActive) {

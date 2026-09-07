@@ -10,7 +10,7 @@ import {
   type TabId,
 } from "../model/layout";
 import type { CommandSpec, ToolbarPosition } from "../model/types";
-import { createButton } from "./button";
+import { createButton, createTabButton } from "./button";
 import { openCharPanel } from "./char-panel";
 import type { ToolbarHost } from "./host";
 import { resolveIcon } from "./icons";
@@ -90,20 +90,13 @@ export class ToolbarSurface {
 
     for (const tab of RIBBON_TABS) {
       const active = tab.id === this.activeTab;
-      const tabEl = tabs.createEl("button", {
-        attr: {
-          "aria-selected": String(active),
-          role: "tab",
-          tabindex: active ? "0" : "-1",
-          type: "button",
-        },
-        cls: active ? "tab is-active" : "tab",
+      createTabButton(tabs, {
+        active,
+        cls: "tab",
+        onClick: () => this.selectTab(tab.id),
+        onKeydown: (event) => this.onTabKeydown(event, tab.id),
         text: tab.name,
       });
-      tabEl.addEventListener("click", () => this.selectTab(tab.id));
-      tabEl.addEventListener("keydown", (event) =>
-        this.onTabKeydown(event, tab.id),
-      );
     }
     this.renderGroups(panel);
   }
