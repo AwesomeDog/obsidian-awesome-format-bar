@@ -23,6 +23,8 @@ export function openFloatingLayer(
   onDismiss?: () => void,
   /** Every close, dismissal included, for callers holding something outside. */
   onClose?: () => void,
+  /** Return false to prevent closing on Escape (e.g. to clear input first). */
+  canDismiss?: (event: KeyboardEvent) => boolean,
 ): FloatingLayer {
   closeFloating();
   const doc = anchor.ownerDocument;
@@ -56,6 +58,11 @@ export function openFloatingLayer(
   // Escape returns focus to where the user was: the editor, not the button.
   const onKey = (event: KeyboardEvent): void => {
     if (event.key !== "Escape") return;
+    if (canDismiss && !canDismiss(event)) {
+      event.preventDefault();
+      event.stopPropagation();
+      return;
+    }
     event.preventDefault();
     close();
     onDismiss?.();

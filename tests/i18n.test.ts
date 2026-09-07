@@ -1,5 +1,6 @@
 import { readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
+import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 import ja from "../src/i18n/ja";
 import de from "../src/i18n/de";
@@ -21,7 +22,7 @@ function sourceText(dir: string): string {
     .join("\n");
 }
 
-const source = sourceText(new URL("../src", import.meta.url).pathname);
+const source = sourceText(fileURLToPath(new URL("../src", import.meta.url)));
 
 /** Catches the one silent failure of keying by English: renaming the source. */
 describe("dictionaries", () => {

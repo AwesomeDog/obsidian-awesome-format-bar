@@ -254,75 +254,127 @@
 }
 
 /* ------------------------- Emoji & Symbols panel -------------------------- */
-/* Search box, then two rows of tabs — source, then group — and one flat grid. */
+/* Stabilized layout: search, segmented tabs, category chips, grid, preview footer */
 
-/* Scroll the grid, not the layer: the search box has to stay reachable. */
 .awesome-format-bar--menu.is-char-panel {
+  block-size: 420px;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
+  gap: var(--size-2-2);
+  inline-size: 350px;
+  max-block-size: min(420px, calc(100vh - 32px));
+  max-inline-size: calc(100vw - 16px);
   overflow: hidden;
+  padding: var(--size-4-2);
 }
 
+/* Search bar with icon, input and clear button */
+.awesome-format-bar .char-search-wrapper {
+  align-items: center;
+  background: var(--background-modifier-form-field);
+  border: 1px solid var(--background-modifier-border);
+  border-radius: var(--radius-s);
+  block-size: 30px;
+  display: flex;
+  flex: 0 0 auto;
+  padding: 0 var(--size-2-2);
+}
+
+.awesome-format-bar .char-search-icon {
+  color: var(--text-faint);
+  display: inline-flex;
+  margin-inline-end: var(--size-2-1);
+}
+
+.awesome-format-bar .char-search-input {
+  background: transparent;
+  border: none;
+  color: var(--text-normal);
+  flex: 1 1 auto;
+  font-size: var(--font-ui-small);
+  padding: var(--size-2-1) 0;
+}
+
+.awesome-format-bar .char-search-clear.is-hidden {
+  display: none;
+}
+
+/* Source tabs: segmented control */
+.awesome-format-bar .char-source-tabs {
+  background: var(--background-modifier-form-field);
+  border-radius: var(--radius-s);
+  display: flex;
+  flex: 0 0 auto;
+  gap: 2px;
+  padding: 2px;
+}
+
+.awesome-format-bar .char-source-tab {
+  block-size: 26px;
+  flex: 1 1 0;
+  padding: 0 var(--size-2-1);
+}
+
+.awesome-format-bar .char-source-tab.is-active {
+  background: var(--background-primary);
+  color: var(--text-normal);
+  font-weight: var(--font-semibold);
+}
+
+/* Category navigation chips: single-row horizontal scroll */
+.awesome-format-bar .char-category-nav {
+  align-items: center;
+  display: flex;
+  flex: 0 0 auto;
+  flex-wrap: nowrap;
+  gap: var(--size-2-2);
+  min-block-size: 28px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+}
+
+.awesome-format-bar .char-category-nav::-webkit-scrollbar {
+  display: none;
+}
+
+.awesome-format-bar .char-category-nav.is-hidden {
+  display: none;
+}
+
+.awesome-format-bar .char-category-chip {
+  block-size: 26px;
+  border-radius: var(--radius-s);
+  flex: 0 0 auto;
+  font-size: var(--font-ui-smaller);
+  padding: 0 var(--size-2-3);
+  white-space: nowrap;
+}
+
+.awesome-format-bar .char-category-chip.is-active {
+  background: var(--background-modifier-active-hover);
+  color: var(--text-normal);
+  font-weight: var(--font-semibold);
+}
+
+/* Character grid & cells */
 .awesome-format-bar--menu.is-char-panel .menu-grid {
+  flex: 1 1 auto;
   min-block-size: 0;
   overflow-y: auto;
 }
 
-.awesome-format-bar .char-search {
-  background: var(--background-modifier-form-field);
-  border: 1px solid var(--background-modifier-border);
-  border-radius: var(--radius-s);
-  color: var(--text-normal);
-  inline-size: 100%;
-  margin-block-end: var(--size-2-2);
-  padding: var(--size-2-1) var(--size-2-3);
-}
-
-.awesome-format-bar .char-tabs {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--size-2-1);
-  margin-block-end: var(--size-2-2);
-}
-
-.awesome-format-bar .char-tab {
-  border-radius: var(--radius-s);
-  color: var(--text-faint);
-  font-size: var(--font-ui-smaller);
-  padding: var(--size-2-1) var(--size-2-3);
-  white-space: nowrap;
-}
-
-.awesome-format-bar .char-tab:hover {
-  background: var(--background-modifier-hover);
-  color: var(--text-normal);
-}
-
-.awesome-format-bar .char-tab.is-active {
-  background: var(--background-modifier-active-hover);
-  color: var(--text-normal);
-}
-
 .awesome-format-bar .char-cell {
-  align-items: center;
-  border-radius: var(--radius-s);
-  display: flex;
-  font-size: var(--font-ui-large);
-  justify-content: center;
-  line-height: 1.2;
-  min-block-size: var(--formatbar-hit);
-  padding: var(--size-2-1);
+  block-size: 36px;
+  font-size: 21px;
 }
 
-.awesome-format-bar .char-cell:hover {
-  background: var(--background-modifier-hover);
-}
-
-/* Kaomoji: two columns, left aligned, small enough to stay on one line. */
 .awesome-format-bar .menu-grid.is-wide .char-cell {
   font-size: var(--font-ui-smaller);
   justify-content: flex-start;
   overflow: hidden;
+  padding: 0 var(--size-2-2);
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -334,10 +386,63 @@
   text-align: center;
 }
 
-.awesome-format-bar .char-search:focus-visible,
-.awesome-format-bar .char-tab:focus-visible,
-.awesome-format-bar .char-cell:focus-visible {
-  outline: 2px solid var(--background-modifier-border-focus);
+/* Preview & details footer: strictly single-line, never wraps */
+.awesome-format-bar .char-preview-footer {
+  align-items: center;
+  block-size: 38px;
+  border-block-start: 1px solid var(--background-modifier-border);
+  box-sizing: border-box;
+  display: flex;
+  flex: 0 0 auto;
+  gap: var(--size-2-3);
+  min-block-size: 38px;
+  overflow: hidden;
+  padding-block-start: var(--size-2-2);
+  white-space: nowrap;
+}
+
+.awesome-format-bar .char-preview-icon {
+  align-items: center;
+  display: flex;
+  flex: 0 0 auto;
+  font-size: 20px;
+  justify-content: center;
+  max-inline-size: 130px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.awesome-format-bar .char-preview-details {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  justify-content: center;
+  min-inline-size: 0;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.awesome-format-bar .char-preview-name {
+  font-weight: var(--font-semibold);
+  line-height: 1.3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.awesome-format-bar .char-preview-meta {
+  color: var(--text-faint);
+  font-size: var(--font-ui-smaller);
+  line-height: 1.3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.awesome-format-bar .char-preview-meta.is-status {
+  color: var(--text-accent);
+  font-weight: var(--font-medium);
 }
 
 /* ------------------------------ Color picker ------------------------------ */
