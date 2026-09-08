@@ -33,6 +33,9 @@ export class ToolbarSurface {
   private readonly position: ToolbarPosition;
   private readonly observer: ResizeObserver | null = null;
   private activeTab: TabId = "home";
+  private wasInTable = false;
+  private autoSwitched = false;
+  private tabBeforeTable: TabId = "home";
   private mainEl: HTMLElement | null = null;
   private overflowEl: HTMLButtonElement | null = null;
   private overflowed: CommandSpec[] = [];
@@ -93,7 +96,7 @@ export class ToolbarSurface {
       createTabButton(tabs, {
         active,
         cls: "tab",
-        onClick: () => this.selectTab(tab.id),
+        onClick: () => this.pickTab(tab.id),
         onKeydown: (event) => this.onTabKeydown(event, tab.id),
         text: tab.name,
       });
@@ -135,6 +138,29 @@ export class ToolbarSurface {
     this.refresh();
   }
 
+  /** Word activates its Table tab on entering a table; a manual pick wins. */
+  private followTable(inTable: boolean): boolean {
+    if (this.position !== "top" || inTable === this.wasInTable) return false;
+    this.wasInTable = inTable;
+    if (!inTable) {
+      if (!this.autoSwitched) return false;
+      this.autoSwitched = false;
+      this.selectTab(this.tabBeforeTable);
+      return true;
+    }
+    if (this.activeTab === "table") return false;
+    this.tabBeforeTable = this.activeTab;
+    this.autoSwitched = true;
+    this.selectTab("table");
+    return true;
+  }
+
+  /** A tab the user picked: the Table tab stops following the caret. */
+  private pickTab(id: TabId): void {
+    this.autoSwitched = false;
+    this.selectTab(id);
+  }
+
   private selectTab(id: TabId): void {
     if (id === this.activeTab) return;
     this.activeTab = id;
@@ -167,7 +193,7 @@ export class ToolbarSurface {
     event.preventDefault();
     const tab = RIBBON_TABS[target];
     if (!tab) return;
-    this.selectTab(tab.id);
+    this.pickTab(tab.id);
     this.el.querySelectorAll<HTMLElement>(".tab").item(target)?.focus();
   }
 
@@ -310,6 +336,8 @@ export class ToolbarSurface {
 
   refresh(): void {
     const state = this.host.state();
+    // Switching re-renders the panel, which refreshes; the rest is stale work.
+    if (this.followTable(state.inTable)) return;
     for (const [button, spec] of this.buttons) {
       const enabled = state.isEnabled(spec);
       button.disabled = !enabled;

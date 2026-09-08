@@ -5,6 +5,8 @@ import type { CommandSpec, ToolbarPosition } from "../model/types";
 /** The toolbar never inspects the editor itself. */
 export interface ToolbarState {
   readonly isEnabled: (spec: CommandSpec) => boolean;
+  /** The Ribbon switches to its Table tab on the edge where this flips. */
+  readonly inTable: boolean;
 }
 
 export interface ToolbarHost {

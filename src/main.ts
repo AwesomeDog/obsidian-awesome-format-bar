@@ -247,6 +247,7 @@ export default class AwesomeFormatBarPlugin extends Plugin {
           editable ? view.editor : null,
         );
         return {
+          inTable: conditions.inTable,
           isEnabled: (spec: CommandSpec): boolean => canRun(spec, conditions),
         };
       },
