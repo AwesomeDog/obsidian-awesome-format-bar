@@ -50,14 +50,14 @@ Obsidian is fast **if** you already speak Markdown. For everyone else — studen
 - **Do what Markdown can't.** Underline, superscript, subscript, paragraph alignment and text/highlight colors, written as clean inline HTML.
 - **Plain text forever.** No proprietary format, no database, no lock-in — your notes are still just `.md` files.
 - **Offline & private.** No network calls, no accounts, no telemetry. The ~2,150-entry emoji library ships inside the plugin.
-- **Keyboard-friendly too.** Switch every toolbar position off and the interface disappears completely — all 101 palette-registered commands stay available and can be bound to your own hotkeys.
+- **Keyboard-friendly too.** Switch every toolbar position off and the interface disappears completely — all 103 palette-registered commands stay available and can be bound to your own hotkeys.
 
 ## At a glance
 
 | | |
 | --- | --- |
 | **Toolbar positions** | Top ribbon, floating bar above the selection, fixed bottom bar — combine freely |
-| **Commands** | **109** built-in, **101** available in the command palette for custom hotkeys |
+| **Commands** | **111** built-in, **103** available in the command palette for custom hotkeys |
 | **Tabs** | Home · Insert · View · Table · Utilities · **Pinned** |
 | **Callouts** | All 12 Obsidian callout types in one drop-down |
 | **Emoji & symbols** | ~2,150 emoji, kaomoji and symbols, fully offline |
@@ -78,7 +78,7 @@ Obsidian is fast **if** you already speak Markdown. For everyone else — studen
 
 Each position is toggled independently, so you can run just the floating bar, just the ribbon, or all three.
 
-### 🅰️ 109 formatting commands in a familiar layout
+### 🅰️ 111 formatting commands in a familiar layout
 
 Bold, italic, underline, strikethrough, inline code, inline math, highlight (with color), font color, clear formatting, change case, headings 1–6, bullet / numbered / task lists, quotes, indentation, horizontal rules, undo/redo, find & replace, paragraph alignment — grouped exactly where a Word user expects them.
 
@@ -100,7 +100,7 @@ The **Pinned** tab turns the toolbar into your own launcher: pick any command fr
 
 ### 👁️ Reading, focus and outlining tools
 
-**Show Whitespace** (dots for spaces, arrows for tabs, orange markers for NBSP / ideographic / EN & EM spaces), **Show Line Numbers**, **Readable Line Length**, **Navigation Pane** (Obsidian's Outline), **Zoom In / Out / 100%**, **Collapse / Expand (All)**, **Focus Mode** (collapse both sidebars) and **Zen Mode** (true fullscreen).
+**Show Whitespace** (dots for spaces, arrows for tabs, orange markers for NBSP / ideographic / EN & EM spaces), **Show Line Numbers**, **Readable Line Length**, **Navigation Pane** (Obsidian's Outline), **Zoom In / Out / 100%**, **Split Right / Down**, **Collapse / Expand (All)**, **Focus Mode** (collapse both sidebars) and **Zen Mode** (true fullscreen).
 
 ### 📑 Table of contents in one click
 
@@ -118,7 +118,7 @@ Fixed, opinionated layout that inherits your active Obsidian theme in light and 
 
 ## Full command reference
 
-101 of the 109 commands are registered in the **command palette**, so you can assign your own keyboard shortcuts. (Drop-down containers and the Emoji & Symbols panel are toolbar-only.)
+103 of the 111 commands are registered in the **command palette**, so you can assign your own keyboard shortcuts. (Drop-down containers and the Emoji & Symbols panel are toolbar-only.)
 
 ### Home
 
@@ -136,6 +136,7 @@ Internal Link, External Link, Embed, Tag, Block Reference, **Callout ▼** (Note
 
 - **Show** — Show Whitespace, Show Line Numbers, Readable Line Length, Navigation Pane (Obsidian's Outline)
 - **Zoom** — Zoom In, Zoom Out, 100%
+- **Window** — Split Right, Split Down
 - **Outlining** — Collapse, Expand, Collapse All, Expand All
 - **Immersive** — Focus Mode, Zen Mode
 
@@ -184,7 +185,7 @@ Download `main.js`, `manifest.json` and `styles.css` from a release into `<vault
 2. The **Ribbon (Top)** has six tabs; the last one, **Pinned**, holds the commands you pin yourself. While it is empty it shows a hint pointing back to Settings.
 3. The **compact bars** (Following / Fixed) carry a fixed subset of commands; anything that doesn't fit collapses into the `⋯` overflow menu.
 4. Pin commands under **Settings → Pinned**: add (pick a command, then an icon), change the icon, drag to reorder, or delete. Pinned commands behave exactly like their command-palette counterparts.
-5. Prefer the keyboard? Turn **all three position toggles off** and the toolbar disappears from the interface entirely — the plugin then adds nothing to your screen, while all **101 palette-registered commands** keep working and can be bound to your own hotkeys in **Settings → Hotkeys**. In other words: you can use it as a pure command/hotkey pack and never click a button.
+5. Prefer the keyboard? Turn **all three position toggles off** and the toolbar disappears from the interface entirely — the plugin then adds nothing to your screen, while all **103 palette-registered commands** keep working and can be bound to your own hotkeys in **Settings → Hotkeys**. In other words: you can use it as a pure command/hotkey pack and never click a button.
 
 ## Settings
 
@@ -215,7 +216,7 @@ No. Bold, headings, lists, links, tables, callouts, code blocks and math are all
 Standard Markdown and Obsidian-flavoured Markdown. Only where Markdown has no syntax — underline, superscript, subscript, paragraph alignment, text and highlight colors — does the plugin emit small, standard inline HTML tags, which Obsidian renders natively.
 
 **Can I keep using my keyboard shortcuts?**
-Yes. 101 of the 109 commands appear in the command palette and can be bound to any hotkey.
+Yes. 103 of the 111 commands appear in the command palette and can be bound to any hotkey.
 
 **I'm a keyboard person — can I hide the toolbar completely?**
 Yes, and nothing is lost by doing it. Switch off all three positions (**Top / Following / Fixed**) in **Settings → Awesome Format Bar** and the plugin leaves zero footprint on the screen: no ribbon, no floating bar, no bottom bar. Every one of the **101 palette-registered commands** still runs, from the command palette or from a hotkey you assign in **Settings → Hotkeys** — including commands Obsidian has no built-in shortcut for, such as font color, highlight color, change case, callouts, table sorting and the line utilities. Think of it as an optional keyboard-only layer you can switch on whenever the mouse starts feeling slow.

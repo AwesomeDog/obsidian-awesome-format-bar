@@ -492,6 +492,22 @@ export const COMMANDS = [
     registeredCommandId: "window:reset-zoom",
   },
 
+  // View · Window
+  {
+    id: "split-right",
+    name: "Split Right",
+    icon: "columns-2",
+    kind: "registered",
+    registeredCommandId: "workspace:split-vertical",
+  },
+  {
+    id: "split-down",
+    name: "Split Down",
+    icon: "rows-2",
+    kind: "registered",
+    registeredCommandId: "workspace:split-horizontal",
+  },
+
   // View · Outlining
   {
     id: "collapse",

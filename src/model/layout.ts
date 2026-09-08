@@ -113,6 +113,7 @@ export const BUILT_IN_COMMAND_TABS = [
         ],
       },
       { name: "Zoom", commands: ["zoom-in", "zoom-out", "zoom-reset"] },
+      { name: "Window", commands: ["split-right", "split-down"] },
       {
         name: "Outlining",
         commands: ["collapse", "expand", "collapse-all", "expand-all"],
