@@ -9,9 +9,7 @@
 [![i18n](https://img.shields.io/badge/languages-8-success)]()
 [![Stars](https://img.shields.io/github/stars/AwesomeDog/obsidian-awesome-format-bar?style=social)](https://github.com/AwesomeDog/obsidian-awesome-format-bar/stargazers)
 
-**English** (this file is the canonical one) · [简体中文](README.zh-CN.md)
-
-🌍 Localized in **English, 简体中文, 繁體中文, 日本語, 한국어, Deutsch, Français and Español** (matches your Obsidian language).
+🌍 **English** · [简体中文](docs/i18n/README.zh.md) · [繁體中文](docs/i18n/README.zh-TW.md) · [日本語](docs/i18n/README.ja.md) · [한국어](docs/i18n/README.ko.md) · [Deutsch](docs/i18n/README.de.md) · [Français](docs/i18n/README.fr.md) · [Español](docs/i18n/README.es.md) — the plugin UI matches your Obsidian language.
 
 **Awesome Format Bar** is a **formatting toolbar (ribbon) plugin for [Obsidian](https://obsidian.md)**. It overlays a familiar, Word-like **editor toolbar** on top of your notes, so everyday formatting is one click away — while your vault stays 100% plain text.
 

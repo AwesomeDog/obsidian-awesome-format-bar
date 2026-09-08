@@ -4,4 +4,6 @@ main.js
 package-lock.json
 data.json
 docs
+docs/i18n
+README.md
 *.map
