@@ -50,6 +50,7 @@ Obsidian is fast **if** you already speak Markdown. For everyone else — studen
 - **Do what Markdown can't.** Underline, superscript, subscript, paragraph alignment and text/highlight colors, written as clean inline HTML.
 - **Plain text forever.** No proprietary format, no database, no lock-in — your notes are still just `.md` files.
 - **Offline & private.** No network calls, no accounts, no telemetry. The ~2,150-entry emoji library ships inside the plugin.
+- **Keyboard-friendly too.** Switch every toolbar position off and the interface disappears completely — all 101 palette-registered commands stay available and can be bound to your own hotkeys.
 
 ## At a glance
 
@@ -183,7 +184,7 @@ Download `main.js`, `manifest.json` and `styles.css` from a release into `<vault
 2. The **Ribbon (Top)** has six tabs; the last one, **Pinned**, holds the commands you pin yourself. While it is empty it shows a hint pointing back to Settings.
 3. The **compact bars** (Following / Fixed) carry a fixed subset of commands; anything that doesn't fit collapses into the `⋯` overflow menu.
 4. Pin commands under **Settings → Pinned**: add (pick a command, then an icon), change the icon, drag to reorder, or delete. Pinned commands behave exactly like their command-palette counterparts.
-5. Prefer the keyboard? Assign hotkeys to any of the 101 palette-registered commands in **Settings → Hotkeys**.
+5. Prefer the keyboard? Turn **all three position toggles off** and the toolbar disappears from the interface entirely — the plugin then adds nothing to your screen, while all **101 palette-registered commands** keep working and can be bound to your own hotkeys in **Settings → Hotkeys**. In other words: you can use it as a pure command/hotkey pack and never click a button.
 
 ## Settings
 
@@ -216,6 +217,9 @@ Standard Markdown and Obsidian-flavoured Markdown. Only where Markdown has no sy
 **Can I keep using my keyboard shortcuts?**
 Yes. 101 of the 109 commands appear in the command palette and can be bound to any hotkey.
 
+**I'm a keyboard person — can I hide the toolbar completely?**
+Yes, and nothing is lost by doing it. Switch off all three positions (**Top / Following / Fixed**) in **Settings → Awesome Format Bar** and the plugin leaves zero footprint on the screen: no ribbon, no floating bar, no bottom bar. Every one of the **101 palette-registered commands** still runs, from the command palette or from a hotkey you assign in **Settings → Hotkeys** — including commands Obsidian has no built-in shortcut for, such as font color, highlight color, change case, callouts, table sorting and the line utilities. Think of it as an optional keyboard-only layer you can switch on whenever the mouse starts feeling slow.
+
 **Can I add buttons for commands from other plugins?**
 Yes — that's the **Pinned** tab. Pin any command from the palette and choose an icon. If the owning plugin is disabled, the button greys out and the pin is preserved.
 
@@ -226,7 +230,7 @@ No. All ~2,150 emoji, kaomoji and symbols are bundled with the plugin.
 No. Reading-view header-click sorting is display-only and never modifies the note.
 
 **Can I hide the toolbar when I want a clean screen?**
-Yes — toggle any position off in settings.
+Yes — toggle any position off in settings, or all three to hide it entirely (see the keyboard question above for what still works).
 
 **Is it configurable?**
 Deliberately minimal: the layout is fixed and theme-aware so it always looks native. The Pinned tab is yours to arrange.

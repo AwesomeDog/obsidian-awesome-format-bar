@@ -84,7 +84,7 @@
   }
 
   & .is-hidden {
-    display: none !important;
+    display: none;
   }
 
   /* --------------------------------- Ribbon --------------------------------- */
@@ -271,7 +271,7 @@
       flex: 1 1 0;
       padding: 0 var(--size-2-1);
     }
-    & .char-category-nav {
+    & .char-category-nav:not(.is-hidden) {
       align-items: center;
       display: flex;
       flex: 0 0 auto;
