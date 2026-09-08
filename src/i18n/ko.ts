@@ -63,6 +63,7 @@ export default {
   "Code Block": "코드 블록",
   "Math Block": "수식 블록",
   Table: "표",
+  "Convert Text to Table": "텍스트를 표로 변환",
   Comment: "메모",
   Footnote: "각주",
   "Attach File": "파일 첨부",
@@ -109,6 +110,7 @@ export default {
   "Sort Rows": "행 정렬",
   "Sort Rows A to Z": "오름차순 정렬",
   "Sort Rows Z to A": "내림차순 정렬",
+  "Convert to Text": "텍스트로 변환",
   "Paste as Table": "표로 붙여넣기",
 
   // Tabs and groups
@@ -191,4 +193,6 @@ export default {
   "Clipboard is not a table. Copy two or more rows of tab- or comma-separated values first.":
     "클립보드 내용이 표가 아닙니다. 탭이나 쉼표로 구분된 값을 두 행 이상 먼저 복사하세요.",
   "This note has no headings to list.": "이 노트에는 나열할 제목이 없습니다.",
+  "Select two or more rows of tab- or comma-separated values first.":
+    "탭이나 쉼표로 구분된 값을 두 행 이상 선택하세요.",
 } satisfies Record<string, string>;

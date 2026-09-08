@@ -63,6 +63,7 @@ export default {
   "Code Block": "Bloque de código",
   "Math Block": "Bloque de fórmula",
   Table: "Tabla",
+  "Convert Text to Table": "Convertir texto en tabla",
   Comment: "Comentario",
   Footnote: "Nota al pie",
   "Attach File": "Adjuntar archivo",
@@ -109,6 +110,7 @@ export default {
   "Sort Rows": "Ordenar filas",
   "Sort Rows A to Z": "Ordenar de A a Z",
   "Sort Rows Z to A": "Ordenar de Z a A",
+  "Convert to Text": "Convertir en texto",
   "Paste as Table": "Pegar como tabla",
 
   // Tabs and groups
@@ -190,6 +192,8 @@ export default {
     "{name} ha fallado. Consulte la consola de desarrollador para más detalles.",
   "Clipboard is not a table. Copy two or more rows of tab- or comma-separated values first.":
     "El portapapeles no es una tabla. Copie primero dos o más filas de valores separados por tabulaciones o comas.",
+  "Select two or more rows of tab- or comma-separated values first.":
+    "Seleccione primero dos o más filas de valores separados por tabulaciones o comas.",
   "This note has no headings to list.":
     "Esta nota no tiene títulos que mostrar.",
 } satisfies Record<string, string>;

@@ -387,6 +387,13 @@ export const COMMANDS = [
     registeredCommandId: "editor:insert-table",
   },
   {
+    id: "convert-text-to-table",
+    name: "Convert Text to Table",
+    icon: "table-2",
+    kind: "editor",
+    requiresSelection: true,
+  },
+  {
     id: "comment",
     name: "Comment",
     icon: "percent",
@@ -711,6 +718,13 @@ export const COMMANDS = [
     id: "table-sort-za",
     name: "Sort Rows Z to A",
     icon: "arrow-up-za",
+    kind: "editor",
+    requiresTable: true,
+  },
+  {
+    id: "table-convert-to-text",
+    name: "Convert to Text",
+    icon: "wrap-text",
     kind: "editor",
     requiresTable: true,
   },

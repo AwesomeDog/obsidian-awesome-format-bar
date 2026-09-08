@@ -55,7 +55,7 @@ function parseRows(text: string, delimiter: string): string[][] {
 }
 
 /** `null` when it cannot become a table; the caller tells the user. */
-export function tableFromClipboard(
+export function tableFromDelimited(
   text: string,
   format: TableFormat,
 ): string | null {

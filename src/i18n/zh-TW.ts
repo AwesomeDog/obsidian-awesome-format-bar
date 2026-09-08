@@ -63,6 +63,7 @@ export default {
   "Code Block": "程式碼區塊",
   "Math Block": "公式區塊",
   Table: "表格",
+  "Convert Text to Table": "文字轉換為表格",
   Comment: "註解",
   Footnote: "腳注",
   "Attach File": "附加檔案",
@@ -109,6 +110,7 @@ export default {
   "Sort Rows": "列排序",
   "Sort Rows A to Z": "由 A 到 Z 排序",
   "Sort Rows Z to A": "由 Z 到 A 排序",
+  "Convert to Text": "轉換為文字",
   "Paste as Table": "貼上為表格",
 
   // Tabs and groups
@@ -190,4 +192,6 @@ export default {
   "Clipboard is not a table. Copy two or more rows of tab- or comma-separated values first.":
     "剪貼簿內容不是表格。請先複製兩列或以上以 Tab 或逗號分隔的資料。",
   "This note has no headings to list.": "此筆記沒有可列出的標題。",
+  "Select two or more rows of tab- or comma-separated values first.":
+    "請先選取兩列或以上以 Tab 或逗號分隔的資料。",
 } satisfies Record<string, string>;

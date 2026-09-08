@@ -63,6 +63,7 @@ export default {
   "Code Block": "コード ブロック",
   "Math Block": "数式ブロック",
   Table: "テーブル",
+  "Convert Text to Table": "テキストをテーブルに変換",
   Comment: "コメント",
   Footnote: "脚注",
   "Attach File": "ファイルの添付",
@@ -109,6 +110,7 @@ export default {
   "Sort Rows": "行の並べ替え",
   "Sort Rows A to Z": "昇順に並べ替え",
   "Sort Rows Z to A": "降順に並べ替え",
+  "Convert to Text": "テキストに変換",
   "Paste as Table": "テーブルとして貼り付け",
 
   // Tabs and groups
@@ -191,6 +193,8 @@ export default {
     "{name} に失敗しました。詳細は開発者コンソールで確認してください。",
   "Clipboard is not a table. Copy two or more rows of tab- or comma-separated values first.":
     "クリップボードの内容はテーブルではありません。タブまたはコンマで区切られたデータを 2 行以上コピーしてください。",
+  "Select two or more rows of tab- or comma-separated values first.":
+    "タブまたはコンマで区切られたデータを 2 行以上選択してください。",
   "This note has no headings to list.":
     "このノートには一覧表示できる見出しがありません。",
 } satisfies Record<string, string>;

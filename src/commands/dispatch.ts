@@ -41,9 +41,10 @@ import {
   moveColumn,
   moveRow,
   sortRows,
+  tableToText,
   type TableFormat,
 } from "../editor-ops/table";
-import { tableFromClipboard } from "../editor-ops/tsv";
+import { tableFromDelimited } from "../editor-ops/tsv";
 import { deleteRanges, formatDateTime, insertText } from "../editor-ops/text";
 import { CASE_OPTIONS } from "../model/palettes";
 import { commit, selectionRanges } from "./apply";
@@ -168,7 +169,7 @@ export async function runClipboard(
   if (id === "paste-as-table") {
     const text = await navigator.clipboard.readText();
     if (text === "") return;
-    const table = tableFromClipboard(text, context.format);
+    const table = tableFromDelimited(text, context.format);
     if (!table) {
       new Notice(
         t(
@@ -308,6 +309,21 @@ export function planFor(context: CommandContext, id: string): Plan | null {
       return sortRows(doc, caret, format, false);
     case "table-sort-za":
       return sortRows(doc, caret, format, true);
+    case "table-convert-to-text":
+      return tableToText(doc, caret);
+    case "convert-text-to-table": {
+      // One table needs one block of text, so extra cursors are ignored.
+      const range = ranges[0];
+      if (!range) return NO_CHANGE;
+      const table = tableFromDelimited(doc.slice(range.from, range.to), format);
+      if (!table) {
+        new Notice(
+          t("Select two or more rows of tab- or comma-separated values first."),
+        );
+        return NO_CHANGE;
+      }
+      return insertText(doc, [range], table);
+    }
     case "emoji":
       return optionValue ? insertText(doc, ranges, optionValue) : NO_CHANGE;
     case "change-case": {

@@ -210,6 +210,23 @@ export function renderTable(
   for (const row of cells.slice(1)) out.push(draw(row));
   return out.join("\n");
 }
+
+/** Word's Convert to Text: one tab-separated line per row, header included. */
+export function tableToText(doc: string, offset: number): Plan {
+  const found = tableAt(doc, offset);
+  if (!found) return NO_CHANGE;
+  const text = found.rows.map((row) => row.join("\t")).join("\n");
+  return {
+    changes: [
+      replaceBlock(
+        found.lines,
+        found.start,
+        found.start + found.rows.length,
+        text,
+      ),
+    ],
+  };
+}
 interface TableEditContext {
   readonly cell: TableCellPosition;
   readonly columns: number;

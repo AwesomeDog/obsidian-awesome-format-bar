@@ -14,9 +14,10 @@ import {
   planTableEnter,
   moveRow,
   sortRows,
+  tableToText,
   type TableFormat,
 } from "../src/editor-ops/table";
-import { tableFromClipboard } from "../src/editor-ops/tsv";
+import { tableFromDelimited } from "../src/editor-ops/tsv";
 
 const PADDED: TableFormat = { padWidth: true };
 const TIGHT: TableFormat = { padWidth: false };
@@ -417,41 +418,83 @@ describe("planTableEnter", () => {
   });
 });
 
-describe("tableFromClipboard", () => {
+describe("tableFromDelimited", () => {
   it("builds a table from tab-separated values", () => {
-    expect(tableFromClipboard("a\tb\nc\td", PADDED)).toBe(
+    expect(tableFromDelimited("a\tb\nc\td", PADDED)).toBe(
       ["| a   | b   |", "| --- | --- |", "| c   | d   |"].join("\n"),
     );
   });
 
   it("keeps a comma inside a quoted CSV field in one cell", () => {
-    expect(tableFromClipboard('"a,b",c\nd,e', PADDED)).toBe(
+    expect(tableFromDelimited('"a,b",c\nd,e', PADDED)).toBe(
       ["| a,b | c   |", "| --- | --- |", "| d   | e   |"].join("\n"),
     );
   });
 
   it("turns a newline inside a quoted field into a line break", () => {
-    expect(tableFromClipboard('"x\ny",b\nc,d', PADDED)).toBe(
+    expect(tableFromDelimited('"x\ny",b\nc,d', PADDED)).toBe(
       ["| x<br>y | b   |", "| ------ | --- |", "| c      | d   |"].join("\n"),
     );
   });
 
   it("escapes pipes, which would otherwise split a cell", () => {
-    expect(tableFromClipboard("a|b\tc\nd\te", PADDED)).toBe(
+    expect(tableFromDelimited("a|b\tc\nd\te", PADDED)).toBe(
       ["| a\\|b | c   |", "| ---- | --- |", "| d    | e   |"].join("\n"),
     );
   });
 
   it("drops the trailing empty row a spreadsheet always adds", () => {
-    expect(tableFromClipboard("a\tb\nc\td\n\t", PADDED)).toBe(
+    expect(tableFromDelimited("a\tb\nc\td\n\t", PADDED)).toBe(
       ["| a   | b   |", "| --- | --- |", "| c   | d   |"].join("\n"),
     );
   });
 
   it("refuses text that cannot be a table", () => {
-    expect(tableFromClipboard("", PADDED)).toBeNull();
-    expect(tableFromClipboard("   \n\n", PADDED)).toBeNull();
-    expect(tableFromClipboard("a\tb", PADDED)).toBeNull();
-    expect(tableFromClipboard("hello\nworld", PADDED)).toBeNull();
+    expect(tableFromDelimited("", PADDED)).toBeNull();
+    expect(tableFromDelimited("   \n\n", PADDED)).toBeNull();
+    expect(tableFromDelimited("a\tb", PADDED)).toBeNull();
+    expect(tableFromDelimited("hello\nworld", PADDED)).toBeNull();
+  });
+});
+
+describe("tableToText", () => {
+  it("writes one tab-separated line per row", () => {
+    expect(
+      run("| a | b |\n| - | - |\n| c^ | d |", (doc, at) =>
+        tableToText(doc, at),
+      ),
+    ).toBe("a\tb\nc\td");
+  });
+
+  it("keeps an empty cell as an empty field", () => {
+    expect(
+      run("| a | b |\n| - | - |\n|^  | d |", (doc, at) => tableToText(doc, at)),
+    ).toBe("a\tb\n\td");
+  });
+
+  it("unescapes a piped cell back into a pipe", () => {
+    expect(
+      run("| a\\|b | c |\n| ---- | - |\n| d^ | e |", (doc, at) =>
+        tableToText(doc, at),
+      ),
+    ).toBe("a|b\tc\nd\te");
+  });
+
+  it("keeps a header-only table as one line", () => {
+    expect(
+      run("| a | b |\n| -^ | - |", (doc, at) => tableToText(doc, at)),
+    ).toBe("a\tb");
+  });
+
+  it("does nothing outside a table", () => {
+    const { doc, offset } = caret("plain ^text");
+    expect(tableToText(doc, offset).changes.length).toBe(0);
+  });
+
+  it("round-trips back through tableFromDelimited", () => {
+    const table = tableFromDelimited("a\tb\nc\td", PADDED) ?? "";
+    expect(applyChanges(table, tableToText(table, 0).changes)).toBe(
+      "a\tb\nc\td",
+    );
   });
 });

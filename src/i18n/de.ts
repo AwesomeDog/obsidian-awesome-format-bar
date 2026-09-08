@@ -63,6 +63,7 @@ export default {
   "Code Block": "Codeblock",
   "Math Block": "Formelblock",
   Table: "Tabelle",
+  "Convert Text to Table": "Text in Tabelle umwandeln",
   Comment: "Kommentar",
   Footnote: "Fußnote",
   "Attach File": "Datei anfügen",
@@ -109,6 +110,7 @@ export default {
   "Sort Rows": "Zeilen sortieren",
   "Sort Rows A to Z": "Aufsteigend sortieren",
   "Sort Rows Z to A": "Absteigend sortieren",
+  "Convert to Text": "In Text umwandeln",
   "Paste as Table": "Als Tabelle einfügen",
 
   // Tabs and groups
@@ -192,6 +194,8 @@ export default {
     "{name} ist fehlgeschlagen. Details finden Sie in der Entwicklerkonsole.",
   "Clipboard is not a table. Copy two or more rows of tab- or comma-separated values first.":
     "Die Zwischenablage enthält keine Tabelle. Kopieren Sie zuerst zwei oder mehr Zeilen mit tabulator- oder kommagetrennten Werten.",
+  "Select two or more rows of tab- or comma-separated values first.":
+    "Wählen Sie zuerst zwei oder mehr Zeilen mit tabulator- oder kommagetrennten Werten aus.",
   "This note has no headings to list.":
     "Diese Notiz enthält keine Überschriften.",
 } satisfies Record<string, string>;

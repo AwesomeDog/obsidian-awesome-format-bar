@@ -89,7 +89,14 @@ export const BUILT_IN_COMMAND_TABS = [
       },
       {
         name: "Blocks",
-        commands: ["callout", "code-block", "math-block", "table", "comment"],
+        commands: [
+          "callout",
+          "code-block",
+          "math-block",
+          "table",
+          "convert-text-to-table",
+          "comment",
+        ],
       },
       {
         name: "Media & Symbols",
@@ -147,7 +154,10 @@ export const BUILT_IN_COMMAND_TABS = [
           "table-align-column-right",
         ],
       },
-      { name: "Data", commands: ["table-sort"] },
+      {
+        name: "Data",
+        commands: ["table-sort", "table-convert-to-text"],
+      },
       { name: "Clipboard", commands: ["paste-as-table"] },
     ],
   },

@@ -63,6 +63,7 @@ export default {
   "Code Block": "Bloc de code",
   "Math Block": "Bloc de formule",
   Table: "Tableau",
+  "Convert Text to Table": "Convertir le texte en tableau",
   Comment: "Commentaire",
   Footnote: "Note de bas de page",
   "Attach File": "Joindre un fichier",
@@ -109,6 +110,7 @@ export default {
   "Sort Rows": "Trier les lignes",
   "Sort Rows A to Z": "Trier de A à Z",
   "Sort Rows Z to A": "Trier de Z à A",
+  "Convert to Text": "Convertir en texte",
   "Paste as Table": "Coller en tant que tableau",
 
   // Tabs and groups
@@ -193,6 +195,8 @@ export default {
     "{name} a échoué. Consultez la console de développement pour plus de détails.",
   "Clipboard is not a table. Copy two or more rows of tab- or comma-separated values first.":
     "Le presse-papiers n'est pas un tableau. Copiez d'abord deux lignes ou plus de valeurs séparées par des tabulations ou des virgules.",
+  "Select two or more rows of tab- or comma-separated values first.":
+    "Sélectionnez d’abord deux lignes ou plus de valeurs séparées par des tabulations ou des virgules.",
   "This note has no headings to list.":
     "Cette note ne contient aucun titre à lister.",
 } satisfies Record<string, string>;
