@@ -14,7 +14,8 @@ import { openFloatingLayer } from "./floating";
 import type { ToolbarHost } from "./host";
 import { resolveIcon } from "./icons";
 
-const FREQUENT = "Frequently used";
+/** Chip label: the word it replaced was several times wider than the rest. */
+const FREQUENT = "🕘";
 
 /** Kaomoji are whole sentences; two columns is the only readable layout. */
 const COLUMNS: Readonly<Record<string, number>> = {
@@ -219,13 +220,13 @@ export async function openCharPanel(
     const names = groupsOf(source.entries);
     const frequent = searching ? [] : frequentlyUsed(source.entries, usage);
     const activeGroup =
-      group || (frequent.length > 0 ? t(FREQUENT) : (names[0] ?? ""));
+      group || (frequent.length > 0 ? FREQUENT : (names[0] ?? ""));
     // Sticky, or the first pick makes Frequently used appear under the cursor.
     group = activeGroup;
 
     items = searching
       ? searchCharacters(source.entries, query)
-      : activeGroup === t(FREQUENT)
+      : activeGroup === FREQUENT
         ? frequent
         : source.entries.filter((c) => c.group === activeGroup);
 
@@ -254,8 +255,7 @@ export async function openCharPanel(
       categoryNavEl.addClass("is-hidden");
     } else {
       categoryNavEl.removeClass("is-hidden");
-      const categoryList =
-        frequent.length > 0 ? [t(FREQUENT), ...names] : names;
+      const categoryList = frequent.length > 0 ? [FREQUENT, ...names] : names;
       for (const cat of categoryList) {
         const isCatActive = cat === activeGroup;
         const chip = createTabButton(categoryNavEl, {

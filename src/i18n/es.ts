@@ -169,7 +169,6 @@ export default {
   "More commands": "Más comandos",
   "Add one under Settings → Pinned.": "Agregue uno en Configuración → Anclado.",
   "Hidden by width": "Oculto por falta de ancho",
-  "Frequently used": "Usados con frecuencia",
   "Search…": "Buscar…",
   "Search characters": "Buscar caracteres",
   "No matches": "Sin coincidencias",

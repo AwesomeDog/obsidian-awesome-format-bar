@@ -168,7 +168,6 @@ export default {
   "More commands": "更多命令",
   "Add one under Settings → Pinned.": "请前往「设置 → 已固定」添加。",
   "Hidden by width": "因宽度不足而隐藏",
-  "Frequently used": "常用",
   "Search…": "搜索…",
   "Search characters": "搜索字符",
   "No matches": "无匹配项",

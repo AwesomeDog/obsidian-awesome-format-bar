@@ -171,7 +171,6 @@ export default {
   "Add one under Settings → Pinned.":
     "Fügen Sie unter „Einstellungen → Angeheftet“ einen hinzu.",
   "Hidden by width": "Wegen der Breite ausgeblendet",
-  "Frequently used": "Häufig verwendet",
   "Search…": "Suchen…",
   "Search characters": "Zeichen suchen",
   "No matches": "Keine Übereinstimmungen",

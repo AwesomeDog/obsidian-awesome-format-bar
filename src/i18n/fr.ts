@@ -171,7 +171,6 @@ export default {
   "Add one under Settings → Pinned.":
     "Ajoutez-en un sous « Paramètres → Épinglé ».",
   "Hidden by width": "Masqué par manque de largeur",
-  "Frequently used": "Fréquemment utilisé",
   "Search…": "Rechercher…",
   "Search characters": "Rechercher des caractères",
   "No matches": "Aucun résultat",

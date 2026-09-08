@@ -170,7 +170,6 @@ export default {
   "Add one under Settings → Pinned.":
     "「設定 → ピン留め」から追加してください。",
   "Hidden by width": "幅が不足しているため非表示",
-  "Frequently used": "よく使う項目",
   "Search…": "検索…",
   "Search characters": "文字を検索",
   "No matches": "該当する項目はありません",
