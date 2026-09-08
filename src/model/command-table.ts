@@ -27,6 +27,24 @@ export const COMMANDS = [
 
   // Home · Font
   {
+    id: "font-family",
+    name: "Font Family",
+    icon: "whole-word",
+    kind: "editor",
+    requiresSelection: true,
+    popup: "font-family",
+    commandPalette: false,
+  },
+  {
+    id: "font-size",
+    name: "Font Size",
+    icon: "a-large-small",
+    kind: "editor",
+    requiresSelection: true,
+    popup: "font-size",
+    commandPalette: false,
+  },
+  {
     id: "bold",
     name: "Bold",
     icon: "bold",

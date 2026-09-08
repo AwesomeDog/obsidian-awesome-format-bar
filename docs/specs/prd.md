@@ -28,7 +28,7 @@ Markdown also has no syntax for the characters people actually want — an emoji
 ## 3. Design Principles
 
 1. **Word terminology** — reuse existing muscle memory.
-2. **Only what the Markdown ecosystem can express** — standard Markdown first, then Obsidian syntax, then inline HTML (Underline, Superscript, Subscript, alignment, Font Color, Highlight Color). No Word concepts Markdown lacks.
+2. **Only what the Markdown ecosystem can express** — standard Markdown first, then Obsidian syntax, then inline HTML (Underline, Superscript, Subscript, alignment, Font Color, Highlight Color, Font Size, Font Family). No Word concepts Markdown lacks.
 3. **Forward, don't rebuild** — where Obsidian already provides a command (Insert Table, Internal Link, Clear Formatting), the toolbar forwards to it.
 4. **Minimal UI** — follow the active theme; icons from Obsidian's built-in Lucide set (§7).
 5. **Fixed layout, zero configuration** — except the **Pinned** tab, because only the user knows which commands deserve a toolbar spot.
@@ -66,12 +66,12 @@ A fixed built-in subset of commands, grouped by dividers. Buttons that don't fit
 
 ## 5. Commands
 
-**113 built-in commands** across 5 tabs and 21 groups, plus the Pinned tab. Seven live inside drop-down buttons and one opens the Emoji & Symbols panel; the other 105 are registered in the command palette, so users can assign their own shortcuts.
+**115 built-in commands** across 5 tabs and 21 groups, plus the Pinned tab. Nine live inside drop-down buttons and one opens the Emoji & Symbols panel; the other 105 are registered in the command palette, so users can assign their own shortcuts.
 
 ### Tab 1 · Home
 
 - **Clipboard** — Paste, Cut, Copy, Paste as Plain Text
-- **Font** — Bold, Italic, Underline, Strikethrough, Subscript, Superscript, Inline Code, Inline Math, Highlight, Highlight Color, Font Color, Clear Formatting, Change Case
+- **Font** — Font Family, Font Size, Bold, Italic, Underline, Strikethrough, Subscript, Superscript, Inline Code, Inline Math, Highlight, Highlight Color, Font Color, Clear Formatting, Change Case
 - **Paragraph** — Bullet List, Numbered List, Task List, Quote, Decrease Indent, Increase Indent, Renumber List, Sort Lines, Swap Line Up, Swap Line Down, Align Left / Center / Right / Justify, Horizontal Rule
 - **Styles** — Heading 1–6, Remove Heading
 - **Editing** — Undo, Redo, Find and Replace
@@ -182,12 +182,12 @@ The Table options govern editing behavior and text output, not toolbar layout, s
 
 - A rich-text editor or any proprietary format.
 - A replacement for the command palette — the toolbar covers frequent actions only.
-- Word features Markdown has no concept of: font family and size, line spacing, margins, headers and footers, page numbers, shapes, charts, table of contents.
+- Word features Markdown has no concept of: line spacing, margins, headers and footers, page numbers, shapes, charts, table of contents.
 - Features needing capabilities Obsidian doesn't expose: spell check, grammar check, thesaurus, translation.
 - User-created commands — Pinned surfaces existing commands, it doesn't create new ones.
 - Emoji shortcodes: no `:smile:` expansion, no autocomplete while typing; the panel inserts raw characters.
 - Skin-tone selection, custom emoji sets, user-editable character lists.
-- Reordering, hiding or showing the 113 built-in commands.
+- Reordering, hiding or showing the 115 built-in commands.
 - Toolbar appearance customization: background or icon color pickers, theme variants.
 
 ---
@@ -199,7 +199,7 @@ The Table options govern editing behavior and text output, not toolbar layout, s
 | **Position** | Where a toolbar renders: **Top**, **Following**, **Fixed**. Three independent toggles. |
 | **Layout** | How a position renders: **Ribbon** (Top) or **Compact** (Following / Fixed). |
 | **Tab · Group · Button** | Ribbon structure. A **drop-down** button holds several commands; a Compact **overflow menu** (`⋯`) holds the buttons that don't fit. |
-| **Command** | An action the toolbar runs. **113 built-in commands** plus any **pinned command**. |
+| **Command** | An action the toolbar runs. **115 built-in commands** plus any **pinned command**. |
 | **Source · Group · Entry** | Emoji & Symbols panel structure: three sources (Emoji, Kaomoji, Symbols) → groups → entries. Picking an entry inserts a character. |
 | **Word terminology** | Display names follow Microsoft Word (*Bold*, *Clear Formatting*), initial capitals, no `Toggle` prefix. |
 | **Plugin icon** | The plugin's icon in Obsidian's left sidebar. "Ribbon" on its own always means the toolbar layout. |

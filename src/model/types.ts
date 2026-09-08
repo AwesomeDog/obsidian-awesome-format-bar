@@ -40,6 +40,8 @@ type CommandKind = "registered" | "editor" | "clipboard" | "view";
 type CommandPopup =
   | "color"
   | "highlight-color"
+  | "font-size"
+  | "font-family"
   | "case"
   | "character-panel"
   | "callout"

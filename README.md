@@ -13,7 +13,7 @@
 
 **Awesome Format Bar** is a **formatting toolbar (ribbon) plugin for [Obsidian](https://obsidian.md)**. It overlays a familiar, Word-like **editor toolbar** on top of your notes, so everyday formatting is one click away — while your vault stays 100% plain text.
 
-Everything the toolbar writes is **standard Markdown**, **Obsidian-flavoured Markdown**, or — where Markdown simply has no syntax (underline, superscript, subscript, text alignment, text color) — a small amount of **inline HTML** that Obsidian renders natively.
+Everything the toolbar writes is **standard Markdown**, **Obsidian-flavoured Markdown**, or — where Markdown simply has no syntax (underline, superscript, subscript, text alignment, text color, font family, font size) — a small amount of **inline HTML** that Obsidian renders natively.
 
 *Looking for an Obsidian **toolbar plugin**, **format bar**, **editor toolbar**, **rich-text / WYSIWYG-style editing bar**, **Markdown formatting buttons**, **emoji picker**, **table editor**, or a **Microsoft Word-like ribbon for Obsidian**? That's this plugin.*
 
@@ -47,7 +47,7 @@ Obsidian is fast **if** you already speak Markdown. For everyone else — studen
 - **No syntax to memorise.** Select text, click **Bold**. That's it.
 - **Word terminology you already know.** Home / Insert / View / Table tabs, "Clear Formatting", "Change Case", "Navigation Pane".
 - **Discover what Obsidian can do.** Callouts, block references, embeds, math blocks and tags all get a button — features many users never find in the syntax.
-- **Do what Markdown can't.** Underline, superscript, subscript, paragraph alignment and text/highlight colors, written as clean inline HTML.
+- **Do what Markdown can't.** Underline, superscript, subscript, paragraph alignment, text/highlight colors and font family/size, written as clean inline HTML.
 - **Plain text forever.** No proprietary format, no database, no lock-in — your notes are still just `.md` files.
 - **Offline & private.** No network calls, no accounts, no telemetry. The ~2,150-entry emoji library ships inside the plugin.
 - **Keyboard-friendly too.** Switch every toolbar position off and the interface disappears completely — all 105 palette-registered commands stay available and can be bound to your own hotkeys.
@@ -57,7 +57,7 @@ Obsidian is fast **if** you already speak Markdown. For everyone else — studen
 | | |
 | --- | --- |
 | **Toolbar positions** | Top ribbon, floating bar above the selection, fixed bottom bar — combine freely |
-| **Commands** | **113** built-in, **105** available in the command palette for custom hotkeys |
+| **Commands** | **115** built-in, **105** available in the command palette for custom hotkeys |
 | **Tabs** | Home · Insert · View · Table · Utilities · **Pinned** |
 | **Callouts** | All 12 Obsidian callout types in one drop-down |
 | **Emoji & symbols** | ~2,150 emoji, kaomoji and symbols, fully offline |
@@ -78,9 +78,9 @@ Obsidian is fast **if** you already speak Markdown. For everyone else — studen
 
 Each position is toggled independently, so you can run just the floating bar, just the ribbon, or all three.
 
-### 🅰️ 113 formatting commands in a familiar layout
+### 🅰️ 115 formatting commands in a familiar layout
 
-Bold, italic, underline, strikethrough, inline code, inline math, highlight (with color), font color, clear formatting, change case, headings 1–6, bullet / numbered / task lists, quotes, indentation, horizontal rules, undo/redo, find & replace, paragraph alignment — grouped exactly where a Word user expects them.
+Bold, italic, underline, strikethrough, inline code, inline math, highlight (with color), font color, **font family**, **font size**, clear formatting, change case, headings 1–6, bullet / numbered / task lists, quotes, indentation, horizontal rules, undo/redo, find & replace, paragraph alignment — grouped exactly where a Word user expects them.
 
 ### 💬 Callout picker — all 12 Obsidian callout types
 
@@ -118,12 +118,12 @@ Fixed, opinionated layout that inherits your active Obsidian theme in light and 
 
 ## Full command reference
 
-105 of the 113 commands are registered in the **command palette**, so you can assign your own keyboard shortcuts. (Drop-down containers and the Emoji & Symbols panel are toolbar-only.)
+105 of the 115 commands are registered in the **command palette**, so you can assign your own keyboard shortcuts. (Drop-down containers and the Emoji & Symbols panel are toolbar-only.)
 
 ### Home
 
 - **Clipboard** — Paste, Cut, Copy, Paste as Plain Text
-- **Font** — Bold, Italic, Underline, Strikethrough, Subscript, Superscript, Inline Code, Inline Math, Highlight, Highlight Color, Font Color, Clear Formatting, Change Case
+- **Font** — Font Family, Font Size, Bold, Italic, Underline, Strikethrough, Subscript, Superscript, Inline Code, Inline Math, Highlight, Highlight Color, Font Color, Clear Formatting, Change Case
 - **Paragraph** — Bullet / Numbered / Task List, Quote, Decrease / Increase Indent, Renumber List, Sort Lines, Swap Line Up / Down, Align Left / Center / Right / Justify, Horizontal Rule
 - **Styles** — Heading 1–6, Remove Heading
 - **Editing** — Undo, Redo, Find and Replace
@@ -213,10 +213,10 @@ No — and that's the point. It's a **toolbar** on top of Obsidian's own editor.
 No. Bold, headings, lists, links, tables, callouts, code blocks and math are all buttons.
 
 **What exactly gets written into my notes?**
-Standard Markdown and Obsidian-flavoured Markdown. Only where Markdown has no syntax — underline, superscript, subscript, paragraph alignment, text and highlight colors — does the plugin emit small, standard inline HTML tags, which Obsidian renders natively.
+Standard Markdown and Obsidian-flavoured Markdown. Only where Markdown has no syntax — underline, superscript, subscript, paragraph alignment, text and highlight colors, font family and font size — does the plugin emit small, standard inline HTML tags, which Obsidian renders natively.
 
 **Can I keep using my keyboard shortcuts?**
-Yes. 105 of the 113 commands appear in the command palette and can be bound to any hotkey.
+Yes. 105 of the 115 commands appear in the command palette and can be bound to any hotkey.
 
 **I'm a keyboard person — can I hide the toolbar completely?**
 Yes, and nothing is lost by doing it. Switch off all three positions (**Top / Following / Fixed**) in **Settings → Awesome Format Bar** and the plugin leaves zero footprint on the screen: no ribbon, no floating bar, no bottom bar. Every one of the **101 palette-registered commands** still runs, from the command palette or from a hotkey you assign in **Settings → Hotkeys** — including commands Obsidian has no built-in shortcut for, such as font color, highlight color, change case, callouts, table sorting and the line utilities. Think of it as an optional keyboard-only layer you can switch on whenever the mouse starts feeling slow.

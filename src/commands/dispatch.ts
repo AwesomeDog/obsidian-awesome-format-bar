@@ -64,16 +64,23 @@ function parseCaseMode(optionValue: string): CaseMode | null {
   return CASE_MODES.has(optionValue) ? (optionValue as CaseMode) : null;
 }
 
-/** Color options arrive as `color:#e03131` or `background:none`. */
-function parseColorOptionValue(
+const SPAN_PROPERTIES = new Set<string>([
+  "color",
+  "background",
+  "font-size",
+  "font-family",
+]);
+
+/** Span options arrive as `color:#e03131`, `font-size:12pt`, `background:none`. */
+function parseSpanOptionValue(
   optionValue: string,
 ): { property: SpanProperty; value: string | null } | null {
   const at = optionValue.indexOf(":");
   if (at < 0) return null;
   const name = optionValue.slice(0, at);
   const raw = optionValue.slice(at + 1);
-  if (name !== "color" && name !== "background") return null;
-  return { property: name, value: raw === "none" ? null : raw };
+  if (!SPAN_PROPERTIES.has(name)) return null;
+  return { property: name as SpanProperty, value: raw === "none" ? null : raw };
 }
 
 /** Tracked so unload can leave fullscreen even if the user never toggles back. */
@@ -331,8 +338,10 @@ export function planFor(context: CommandContext, id: string): Plan | null {
       return mode ? changeCase(doc, ranges, mode) : NO_CHANGE;
     }
     case "font-color":
-    case "highlight-color": {
-      const parsed = optionValue ? parseColorOptionValue(optionValue) : null;
+    case "highlight-color":
+    case "font-size":
+    case "font-family": {
+      const parsed = optionValue ? parseSpanOptionValue(optionValue) : null;
       return parsed
         ? applySpanStyle(doc, ranges, parsed.property, parsed.value)
         : NO_CHANGE;

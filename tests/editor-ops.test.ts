@@ -194,6 +194,31 @@ describe("applySpanStyle", () => {
       applySpanStyle("ab", [{ from: 1, to: 1 }], "color", "#111").changes,
     ).toHaveLength(0);
   });
+
+  it("adds a font size beside a colour", () => {
+    expect(
+      apply('[<span style="color:#111">b</span>]', (d, r) =>
+        applySpanStyle(d, r, "font-size", "12pt"),
+      ),
+    ).toBe('<span style="color:#111;font-size:12pt">b</span>');
+  });
+
+  it("keeps a comma inside a font family", () => {
+    expect(
+      apply('[<span style="font-family:Georgia,serif">b</span>]', (d, r) =>
+        applySpanStyle(d, r, "font-size", "12pt"),
+      ),
+    ).toBe('<span style="font-family:Georgia,serif;font-size:12pt">b</span>');
+  });
+
+  it("clears the size and keeps the family", () => {
+    expect(
+      apply(
+        '[<span style="font-family:serif;font-size:12pt">b</span>]',
+        (d, r) => applySpanStyle(d, r, "font-size", null),
+      ),
+    ).toBe('<span style="font-family:serif">b</span>');
+  });
 });
 
 describe("case", () => {

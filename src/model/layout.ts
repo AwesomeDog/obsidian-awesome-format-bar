@@ -23,6 +23,8 @@ export const BUILT_IN_COMMAND_TABS = [
       {
         name: "Font",
         commands: [
+          "font-family",
+          "font-size",
           "bold",
           "italic",
           "underline",

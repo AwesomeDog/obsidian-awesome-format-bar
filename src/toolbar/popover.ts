@@ -2,7 +2,12 @@ import { setTooltip } from "obsidian";
 import Picker from "vanilla-picker/csp";
 import { t } from "../i18n/i18n";
 import { commandById, DROPDOWN_ITEMS } from "../model/command-table";
-import { CASE_OPTIONS, STANDARD_COLORS } from "../model/palettes";
+import {
+  CASE_OPTIONS,
+  FONT_FAMILIES,
+  FONT_SIZES,
+  STANDARD_COLORS,
+} from "../model/palettes";
 import type { CommandSpec } from "../model/types";
 import { openFloatingLayer } from "./floating";
 import type { ToolbarHost } from "./host";
@@ -125,6 +130,19 @@ export function popoverSectionsFor(
                 ),
             },
           ],
+        },
+      ];
+    }
+    case "font-size":
+    case "font-family": {
+      const property = spec.popup === "font-size" ? "font-size" : "font-family";
+      const options = spec.popup === "font-size" ? FONT_SIZES : FONT_FAMILIES;
+      return [
+        {
+          items: options.map((option) => ({
+            label: t(option.label),
+            onChoose: () => host.execute(spec, `${property}:${option.value}`),
+          })),
         },
       ];
     }

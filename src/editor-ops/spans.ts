@@ -6,8 +6,8 @@ import {
   type Range,
 } from "./plan";
 
-/** Color spans: Font Color and Highlight Color share one writer. */
-export type SpanProperty = "color" | "background";
+/** One writer for all four: Font Color, Highlight Color, Font Size, Font Family. */
+export type SpanProperty = "color" | "background" | "font-size" | "font-family";
 
 const SPAN_CLOSE = "</span>";
 const SPAN_OPEN_BEFORE = /<span style="([^"]*)">$/;
