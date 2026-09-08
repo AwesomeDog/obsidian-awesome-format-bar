@@ -198,23 +198,23 @@ describe("applySpanStyle", () => {
   it("adds a font size beside a colour", () => {
     expect(
       apply('[<span style="color:#111">b</span>]', (d, r) =>
-        applySpanStyle(d, r, "font-size", "12pt"),
+        applySpanStyle(d, r, "font-size", "1.5em"),
       ),
-    ).toBe('<span style="color:#111;font-size:12pt">b</span>');
+    ).toBe('<span style="color:#111;font-size:1.5em">b</span>');
   });
 
   it("keeps a comma inside a font family", () => {
     expect(
       apply('[<span style="font-family:Georgia,serif">b</span>]', (d, r) =>
-        applySpanStyle(d, r, "font-size", "12pt"),
+        applySpanStyle(d, r, "font-size", "1.5em"),
       ),
-    ).toBe('<span style="font-family:Georgia,serif;font-size:12pt">b</span>');
+    ).toBe('<span style="font-family:Georgia,serif;font-size:1.5em">b</span>');
   });
 
   it("clears the size and keeps the family", () => {
     expect(
       apply(
-        '[<span style="font-family:serif;font-size:12pt">b</span>]',
+        '[<span style="font-family:serif;font-size:1.5em">b</span>]',
         (d, r) => applySpanStyle(d, r, "font-size", null),
       ),
     ).toBe('<span style="font-family:serif">b</span>');

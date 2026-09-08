@@ -14,20 +14,19 @@ export const STANDARD_COLORS = [
   "#7030a0",
 ] as const;
 
-/** Word's sizes, in pt. `none` clears the property, the way the colors do. */
+/**
+ * Relative sizes, in `em` — they scale with the surrounding text, so a span
+ * survives a theme or zoom change. `none` clears the property, like the colors.
+ */
 export const FONT_SIZES = [
   { label: "Default", value: "none" },
-  { label: "9", value: "9pt" },
-  { label: "10", value: "10pt" },
-  { label: "11", value: "11pt" },
-  { label: "12", value: "12pt" },
-  { label: "14", value: "14pt" },
-  { label: "16", value: "16pt" },
-  { label: "18", value: "18pt" },
-  { label: "20", value: "20pt" },
-  { label: "24", value: "24pt" },
-  { label: "28", value: "28pt" },
-  { label: "36", value: "36pt" },
+  { label: "0.5", value: "0.5em" },
+  { label: "0.75", value: "0.75em" },
+  { label: "0.9", value: "0.9em" },
+  { label: "1.25", value: "1.25em" },
+  { label: "1.5", value: "1.5em" },
+  { label: "2", value: "2em" },
+  { label: "3", value: "3em" },
 ] as const;
 
 /**

@@ -71,7 +71,7 @@ const SPAN_PROPERTIES = new Set<string>([
   "font-family",
 ]);
 
-/** Span options arrive as `color:#e03131`, `font-size:12pt`, `background:none`. */
+/** Span options arrive as `color:#e03131`, `font-size:1.5em`, `background:none`. */
 function parseSpanOptionValue(
   optionValue: string,
 ): { property: SpanProperty; value: string | null } | null {
