@@ -1,6 +1,6 @@
 # Awesome Format Bar — a Word-style Markdown formatting toolbar for Obsidian
 
-> Bold, italic, underline, highlight, font color, headings, lists, tables, callouts and emoji — **by clicking buttons instead of typing Markdown syntax**.
+> Bold, italic, underline, highlight, font, headings, lists, tables, callouts and emoji — **by clicking buttons instead of typing Markdown syntax**.
 
 [![Obsidian](https://img.shields.io/badge/Obsidian-1.13.7%2B-7C3AED)](https://obsidian.md)
 [![GitHub release](https://img.shields.io/github/v/release/AwesomeDog/obsidian-awesome-format-bar)](https://github.com/AwesomeDog/obsidian-awesome-format-bar/releases/latest)
@@ -8,6 +8,8 @@
 [![Commands](https://img.shields.io/badge/commands-100+-informational)](#full-command-reference)
 [![i18n](https://img.shields.io/badge/languages-8-success)]()
 [![Stars](https://img.shields.io/github/stars/AwesomeDog/obsidian-awesome-format-bar?style=social)](https://github.com/AwesomeDog/obsidian-awesome-format-bar/stargazers)
+
+**English** (this file is the canonical one) · [简体中文](README.zh-CN.md)
 
 🌍 Localized in **English, 简体中文, 繁體中文, 日本語, 한국어, Deutsch, Français and Español** (matches your Obsidian language).
 
