@@ -431,6 +431,12 @@ describe("tableFromDelimited", () => {
     );
   });
 
+  it("keeps comma-containing TSV as tab-separated", () => {
+    expect(tableFromDelimited("a\tb\n\"c,d\"\te", PADDED)).toBe(
+      ["| a   | b   |", "| --- | --- |", "| c,d | e   |"].join("\n"),
+    );
+  });
+
   it("keeps a comma inside a quoted CSV field in one cell", () => {
     expect(tableFromDelimited('"a,b",c\nd,e', PADDED)).toBe(
       ["| a,b | c   |", "| --- | --- |", "| d   | e   |"].join("\n"),

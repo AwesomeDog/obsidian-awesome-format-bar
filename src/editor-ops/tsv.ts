@@ -7,7 +7,7 @@ function detectDelimiter(text: string): string | null {
   const tabs = (text.match(/\t/g) ?? []).length;
   const commas = (text.match(/,/g) ?? []).length;
   if (tabs === 0 && commas === 0) return null;
-  return tabs >= commas ? "\t" : ",";
+  return tabs > 0 ? "\t" : ",";
 }
 
 /** Without quoting, a cell holding a comma or newline splits silently. */
