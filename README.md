@@ -6,10 +6,10 @@
 [![GitHub release](https://img.shields.io/github/v/release/AwesomeDog/obsidian-awesome-format-bar)](https://github.com/AwesomeDog/obsidian-awesome-format-bar/releases/latest)
 [![Downloads](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fobsidianmd%2Fobsidian-releases%2Fmaster%2Fcommunity-plugin-stats.json&query=%24%5B%22awesome-format-bar%22%5D.downloads&label=downloads&color=573E7A)](https://obsidian.md/plugins?id=awesome-format-bar)
 [![Commands](https://img.shields.io/badge/commands-100+-informational)](#full-command-reference)
-[![i18n](https://img.shields.io/badge/languages-8-success)]()
+[![i18n](https://img.shields.io/badge/languages-9-success)]()
 [![Stars](https://img.shields.io/github/stars/AwesomeDog/obsidian-awesome-format-bar?style=social)](https://github.com/AwesomeDog/obsidian-awesome-format-bar/stargazers)
 
-🌍 **English** · [简体中文](docs/i18n/README.zh.md) · [繁體中文](docs/i18n/README.zh-TW.md) · [日本語](docs/i18n/README.ja.md) · [한국어](docs/i18n/README.ko.md) · [Deutsch](docs/i18n/README.de.md) · [Français](docs/i18n/README.fr.md) · [Español](docs/i18n/README.es.md) — the plugin UI matches your Obsidian language.
+🌍 **English** · [简体中文](docs/i18n/README.zh.md) · [繁體中文](docs/i18n/README.zh-TW.md) · [日本語](docs/i18n/README.ja.md) · [한국어](docs/i18n/README.ko.md) · [Deutsch](docs/i18n/README.de.md) · [Français](docs/i18n/README.fr.md) · [Español](docs/i18n/README.es.md) · [Русский](docs/i18n/README.ru.md) — the plugin UI matches your Obsidian language.
 
 **Awesome Format Bar** is a **formatting toolbar (ribbon) plugin for [Obsidian](https://obsidian.md)**. It overlays a familiar, Word-like **editor toolbar** on top of your notes, so everyday formatting is one click away — while your vault stays 100% plain text.
 
@@ -276,4 +276,5 @@ Obsidian ツールバー・書式設定バー・絵文字ピッカー ·
 Obsidian 툴바 · 서식 도구 모음 ·
 Obsidian Symbolleiste / Formatierungsleiste ·
 Barre d'outils / barre de mise en forme pour Obsidian ·
-Barra de herramientas / barra de formato para Obsidian
+Barra de herramientas / barra de formato para Obsidian  
+Панель инструментов / панель форматирования для Obsidian

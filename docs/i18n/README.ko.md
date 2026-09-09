@@ -6,12 +6,12 @@
 [![GitHub release](https://img.shields.io/github/v/release/AwesomeDog/obsidian-awesome-format-bar)](https://github.com/AwesomeDog/obsidian-awesome-format-bar/releases/latest)
 [![Downloads](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fobsidianmd%2Fobsidian-releases%2Fmaster%2Fcommunity-plugin-stats.json&query=%24%5B%22awesome-format-bar%22%5D.downloads&label=downloads&color=573E7A)](https://obsidian.md/plugins?id=awesome-format-bar)
 [![Commands](https://img.shields.io/badge/commands-100+-informational)](#full-command-reference)
-[![i18n](https://img.shields.io/badge/languages-8-success)]()
+[![i18n](https://img.shields.io/badge/languages-9-success)]()
 [![Stars](https://img.shields.io/github/stars/AwesomeDog/obsidian-awesome-format-bar?style=social)](https://github.com/AwesomeDog/obsidian-awesome-format-bar/stargazers)
 
 [English](../../README.md) · **한국어** (이 페이지) —— 이 페이지는 영어판 README의 번역이며, **내용은 영어판이 기준**입니다.
 
-🌍 인터페이스는 **English、简体中文、繁體中文、日本語、한국어、Deutsch、Français、Español** 여덟 가지 언어를 지원합니다（Obsidian의 언어 설정을 따라 자동으로 전환됩니다）.
+🌍 인터페이스는 **English、简体中文、繁體中文、日本語、한국어、Deutsch、Français、Español、Русский** 아홉 가지 언어를 지원합니다（Obsidian의 언어 설정을 따라 자동으로 전환됩니다）.
 
 **Awesome Format Bar**는 [Obsidian](https://obsidian.md)용 **서식 바（리본）플러그인**입니다. 노트 위에 Word처럼 익숙한 **편집기 도구 모음**을 겹쳐 띄워, 매일 쓰는 서식을 한 번의 클릭으로 처리합니다. 그래도 노트는 여전히 100% 순수 텍스트입니다.
 
@@ -278,4 +278,5 @@ Obsidian ツールバー・書式設定バー・絵文字ピッカー ·
 Obsidian 툴바 · 서식 도구 모음 ·  
 Obsidian Symbolleiste / Formatierungsleiste ·  
 Barre d'outils / barre de mise en forme pour Obsidian ·  
-Barra de herramientas / barra de formato para Obsidian
+Barra de herramientas / barra de formato para Obsidian  
+Панель инструментов / панель форматирования для Obsidian

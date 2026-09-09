@@ -6,12 +6,12 @@
 [![GitHub release](https://img.shields.io/github/v/release/AwesomeDog/obsidian-awesome-format-bar)](https://github.com/AwesomeDog/obsidian-awesome-format-bar/releases/latest)
 [![Downloads](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fobsidianmd%2Fobsidian-releases%2Fmaster%2Fcommunity-plugin-stats.json&query=%24%5B%22awesome-format-bar%22%5D.downloads&label=downloads&color=573E7A)](https://obsidian.md/plugins?id=awesome-format-bar)
 [![Commands](https://img.shields.io/badge/commands-100+-informational)](#full-command-reference)
-[![i18n](https://img.shields.io/badge/languages-8-success)]()
+[![i18n](https://img.shields.io/badge/languages-9-success)]()
 [![Stars](https://img.shields.io/github/stars/AwesomeDog/obsidian-awesome-format-bar?style=social)](https://github.com/AwesomeDog/obsidian-awesome-format-bar/stargazers)
 
 [English](../../README.md) · **繁體中文（本頁）** —— 本頁是英文版 README 的翻譯，**內容以英文版為準**。
 
-🌍 介面支援 **English、简体中文、繁體中文、日本語、한국어、Deutsch、Français、Español** 八種語言（跟隨 Obsidian 的語言設定自動切換）。
+🌍 介面支援 **English、简体中文、繁體中文、日本語、한국어、Deutsch、Français、Español、Русский** 九種語言（跟隨 Obsidian 的語言設定自動切換）。
 
 **Awesome Format Bar** 是 [Obsidian](https://obsidian.md) 的**格式列（功能區）外掛**。它在編輯器上疊一條熟悉的、類似 Word 的**工具列**，日常排版一鍵完成，而你的保存庫仍然是 100% 純文字。
 
@@ -278,4 +278,5 @@ Obsidian ツールバー・書式設定バー・絵文字ピッカー ·
 Obsidian 툴바 · 서식 도구 모음 ·  
 Obsidian Symbolleiste / Formatierungsleiste ·  
 Barre d'outils / barre de mise en forme pour Obsidian ·  
-Barra de herramientas / barra de formato para Obsidian
+Barra de herramientas / barra de formato para Obsidian  
+Панель инструментов / панель форматирования для Obsidian

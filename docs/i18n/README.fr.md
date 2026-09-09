@@ -6,12 +6,12 @@
 [![GitHub release](https://img.shields.io/github/v/release/AwesomeDog/obsidian-awesome-format-bar)](https://github.com/AwesomeDog/obsidian-awesome-format-bar/releases/latest)
 [![Downloads](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fobsidianmd%2Fobsidian-releases%2Fmaster%2Fcommunity-plugin-stats.json&query=%24%5B%22awesome-format-bar%22%5D.downloads&label=downloads&color=573E7A)](https://obsidian.md/plugins?id=awesome-format-bar)
 [![Commands](https://img.shields.io/badge/commands-100+-informational)](#full-command-reference)
-[![i18n](https://img.shields.io/badge/languages-8-success)]()
+[![i18n](https://img.shields.io/badge/languages-9-success)]()
 [![Stars](https://img.shields.io/github/stars/AwesomeDog/obsidian-awesome-format-bar?style=social)](https://github.com/AwesomeDog/obsidian-awesome-format-bar/stargazers)
 
 [English](../../README.md) · **Français** (cette page) —— Cette page est une traduction du README anglais, **la version anglaise fait foi**.
 
-🌍 L'interface est disponible en huit langues : **English、简体中文、繁體中文、日本語、한국어、Deutsch、Français、Español**（elle suit automatiquement la langue d'Obsidian）.
+🌍 L'interface est disponible en neuf langues : **English、简体中文、繁體中文、日本語、한국어、Deutsch、Français、Español、Русский**（elle suit automatiquement la langue d'Obsidian）.
 
 **Awesome Format Bar** est un **plugin de barre de mise en forme（ruban）pour [Obsidian](https://obsidian.md)**. Il superpose à vos notes une **barre d'outils** familière, façon Word, pour que la mise en forme courante soit à un clic —— tandis que votre coffre reste 100 % texte brut.
 
@@ -278,4 +278,5 @@ Obsidian ツールバー・書式設定バー・絵文字ピッカー ·
 Obsidian 툴바 · 서식 도구 모음 ·  
 Obsidian Symbolleiste / Formatierungsleiste ·  
 Barre d'outils / barre de mise en forme pour Obsidian ·  
-Barra de herramientas / barra de formato para Obsidian
+Barra de herramientas / barra de formato para Obsidian  
+Панель инструментов / панель форматирования для Obsidian

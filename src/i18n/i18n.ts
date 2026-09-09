@@ -5,6 +5,7 @@ import es from "./es";
 import fr from "./fr";
 import ja from "./ja";
 import ko from "./ko";
+import ru from "./ru";
 import zh from "./zh";
 import zhTW from "./zh-TW";
 
@@ -13,7 +14,16 @@ type Dict = Readonly<Record<string, string>>;
 type Named = { name: string };
 
 /** Keyed by what `getLanguage()` returns; English is the source text. */
-const DICTS: Record<string, Dict> = { de, es, fr, ja, ko, zh, "zh-TW": zhTW };
+const DICTS: Record<string, Dict> = {
+  de,
+  es,
+  fr,
+  ja,
+  ko,
+  ru,
+  zh,
+  "zh-TW": zhTW,
+};
 
 const EMPTY: Dict = {};
 let current: Dict = EMPTY;

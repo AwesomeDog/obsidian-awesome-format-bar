@@ -7,6 +7,7 @@ import de from "../src/i18n/de";
 import es from "../src/i18n/es";
 import fr from "../src/i18n/fr";
 import ko from "../src/i18n/ko";
+import ru from "../src/i18n/ru";
 import zh from "../src/i18n/zh";
 import zhTW from "../src/i18n/zh-TW";
 
@@ -26,7 +27,7 @@ const source = sourceText(fileURLToPath(new URL("../src", import.meta.url)));
 
 /** Catches the one silent failure of keying by English: renaming the source. */
 describe("dictionaries", () => {
-  const dicts = { de, es, fr, ja, ko, zh, "zh-TW": zhTW };
+  const dicts = { de, es, fr, ja, ko, ru, zh, "zh-TW": zhTW };
   for (const [code, dict] of Object.entries(dicts))
     it(`${code} has no orphaned keys`, () => {
       const orphans = Object.keys(dict).filter(
