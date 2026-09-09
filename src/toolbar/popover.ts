@@ -91,6 +91,9 @@ function openColorPicker(
       layer.close();
     },
   });
+  layer.el
+    .querySelector<HTMLButtonElement>(".picker_cancel button")
+    ?.addEventListener("click", () => layer.close());
 
   layer.place();
 }
