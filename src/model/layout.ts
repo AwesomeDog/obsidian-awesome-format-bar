@@ -111,6 +111,7 @@ export const BUILT_IN_COMMAND_TABS = [
     id: "view",
     name: "View",
     groups: [
+      { name: "Views", commands: ["toggle-live-preview-source"] },
       { name: "Immersive", commands: ["focus-mode", "zen-mode"] },
       {
         name: "Show",

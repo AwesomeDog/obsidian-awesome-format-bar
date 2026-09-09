@@ -462,7 +462,14 @@ export const COMMANDS = [
   // Real fullscreen on the view, so Obsidian's own layout is left alone.
   { id: "zen-mode", name: "Zen Mode", icon: "maximize", kind: "view" },
 
-  // View · Show
+  // View · Views
+  {
+    id: "toggle-live-preview-source",
+    name: "Live Preview/Source",
+    icon: "code-2",
+    kind: "registered",
+    registeredCommandId: "editor:toggle-source",
+  },
   {
     id: "show-whitespace",
     name: "Show Whitespace",

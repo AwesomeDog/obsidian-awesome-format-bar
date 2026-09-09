@@ -73,6 +73,7 @@ export default {
   "Date and Time": "날짜 및 시간",
   "Table of Contents": "목차",
   "Show Whitespace": "공백 표시",
+  "Live Preview/Source": "라이브 프리뷰/소스",
   "Show Line Numbers": "줄 번호 표시",
   "Focus Mode": "집중 모드",
   "Zen Mode": "젠 모드",

@@ -73,6 +73,7 @@ export default {
   "Date and Time": "日期與時間",
   "Table of Contents": "目錄",
   "Show Whitespace": "顯示空格",
+  "Live Preview/Source": "即時預覽/原始碼",
   "Show Line Numbers": "顯示行號",
   "Focus Mode": "專注模式",
   "Zen Mode": "禪模式",

@@ -66,7 +66,7 @@ A fixed built-in subset of commands, grouped by dividers. Buttons that don't fit
 
 ## 5. Commands
 
-**115 built-in commands** across 5 tabs and 21 groups, plus the Pinned tab. Nine live inside drop-down buttons and one opens the Emoji & Symbols panel; the other 105 are registered in the command palette, so users can assign their own shortcuts.
+**116 built-in commands** across 5 tabs and 22 groups, plus the Pinned tab. Nine live inside drop-down buttons and one opens the Emoji & Symbols panel; the other 106 are registered in the command palette, so users can assign their own shortcuts.
 
 ### Tab 1 · Home
 
@@ -81,11 +81,13 @@ A fixed built-in subset of commands, grouped by dividers. Buttons that don't fit
 - **Links** — Internal Link, External Link, Embed, Tag, Block Reference
 - **Blocks** — Callout ▼ (Note Callout, Abstract Callout, Info Callout, Tip Callout, Success Callout, Question Callout, Warning Callout, Failure Callout, Danger Callout, Bug Callout, Example Callout, Quote Callout), Code Block, Math Block, Table, Convert Text to Table, Comment
 - **Media & Symbols** — Attach File, Emoji & Symbols, Date and Time
+- **Reference** — **Table of Contents** writes a snapshot after the paragraph at the caret: a bold title followed by one nested `- [[#Heading|Heading]]` link per heading; headings inside code fences or quoted into callouts are ignored. **Footnote** forwards to Obsidian's footnote command.
 
 ### Tab 3 · View
 
 Group order follows Word's own View tab.
 
+- **Views** — **Live Preview/Source** forwards to Obsidian's built-in editing-mode command. Word's corresponding group contains Read Mode, Print Layout and Web Layout.
 - **Immersive** — **Focus Mode** collapses both sidebars. **Zen Mode** puts the note itself into real fullscreen. Word keeps Focus here too; its other half there, Immersive Reader, has no Markdown equivalent.
 - **Show** — **Show Whitespace** marks every space with a dot and every tab with an arrow, and draws any space that isn't a plain one — NBSP, ideographic, EN/EM — in orange, so the wrong space is visible where it was typed. It draws in Source mode only. Neither line ends nor line breaks are marked. **Show Line Numbers** and **Readable Line Length** are Obsidian's own settings. **Navigation Pane** opens Obsidian's Outline: Word's Navigation Pane is that same panel of headings, while Word's **Outline** is a view mode that replaces the whole document.
 - **Zoom** — **Zoom In**, **Zoom Out** and **100%** scale the window. Word's Zoom group calls the last one 100%; it is Obsidian's Reset Zoom. Desktop only — Obsidian registers no zoom commands elsewhere, so the buttons grey out.
@@ -113,7 +115,7 @@ Column-level names (*Align Column…*, *Sort Rows…*) distinguish these from th
 
 ### Tab 6 · Pinned
 
-Pin **any command from the command palette** — core commands, other plugins' commands, or this plugin's own 105 — to the toolbar with an icon of your choice. The built-in set is the intersection of what most people use often; the one or two commands a given user can't live without usually fall outside it.
+Pin **any command from the command palette** — core commands, other plugins' commands, or this plugin's own 106 — to the toolbar with an icon of your choice. The built-in set is the intersection of what most people use often; the one or two commands a given user can't live without usually fall outside it.
 
 | Item | Convention |
 |---|---|
@@ -182,12 +184,12 @@ The Table options govern editing behavior and text output, not toolbar layout, s
 
 - A rich-text editor or any proprietary format.
 - A replacement for the command palette — the toolbar covers frequent actions only.
-- Word features Markdown has no concept of: line spacing, margins, headers and footers, page numbers, shapes, charts, table of contents.
+- Word features Markdown has no concept of: line spacing, margins, headers and footers, page numbers, shapes, charts.
 - Features needing capabilities Obsidian doesn't expose: spell check, grammar check, thesaurus, translation.
 - User-created commands — Pinned surfaces existing commands, it doesn't create new ones.
 - Emoji shortcodes: no `:smile:` expansion, no autocomplete while typing; the panel inserts raw characters.
 - Skin-tone selection, custom emoji sets, user-editable character lists.
-- Reordering, hiding or showing the 115 built-in commands.
+- Reordering, hiding or showing the 116 built-in commands.
 - Toolbar appearance customization: background or icon color pickers, theme variants.
 
 ---
@@ -199,7 +201,7 @@ The Table options govern editing behavior and text output, not toolbar layout, s
 | **Position** | Where a toolbar renders: **Top**, **Following**, **Fixed**. Three independent toggles. |
 | **Layout** | How a position renders: **Ribbon** (Top) or **Compact** (Following / Fixed). |
 | **Tab · Group · Button** | Ribbon structure. A **drop-down** button holds several commands; a Compact **overflow menu** (`⋯`) holds the buttons that don't fit. |
-| **Command** | An action the toolbar runs. **115 built-in commands** plus any **pinned command**. |
+| **Command** | An action the toolbar runs. **116 built-in commands** plus any **pinned command**. |
 | **Source · Group · Entry** | Emoji & Symbols panel structure: three sources (Emoji, Kaomoji, Symbols) → groups → entries. Picking an entry inserts a character. |
 | **Word terminology** | Display names follow Microsoft Word (*Bold*, *Clear Formatting*), initial capitals, no `Toggle` prefix. |
 | **Plugin icon** | The plugin's icon in Obsidian's left sidebar. "Ribbon" on its own always means the toolbar layout. |

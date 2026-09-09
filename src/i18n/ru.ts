@@ -73,6 +73,7 @@ export default {
   "Date and Time": "Дата и время",
   "Table of Contents": "Оглавление",
   "Show Whitespace": "Показывать пробелы",
+  "Live Preview/Source": "Live Preview/исходный текст",
   "Show Line Numbers": "Показывать номера строк",
   "Focus Mode": "Режим фокуса",
   "Zen Mode": "Режим дзен",

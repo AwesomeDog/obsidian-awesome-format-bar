@@ -73,6 +73,7 @@ export default {
   "Date and Time": "Date et heure",
   "Table of Contents": "Table des matières",
   "Show Whitespace": "Afficher les espaces",
+  "Live Preview/Source": "Aperçu en direct/Source",
   "Show Line Numbers": "Afficher les numéros de ligne",
   "Focus Mode": "Mode focus",
   "Zen Mode": "Mode zen",

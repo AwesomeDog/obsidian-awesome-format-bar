@@ -73,6 +73,7 @@ export default {
   "Date and Time": "日付と時刻",
   "Table of Contents": "目次",
   "Show Whitespace": "空白を表示",
+  "Live Preview/Source": "ライブプレビュー/ソース",
   "Show Line Numbers": "行番号を表示",
   "Focus Mode": "フォーカス モード",
   "Zen Mode": "禅モード",

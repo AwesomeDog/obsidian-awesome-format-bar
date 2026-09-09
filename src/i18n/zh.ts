@@ -73,6 +73,7 @@ export default {
   "Date and Time": "日期和时间",
   "Table of Contents": "目录",
   "Show Whitespace": "显示空格",
+  "Live Preview/Source": "实时预览/源码",
   "Show Line Numbers": "显示行号",
   "Focus Mode": "专注模式",
   "Zen Mode": "禅模式",
