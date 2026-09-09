@@ -46,6 +46,12 @@ describe("formatTable", () => {
     ).toBe(["| a | b |", "| --- | --- |", "| c | d |"].join("\n"));
   });
 
+  it("accepts a table without outer pipes", () => {
+    expect(
+      run("a | b\n--|--\nc^ | d", (doc, at) => formatTable(doc, at, PADDED)),
+    ).toBe(["| a   | b   |", "| --- | --- |", "| c   | d   |"].join("\n"));
+  });
+
   it("pads short rows out to the widest row", () => {
     expect(
       run("|a|b|c|\n|-|-|-|\n|1^|", (doc, at) => formatTable(doc, at, PADDED)),

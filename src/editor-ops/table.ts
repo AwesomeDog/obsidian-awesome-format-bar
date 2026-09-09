@@ -17,16 +17,13 @@ export interface MarkdownTable {
   readonly align: readonly ColumnAlignment[];
 }
 const DELIMITER = /^:?-+:?$/;
-const DELIMITER_ROW = /^\|?\s*:?-+:?\s*(\|\s*:?-+:?\s*)*\|?$/;
 
 /** Captured markers: a ``` block never closes on `~~~`; a miss reformats code. */
 const FENCE = /^\s*(`{3,}|~{3,}|\${2,})/;
 
-/** A pipe, or a bare delimiter row — but never a bare `---` rule. */
+/** A table row, but never a bare `---` rule. */
 export function isTableLine(line: string): boolean {
-  const trimmed = line.trim();
-  if (trimmed.startsWith("|")) return true;
-  return trimmed.includes("|") && DELIMITER_ROW.test(trimmed);
+  return line.trim().includes("|");
 }
 
 /** Pipes inside a fence are content, not cells. */
