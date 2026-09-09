@@ -16,6 +16,10 @@ export class ViewToolbar {
 
   sync(): void {
     const wanted = new Set(this.host.positions);
+    this.host.containerEl.toggleClass(
+      "awesome-format-bar-host--has-ribbon",
+      wanted.has("top"),
+    );
     for (const [position, surface] of this.surfaces) {
       if (wanted.has(position)) continue;
       surface.destroy();
@@ -47,6 +51,7 @@ export class ViewToolbar {
     if (this.frame) win.cancelAnimationFrame(this.frame);
     for (const surface of this.surfaces.values()) surface.destroy();
     this.surfaces.clear();
+    this.host.containerEl.removeClass("awesome-format-bar-host--has-ribbon");
     this.host.containerEl.removeClass("awesome-format-bar-host");
   }
 }

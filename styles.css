@@ -526,7 +526,7 @@
  * ribbon in normal flow, but start it below that layer using Obsidian's own
  * measured header height (rather than a device-specific pixel value).
  */
-.is-mobile .awesome-format-bar-host:has(> .awesome-format-bar--ribbon) {
+.is-mobile .awesome-format-bar-host--has-ribbon {
   padding-block-start: var(--view-header-height, 0px);
 }
 
