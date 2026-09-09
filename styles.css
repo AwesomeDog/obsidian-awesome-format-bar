@@ -516,8 +516,18 @@
     --formatbar-swatch: 28px;
     --formatbar-control-h: 30px;
     --formatbar-search-h: 34px;
-    --formatbar-lift: var(--size-4-12);
+    /* Obsidian's mobile view already reserves the native toolbar area. */
+    --formatbar-lift: var(--size-4-2);
   }
+}
+
+/*
+ * On current Android builds the pane header is a floating layer. Keep the
+ * ribbon in normal flow, but start it below that layer using Obsidian's own
+ * measured header height (rather than a device-specific pixel value).
+ */
+.is-mobile .awesome-format-bar-host:has(> .awesome-format-bar--ribbon) {
+  padding-block-start: var(--view-header-height, 0px);
 }
 
 /* ----------------------- Sort by Clicking a Header ------------------------ */
