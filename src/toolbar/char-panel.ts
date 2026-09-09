@@ -58,6 +58,7 @@ export async function openCharPanel(
   );
 
   layer.el.addClass("is-char-panel");
+  layer.el.setAttr("tabindex", "-1");
   const usage = host.charUsage();
   pruneUsage(usage);
 
@@ -164,7 +165,8 @@ export async function openCharPanel(
 
   /** Autofocusing a text field on mobile pops the keyboard over the panel. */
   function focusEl(el: HTMLElement): void {
-    if (!Platform.isMobileApp) el.focus();
+    if (Platform.isMobileApp && el === searchEl) layer.el.focus();
+    else el.focus();
   }
 
   function clearSearch(): void {
@@ -321,6 +323,45 @@ export async function openCharPanel(
 
   layer.el.addEventListener("keydown", (event) => {
     const inSearch = searchEl.ownerDocument.activeElement === searchEl;
+    const active = event.target as HTMLElement;
+    const sourceTabs = Array.from(
+      layer.el.querySelectorAll<HTMLButtonElement>(".char-source-tab"),
+    );
+    const categoryTabs = Array.from(
+      layer.el.querySelectorAll<HTMLButtonElement>(".char-category-chip"),
+    );
+    const tabIndex = (tabs: readonly HTMLElement[]): number =>
+      tabs.indexOf(active);
+    const moveTab = (tabs: readonly HTMLButtonElement[], delta: number): void => {
+      const current = tabIndex(tabs);
+      const next = Math.max(0, Math.min(current + delta, tabs.length - 1));
+      tabs[next]?.focus();
+    };
+
+    const sourceIndexAt = tabIndex(sourceTabs);
+    if (sourceIndexAt >= 0) {
+      if (event.key === "ArrowLeft" || event.key === "ArrowRight")
+        moveTab(sourceTabs, event.key === "ArrowLeft" ? -1 : 1);
+      else if (event.key === "ArrowDown")
+        (categoryTabs[0] ?? cells[0])?.focus();
+      else if (event.key === "Enter") active.click();
+      else return;
+      event.preventDefault();
+      return;
+    }
+
+    const categoryIndex = tabIndex(categoryTabs);
+    if (categoryIndex >= 0) {
+      if (event.key === "ArrowLeft" || event.key === "ArrowRight")
+        moveTab(categoryTabs, event.key === "ArrowLeft" ? -1 : 1);
+      else if (event.key === "ArrowDown") cells[0]?.focus();
+      else if (event.key === "ArrowUp") sourceTabs[sourceIndex]?.focus();
+      else if (event.key === "Enter") active.click();
+      else return;
+      event.preventDefault();
+      return;
+    }
+
     switch (event.key) {
       case "ArrowLeft":
         if (inSearch) return; // Allow normal caret navigation within search input
