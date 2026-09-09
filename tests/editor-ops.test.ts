@@ -313,6 +313,10 @@ describe("sortList", () => {
     expect(apply("[1. b\n2. a]", sortList)).toBe("1. a\n2. b");
   });
 
+  it("sorts only a single selected list item", () => {
+    expect(apply("[1. b]\n2. a\n3. c", sortList)).toBe("1. b\n2. a\n3. c");
+  });
+
   it("leaves a selection that holds no list alone", () => {
     expect(apply("[b\na]", sortList)).toBe("b\na");
   });
