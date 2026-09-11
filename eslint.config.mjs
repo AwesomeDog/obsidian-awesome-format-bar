@@ -10,6 +10,7 @@ export default defineConfig(
     "esbuild.config.mjs",
     "version-bump.mjs",
     "scripts/deploy.mjs",
+    "scripts/social-preview.mjs",
     "package.json",
     "package-lock.json",
     "tsconfig.json",
