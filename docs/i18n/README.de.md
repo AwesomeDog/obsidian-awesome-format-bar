@@ -102,7 +102,7 @@ Die Registerkarte **Angeheftet** macht die Leiste zu Ihrem eigenen Starter: Wäh
 
 ### 👁️ Lese-, Fokus- und Gliederungswerkzeuge
 
-**Leerzeichen anzeigen** (Punkte für Leerzeichen, Pfeile für Tabulatoren, orange Markierungen für geschütztes Leerzeichen, ideografisches Leerzeichen sowie EN- und EM-Leerzeichen), **Zeilennummern anzeigen**, **Lesbare Zeilenbreite**, **Navigationsbereich** (die Gliederung von Obsidian), **Vergrößern / Verkleinern / 100 %**, **Nach rechts teilen / Nach unten teilen**, **Reduzieren / Erweitern (Alle)**, **Fokusmodus** (beide Seitenleisten einklappen) und **Zen-Modus** (echter Vollbildmodus).
+**Leerzeichen anzeigen** (Punkte für Leerzeichen, Pfeile für Tabulatoren, orange Markierungen für geschütztes Leerzeichen, ideografisches Leerzeichen sowie EN- und EM-Leerzeichen), **Zeilennummern anzeigen**, **Lesbare Zeilenbreite**, **Navigationsbereich** (die Gliederung von Obsidian), **Vergrößern / Verkleinern / 100 %**, **Nach rechts teilen / Nach unten teilen**, **Reduzieren / Erweitern (Alle)**, **Fokusmodus** (beide Seitenleisten einklappen), **Zen-Modus** (echter Vollbildmodus) und **Schreibmaschinen-Modus** (Cursorzeile in der Mitte fixiert, hervorgehoben, der Rest gedimmt).
 
 ### 📑 Inhaltsverzeichnis mit einem Klick
 
@@ -140,7 +140,7 @@ Interner Link, Externer Link, Einbetten, Tag, Blockverweis, **Hinweis (Callout) 
 - **Zoom** — Vergrößern, Verkleinern, 100 %
 - **Fenster** — Nach rechts teilen, Nach unten teilen
 - **Gliederung** — Reduzieren, Erweitern, Alle reduzieren, Alle erweitern
-- **Immersiv** — Fokusmodus, Zen-Modus
+- **Immersiv** — Fokusmodus, Zen-Modus, Schreibmaschinen-Modus
 
 ### Tabelle
 

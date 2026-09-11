@@ -100,7 +100,7 @@ The **Pinned** tab turns the toolbar into your own launcher: pick any command fr
 
 ### 👁️ Reading, focus and outlining tools
 
-**Show Whitespace** (dots for spaces, arrows for tabs, orange markers for NBSP / ideographic / EN & EM spaces), **Show Line Numbers**, **Readable Line Length**, **Navigation Pane** (Obsidian's Outline), **Zoom In / Out / 100%**, **Split Right / Down**, **Collapse / Expand (All)**, **Focus Mode** (collapse both sidebars) and **Zen Mode** (true fullscreen).
+**Show Whitespace** (dots for spaces, arrows for tabs, orange markers for NBSP / ideographic / EN & EM spaces), **Show Line Numbers**, **Readable Line Length**, **Navigation Pane** (Obsidian's Outline), **Zoom In / Out / 100%**, **Split Right / Down**, **Collapse / Expand (All)**, **Focus Mode** (collapse both sidebars), **Zen Mode** (true fullscreen) and **Typewriter Mode** (caret line parked mid-editor, highlighted, with the rest dimmed).
 
 ### 📑 Table of contents in one click
 
@@ -138,7 +138,7 @@ Internal Link, External Link, Embed, Tag, Block Reference, **Callout ▼** (Note
 - **Zoom** — Zoom In, Zoom Out, 100%
 - **Window** — Split Right, Split Down
 - **Outlining** — Collapse, Expand, Collapse All, Expand All
-- **Immersive** — Focus Mode, Zen Mode
+- **Immersive** — Focus Mode, Zen Mode, Typewriter Mode
 
 ### Table
 

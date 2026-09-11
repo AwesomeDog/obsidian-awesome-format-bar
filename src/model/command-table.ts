@@ -461,6 +461,13 @@ export const COMMANDS = [
   },
   // Real fullscreen on the view, so Obsidian's own layout is left alone.
   { id: "zen-mode", name: "Zen Mode", icon: "maximize", kind: "view" },
+  // Parks the caret line mid-editor, highlights it and dims the rest.
+  {
+    id: "typewriter-mode",
+    name: "Typewriter Mode",
+    icon: "type",
+    kind: "view",
+  },
 
   // View · Views
   {

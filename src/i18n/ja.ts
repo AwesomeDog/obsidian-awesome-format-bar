@@ -77,6 +77,7 @@ export default {
   "Show Line Numbers": "行番号を表示",
   "Focus Mode": "フォーカス モード",
   "Zen Mode": "禅モード",
+  "Typewriter Mode": "タイプライターモード",
   "Readable Line Length": "読みやすい行の長さ",
   "Navigation Pane": "ナビゲーションウィンドウ",
   "Zoom In": "拡大",

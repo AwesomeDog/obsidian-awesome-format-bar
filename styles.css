@@ -601,6 +601,18 @@
   }
 }
 
+/* ---------------------------- Typewriter Mode ----------------------------- */
+.awesome-format-bar-typewriter .cm-line {
+  opacity: 0.45;
+}
+
+/* 10% of --interactive-accent: tinted rather than grey, so it follows whatever
+   accent the vault is set to. Dimming carries the contrast, not this. */
+.awesome-format-bar-typewriter .cm-line.awesome-format-bar-current-line {
+  opacity: 1;
+  background-color: var(--background-modifier-active-hover);
+}
+
 /* ------------------------------- Zen Mode ------------------------------- */
 :fullscreen > .view-header {
   display: none;

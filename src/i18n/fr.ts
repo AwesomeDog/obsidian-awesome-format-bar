@@ -77,6 +77,7 @@ export default {
   "Show Line Numbers": "Afficher les numéros de ligne",
   "Focus Mode": "Mode focus",
   "Zen Mode": "Mode zen",
+  "Typewriter Mode": "Mode machine à écrire",
   "Readable Line Length": "Largeur de ligne lisible",
   "Navigation Pane": "Volet de navigation",
   "Zoom In": "Zoom avant",

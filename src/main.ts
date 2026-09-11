@@ -34,6 +34,11 @@ import type { ToolbarHost, ToolbarState } from "./toolbar/host";
 import { missingIcons } from "./toolbar/icons";
 import { closeFloating } from "./toolbar/floating";
 import { ViewToolbar } from "./toolbar/view";
+import {
+  isTypewriterModeEnabled,
+  toggleTypewriterMode,
+  TYPEWRITER,
+} from "./typewriter";
 import { SHOW_WHITESPACE } from "./whitespace";
 
 const PLACEHOLDER_SVG =
@@ -79,7 +84,7 @@ export default class AwesomeFormatBarPlugin extends Plugin {
     addIcon("table-column-delete", TABLE_COLUMN_DELETE);
     this.registerCommands();
     this.addSettingTab(new FormatBarSettingTab(this.app, this));
-    this.applyWhitespace();
+    this.applyEditorExtensions();
     this.registerEditorExtension(this.editorExtensions);
 
     const reload = (): void => {
@@ -123,10 +128,12 @@ export default class AwesomeFormatBarPlugin extends Plugin {
     doc.body.toggleClass(SORTABLE_CLASS, this.settings.sortTableOnHeaderClick);
   }
 
-  private applyWhitespace(): void {
+  /** Read once per editor: a toggle reaches it through `updateOptions()`. */
+  private applyEditorExtensions(): void {
     this.editorExtensions.length = 0;
     if (this.settings.showWhitespace)
       this.editorExtensions.push(SHOW_WHITESPACE);
+    if (isTypewriterModeEnabled()) this.editorExtensions.push(TYPEWRITER);
   }
 
   refreshToolbars(): Promise<void> {
@@ -270,10 +277,9 @@ export default class AwesomeFormatBarPlugin extends Plugin {
     }
   }
 
-  /** Extensions are read once per editor, so a toggle has to reconfigure them. */
   private async setShowWhitespace(show: boolean): Promise<void> {
     this.settings.showWhitespace = show;
-    this.applyWhitespace();
+    this.applyEditorExtensions();
     await this.saveData(this.settings);
     this.app.workspace.updateOptions();
   }
@@ -337,6 +343,14 @@ export default class AwesomeFormatBarPlugin extends Plugin {
     // Its own state, not an editor write: no context to resolve.
     if (spec.id === "show-whitespace") {
       await this.setShowWhitespace(!this.settings.showWhitespace);
+      return;
+    }
+    // Same shape as Show Whitespace: state lives in the module, here to reconfigure.
+    if (spec.id === "typewriter-mode") {
+      toggleTypewriterMode();
+      this.applyEditorExtensions();
+      this.app.workspace.updateOptions();
+      this.queueRefresh();
       return;
     }
     // View commands must run in Reading view without focusing the editor.

@@ -102,7 +102,7 @@ L'onglet **Épinglé** transforme la barre en votre propre lanceur : choisissez 
 
 ### 👁️ Outils de lecture, de concentration et de plan
 
-**Afficher les espaces**（des points pour les espaces, des flèches pour les tabulations, des marqueurs orange pour les espaces insécables / idéographiques / demi-cadratin et cadratin）、**Afficher les numéros de ligne**、**Largeur de ligne lisible**、**Volet de navigation**（le plan d'Obsidian）、**Zoom avant / arrière**、**Fractionner vers la droite / vers le bas**、**Réduire / Développer（tout）**、**Mode focus**（replier les deux barres latérales）et **Mode zen**（plein écran véritable）.
+**Afficher les espaces**（des points pour les espaces, des flèches pour les tabulations, des marqueurs orange pour les espaces insécables / idéographiques / demi-cadratin et cadratin）、**Afficher les numéros de ligne**、**Largeur de ligne lisible**、**Volet de navigation**（le plan d'Obsidian）、**Zoom avant / arrière**、**Fractionner vers la droite / vers le bas**、**Réduire / Développer（tout）**、**Mode focus**（replier les deux barres latérales）, **Mode zen**（plein écran véritable）et **Mode machine à écrire**（la ligne du curseur reste au milieu, mise en évidence, le reste estompé）.
 
 ### 📑 Une table des matières en un clic
 
@@ -140,7 +140,7 @@ Lien interne, Lien externe, Incorporer, Étiquette, Référence de bloc, **Encad
 - **Zoom** —— Zoom avant, Zoom arrière, 100 %
 - **Fenêtre** —— Fractionner vers la droite, Fractionner vers le bas
 - **Plan** —— Réduire, Développer, Tout réduire, Tout développer
-- **Immersion** —— Mode focus, Mode zen
+- **Immersion** —— Mode focus, Mode zen, Mode machine à écrire
 
 ### Tableau
 

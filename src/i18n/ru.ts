@@ -77,6 +77,7 @@ export default {
   "Show Line Numbers": "Показывать номера строк",
   "Focus Mode": "Режим фокуса",
   "Zen Mode": "Режим дзен",
+  "Typewriter Mode": "Режим печатной машинки",
   "Readable Line Length": "Удобная для чтения длина строки",
   "Navigation Pane": "Область навигации",
   "Zoom In": "Увеличить масштаб",

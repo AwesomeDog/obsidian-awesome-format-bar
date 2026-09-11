@@ -102,7 +102,7 @@ La pestaña **Anclado** convierte la barra en tu propio lanzador: elige cualquie
 
 ### 👁️ Herramientas de lectura, enfoque y esquema
 
-**Mostrar espacios**（puntos para los espacios, flechas para las tabulaciones, marcas naranjas para los espacios duros / ideográficos / EN y EM）, **Mostrar números de línea**, **Ancho de línea legible**, **Panel de navegación**（el esquema de Obsidian）, **Acercar / Alejar / 100 %**, **Dividir a la derecha / Dividir hacia abajo**, **Contraer / Expandir（todo）**, **Modo de enfoque**（contrae ambas barras laterales）y **Modo zen**（pantalla completa real）.
+**Mostrar espacios**（puntos para los espacios, flechas para las tabulaciones, marcas naranjas para los espacios duros / ideográficos / EN y EM）, **Mostrar números de línea**, **Ancho de línea legible**, **Panel de navegación**（el esquema de Obsidian）, **Acercar / Alejar / 100 %**, **Dividir a la derecha / Dividir hacia abajo**, **Contraer / Expandir（todo）**, **Modo de enfoque**（contrae ambas barras laterales）, **Modo zen**（pantalla completa real）y **Modo máquina de escribir**（la línea del cursor se fija en el centro, resaltada y el resto atenuado）.
 
 ### 📑 Índice en un clic
 
@@ -140,7 +140,7 @@ Vínculo interno, Vínculo externo, Incrustar, Etiqueta, Referencia de bloque, *
 - **Zoom** —— Acercar, Alejar, 100 %
 - **Ventana** —— Dividir a la derecha, Dividir hacia abajo
 - **Esquema** —— Contraer, Expandir, Contraer todo, Expandir todo
-- **Inmersión** —— Modo de enfoque, Modo zen
+- **Inmersión** —— Modo de enfoque, Modo zen, Modo máquina de escribir
 
 ### Tabla
 

@@ -77,6 +77,7 @@ export default {
   "Show Line Numbers": "줄 번호 표시",
   "Focus Mode": "집중 모드",
   "Zen Mode": "젠 모드",
+  "Typewriter Mode": "타자기 모드",
   "Readable Line Length": "읽기 편한 줄 길이",
   "Navigation Pane": "탐색 창",
   "Zoom In": "확대",

@@ -77,6 +77,7 @@ export default {
   "Show Line Numbers": "显示行号",
   "Focus Mode": "专注模式",
   "Zen Mode": "禅模式",
+  "Typewriter Mode": "打字机模式",
   "Readable Line Length": "可读行宽",
   "Navigation Pane": "导航窗格",
   "Zoom In": "放大",
