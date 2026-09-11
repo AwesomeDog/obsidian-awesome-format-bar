@@ -24,6 +24,7 @@ export interface PopoverItem {
   readonly label: string;
   readonly icon?: string;
   readonly swatch?: string;
+  readonly disabled?: boolean;
   readonly onChoose: () => void;
 }
 
@@ -47,19 +48,24 @@ export function openPopover(
 
     for (const item of section.items) {
       const entry = list.createEl("button", {
-        attr: { type: "button" },
+        attr: {
+          "aria-disabled": String(Boolean(item.disabled)),
+          type: "button",
+        },
         cls: item.swatch ? "swatch" : "menu-item",
       });
+      entry.disabled = Boolean(item.disabled);
       if (item.swatch) entry.style.backgroundColor = item.swatch;
       else {
         if (item.icon) resolveIcon(entry, item.icon);
         entry.createSpan({ text: item.label });
       }
       setTooltip(entry, item.label);
-      entry.addEventListener("click", () => {
-        layer.close();
-        item.onChoose();
-      });
+      if (!item.disabled)
+        entry.addEventListener("click", () => {
+          layer.close();
+          item.onChoose();
+        });
     }
   }
 

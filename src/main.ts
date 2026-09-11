@@ -363,7 +363,7 @@ export default class AwesomeFormatBarPlugin extends Plugin {
   }
 
   openPinnedManager(): void {
-    openPinnedManager(this.app, {
+    const modal = openPinnedManager(this.app, {
       entries: (): readonly PinnedCommand[] => this.settings.pinned,
       add: (): Promise<void> => this.pinCommand(),
       changeIcon: (commandId): Promise<void> => this.pickPinnedIcon(commandId),
@@ -376,6 +376,7 @@ export default class AwesomeFormatBarPlugin extends Plugin {
       moveCommand: (group, from, to): Promise<void> =>
         this.movePinnedCommand(group, from, to),
     });
+    this.register(() => modal.close());
   }
 
   /** The Ribbon builds its groups once, so saving is not enough. */

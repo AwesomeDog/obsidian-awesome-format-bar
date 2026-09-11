@@ -363,8 +363,7 @@ export class ToolbarSurface {
       const items = group.commands
         .map((entry) => specsByCommand.get(entry.commandId))
         .filter((spec): spec is CommandSpec => Boolean(spec))
-        .filter((spec) => state.isEnabled(spec))
-        .map(toItem);
+        .map((spec) => ({ ...toItem(spec), disabled: !state.isEnabled(spec) }));
       if (items.length)
         sections.push({
           items,

@@ -17,6 +17,8 @@ import {
 import type { PinnedCommand } from "./model/types";
 import { allIconNames, resolveIcon } from "./toolbar/icons";
 
+const NEW_GROUP = "__new-group__";
+
 /** Pick a command, then an icon; both are `FuzzySuggestModal`. */
 
 /** An empty note gets no element, or every row grows a line. */
@@ -212,7 +214,7 @@ class TextModal extends Modal {
     form.addEventListener("submit", (event) => {
       event.preventDefault();
       const value = input.value.trim();
-      if (!value) return;
+      if (!value || value === NEW_GROUP) return;
       this.chosen = true;
       this.close();
       this.finish(value);
@@ -234,8 +236,6 @@ function askText(
     new TextModal(app, heading, initial, resolve).open(),
   );
 }
-
-const NEW_GROUP = "__new-group__";
 
 function pinnedGroupLabel(name: string): string {
   return name === DEFAULT_PIN_GROUP ? t("General") : name;
@@ -444,6 +444,8 @@ class PinnedManagerModal extends Modal {
 export function openPinnedManager(
   app: App,
   actions: PinnedManagerActions,
-): void {
-  new PinnedManagerModal(app, actions).open();
+): Modal {
+  const modal = new PinnedManagerModal(app, actions);
+  modal.open();
+  return modal;
 }
