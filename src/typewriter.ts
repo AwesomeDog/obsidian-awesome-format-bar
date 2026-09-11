@@ -74,6 +74,7 @@ class Typewriter {
         head: view.state.selection.main.head,
       }),
       write: ({ offset, head }, view) => {
+        if (!this.alive) return;
         view.contentDOM.style.paddingBlock = `${offset}px`;
         window.requestAnimationFrame(() => {
           if (!this.alive) return;

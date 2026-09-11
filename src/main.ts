@@ -14,7 +14,7 @@ import {
 } from "./commands/registered";
 import { planTableEnter, type TableFormat } from "./editor-ops/table";
 import { setLanguage } from "./i18n/i18n";
-import { COMMANDS } from "./model/command-table";
+import { COMMANDS, commandById } from "./model/command-table";
 import {
   DEFAULT_SETTINGS,
   enabledToolbarPositions,
@@ -138,6 +138,13 @@ export default class AwesomeFormatBarPlugin extends Plugin {
 
   refreshToolbars(): Promise<void> {
     return this.rebuild();
+  }
+
+  /** Typewriter parks a line, and Live Preview has none */
+  private async enterSourceMode(): Promise<void> {
+    const view = this.app.workspace.getActiveViewOfType(MarkdownView);
+    if (view?.getState()["source"] === true) return;
+    await this.execute(commandById("toggle-live-preview-source"));
   }
 
   /** A deferred leaf has no view yet; activation picks it up. */
@@ -348,6 +355,8 @@ export default class AwesomeFormatBarPlugin extends Plugin {
     // Same shape as Show Whitespace: state lives in the module, here to reconfigure.
     if (spec.id === "typewriter-mode") {
       toggleTypewriterMode();
+      // Only on the way in: leaving should not yank the view back.
+      if (isTypewriterModeEnabled()) await this.enterSourceMode();
       this.applyEditorExtensions();
       this.app.workspace.updateOptions();
       this.queueRefresh();
