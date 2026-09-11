@@ -41,6 +41,8 @@ Pinned commands stay out of both tables:
 - `RIBBON_TABS = [...BUILT_IN_COMMAND_TABS, PINNED_TAB]`, so `BUILT_IN_COMMAND_TABS` remains exactly the built-in layout and its contract test never changes.
 - `pinnedSpecs()` synthesizes ordinary `kind: 'registered'` specs at runtime, reusing the existing button and execution code.
 - **Pinned adds a data source, not an execution path.**
+- `pinned` stays a flat array. Each entry keeps `commandId`, `icon` and the captured `name`, and may add `group`; missing or invalid groups resolve to `General`.
+- `pinnedGroups()` is only a derived view. First appearance fixes group order, and every write flattens grouped entries back into one contiguous array.
 
 Contract tests in `tests/settings.test.ts` pin what the tables promise: `BUILT_IN_COMMAND_TABS` = 5 tabs / 22 groups with each non-dropdown command in exactly one group; the 18 dropdown items are listed only in `DROPDOWN_ITEMS`; `COMPACT_ORDER` is free of duplicate or unknown IDs. Startup itself only warns — `reportStartupGaps()` checks icon names and forwarded command IDs.
 
@@ -88,7 +90,7 @@ Buttons, palette and future shortcuts all run `executeSpec(spec, context)`: chec
 
 **DOM:** `setIcon()`, `setText()`, `addIcon()`; never `innerHTML`.
 
-**Overflow:** a `ResizeObserver` re-measures on width change; the rest go into an Obsidian `Menu` sectioned by the `BUILT_IN_COMMAND_TABS` groups — no custom Modal.
+**Overflow:** a `ResizeObserver` re-measures on width change; the rest go into sections by the `BUILT_IN_COMMAND_TABS` groups and by each Pinned group. Pinned editing uses one small Modal shared by the Ribbon edit button and the Settings fallback.
 
 **Following placement:** prefer above the selection, fall back below, clamp horizontally to the view, and **hide rather than cover the selection** when neither fits — a bar that would spill outside the view is hidden rather than clamped, so the vertical direction is never traded away. `pointerdown` calls `preventDefault()` to keep focus and selection.
 
@@ -118,8 +120,8 @@ Only the non-obvious ones.
 Only `getSettingDefinitions()` is overridden; the framework owns rendering, search and controls. It does no I/O, since it is re-run on every update. Nested keys plug in through `getControlValue` / `setControlValue` over dotted keys.
 
 - **Platform rows** need a handwritten `render`: a declarative item carries one control, but the three positions are independent switches. Each toggle sits in a `<label>` so the text is clickable, with the description as a tooltip on the label — on the toggle it would appear only over the switch.
-- **Pinned** is the only `type: 'list'` group, so add, delete, drag handles and indices come from the framework, identical on both platforms with no branch. Each row renders only the Change icon button; name and description are applied before `render` runs.
-- **`this.update()` after every mutation** is the only reason the list refreshes; `refreshDomState()` only re-evaluates `visible` / `disabled` and does nothing for add or delete.
+- **Pinned** is edited by the small manager Modal opened from the Pinned Ribbon or the Settings fallback. It owns group headers, command rows, drag handles, moves and icon changes; the normal toolbar remains an execution surface.
+- **The manager re-reads `settings.pinned` after every mutation** and the plugin rerenders every toolbar after saving, so the Ribbon and Compact overflow share one source of truth.
 - **Pinned changes also call `toolbar.rerender()`**: `refreshToolbars()` only syncs surfaces and disabled states, while Ribbon groups are built in the surface constructor. The two entry points own separate halves and never call each other.
 - All three positions off stays — Fixed is never auto-enabled.
 
@@ -134,7 +136,7 @@ Unavailable commands set both `disabled` and `aria-disabled`. The toolbar handle
 ## 8. Testing and gate
 
 - **`editor-ops`** — overlapping selections; wrap/unwrap over existing wrappers; Renumber List nesting, blank lines, paragraph boundaries, mixed delimiters; Sort Lines stability and fences; Merge / Split Lines over fences, lone lines and CJK; color removal touching only its own property.
-- **`settings`** — per-field defaulting, explicit all-`false` surviving, bad version reset, values preserved when disabled; `pinned` round-trip, dedupe, name fallback; the layout contract.
+- **`settings`** — per-field defaulting, explicit all-`false` surviving, bad version reset, values preserved when disabled; `pinned` round-trip, dedupe, group compaction and name fallback; the layout contract.
 - **Integration** on exactly 1.13.7 — platform defaults; all 8 position combinations without overlap; splits and pop-outs; deferred tabs; Following never covering the selection; all 107 commands executing with no missing forwarded mapping; one undo per transform; settings search and persistence; Pinned staying in sync and greying out when its source plugin is disabled; nothing left behind after unload.
 - **Gate** — `lint`, `test`, `build` pass; no source map; release contains only `main.js`, `manifest.json`, `styles.css`.
 
@@ -148,7 +150,7 @@ Unavailable commands set both `disabled` and `aria-disabled`. The toolbar handle
 | Adjust buttons or positioning | `toolbar/surface.ts` / `styles.css` |
 | Add a setting | `Settings` type, defaults in `preferences.ts`, definitions in `settings.ts` |
 | Change a forwarded command ID | The `registeredCommandId` field — leave `commands/registered.ts` alone |
-| Change Pinned behaviour | `src/pin.ts` (pickers) / `pinnedSpecs()` (buttons) |
+| Change Pinned behaviour | `src/model/pinned.ts` (grouping/order) / `src/pin.ts` (pickers and manager) / `pinnedSpecs()` (buttons) |
 
 Never touch a button callback, the settings tab and an event listener for one feature. The command table is the behaviour entry point, `ViewToolbar` the view entry point, `Plugin` the lifecycle entry point; no further layers.
 

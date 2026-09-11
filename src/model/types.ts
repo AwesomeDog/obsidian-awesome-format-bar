@@ -33,6 +33,8 @@ export interface PinnedCommand {
   readonly icon: string;
   /** Captured at pin time; the fallback when a command's plugin is gone. */
   readonly name: string;
+  /** Optional user label; absent entries belong to the default group. */
+  readonly group?: string;
 }
 type CommandKind = "registered" | "editor" | "clipboard" | "view";
 

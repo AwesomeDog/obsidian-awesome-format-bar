@@ -329,13 +329,13 @@
                 ["Data",[["arrow-down-narrow-wide","Sort Rows ▾"],["wrap-text","Convert to Text"]]],
                 ["Clipboard",[["clipboard","Paste as Table"]]]]},
         Utilities:{d:'<b>Lines</b> reshapes runs of lines: merge, split at the punctuation the text uses most, or reverse. <b>Sort</b> adds two sorts that read structure — a list sorted level by level, and the note\'s outline.',g:[["Lines",[["merge","Merge Lines"],["split","Split Lines"],["arrow-up-down","Reverse Lines"],["copy-plus","Duplicate"]]],["Sort",[["list-tree","Sort List"],["heading","Sort Headings"]]]]},
-        Pinned:{d:'<b>Pinned</b> — any command from the command palette, with any Lucide icon. Always the last tab; always a single unnamed group.',g:[]}
+        Pinned:{d:'<b>Pinned</b> — any command from the command palette, with any Lucide icon. Always the last tab; groups are user-defined.',g:[]}
     };
     const seg=document.getElementById('seg'),body=document.getElementById('rbBody'),desc=document.getElementById('rbDesc');
     Object.keys(TABS).forEach((k,i)=>{const b=document.createElement('button');b.textContent=k;if(!i)b.className='on';
         b.onclick=()=>{[...seg.children].forEach(c=>c.className='');b.className='on';render(k)};seg.appendChild(b)});
     function render(k){const t=TABS[k];desc.innerHTML=t.d;
-        if(!t.g.length){body.innerHTML=`<div class="grp" style="border:0"><div class="btns"><div class="b">${I('pin')}</div></div></div><div style="padding:14px 6px;font-size:13px;color:var(--sub)">Nothing pinned yet. Add one under Settings → Pinned.</div>`;}
+        if(!t.g.length){body.innerHTML=`<div class="grp" style="border:0"><div class="btns"><div class="b">${I('pin')}</div></div></div><div style="padding:14px 6px;font-size:13px;color:var(--sub)">Nothing pinned yet. Use the Pinned edit button to add commands and groups.</div>`;}
         else body.innerHTML=t.g.map(([nm,btns])=>`<div class="grp ${t.dim&&nm!=='Clipboard'?'dis':''}"><div class="btns">${btns.map(b=>B(b[0],b[1])).join('')}</div><div class="nm">${nm}</div></div>`).join('');
         draw();}
     render('Home');

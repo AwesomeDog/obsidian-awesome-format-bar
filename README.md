@@ -182,9 +182,9 @@ Download `main.js`, `manifest.json` and `styles.css` from a release into `<vault
 ## Getting started
 
 1. Open **Settings → Awesome Format Bar** and toggle the positions you want: **Top**, **Following**, **Fixed**.
-2. The **Ribbon (Top)** has six tabs; the last one, **Pinned**, holds the commands you pin yourself. While it is empty it shows a hint pointing back to Settings.
+2. The **Ribbon (Top)** has six tabs; the last one, **Pinned**, holds the commands you pin yourself. While it is empty it shows an add hint; use the edit button to manage commands and groups.
 3. The **compact bars** (Following / Fixed) carry a fixed subset of commands; anything that doesn't fit collapses into the `⋯` overflow menu.
-4. Pin commands under **Settings → Pinned**: add (pick a command, then an icon), change the icon, drag to reorder, or delete. Pinned commands behave exactly like their command-palette counterparts.
+4. Open the **Pinned** edit button to add commands, choose icons, create or rename groups, drag to reorder, move commands, or delete them. Settings keeps a fallback entry for the same manager. Pinned commands behave exactly like their command-palette counterparts.
 5. Prefer the keyboard? Turn **all three position toggles off** and the toolbar disappears from the interface entirely — the plugin then adds nothing to your screen, while all **105 palette-registered commands** keep working and can be bound to your own hotkeys in **Settings → Hotkeys**. In other words: you can use it as a pure command/hotkey pack and never click a button.
 
 ## Settings
@@ -192,7 +192,7 @@ Download `main.js`, `manifest.json` and `styles.css` from a release into `<vault
 | Section     | Contents                                                                                                                 |
 | ----------- | ------------------------------------------------------------------------------------------------------------------------ |
 | **Toolbar** | Independent toggles for Top / Following / Fixed                                                                          |
-| **Pinned**  | Your pinned commands — add, re-icon, reorder, delete                                                                      |
+| **Pinned**  | Open the Pinned manager to add commands, choose icons, manage groups, reorder, and delete                                  |
 | **Table**   | Enter moves to the next row; pad cell width with spaces; sort on header click in Reading view (never modifies the file)   |
 
 ## Compatibility

@@ -9,6 +9,7 @@ import {
   type RibbonGroup,
   type TabId,
 } from "../model/layout";
+import { DEFAULT_PIN_GROUP, pinnedGroups } from "../model/pinned";
 import type { CommandSpec, ToolbarPosition } from "../model/types";
 import { createButton, createTabButton } from "./button";
 import { openCharPanel } from "./char-panel";
@@ -25,7 +26,11 @@ import {
 const FOLLOWING_GAP = 8;
 /** Mirrors the `--size-4-4` inline margin both Compact bars get in styles.css. */
 const SIDE_MARGIN = 16;
-const PINNED_EMPTY = "Add one under Settings → Pinned.";
+const PINNED_EMPTY = "No pinned commands yet.";
+
+function pinnedGroupLabel(name: string): string {
+  return name === DEFAULT_PIN_GROUP ? t("General") : name;
+}
 export class ToolbarSurface {
   readonly el: HTMLElement;
   private readonly buttons = new Map<HTMLButtonElement, CommandSpec>();
@@ -121,20 +126,45 @@ export class ToolbarSurface {
         const spec = commandById(id);
         this.buttons.set(createButton(row, spec, this.host), spec);
       }
-      groupEl.createDiv({ cls: "group-name", text: group.name });
+      groupEl.createDiv({
+        cls: "group-name",
+        text: group.name,
+      });
     }
     this.refresh();
   }
 
-  /** One bare group: pinned buttons carry no group name and no fixed order. */
   private renderPinned(panel: HTMLElement): void {
-    const groupEl = panel.createDiv({ cls: "group" });
-    const row = groupEl.createDiv({ cls: "group-buttons" });
+    const actions = panel.createDiv({ cls: "pinned-actions" });
+    const edit = actions.createEl("button", {
+      attr: { "aria-label": t("Manage Pinned"), type: "button" },
+      cls: "clickable-icon",
+    });
+    resolveIcon(edit, "pencil");
+    setTooltip(edit, t("Manage Pinned"));
+    edit.addEventListener("click", () => this.host.editPinned());
+
     const specs = this.host.pinnedSpecs();
-    for (const spec of specs)
-      this.buttons.set(createButton(row, spec, this.host), spec);
-    if (specs.length === 0)
+    const byCommand = new Map(
+      specs.map((spec) => [spec.registeredCommandId, spec] as const),
+    );
+    const groups = pinnedGroups(this.host.pinnedCommands());
+    if (groups.length === 0) {
+      const groupEl = panel.createDiv({ cls: "group" });
       groupEl.createDiv({ cls: "group-empty", text: t(PINNED_EMPTY) });
+    }
+    for (const group of groups) {
+      const groupEl = panel.createDiv({ cls: "group" });
+      const row = groupEl.createDiv({ cls: "group-buttons" });
+      for (const entry of group.commands) {
+        const spec = byCommand.get(entry.commandId);
+        if (spec) this.buttons.set(createButton(row, spec, this.host), spec);
+      }
+      groupEl.createDiv({
+        cls: "group-name",
+        text: pinnedGroupLabel(group.name),
+      });
+    }
     this.refresh();
   }
 
@@ -324,12 +354,26 @@ export class ToolbarSurface {
       }
     }
 
-    // Pinned last: it is the one section the user fills.
-    const pinned = this.host
-      .pinnedSpecs()
-      .filter((spec) => state.isEnabled(spec))
-      .map(toItem);
-    if (pinned.length) sections.push({ items: pinned, title: PINNED_TAB.name });
+    const specsByCommand = new Map(
+      this.host
+        .pinnedSpecs()
+        .map((spec) => [spec.registeredCommandId, spec] as const),
+    );
+    for (const group of pinnedGroups(this.host.pinnedCommands())) {
+      const items = group.commands
+        .map((entry) => specsByCommand.get(entry.commandId))
+        .filter((spec): spec is CommandSpec => Boolean(spec))
+        .filter((spec) => state.isEnabled(spec))
+        .map(toItem);
+      if (items.length)
+        sections.push({
+          items,
+          title: t("{tab} · {group}", {
+            tab: PINNED_TAB.name,
+            group: pinnedGroupLabel(group.name),
+          }),
+        });
+    }
 
     openPopover(anchor, sections, () => this.host.focusEditor());
   }

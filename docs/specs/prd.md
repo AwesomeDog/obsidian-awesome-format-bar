@@ -52,7 +52,7 @@ Defaults: Top only. Turning every position off keeps it off.
 
 ### Layouts
 
-**Ribbon** — six tabs (Home, Insert, View, Table, Utilities, Pinned), each split into groups separated by a divider, with the group name below the buttons. Pinned is always last, has no group name, and stays visible with a hint when empty.
+**Ribbon** — six tabs (Home, Insert, View, Table, Utilities, Pinned), each split into groups separated by a divider, with the group name below the buttons. Pinned is always last; its groups are user-defined and it stays visible with a hint and edit button when empty.
 
 **Compact**
 
@@ -121,15 +121,15 @@ Pin **any command from the command palette** — core commands, other plugins' c
 |---|---|
 | Source | Every command available in the command palette; no filtering |
 | Icon | Any Lucide icon; defaults to `command` |
-| Group name | None — a single unnamed group of buttons |
+| Group name | Optional user label on each pinned command; missing means **General** |
 | Position | Last tab of the Ribbon; last section of the Compact overflow menu |
-| When empty | Tab stays visible with the hint "Add one under Settings → Pinned." |
+| When empty | Tab stays visible with the hint "No pinned commands yet." and an edit button |
 | Execution | Identical to running the command from the command palette |
 | Missing command | Button is disabled; pinned data is kept, so reinstalling restores it |
-| Adding | Settings only — no `+` on the toolbar, no palette command |
-| Order | Drag and drop in Settings |
+| Adding | Pinned's manager; Settings keeps a fallback entry |
+| Order | Drag groups and commands separately; commands stay contiguous within their group |
 
-Pinning is a one-time, low-frequency setup, so Settings is its natural home; a `+` button would eat scarce horizontal space and make the toolbar edit itself.
+Pinned's manager opens from the Pinned tab's edit button and shows command names, group labels and drag handles. Normal toolbar buttons never become editable: the manager is a separate editing state. A command can move to an existing group or create a new named group; empty groups are not stored. The persisted data remains the existing flat `pinned` array with one optional `group` field per entry, so entries without it remain in General. Group order is the first appearance order in that array; the manager compacts every change so one group cannot appear in two separated blocks.
 
 ### Font Color and Highlight Color
 
@@ -162,7 +162,7 @@ The character data ships with the plugin — emoji from `@emoji-mart/data`, kaom
 | Section | Contents |
 |---|---|
 | **Toolbar** | Independent toggles for Top / Following / Fixed |
-| **Pinned** | List of pinned commands: add (pick a command, then an icon), change icon, drag to reorder, delete |
+| **Pinned** | Open the Pinned manager to add commands, choose icons, create or rename groups, drag to reorder, move commands, and delete |
 | **Table** | Enter moves to the next row (on); pad cell width with spaces (on); sort by clicking a header in Reading view (on) |
 
 Entry usage counts are stored with the settings but have no control: the Emoji & Symbols panel writes and prunes them automatically.

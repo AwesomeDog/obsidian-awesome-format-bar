@@ -10,7 +10,14 @@ import {
   RIBBON_TABS,
   type RibbonGroup,
 } from "../src/model/layout";
-import { DEFAULT_PIN_ICON, pinnedSpecs } from "../src/model/pinned";
+import {
+  DEFAULT_PIN_ICON,
+  movePinnedGroup,
+  movePinnedToGroup,
+  movePinnedWithinGroup,
+  pinnedGroups,
+  pinnedSpecs,
+} from "../src/model/pinned";
 import {
   CURRENT_SETTINGS_VERSION,
   DEFAULT_SETTINGS,
@@ -125,6 +132,26 @@ describe("pinned commands", () => {
     ]);
   });
 
+  it("keeps old entries and folds interleaved groups by first appearance", () => {
+    const result = normalizeSettings({
+      version: CURRENT_SETTINGS_VERSION,
+      pinned: [
+        pinned({ group: "Writing" }),
+        pinned({ commandId: "editor:undo", group: "Review" }),
+        pinned({ commandId: "editor:redo", group: "Writing" }),
+        { commandId: "editor:copy", icon: "copy", name: "Copy", group: 42 },
+      ],
+    });
+    expect(
+      result.pinned.map(({ commandId, group }) => ({ commandId, group })),
+    ).toEqual([
+      { commandId: "editor:toggle-bold", group: "Writing" },
+      { commandId: "editor:redo", group: "Writing" },
+      { commandId: "editor:undo", group: "Review" },
+      { commandId: "editor:copy", group: undefined },
+    ]);
+  });
+
   it("builds specs that forward to the command they name", () => {
     const registry = new Map([["editor:toggle-bold", "Toggle bold"]]);
     const specs = pinnedSpecs([pinned()], (commandId) =>
@@ -139,6 +166,43 @@ describe("pinned commands", () => {
         name: "Toggle bold",
       },
     ]);
+  });
+
+  it("keeps group and command order separate", () => {
+    const entries = [
+      pinned({ group: "Writing" }),
+      pinned({ commandId: "editor:undo", group: "Review" }),
+      pinned({ commandId: "editor:redo", group: "Writing" }),
+    ];
+    expect(
+      pinnedGroups(entries).map((group) => [
+        group.name,
+        group.commands.map((entry) => entry.commandId),
+      ]),
+    ).toEqual([
+      ["Writing", ["editor:toggle-bold", "editor:redo"]],
+      ["Review", ["editor:undo"]],
+    ]);
+    expect(
+      movePinnedToGroup(entries, "editor:undo", "Writing").map(
+        (entry) => entry.commandId,
+      ),
+    ).toEqual(["editor:toggle-bold", "editor:redo", "editor:undo"]);
+    expect(
+      movePinnedWithinGroup(
+        movePinnedToGroup(entries, "editor:undo", "Writing"),
+        "Writing",
+        2,
+        0,
+      ).map((entry) => entry.commandId),
+    ).toEqual(["editor:undo", "editor:toggle-bold", "editor:redo"]);
+    expect(
+      movePinnedGroup(
+        movePinnedToGroup(entries, "editor:undo", "Writing"),
+        1,
+        0,
+      ).map((entry) => entry.commandId),
+    ).toEqual(["editor:toggle-bold", "editor:redo", "editor:undo"]);
   });
 });
 

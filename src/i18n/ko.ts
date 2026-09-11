@@ -176,7 +176,6 @@ export default {
 
   // Toolbar, panels and pickers
   "More commands": "추가 명령",
-  "Add one under Settings → Pinned.": "‘설정 → 고정됨’에서 추가하세요.",
   "Hidden by width": "너비 부족으로 숨김",
   "Search…": "검색…",
   "Search characters": "문자 검색",

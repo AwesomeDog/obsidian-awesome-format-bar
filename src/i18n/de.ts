@@ -177,8 +177,6 @@ export default {
 
   // Toolbar, panels and pickers
   "More commands": "Weitere Befehle",
-  "Add one under Settings → Pinned.":
-    "Fügen Sie unter „Einstellungen → Angeheftet“ einen hinzu.",
   "Hidden by width": "Wegen der Breite ausgeblendet",
   "Search…": "Suchen…",
   "Search characters": "Zeichen suchen",

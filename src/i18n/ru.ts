@@ -176,8 +176,6 @@ export default {
 
   // Toolbar, panels and pickers
   "More commands": "Другие команды",
-  "Add one under Settings → Pinned.":
-    "Добавьте команду в разделе «Настройки → Закрепленные».",
   "Hidden by width": "Скрыто из-за нехватки ширины",
   "Search…": "Поиск…",
   "Search characters": "Поиск символов",

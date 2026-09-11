@@ -332,7 +332,10 @@ export async function openCharPanel(
     );
     const tabIndex = (tabs: readonly HTMLElement[]): number =>
       tabs.indexOf(active);
-    const moveTab = (tabs: readonly HTMLButtonElement[], delta: number): void => {
+    const moveTab = (
+      tabs: readonly HTMLButtonElement[],
+      delta: number,
+    ): void => {
       const current = tabIndex(tabs);
       const next = Math.max(0, Math.min(current + delta, tabs.length - 1));
       tabs[next]?.focus();

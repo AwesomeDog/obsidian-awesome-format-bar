@@ -172,10 +172,17 @@ export default {
   "Pin a command": "固定命令",
   "No pinned commands yet.": "尚未固定任何命令。",
   "Change icon": "更改图标",
+  "Manage Pinned": "管理已固定命令",
+  "Manage pinned commands and groups.": "管理已固定的命令和分组。",
+  Done: "完成",
+  Cancel: "取消",
+  "Rename group": "重命名分组",
+  "Move to": "移动到",
+  "New group…": "新建分组…",
+  Delete: "删除",
 
   // Toolbar, panels and pickers
   "More commands": "更多命令",
-  "Add one under Settings → Pinned.": "请前往「设置 → 已固定」添加。",
   "Hidden by width": "因宽度不足而隐藏",
   "Search…": "搜索…",
   "Search characters": "搜索字符",

@@ -68,22 +68,21 @@ export class FormatBarSettingTab extends PluginSettingTab {
         type: "group",
       },
       {
-        addItem: {
-          action: () => {
-            void this.plugin.pinCommand().then(() => this.update());
-          },
-          name: t("Pin a command"),
-        },
-        emptyState: t("No pinned commands yet."),
         heading: t("Pinned"),
-        items: this.pinnedItems(),
-        onDelete: (index: number) => {
-          void this.plugin.removePinnedAt(index).then(() => this.update());
-        },
-        onReorder: (from: number, to: number) => {
-          void this.plugin.movePinned(from, to).then(() => this.update());
-        },
-        type: "list",
+        items: [
+          {
+            desc: t("Manage pinned commands and groups."),
+            name: t("Manage Pinned"),
+            render: (setting: Setting): void => {
+              setting.addButton((button) =>
+                button
+                  .setButtonText(t("Manage Pinned"))
+                  .onClick(() => this.plugin.openPinnedManager()),
+              );
+            },
+          },
+        ],
+        type: "group",
       },
       {
         heading: t("Table"),
@@ -141,24 +140,6 @@ export class FormatBarSettingTab extends PluginSettingTab {
         }
       },
     };
-  }
-
-  /** Adding a pin is Settings' own affordance; a row only changes its icon. */
-  private pinnedItems(): SettingGroupItem[] {
-    return this.plugin.settings.pinned.map((entry, index) => ({
-      desc: entry.commandId,
-      name: entry.name,
-      render: (setting: Setting): void => {
-        setting.addButton((button) =>
-          button
-            .setIcon(entry.icon)
-            .setTooltip(t("Change icon"))
-            .onClick(() => {
-              void this.plugin.pickPinnedIcon(index).then(() => this.update());
-            }),
-        );
-      },
-    }));
   }
 
   override getControlValue(key: string): unknown {

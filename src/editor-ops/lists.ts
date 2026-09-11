@@ -259,7 +259,8 @@ export function sortList(doc: string, ranges: readonly Range[]): Plan {
   for (const range of normalizeRanges(ranges)) {
     const [a, b] = blocksFor(lines, [range])[0] ?? [0, -1];
     // A selection bounds the sort; a bare cursor takes in the whole list.
-    const [first, last] = range.from === range.to ? listBlock(lines, a, b) : [a, b];
+    const [first, last] =
+      range.from === range.to ? listBlock(lines, a, b) : [a, b];
     let start = firstListLine(lines, first, last);
     while (start >= 0) {
       // A blank line ends a list, so two lists never sort into each other.

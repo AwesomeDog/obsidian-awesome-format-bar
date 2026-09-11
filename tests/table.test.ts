@@ -432,7 +432,7 @@ describe("tableFromDelimited", () => {
   });
 
   it("keeps comma-containing TSV as tab-separated", () => {
-    expect(tableFromDelimited("a\tb\n\"c,d\"\te", PADDED)).toBe(
+    expect(tableFromDelimited('a\tb\n"c,d"\te', PADDED)).toBe(
       ["| a   | b   |", "| --- | --- |", "| c,d | e   |"].join("\n"),
     );
   });

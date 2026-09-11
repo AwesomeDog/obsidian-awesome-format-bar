@@ -1,4 +1,8 @@
-import type { CommandSpec, ToolbarPosition } from "../model/types";
+import type {
+  CommandSpec,
+  PinnedCommand,
+  ToolbarPosition,
+} from "../model/types";
 
 /** The contract a view hands to its toolbar. */
 
@@ -14,6 +18,8 @@ export interface ToolbarHost {
   readonly positions: readonly ToolbarPosition[];
   /** Rebuilt when the Pinned tab or overflow menu is drawn, not every refresh. */
   pinnedSpecs(): readonly CommandSpec[];
+  pinnedCommands(): readonly PinnedCommand[];
+  editPinned(): void;
   state(): ToolbarState;
   execute(spec: CommandSpec, optionValue?: string): void;
   /** Hands the caret back after a menu closes without running anything. */

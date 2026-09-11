@@ -1,4 +1,4 @@
-import { DEFAULT_PIN_ICON } from "./pinned";
+import { DEFAULT_PIN_ICON, pinnedGroups, flattenPinnedGroups } from "./pinned";
 import type {
   PinnedCommand,
   Settings,
@@ -62,6 +62,7 @@ function normalizePinned(raw: unknown): PinnedCommand[] {
     )
       continue;
     seen.add(commandId);
+    const group = source["group"];
     pinned.push({
       commandId,
       icon:
@@ -72,9 +73,12 @@ function normalizePinned(raw: unknown): PinnedCommand[] {
         typeof source["name"] === "string" && source["name"] !== ""
           ? source["name"]
           : commandId,
+      ...(typeof group === "string" && group.trim() !== ""
+        ? { group: group.trim() }
+        : {}),
     });
   }
-  return pinned;
+  return flattenPinnedGroups(pinnedGroups(pinned));
 }
 
 function normalizeFlag(raw: unknown, key: keyof Settings): boolean {

@@ -176,7 +176,6 @@ export default {
 
   // Toolbar, panels and pickers
   "More commands": "Más comandos",
-  "Add one under Settings → Pinned.": "Agregue uno en Configuración → Anclado.",
   "Hidden by width": "Oculto por falta de ancho",
   "Search…": "Buscar…",
   "Search characters": "Buscar caracteres",

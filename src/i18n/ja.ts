@@ -176,8 +176,6 @@ export default {
 
   // Toolbar, panels and pickers
   "More commands": "その他のコマンド",
-  "Add one under Settings → Pinned.":
-    "「設定 → ピン留め」から追加してください。",
   "Hidden by width": "幅が不足しているため非表示",
   "Search…": "検索…",
   "Search characters": "文字を検索",

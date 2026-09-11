@@ -20,14 +20,22 @@ import {
   enabledToolbarPositions,
   normalizeSettings,
 } from "./model/preferences";
-import { pinnedSpecs } from "./model/pinned";
+import {
+  flattenPinnedGroups,
+  movePinnedGroup,
+  movePinnedToGroup,
+  movePinnedWithinGroup,
+  pinnedGroups,
+  pinnedSpecs,
+  renamePinnedGroup,
+} from "./model/pinned";
 import type {
   CommandSpec,
   PinnedCommand,
   Settings,
   ToolbarPosition,
 } from "./model/types";
-import { pickIcon, pickPinnedCommand } from "./pin";
+import { openPinnedManager, pickIcon, pickPinnedCommand } from "./pin";
 import { sortTableOnHeaderClick } from "./reading-table";
 import { FormatBarSettingTab } from "./settings";
 import type { ToolbarHost, ToolbarState } from "./toolbar/host";
@@ -253,6 +261,8 @@ export default class AwesomeFormatBarPlugin extends Plugin {
         return enabledToolbarPositions(settings(), Platform.isMobile);
       },
       pinnedSpecs: (): CommandSpec[] => this.pinnedSpecs(),
+      pinnedCommands: (): readonly PinnedCommand[] => this.settings.pinned,
+      editPinned: (): void => this.openPinnedManager(),
       state: (): ToolbarState => {
         // Conditions come from the owning view, not the active one.
         const editable = view.getMode() === "source";
@@ -298,7 +308,7 @@ export default class AwesomeFormatBarPlugin extends Plugin {
     );
   }
 
-  /** Settings is the only place a pin is created. */
+  /** The manager and the Settings fallback share the same picker. */
   async pinCommand(): Promise<void> {
     const pinnedIds = new Set(
       this.settings.pinned.map((entry) => entry.commandId),
@@ -307,7 +317,10 @@ export default class AwesomeFormatBarPlugin extends Plugin {
     if (picked) await this.setPinned([...this.settings.pinned, picked]);
   }
 
-  async pickPinnedIcon(index: number): Promise<void> {
+  async pickPinnedIcon(commandId: string): Promise<void> {
+    const index = this.settings.pinned.findIndex(
+      (entry) => entry.commandId === commandId,
+    );
     const entry = this.settings.pinned[index];
     if (!entry) return;
     const icon = await pickIcon(this.app, entry.name);
@@ -319,23 +332,55 @@ export default class AwesomeFormatBarPlugin extends Plugin {
     );
   }
 
-  async removePinnedAt(index: number): Promise<void> {
+  async removePinned(commandId: string): Promise<void> {
     await this.setPinned(
-      this.settings.pinned.filter((_entry, at) => at !== index),
+      this.settings.pinned.filter((entry) => entry.commandId !== commandId),
     );
   }
 
-  async movePinned(from: number, to: number): Promise<void> {
-    const next = [...this.settings.pinned];
-    const [moved] = next.splice(from, 1);
-    if (!moved) return;
-    next.splice(to, 0, moved);
-    await this.setPinned(next);
+  async movePinnedToGroup(commandId: string, group: string): Promise<void> {
+    await this.setPinned(
+      movePinnedToGroup(this.settings.pinned, commandId, group),
+    );
+  }
+
+  async renamePinnedGroup(from: string, to: string): Promise<void> {
+    await this.setPinned(renamePinnedGroup(this.settings.pinned, from, to));
+  }
+
+  async movePinnedGroup(from: number, to: number): Promise<void> {
+    await this.setPinned(movePinnedGroup(this.settings.pinned, from, to));
+  }
+
+  async movePinnedCommand(
+    group: string,
+    from: number,
+    to: number,
+  ): Promise<void> {
+    await this.setPinned(
+      movePinnedWithinGroup(this.settings.pinned, group, from, to),
+    );
+  }
+
+  openPinnedManager(): void {
+    openPinnedManager(this.app, {
+      entries: (): readonly PinnedCommand[] => this.settings.pinned,
+      add: (): Promise<void> => this.pinCommand(),
+      changeIcon: (commandId): Promise<void> => this.pickPinnedIcon(commandId),
+      remove: (commandId): Promise<void> => this.removePinned(commandId),
+      moveToGroup: (commandId, group): Promise<void> =>
+        this.movePinnedToGroup(commandId, group),
+      renameGroup: (from, to): Promise<void> =>
+        this.renamePinnedGroup(from, to),
+      moveGroup: (from, to): Promise<void> => this.movePinnedGroup(from, to),
+      moveCommand: (group, from, to): Promise<void> =>
+        this.movePinnedCommand(group, from, to),
+    });
   }
 
   /** The Ribbon builds its groups once, so saving is not enough. */
   private async setPinned(next: readonly PinnedCommand[]): Promise<void> {
-    this.settings.pinned = next;
+    this.settings.pinned = flattenPinnedGroups(pinnedGroups(next));
     await this.saveData(this.settings);
     for (const toolbar of this.toolbars.values()) toolbar.rerender();
   }

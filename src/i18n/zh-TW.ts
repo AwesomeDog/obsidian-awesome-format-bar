@@ -175,7 +175,6 @@ export default {
 
   // Toolbar, panels and pickers
   "More commands": "更多命令",
-  "Add one under Settings → Pinned.": "請前往「設定 → 已釘選」新增。",
   "Hidden by width": "因寬度不足而隱藏",
   "Search…": "搜尋…",
   "Search characters": "搜尋字元",
