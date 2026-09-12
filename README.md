@@ -149,6 +149,7 @@ Available whenever the cursor is inside a table: Delete Rows or Columns, Insert 
 
 **Merge Lines** joins a run of lines into one; **Split Lines** breaks them at the punctuation the selection uses most; **Reverse Lines** flips the order of each run. None of the three crosses a blank line or a code fence.
 **Sort List** sorts a list level by level — an item keeps its own body and its own children, and ordered items come out renumbered. **Sort Headings** reorders each level of the note's outline and carries every section's body along with it.
+**Paste URI as Link** wraps selected text with the URI currently on the clipboard. **Smart Punctuation** and **CJK Spacing** normalize selected text, while **Clean Up** groups common Markdown cleanup actions in one menu.
 
 ### Pinned
 

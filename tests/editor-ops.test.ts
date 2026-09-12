@@ -10,6 +10,11 @@ import { changeCase, convertCase } from "../src/editor-ops/case";
 import { toggleInlinePair } from "../src/editor-ops/inline";
 import { Lines, blocksFor } from "../src/editor-ops/lines";
 import {
+  cjkSpacing,
+  cleanUp,
+  smartPunctuation,
+} from "../src/editor-ops/normalize";
+import {
   duplicate,
   mergeLines,
   renumberList,
@@ -155,6 +160,45 @@ describe("toggleInlinePair", () => {
       toggleInlinePair(doc, ranges, "$", "$");
     expect(apply("$[x]$", math)).toBe("x");
     expect(apply("[x]", math)).toBe("$x$");
+  });
+});
+
+describe("normalization", () => {
+  it("converts punctuation while leaving inline code alone", () => {
+    expect(apply('[He said "hi"... -- now `"raw"`]', smartPunctuation)).toBe(
+      'He said “hi”… — now `"raw"`',
+    );
+  });
+
+  it("adds spaces between CJK and Latin text", () => {
+    expect(apply("[中文abc ABC中文 日本語123]", cjkSpacing)).toBe(
+      "中文 abc ABC 中文 日本語 123",
+    );
+  });
+
+  it("cleans common markdown issues without touching fenced code", () => {
+    const doc = "a  \n\n\n* one\nhttps://example.com\n```\n* raw  \n```";
+    const result = run(
+      doc,
+      cleanUp(doc, [{ from: 0, to: doc.length }], "trailing-spaces"),
+    );
+    expect(result).toContain("a\n\n\n* one");
+    expect(result).toContain("* raw  ");
+    expect(
+      run(doc, cleanUp(doc, [{ from: 0, to: doc.length }], "bullet-style")),
+    ).toContain("- one");
+    expect(
+      run(doc, cleanUp(doc, [{ from: 0, to: doc.length }], "bare-urls")),
+    ).toContain("[https://example.com](https://example.com)");
+    expect(
+      run(doc, cleanUp(doc, [{ from: 0, to: doc.length }], "blank-lines")),
+    ).toContain("a  \n\n* one");
+    expect(
+      run(
+        "__bold__ and _italic_",
+        cleanUp("__bold__ and _italic_", [], "emphasis-strong"),
+      ),
+    ).toBe("**bold** and *italic*");
   });
 });
 

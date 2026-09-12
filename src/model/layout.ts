@@ -176,6 +176,11 @@ export const BUILT_IN_COMMAND_TABS = [
         commands: ["merge-lines", "split-lines", "reverse-lines", "duplicate"],
       },
       { name: "Sort", commands: ["sort-list", "sort-headings"] },
+      { name: "Links", commands: ["paste-uri-as-link"] },
+      {
+        name: "Normalize",
+        commands: ["smart-punctuation", "cjk-spacing", "clean-up"],
+      },
     ],
   },
 ] as const satisfies readonly RibbonTab[];

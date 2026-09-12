@@ -49,7 +49,8 @@ type CommandPopup =
   | "callout"
   | "table-delete"
   | "table-format"
-  | "table-sort";
+  | "table-sort"
+  | "clean-up";
 
 export interface CommandSpec {
   readonly id: string;

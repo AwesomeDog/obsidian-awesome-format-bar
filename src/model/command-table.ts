@@ -600,6 +600,67 @@ export const COMMANDS = [
     kind: "editor",
   },
 
+  // Utilities · Links
+  {
+    id: "paste-uri-as-link",
+    name: "Paste URI as Link",
+    icon: "link",
+    kind: "clipboard",
+    requiresSelection: true,
+  },
+
+  // Utilities · Normalize
+  {
+    id: "smart-punctuation",
+    name: "Smart Punctuation",
+    icon: "quote",
+    kind: "editor",
+  },
+  {
+    id: "cjk-spacing",
+    name: "CJK Spacing",
+    icon: "between-horizontal-start",
+    kind: "editor",
+  },
+  {
+    id: "clean-up",
+    name: "Clean Up",
+    icon: "wand-sparkles",
+    kind: "editor",
+    popup: "clean-up",
+    commandPalette: false,
+  },
+  {
+    id: "clean-up-trailing-spaces",
+    name: "Remove Trailing Spaces",
+    icon: "eraser",
+    kind: "editor",
+  },
+  {
+    id: "clean-up-blank-lines",
+    name: "Collapse Blank Lines",
+    icon: "rows-3",
+    kind: "editor",
+  },
+  {
+    id: "clean-up-bare-urls",
+    name: "Convert Bare URLs",
+    icon: "link",
+    kind: "editor",
+  },
+  {
+    id: "clean-up-emphasis-strong",
+    name: "Normalize Emphasis & Strong",
+    icon: "bold",
+    kind: "editor",
+  },
+  {
+    id: "clean-up-bullet-style",
+    name: "Normalize Bullet Style",
+    icon: "list",
+    kind: "editor",
+  },
+
   // Table · Rows & Columns
   {
     id: "table-delete",
@@ -791,6 +852,13 @@ export const DROPDOWN_ITEMS: Readonly<Record<string, readonly CommandId[]>> = {
   "table-delete": ["table-delete-rows", "table-delete-columns"],
   "table-format": ["table-format-table", "table-format-all-tables"],
   "table-sort": ["table-sort-az", "table-sort-za"],
+  "clean-up": [
+    "clean-up-trailing-spaces",
+    "clean-up-blank-lines",
+    "clean-up-bare-urls",
+    "clean-up-emphasis-strong",
+    "clean-up-bullet-style",
+  ],
 };
 
 const COMMAND_BY_ID = new Map<string, CommandSpec>(

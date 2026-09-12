@@ -116,6 +116,15 @@ export default {
   "Sort Rows Z to A": "降順に並べ替え",
   "Convert to Text": "テキストに変換",
   "Paste as Table": "テーブルとして貼り付け",
+  "Paste URI as Link": "URI として貼り付け",
+  "Smart Punctuation": "スマート句読点",
+  "CJK Spacing": "CJKスペース",
+  "Clean Up": "クリーンアップ",
+  "Remove Trailing Spaces": "末尾の空白を削除",
+  "Collapse Blank Lines": "空白行をまとめる",
+  "Convert Bare URLs": "裸の URL を変換",
+  "Normalize Emphasis & Strong": "強調と太字を統一",
+  "Normalize Bullet Style": "箇条書きスタイルを統一",
 
   // Tabs and groups
   Home: "ホーム",
@@ -142,6 +151,7 @@ export default {
   Data: "データ",
   Lines: "行",
   Sort: "並べ替え",
+  Normalize: "正規化",
 
   // Positions
   Fixed: "下部",

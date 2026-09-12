@@ -116,6 +116,15 @@ export default {
   "Sort Rows Z to A": "降序排序",
   "Convert to Text": "转换为文本",
   "Paste as Table": "粘贴为表格",
+  "Paste URI as Link": "粘贴 URI 为链接",
+  "Smart Punctuation": "智能标点",
+  "CJK Spacing": "中日韩间距",
+  "Clean Up": "清理",
+  "Remove Trailing Spaces": "删除行尾空格",
+  "Collapse Blank Lines": "合并连续空行",
+  "Convert Bare URLs": "转换裸 URL",
+  "Normalize Emphasis & Strong": "统一强调和加粗",
+  "Normalize Bullet Style": "统一项目符号样式",
 
   // Tabs and groups
   Home: "开始",
@@ -142,6 +151,7 @@ export default {
   Data: "数据",
   Lines: "行",
   Sort: "排序",
+  Normalize: "规范化",
 
   // Positions
   Fixed: "底部",
@@ -210,4 +220,5 @@ export default {
   "This note has no headings to list.": "此笔记没有可列出的标题。",
   "Select two or more rows of tab- or comma-separated values first.":
     "请先选中两行及以上以制表符或逗号分隔的数据。",
+  "Clipboard does not contain a valid URI.": "剪贴板中没有有效的 URI。",
 } satisfies Record<string, string>;

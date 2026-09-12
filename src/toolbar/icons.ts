@@ -10,6 +10,7 @@ const ICON_FALLBACKS: Readonly<Record<string, readonly string[]>> = {
   "arrow-down-a-z": ["sort-asc", "arrow-down-az"],
   "arrow-up-down": ["chevrons-up-down", "repeat"],
   brackets: ["braces", "brackets-contain"],
+  "between-horizontal-start": ["space", "move-horizontal"],
   "case-upper": ["case-sensitive", "a-large-small"],
   "circle-check": ["check-circle-2", "check-circle"],
   "circle-help": ["help-circle"],
@@ -36,6 +37,8 @@ const ICON_FALLBACKS: Readonly<Record<string, readonly string[]>> = {
   percent: ["percent-circle", "message-square"],
   "square-code": ["file-code", "code-2"],
   "triangle-alert": ["alert-triangle"],
+  "wand-sparkles": ["wand", "sparkles", "eraser"],
+  "rows-3": ["rows", "list"],
 };
 
 /** Obsidian registers its own Lucide set under a `lucide-` prefix. */

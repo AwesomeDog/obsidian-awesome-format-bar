@@ -116,6 +116,15 @@ export default {
   "Sort Rows Z to A": "Сортировать от Я до А",
   "Convert to Text": "Преобразовать в текст",
   "Paste as Table": "Вставить как таблицу",
+  "Paste URI as Link": "Вставить URI как ссылку",
+  "Smart Punctuation": "Умная пунктуация",
+  "CJK Spacing": "Интервалы CJK",
+  "Clean Up": "Очистить",
+  "Remove Trailing Spaces": "Удалить пробелы в конце строк",
+  "Collapse Blank Lines": "Свернуть пустые строки",
+  "Convert Bare URLs": "Преобразовать обычные URL",
+  "Normalize Emphasis & Strong": "Нормализовать курсив и жирный",
+  "Normalize Bullet Style": "Нормализовать маркеры списка",
 
   // Tabs and groups
   Home: "Главная",
@@ -142,6 +151,7 @@ export default {
   Data: "Данные",
   Lines: "Строки",
   Sort: "Сортировка",
+  Normalize: "Нормализация",
 
   // Positions
   Fixed: "Внизу",

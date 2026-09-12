@@ -116,6 +116,15 @@ export default {
   "Sort Rows Z to A": "Trier de Z à A",
   "Convert to Text": "Convertir en texte",
   "Paste as Table": "Coller en tant que tableau",
+  "Paste URI as Link": "Coller l’URI comme lien",
+  "Smart Punctuation": "Ponctuation intelligente",
+  "CJK Spacing": "Espacement CJK",
+  "Clean Up": "Nettoyer",
+  "Remove Trailing Spaces": "Supprimer les espaces de fin",
+  "Collapse Blank Lines": "Réduire les lignes vides",
+  "Convert Bare URLs": "Convertir les URL nues",
+  "Normalize Emphasis & Strong": "Normaliser les emphases et le gras",
+  "Normalize Bullet Style": "Normaliser le style des puces",
 
   // Tabs and groups
   Home: "Accueil",
@@ -142,6 +151,7 @@ export default {
   Data: "Données",
   Lines: "Lignes",
   Sort: "Trier",
+  Normalize: "Normaliser",
 
   // Positions
   Fixed: "Bas",

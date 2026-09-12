@@ -116,6 +116,15 @@ export default {
   "Sort Rows Z to A": "내림차순 정렬",
   "Convert to Text": "텍스트로 변환",
   "Paste as Table": "표로 붙여넣기",
+  "Paste URI as Link": "URI로 붙여넣기",
+  "Smart Punctuation": "스마트 문장 부호",
+  "CJK Spacing": "CJK 간격",
+  "Clean Up": "정리",
+  "Remove Trailing Spaces": "줄 끝 공백 제거",
+  "Collapse Blank Lines": "빈 줄 합치기",
+  "Convert Bare URLs": "일반 URL 변환",
+  "Normalize Emphasis & Strong": "강조 및 굵게 표준화",
+  "Normalize Bullet Style": "글머리 기호 스타일 표준화",
 
   // Tabs and groups
   Home: "홈",
@@ -142,6 +151,7 @@ export default {
   Data: "데이터",
   Lines: "줄",
   Sort: "정렬",
+  Normalize: "정규화",
 
   // Positions
   Fixed: "아래쪽",

@@ -116,6 +116,15 @@ export default {
   "Sort Rows Z to A": "由 Z 到 A 排序",
   "Convert to Text": "轉換為文字",
   "Paste as Table": "貼上為表格",
+  "Paste URI as Link": "貼上 URI 為連結",
+  "Smart Punctuation": "智慧標點",
+  "CJK Spacing": "中日韓間距",
+  "Clean Up": "清理",
+  "Remove Trailing Spaces": "移除行尾空白",
+  "Collapse Blank Lines": "合併連續空白行",
+  "Convert Bare URLs": "轉換裸 URL",
+  "Normalize Emphasis & Strong": "統一強調與粗體",
+  "Normalize Bullet Style": "統一項目符號樣式",
 
   // Tabs and groups
   Home: "常用",
@@ -142,6 +151,7 @@ export default {
   Data: "資料",
   Lines: "行",
   Sort: "排序",
+  Normalize: "正規化",
 
   // Positions
   Fixed: "底部",
@@ -202,4 +212,5 @@ export default {
   "This note has no headings to list.": "此筆記沒有可列出的標題。",
   "Select two or more rows of tab- or comma-separated values first.":
     "請先選取兩列或以上以 Tab 或逗號分隔的資料。",
+  "Clipboard does not contain a valid URI.": "剪貼簿中沒有有效的 URI。",
 } satisfies Record<string, string>;

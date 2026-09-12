@@ -46,6 +46,7 @@ import {
 } from "../editor-ops/table";
 import { tableFromDelimited } from "../editor-ops/tsv";
 import { deleteRanges, formatDateTime, insertText } from "../editor-ops/text";
+import { cjkSpacing, cleanUp, smartPunctuation } from "../editor-ops/normalize";
 import { CASE_OPTIONS } from "../model/palettes";
 import { commit, selectionRanges } from "./apply";
 
@@ -192,6 +193,28 @@ export async function runClipboard(
     return;
   }
 
+  if (id === "paste-uri-as-link") {
+    const uri = (await navigator.clipboard.readText()).trim();
+    if (!/^[A-Za-z][A-Za-z0-9+.-]*:\S+$/u.test(uri)) {
+      new Notice(t("Clipboard does not contain a valid URI."));
+      return;
+    }
+    const doc = editor.getValue();
+    const changes = selectionRanges(editor)
+      .filter((range) => range.from !== range.to)
+      .map((range) => ({
+        from: range.from,
+        to: range.to,
+        text: /^\[[^\]]+\]\((?:<[^>]+>|[^)]+)\)$/u.test(
+          doc.slice(range.from, range.to),
+        )
+          ? doc.slice(range.from, range.to)
+          : `[${doc.slice(range.from, range.to)}](<${uri}>)`,
+      }));
+    commit(editor, { changes });
+    return;
+  }
+
   // Native paste first: it converts `text/html` and keeps list continuation.
   if (nativePaste(id === "paste-plain-text")) return;
 
@@ -265,6 +288,20 @@ export function planFor(context: CommandContext, id: string): Plan | null {
       return splitLines(doc, ranges);
     case "duplicate":
       return duplicate(doc, ranges);
+    case "smart-punctuation":
+      return smartPunctuation(doc, ranges);
+    case "cjk-spacing":
+      return cjkSpacing(doc, ranges);
+    case "clean-up-trailing-spaces":
+      return cleanUp(doc, ranges, "trailing-spaces");
+    case "clean-up-blank-lines":
+      return cleanUp(doc, ranges, "blank-lines");
+    case "clean-up-bare-urls":
+      return cleanUp(doc, ranges, "bare-urls");
+    case "clean-up-emphasis-strong":
+      return cleanUp(doc, ranges, "emphasis-strong");
+    case "clean-up-bullet-style":
+      return cleanUp(doc, ranges, "bullet-style");
     case "horizontal-rule":
       return insertHorizontalRule(doc, ranges);
     case "block-reference":

@@ -66,7 +66,7 @@ A fixed built-in subset of commands, grouped by dividers. Buttons that don't fit
 
 ## 5. Commands
 
-**117 built-in commands** across 5 tabs and 22 groups, plus the Pinned tab. Nine live inside drop-down buttons and one opens the Emoji & Symbols panel; the other 107 are registered in the command palette, so users can assign their own shortcuts.
+**126 built-in commands** across 5 tabs and 24 groups, plus the Pinned tab. Drop-down items stay under their parent buttons, while the other commands are registered in the command palette, so users can assign their own shortcuts.
 
 ### Tab 1 · Home
 
@@ -112,6 +112,8 @@ Column-level names (*Align Column…*, *Sort Rows…*) distinguish these from th
 
 - **Lines** — **Merge Lines** joins a run of lines into one; **Split Lines** breaks them at the punctuation the selection uses most, out of `、 ， , ; ； | ·`; **Reverse Lines** flips the order of each run. None of the three crosses a blank line or a code fence, and a line with nothing to do is left alone. **Duplicate** copies the line at the caret, or the selection.
 - **Sort** — two sorts that read structure rather than lines. **Sort List** sorts a list level by level: an item keeps its own body and its own children, and ordered items come out renumbered. **Sort Headings** reorders each level of the note's outline and carries every section's body along with it; its scope is the whole note, and a heading quoted in a callout or written inside a code fence counts as body text, not as a heading.
+- **Links** — **Paste URI as Link** reads one URI with a scheme from the clipboard and wraps each selected range as a Markdown link using an angle-bracket destination. It requires a selection and leaves regular Paste unchanged.
+- **Normalize** — **Smart Punctuation** converts straight quotes, double hyphens and three periods in the selected text to typographic punctuation. **CJK Spacing** normalizes spaces between CJK and Latin letters or numbers. Both are explicit commands and skip inline code and fenced code. **Clean Up** contains five explicit whole-note or selected-range actions: Remove Trailing Spaces, Collapse Blank Lines, Convert Bare URLs, Normalize Emphasis & Strong, and Normalize Bullet Style.
 
 ### Tab 6 · Pinned
 
@@ -189,7 +191,7 @@ The Table options govern editing behavior and text output, not toolbar layout, s
 - User-created commands — Pinned surfaces existing commands, it doesn't create new ones.
 - Emoji shortcodes: no `:smile:` expansion, no autocomplete while typing; the panel inserts raw characters.
 - Skin-tone selection, custom emoji sets, user-editable character lists.
-- Reordering, hiding or showing the 117 built-in commands.
+- Reordering, hiding or showing the 126 built-in commands.
 - Toolbar appearance customization: background or icon color pickers, theme variants.
 
 ---
@@ -201,7 +203,7 @@ The Table options govern editing behavior and text output, not toolbar layout, s
 | **Position** | Where a toolbar renders: **Top**, **Following**, **Fixed**. Three independent toggles. |
 | **Layout** | How a position renders: **Ribbon** (Top) or **Compact** (Following / Fixed). |
 | **Tab · Group · Button** | Ribbon structure. A **drop-down** button holds several commands; a Compact **overflow menu** (`⋯`) holds the buttons that don't fit. |
-| **Command** | An action the toolbar runs. **117 built-in commands** plus any **pinned command**. |
+| **Command** | An action the toolbar runs. **126 built-in commands** plus any **pinned command**. |
 | **Source · Group · Entry** | Emoji & Symbols panel structure: three sources (Emoji, Kaomoji, Symbols) → groups → entries. Picking an entry inserts a character. |
 | **Word terminology** | Display names follow Microsoft Word (*Bold*, *Clear Formatting*), initial capitals, no `Toggle` prefix. |
 | **Plugin icon** | The plugin's icon in Obsidian's left sidebar. "Ribbon" on its own always means the toolbar layout. |

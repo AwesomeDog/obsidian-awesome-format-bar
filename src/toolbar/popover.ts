@@ -168,6 +168,7 @@ export function popoverSectionsFor(
     case "table-delete":
     case "table-format":
     case "table-sort":
+    case "clean-up":
       return [
         {
           items: (DROPDOWN_ITEMS[spec.popup ?? ""] ?? []).map((id) => {
