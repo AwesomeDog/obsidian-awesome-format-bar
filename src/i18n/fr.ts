@@ -82,6 +82,7 @@ export default {
   "Navigation Pane": "Volet de navigation",
   "Zoom In": "Zoom avant",
   "Zoom Out": "Zoom arrière",
+  "100%": "100 %",
   "Split Right": "Fractionner vers la droite",
   "Split Down": "Fractionner vers le bas",
   Collapse: "Réduire",
@@ -140,7 +141,9 @@ export default {
   Links: "Liens",
   Blocks: "Blocs",
   "Media & Symbols": "Médias et symboles",
+  Reference: "Référence",
   Show: "Afficher",
+  Views: "Vues",
   Immersive: "Immersion",
   Zoom: "Zoom",
   Window: "Fenêtre",
@@ -187,6 +190,15 @@ export default {
   "Pin a command": "Épingler une commande",
   "No pinned commands yet.": "Aucune commande épinglée pour l'instant.",
   "Change icon": "Changer l'icône",
+  "Manage Pinned": "Gérer les commandes épinglées",
+  "Manage pinned commands and groups.":
+    "Gérer les commandes et groupes épinglés.",
+  Done: "Terminé",
+  Cancel: "Annuler",
+  "Rename group": "Renommer le groupe",
+  "Move to": "Déplacer vers",
+  "New group…": "Nouveau groupe…",
+  Delete: "Supprimer",
 
   // Toolbar, panels and pickers
   "More commands": "Plus de commandes",
@@ -219,4 +231,6 @@ export default {
     "Sélectionnez d’abord deux lignes ou plus de valeurs séparées par des tabulations ou des virgules.",
   "This note has no headings to list.":
     "Cette note ne contient aucun titre à lister.",
+  "Clipboard does not contain a valid URI.":
+    "Le presse-papiers ne contient pas d’URI valide.",
 } satisfies Record<string, string>;

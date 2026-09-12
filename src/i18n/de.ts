@@ -82,6 +82,7 @@ export default {
   "Navigation Pane": "Navigationsbereich",
   "Zoom In": "Vergrößern",
   "Zoom Out": "Verkleinern",
+  "100%": "100 %",
   "Split Right": "Nach rechts teilen",
   "Split Down": "Nach unten teilen",
   Collapse: "Reduzieren",
@@ -140,7 +141,9 @@ export default {
   Links: "Links",
   Blocks: "Blöcke",
   "Media & Symbols": "Medien und Symbole",
+  Reference: "Referenz",
   Show: "Anzeigen",
+  Views: "Ansichten",
   Immersive: "Immersiv",
   Zoom: "Zoom",
   Window: "Fenster",
@@ -187,6 +190,15 @@ export default {
   "Pin a command": "Befehl anheften",
   "No pinned commands yet.": "Noch keine Befehle angeheftet.",
   "Change icon": "Symbol ändern",
+  "Manage Pinned": "Angeheftete verwalten",
+  "Manage pinned commands and groups.":
+    "Angeheftete Befehle und Gruppen verwalten.",
+  Done: "Fertig",
+  Cancel: "Abbrechen",
+  "Rename group": "Gruppe umbenennen",
+  "Move to": "Verschieben nach",
+  "New group…": "Neue Gruppe…",
+  Delete: "Löschen",
 
   // Toolbar, panels and pickers
   "More commands": "Weitere Befehle",
@@ -218,4 +230,6 @@ export default {
     "Wählen Sie zuerst zwei oder mehr Zeilen mit tabulator- oder kommagetrennten Werten aus.",
   "This note has no headings to list.":
     "Diese Notiz enthält keine Überschriften.",
+  "Clipboard does not contain a valid URI.":
+    "Die Zwischenablage enthält keine gültige URI.",
 } satisfies Record<string, string>;

@@ -151,6 +151,7 @@ Disponible siempre que el cursor esté dentro de una tabla: Eliminar filas o col
 
 **Combinar líneas** une una serie de líneas en una sola; **Dividir líneas** las parte por el signo de puntuación más frecuente en la selección; **Invertir líneas** da la vuelta al orden de cada serie. Ninguna de las tres cruza una línea en blanco ni un bloque de código.
 **Ordenar lista** ordena una lista nivel por nivel ——cada elemento conserva su cuerpo y sus hijos, y los elementos ordenados salen renumerados——. **Ordenar títulos** reordena cada nivel del esquema de la nota y se lleva consigo el cuerpo de cada sección.
+**Pegar URI como vínculo** envuelve el texto seleccionado con la URI del portapapeles. **Puntuación inteligente** y **Espaciado CJK** normalizan el texto seleccionado, mientras **Limpiar** agrupa en un menú las acciones habituales de limpieza de Markdown.
 
 ### Anclado
 
@@ -195,7 +196,7 @@ Descarga `main.js`, `manifest.json` y `styles.css` de una versión publicada y c
 | -------------------- | -------------------------------------------------------------------------------------------------- |
 | **Barra de herramientas** | Interruptores independientes para Superior / Flotante / Inferior                               |
 | **Anclado**          | Tus comandos anclados —— agregar, cambiar icono, reordenar, eliminar                                |
-| **Tabla**            | Entrar pasa a la fila siguiente; rellenar celdas con espacios; ordenar al hacer clic en el encabezado en el modo de lectura（nunca modifica el archivo） |
+| **Tabla**            | Entrar pasa a la fila siguiente; Tab / Shift+Tab cambian entre celdas y Tab en el borde derecho añade una columna; rellenar celdas con espacios; ordenar al hacer clic en el encabezado en el modo de lectura（nunca modifica el archivo） |
 
 ## Compatibilidad
 

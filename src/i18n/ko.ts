@@ -82,6 +82,7 @@ export default {
   "Navigation Pane": "탐색 창",
   "Zoom In": "확대",
   "Zoom Out": "축소",
+  "100%": "100%",
   "Split Right": "오른쪽으로 분할",
   "Split Down": "아래로 분할",
   Collapse: "접기",
@@ -140,7 +141,9 @@ export default {
   Links: "링크",
   Blocks: "블록",
   "Media & Symbols": "미디어 및 기호",
+  Reference: "참조",
   Show: "표시",
+  Views: "보기",
   Immersive: "몰입형",
   Zoom: "확대/축소",
   Window: "창",
@@ -186,6 +189,14 @@ export default {
   "Pin a command": "명령 고정",
   "No pinned commands yet.": "아직 고정된 명령이 없습니다.",
   "Change icon": "아이콘 변경",
+  "Manage Pinned": "고정된 명령 관리",
+  "Manage pinned commands and groups.": "고정된 명령과 그룹을 관리합니다.",
+  Done: "완료",
+  Cancel: "취소",
+  "Rename group": "그룹 이름 변경",
+  "Move to": "이동",
+  "New group…": "새 그룹…",
+  Delete: "삭제",
 
   // Toolbar, panels and pickers
   "More commands": "추가 명령",
@@ -216,4 +227,6 @@ export default {
   "This note has no headings to list.": "이 노트에는 나열할 제목이 없습니다.",
   "Select two or more rows of tab- or comma-separated values first.":
     "탭이나 쉼표로 구분된 값을 두 행 이상 선택하세요.",
+  "Clipboard does not contain a valid URI.":
+    "클립보드에 유효한 URI가 없습니다.",
 } satisfies Record<string, string>;

@@ -151,6 +151,7 @@ Verfügbar, sobald sich der Cursor in einer Tabelle befindet: Zeilen oder Spalte
 
 **Zeilen zusammenführen** fasst eine Folge von Zeilen zu einer zusammen; **Zeilen teilen** bricht sie am Satzzeichen um, das in der Auswahl am häufigsten vorkommt; **Zeilen umkehren** dreht die Reihenfolge jeder Folge um. Keiner der drei überschreitet eine Leerzeile oder einen Codeblock.
 **Liste sortieren** sortiert eine Liste Ebene für Ebene — ein Eintrag behält seinen eigenen Textkörper und seine eigenen Unterpunkte, und nummerierte Einträge kommen neu nummeriert heraus. **Überschriften sortieren** ordnet jede Ebene der Notizgliederung neu und nimmt den Textkörper jedes Abschnitts dabei mit.
+**URI als Link einfügen** umschließt den ausgewählten Text mit der URI aus der Zwischenablage. **Intelligente Zeichensetzung** und **CJK-Abstände** normalisieren den ausgewählten Text, während **Bereinigen** gängige Markdown-Bereinigungsaktionen in einem Menü bündelt.
 
 ### Angeheftet
 
@@ -195,7 +196,7 @@ Laden Sie `main.js`, `manifest.json` und `styles.css` aus einem Release in `<Tre
 | --------------- | ------------------------------------------------------------------------------------------------------------ |
 | **Symbolleiste** | Unabhängige Schalter für Oben / Mitlaufend / Unten                                                          |
 | **Angeheftet**  | Ihre angehefteten Befehle — hinzufügen, Symbol ändern, umordnen, löschen                                    |
-| **Tabelle**     | Eingabetaste wechselt zur nächsten Zeile; Zellen mit Leerzeichen auffüllen; in der Leseansicht beim Klicken auf die Kopfzeile sortieren (ändert die Datei niemals) |
+| **Tabelle**     | Eingabetaste wechselt zur nächsten Zeile; Tab / Shift+Tab wechseln zwischen Zellen, und Tab am rechten Rand fügt eine Spalte hinzu; Zellen mit Leerzeichen auffüllen; in der Leseansicht beim Klicken auf die Kopfzeile sortieren (ändert die Datei niemals) |
 
 ## Kompatibilität
 

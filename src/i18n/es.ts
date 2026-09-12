@@ -82,6 +82,7 @@ export default {
   "Navigation Pane": "Panel de navegación",
   "Zoom In": "Acercar",
   "Zoom Out": "Alejar",
+  "100%": "100 %",
   "Split Right": "Dividir a la derecha",
   "Split Down": "Dividir hacia abajo",
   Collapse: "Contraer",
@@ -140,7 +141,9 @@ export default {
   Links: "Vínculos",
   Blocks: "Bloques",
   "Media & Symbols": "Multimedia y símbolos",
+  Reference: "Referencia",
   Show: "Mostrar",
+  Views: "Vistas",
   Immersive: "Inmersión",
   Zoom: "Zoom",
   Window: "Ventana",
@@ -186,6 +189,15 @@ export default {
   "Pin a command": "Anclar un comando",
   "No pinned commands yet.": "Todavía no hay comandos anclados.",
   "Change icon": "Cambiar icono",
+  "Manage Pinned": "Gestionar comandos anclados",
+  "Manage pinned commands and groups.":
+    "Gestionar los comandos y grupos anclados.",
+  Done: "Listo",
+  Cancel: "Cancelar",
+  "Rename group": "Cambiar nombre del grupo",
+  "Move to": "Mover a",
+  "New group…": "Nuevo grupo…",
+  Delete: "Eliminar",
 
   // Toolbar, panels and pickers
   "More commands": "Más comandos",
@@ -217,4 +229,6 @@ export default {
     "Seleccione primero dos o más filas de valores separados por tabulaciones o comas.",
   "This note has no headings to list.":
     "Esta nota no tiene títulos que mostrar.",
+  "Clipboard does not contain a valid URI.":
+    "El portapapeles no contiene una URI válida.",
 } satisfies Record<string, string>;

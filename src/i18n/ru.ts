@@ -82,6 +82,7 @@ export default {
   "Navigation Pane": "Область навигации",
   "Zoom In": "Увеличить масштаб",
   "Zoom Out": "Уменьшить масштаб",
+  "100%": "100 %",
   "Split Right": "Разделить вправо",
   "Split Down": "Разделить вниз",
   Collapse: "Свернуть",
@@ -140,7 +141,9 @@ export default {
   Links: "Ссылки",
   Blocks: "Блоки",
   "Media & Symbols": "Медиа и символы",
+  Reference: "Справочные материалы",
   Show: "Показать",
+  Views: "Режимы просмотра",
   Immersive: "Погружение",
   Zoom: "Масштаб",
   Window: "Окно",
@@ -186,6 +189,15 @@ export default {
   "Pin a command": "Закрепить команду",
   "No pinned commands yet.": "Закрепленных команд пока нет.",
   "Change icon": "Изменить значок",
+  "Manage Pinned": "Управление закрепленными",
+  "Manage pinned commands and groups.":
+    "Управление закрепленными командами и группами.",
+  Done: "Готово",
+  Cancel: "Отмена",
+  "Rename group": "Переименовать группу",
+  "Move to": "Переместить в",
+  "New group…": "Новая группа…",
+  Delete: "Удалить",
 
   // Toolbar, panels and pickers
   "More commands": "Другие команды",
@@ -216,4 +228,6 @@ export default {
   "Select two or more rows of tab- or comma-separated values first.":
     "Сначала выделите две или более строки со значениями, разделенными табуляцией или запятыми.",
   "This note has no headings to list.": "В этой заметке нет заголовков.",
+  "Clipboard does not contain a valid URI.":
+    "В буфере обмена нет допустимого URI.",
 } satisfies Record<string, string>;

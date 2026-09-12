@@ -82,6 +82,7 @@ export default {
   "Navigation Pane": "ナビゲーションウィンドウ",
   "Zoom In": "拡大",
   "Zoom Out": "縮小",
+  "100%": "100%",
   "Split Right": "右に分割",
   "Split Down": "下に分割",
   Collapse: "折りたたむ",
@@ -140,7 +141,9 @@ export default {
   Links: "リンク",
   Blocks: "ブロック",
   "Media & Symbols": "メディアと記号",
+  Reference: "参照",
   Show: "表示する",
+  Views: "ビュー",
   Immersive: "イマーシブ",
   Zoom: "ズーム",
   Window: "ウィンドウ",
@@ -186,6 +189,15 @@ export default {
   "Pin a command": "コマンドをピン留め",
   "No pinned commands yet.": "ピン留めされたコマンドはまだありません。",
   "Change icon": "アイコンの変更",
+  "Manage Pinned": "ピン留めを管理",
+  "Manage pinned commands and groups.":
+    "ピン留めしたコマンドとグループを管理します。",
+  Done: "完了",
+  Cancel: "キャンセル",
+  "Rename group": "グループ名を変更",
+  "Move to": "移動先",
+  "New group…": "新しいグループ…",
+  Delete: "削除",
 
   // Toolbar, panels and pickers
   "More commands": "その他のコマンド",
@@ -217,4 +229,6 @@ export default {
     "タブまたはコンマで区切られたデータを 2 行以上選択してください。",
   "This note has no headings to list.":
     "このノートには一覧表示できる見出しがありません。",
+  "Clipboard does not contain a valid URI.":
+    "クリップボードに有効な URI がありません。",
 } satisfies Record<string, string>;

@@ -151,6 +151,7 @@ Disponible dès que le curseur se trouve dans un tableau : Supprimer des lignes 
 
 **Fusionner les lignes** rassemble une série de lignes en une seule ; **Diviser les lignes** les coupe au signe de ponctuation le plus fréquent dans la sélection ; **Inverser les lignes** inverse l'ordre de chaque série. Aucun des trois ne franchit une ligne vide ou un bloc de code.
 **Trier la liste** trie une liste niveau par niveau —— chaque élément conserve son propre corps et ses propres enfants, et les éléments numérotés ressortent renumérotés. **Trier les titres** réordonne chaque niveau du plan de la note et emporte le corps de chaque section avec lui.
+**Coller l’URI comme lien** entoure le texte sélectionné avec l’URI du presse-papiers. **Ponctuation intelligente** et **Espacement CJK** normalisent le texte sélectionné, tandis que **Nettoyer** regroupe les actions courantes de nettoyage Markdown dans un même menu.
 
 ### Épinglé
 
