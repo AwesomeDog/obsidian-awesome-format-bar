@@ -59,7 +59,7 @@ Local by decision, everything else forwards: **Inline Math** (joins `toggleInlin
 
 ### 3.3 One transaction per click
 
-Write through a single `editor.transaction(..., 'awesome-format-bar')`; never `setValue()`. Multi-selection changes are merged where they overlap and then sorted front-to-back — CodeMirror requires sorted, non-overlapping changes — so one click is one undo unit. Raw Markdown is touched only where the public API cannot express the change.
+Write through a single `editor.transaction(..., 'awesome-format-bar')`; never `setValue()`. Multi-selection changes are merged where they overlap and then sorted front-to-back — CodeMirror requires sorted, non-overlapping changes — so one click is one undo unit. **Clear Formatting is the deliberate exception:** it removes the plugin's inline HTML in one local transaction, then forwards to Obsidian's native command, so it may create two undo units. Raw Markdown is touched only where the public API cannot express the change.
 
 ### 3.4 One execution entry point
 

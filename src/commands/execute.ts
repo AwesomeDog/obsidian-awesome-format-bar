@@ -3,7 +3,8 @@ import { t } from "../i18n/i18n";
 import type { CommandSpec } from "../model/types";
 import { isTableLine } from "../editor-ops/table";
 import type { TableFormat } from "../editor-ops/table";
-import { commit, hasSelection, ORIGIN } from "./apply";
+import { clearOwnedInlineHtml } from "../editor-ops/spans";
+import { commit, hasSelection, ORIGIN, selectionRanges } from "./apply";
 import {
   executeRegisteredCommand,
   registeredCommandAvailable,
@@ -15,7 +16,7 @@ import {
   type CommandContext,
 } from "./dispatch";
 
-/** The one place a CommandSpec becomes an effect; one press is one undo step. */
+/** The one place a CommandSpec becomes an effect. */
 /** Resolved once per refresh, not once per button. */
 interface RunConditions {
   readonly app: App;
@@ -79,6 +80,19 @@ export async function executeSpec(
     }
     if (spec.id === "decrease-indent") {
       context.editor.exec("indentLess");
+      return;
+    }
+
+    // Native clear-formatting does not remove the plugin's inline HTML.
+    if (spec.id === "clear-formatting" && spec.registeredCommandId) {
+      commit(
+        context.editor,
+        clearOwnedInlineHtml(
+          context.editor.getValue(),
+          selectionRanges(context.editor),
+        ),
+      );
+      executeRegisteredCommand(context.app, spec.registeredCommandId);
       return;
     }
 

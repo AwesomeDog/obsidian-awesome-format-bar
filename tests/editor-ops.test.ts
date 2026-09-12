@@ -24,7 +24,7 @@ import {
   type Plan,
   type Range,
 } from "../src/editor-ops/plan";
-import { applySpanStyle } from "../src/editor-ops/spans";
+import { applySpanStyle, clearOwnedInlineHtml } from "../src/editor-ops/spans";
 import { formatDateTime } from "../src/editor-ops/text";
 
 /** Applies a plan the way the editor would, so tests assert on text. */
@@ -218,6 +218,41 @@ describe("applySpanStyle", () => {
         (d, r) => applySpanStyle(d, r, "font-size", null),
       ),
     ).toBe('<span style="font-family:serif">b</span>');
+  });
+});
+
+describe("clearOwnedInlineHtml", () => {
+  it("removes every plugin span style from a selected wrapper", () => {
+    expect(
+      apply(
+        '<span style="color:red;background:yellow;font-size:1.2em;font-family:serif">[text]</span>',
+        clearOwnedInlineHtml,
+      ),
+    ).toBe("text");
+  });
+
+  it("removes underline, subscript and superscript wrappers", () => {
+    expect(
+      apply("<u><sub><sup>[text]</sup></sub></u>", clearOwnedInlineHtml),
+    ).toBe("text");
+  });
+
+  it("clears a touched outer wrapper even for a partial selection", () => {
+    expect(
+      apply('<span style="color:red">a[ b ]c</span>', clearOwnedInlineHtml),
+    ).toBe("a b c");
+  });
+
+  it("leaves unrelated HTML wrappers untouched", () => {
+    expect(apply("<em><u>[text]</u></em>", clearOwnedInlineHtml)).toBe(
+      "<em>text</em>",
+    );
+  });
+
+  it("does not pre-clear at a collapsed cursor", () => {
+    expect(
+      clearOwnedInlineHtml("<u>text</u>", [{ from: 3, to: 3 }]).changes,
+    ).toEqual([]);
   });
 });
 

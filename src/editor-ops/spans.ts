@@ -12,6 +12,19 @@ export type SpanProperty = "color" | "background" | "font-size" | "font-family";
 const SPAN_CLOSE = "</span>";
 const SPAN_OPEN_BEFORE = /<span style="([^"]*)">$/;
 const SPAN_WHOLE = /^<span style="([^"]*)">([\s\S]*)<\/span>$/;
+const CLEARABLE_TAG = /<\/?(span|u|sub|sup)\b[^>]*>/gi;
+
+interface InlineTag {
+  readonly from: number;
+  readonly to: number;
+  readonly name: string;
+  readonly closing: boolean;
+}
+
+interface InlineWrapper {
+  readonly open: InlineTag;
+  readonly close?: InlineTag;
+}
 
 function editStyle(
   style: string,
@@ -88,6 +101,69 @@ export function applySpanStyle(
       text: `<span style="${property}:${value}">`,
     });
     changes.push({ from: range.to, to: range.to, text: SPAN_CLOSE });
+  }
+  return { changes: order(changes) };
+}
+
+/** Removes the plugin's inline HTML wrappers before native clear-formatting runs. */
+export function clearOwnedInlineHtml(
+  doc: string,
+  ranges: readonly Range[],
+): Plan {
+  const selected = normalizeRanges(ranges).filter(
+    (range) => range.from !== range.to,
+  );
+  if (selected.length === 0) return { changes: [] };
+
+  const wrappers: InlineWrapper[] = [];
+  const unmatched: InlineTag[] = [];
+  const stack: InlineTag[] = [];
+  CLEARABLE_TAG.lastIndex = 0;
+  for (
+    let match = CLEARABLE_TAG.exec(doc);
+    match;
+    match = CLEARABLE_TAG.exec(doc)
+  ) {
+    const raw = match[0] ?? "";
+    const tag: InlineTag = {
+      from: match.index,
+      to: match.index + raw.length,
+      name: (match[1] ?? "").toLowerCase(),
+      closing: raw.startsWith("</"),
+    };
+    if (!tag.closing) {
+      if (!/\/\s*>$/.test(raw)) stack.push(tag);
+      continue;
+    }
+
+    let openIndex = stack.length - 1;
+    while (openIndex >= 0 && stack[openIndex]?.name !== tag.name) openIndex--;
+    if (openIndex < 0) {
+      unmatched.push(tag);
+      continue;
+    }
+    const open = stack.splice(openIndex, 1)[0];
+    if (open) wrappers.push({ open, close: tag });
+  }
+  unmatched.push(...stack);
+
+  const touched = (from: number, to: number): boolean =>
+    selected.some((range) => range.from < to && range.to > from);
+  const changes: Change[] = [];
+  for (const wrapper of wrappers) {
+    const end = wrapper.close?.to ?? doc.length;
+    if (!touched(wrapper.open.from, end)) continue;
+    changes.push({ from: wrapper.open.from, to: wrapper.open.to, text: "" });
+    if (wrapper.close)
+      changes.push({
+        from: wrapper.close.from,
+        to: wrapper.close.to,
+        text: "",
+      });
+  }
+  for (const tag of unmatched) {
+    if (touched(tag.from, tag.to))
+      changes.push({ from: tag.from, to: tag.to, text: "" });
   }
   return { changes: order(changes) };
 }
