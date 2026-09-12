@@ -1,7 +1,10 @@
 # Awesome Format Bar — a Word-style Markdown formatting toolbar for Obsidian
 
-> Bold, italic, underline, highlight, font, headings, lists, tables, callouts and emoji — **by clicking buttons instead of typing Markdown syntax**.
+> Bold, italic, underline, highlight, font, headings, lists, tables, callouts and emoji — **by clicking buttons instead of typing Markdown syntax**.  
+> **No AI. No network. No telemetry. No accounts.**
 
+[![Privacy](https://img.shields.io/badge/privacy-no%20AI%20%C2%B7%20no%20network%20%C2%B7%20no%20telemetry-brightgreen)](#compatibility)
+[![Last commit](https://img.shields.io/github/last-commit/AwesomeDog/obsidian-awesome-format-bar?label=last%20commit)](https://github.com/AwesomeDog/obsidian-awesome-format-bar/commits/main)
 [![Obsidian](https://img.shields.io/badge/Obsidian-1.13.7%2B-7C3AED)](https://obsidian.md)
 [![GitHub release](https://img.shields.io/github/v/release/AwesomeDog/obsidian-awesome-format-bar)](https://github.com/AwesomeDog/obsidian-awesome-format-bar/releases/latest)
 [![Downloads](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fobsidianmd%2Fobsidian-releases%2Fmaster%2Fcommunity-plugin-stats.json&query=%24%5B%22awesome-format-bar%22%5D.downloads&label=downloads&color=573E7A)](https://obsidian.md/plugins?id=awesome-format-bar)
@@ -73,7 +76,7 @@ Obsidian is fast **if** you already speak Markdown. For everyone else — studen
 ### 🧭 Three toolbar positions, freely combined
 
 - **Ribbon (Top)** — the full, tabbed toolbar pinned above the editor. *Default.*
-- **Following** — a compact bar that floats above your current selection, like the selection toolbar in Word or Google Docs.
+- **Following** — a compact bar that floats above your current selection, like the selection toolbar in Word or Google Docs. **The Following bar never covers what you are editing.**
 - **Fixed** — a compact bar pinned to the bottom of the editor.
 
 Each position is toggled independently, so you can run just the floating bar, just the ribbon, or all three.
@@ -200,7 +203,7 @@ Download `main.js`, `manifest.json` and `styles.css` from a release into `<vault
 
 - Obsidian **1.13.7+**
 - Works with the Markdown editor and adapts to your active theme in both light and dark mode.
-- No network access, no accounts, no telemetry — everything runs locally.
+- No AI, no network access, no accounts, no telemetry — everything runs locally.
 - The release is exactly three files: `main.js`, `manifest.json`, `styles.css`.
 
 ---
@@ -227,6 +230,9 @@ Yes — that's the **Pinned** tab. Pin any command from the palette and choose a
 
 **Does the emoji picker need an internet connection?**
 No. All ~2,150 emoji, kaomoji and symbols are bundled with the plugin.
+
+**Does the plugin use AI, or phone home in any way?**
+No. There is no AI feature, no API key, no network request, no analytics and no telemetry anywhere in the code — the plugin reads and writes your local `.md` files and nothing else. The emoji library is bundled, so it works on a plane.
 
 **Does sorting a table in Reading view change my file?**
 No. Reading-view header-click sorting is display-only and never modifies the note.

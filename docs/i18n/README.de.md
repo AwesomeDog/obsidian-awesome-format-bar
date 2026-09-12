@@ -1,7 +1,10 @@
 # Awesome Format Bar —— eine Word-ähnliche Markdown-Formatleiste für Obsidian
 
-> Fett, Kursiv, Unterstreichen, Hervorhebung, Schriftart, Überschriften, Listen, Tabellen, Callouts und Emoji — **Schaltflächen anklicken, statt Markdown-Syntax zu tippen**.
+> Fett, Kursiv, Unterstreichen, Hervorhebung, Schriftart, Überschriften, Listen, Tabellen, Callouts und Emoji — **Schaltflächen anklicken, statt Markdown-Syntax zu tippen**.  
+> **Keine KI. Kein Netzwerk. Keine Telemetrie. Keine Konten.**
 
+[![Privacy](https://img.shields.io/badge/privacy-no%20AI%20%C2%B7%20no%20network%20%C2%B7%20no%20telemetry-brightgreen)](#compatibility)
+[![Last commit](https://img.shields.io/github/last-commit/AwesomeDog/obsidian-awesome-format-bar?label=last%20commit)](https://github.com/AwesomeDog/obsidian-awesome-format-bar/commits/main)
 [![Obsidian](https://img.shields.io/badge/Obsidian-1.13.7%2B-7C3AED)](https://obsidian.md)
 [![GitHub release](https://img.shields.io/github/v/release/AwesomeDog/obsidian-awesome-format-bar)](https://github.com/AwesomeDog/obsidian-awesome-format-bar/releases/latest)
 [![Downloads](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fobsidianmd%2Fobsidian-releases%2Fmaster%2Fcommunity-plugin-stats.json&query=%24%5B%22awesome-format-bar%22%5D.downloads&label=downloads&color=573E7A)](https://obsidian.md/plugins?id=awesome-format-bar)
@@ -75,7 +78,7 @@ Obsidian ist schnell — **wenn** Sie bereits Markdown beherrschen. Für alle an
 ### 🧭 Drei Leistenpositionen, frei kombinierbar
 
 - **Menüband (Oben)** — die vollständige, in Registerkarten unterteilte Symbolleiste, fest über dem Editor. *Standard.*
-- **Mitlaufend** — eine kompakte Leiste, die über der aktuellen Auswahl schwebt, wie die Auswahl-Symbolleiste in Word oder Google Docs.
+- **Mitlaufend** — eine kompakte Leiste, die über der aktuellen Auswahl schwebt, wie die Auswahl-Symbolleiste in Word oder Google Docs. **Die mitlaufende Leiste verdeckt nie, was Sie gerade bearbeiten.**
 - **Unten** — eine kompakte Leiste, die am unteren Rand des Editors fixiert ist.
 
 Jede Position wird unabhängig ein- und ausgeschaltet, Sie können also nur die mitlaufende Leiste, nur das Menüband oder alle drei nutzen.
@@ -202,7 +205,7 @@ Laden Sie `main.js`, `manifest.json` und `styles.css` aus einem Release in `<Tre
 
 - Obsidian **1.13.7+**
 - Funktioniert mit dem Markdown-Editor und passt sich im hellen wie im dunklen Modus an das aktive Theme an.
-- Kein Netzwerkzugriff, keine Konten, keine Telemetrie — alles läuft lokal.
+- Keine KI, kein Netzwerkzugriff, keine Konten, keine Telemetrie — alles läuft lokal.
 - Das Release besteht aus genau drei Dateien: `main.js`, `manifest.json`, `styles.css`.
 
 ---
@@ -229,6 +232,9 @@ Ja — dafür ist die Registerkarte **Angeheftet** da. Heften Sie einen beliebig
 
 **Braucht die Emoji-Auswahl eine Internetverbindung?**
 Nein. Alle rund 2.150 Emoji, Kaomoji und Symbole sind im Plugin enthalten.
+
+**Nutzt das Plugin KI oder telefoniert es in irgendeiner Weise nach Hause?**
+Nein. Im gesamten Code gibt es keine KI-Funktion, keinen API-Schlüssel, keine Netzwerkanfrage, keine Nutzungsanalyse und keine Telemetrie — das Plugin liest und schreibt Ihre lokalen `.md`-Dateien und sonst nichts. Die Emoji-Bibliothek ist im Plugin enthalten und funktioniert daher auch im Flugzeug.
 
 **Ändert das Sortieren einer Tabelle in der Leseansicht meine Datei?**
 Nein. Die Sortierung per Klick auf die Kopfzeile in der Leseansicht betrifft nur die Anzeige und ändert die Notiz niemals.

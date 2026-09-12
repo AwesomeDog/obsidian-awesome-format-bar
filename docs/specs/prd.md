@@ -153,7 +153,7 @@ One button on **Insert · Media & Symbols** opens a panel of about 2,150 entries
 
 Search matches an entry's name and keywords. Each source additionally keeps its own **Frequently used** group — per source, not global, so kaomoji don't get crowded out by emoji — which becomes the default group once anything has been picked. Usage counts live in settings and are pruned automatically; there is no UI for them.
 
-Picking an entry inserts the character over the selection or at the caret, as one undo step. The panel stays open so several characters can be dropped in a row, and closes on Escape or an outside click, returning focus to the editor. Emoji are inserted with their default skin tone.
+Picking an entry inserts the character over the selection or at the caret, as one undo step. The panel stays open so several characters can be dropped in a row, and closes on Escape or an outside click, returning focus to the editor.
 
 The character data ships with the plugin — emoji from `@emoji-mart/data`, kaomoji and symbols hand-kept in the repo — so the panel works offline. The button is available wherever the editor is in source mode, in every position including the Compact overflow menu, but is not registered in the command palette: its only job is to open the panel, so a palette entry would be a no-op.
 
@@ -190,7 +190,7 @@ The Table options govern editing behavior and text output, not toolbar layout, s
 - Features needing capabilities Obsidian doesn't expose: spell check, grammar check, thesaurus, translation.
 - User-created commands — Pinned surfaces existing commands, it doesn't create new ones.
 - Emoji shortcodes: no `:smile:` expansion, no autocomplete while typing; the panel inserts raw characters.
-- Skin-tone selection, custom emoji sets, user-editable character lists.
+- Custom emoji sets, user-editable character lists.
 - Reordering, hiding or showing the 126 built-in commands.
 - Toolbar appearance customization: background or icon color pickers, theme variants.
 

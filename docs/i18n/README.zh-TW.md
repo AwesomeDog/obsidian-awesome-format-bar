@@ -1,7 +1,10 @@
 # Awesome Format Bar —— 給 Obsidian 的 Word 式 Markdown 格式列
 
-> 粗體、斜體、底線、醒目提示、字型、標題、清單、表格、標註、表情符號 —— **按鈕點一下就好，不必手打 Markdown 語法**。
+> 粗體、斜體、底線、醒目提示、字型、標題、清單、表格、標註、表情符號 —— **按鈕點一下就好，不必手打 Markdown 語法**。  
+> **沒有 AI。不連網路。無遙測。免帳號。**
 
+[![Privacy](https://img.shields.io/badge/privacy-no%20AI%20%C2%B7%20no%20network%20%C2%B7%20no%20telemetry-brightgreen)](#compatibility)
+[![Last commit](https://img.shields.io/github/last-commit/AwesomeDog/obsidian-awesome-format-bar?label=last%20commit)](https://github.com/AwesomeDog/obsidian-awesome-format-bar/commits/main)
 [![Obsidian](https://img.shields.io/badge/Obsidian-1.13.7%2B-7C3AED)](https://obsidian.md)
 [![GitHub release](https://img.shields.io/github/v/release/AwesomeDog/obsidian-awesome-format-bar)](https://github.com/AwesomeDog/obsidian-awesome-format-bar/releases/latest)
 [![Downloads](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fobsidianmd%2Fobsidian-releases%2Fmaster%2Fcommunity-plugin-stats.json&query=%24%5B%22awesome-format-bar%22%5D.downloads&label=downloads&color=573E7A)](https://obsidian.md/plugins?id=awesome-format-bar)
@@ -75,7 +78,7 @@
 ### 🧭 三處工具列位置，自由組合
 
 - **功能區（頂端）** —— 固定在編輯器上方的完整分頁工具列。*預設。*
-- **跟隨** —— 浮在目前選取範圍上方的精簡工具列，類似 Word 或 Google Docs 的選取工具列。
+- **跟隨** —— 浮在目前選取範圍上方的精簡工具列，類似 Word 或 Google Docs 的選取工具列。 **跟隨列永遠不會蓋住你正在編輯的內容。**
 - **底部** —— 固定在編輯器底部的精簡工具列。
 
 每個位置各自獨立開關，你可以只用跟隨列、只用功能區，或者三處全開。
@@ -202,7 +205,7 @@
 
 - Obsidian **1.13.7 以上**
 - 搭配 Markdown 編輯器運作，淺色與深色模式下都配合你目前的主題。
-- 不連網路、不要帳號、無遙測——一切都在本機執行。
+- 無 AI、不連網路、不要帳號、無遙測——一切都在本機執行。
 - 發布物只有三個檔案：`main.js`、`manifest.json`、`styles.css`。
 
 ---
@@ -229,6 +232,9 @@
 
 **表情符號選擇器需要連上網路嗎？**
 不需要。約 2,150 筆表情符號、顏文字與符號全部隨外掛打包。
+
+**這個外掛會用到 AI，或以任何方式回傳資料嗎？**
+不會。程式碼裡沒有任何 AI 功能、沒有 API 金鑰、沒有網路請求、沒有分析、也沒有遙測——外掛只讀寫你本機的 `.md` 檔案，除此之外什麼都不做。表情符號庫隨外掛打包，所以就算在飛機上也照樣能用。
 
 **在閱讀模式中替表格排序會改動我的檔案嗎？**
 不會。閱讀模式下按一下標題排序只是顯示層面，絕不修改筆記。

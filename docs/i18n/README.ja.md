@@ -1,7 +1,10 @@
 # Awesome Format Bar —— Obsidian に Word ライクな Markdown 書式バーを
 
-> 太字、斜体、下線、蛍光ペン、フォント、見出し、リスト、テーブル、コールアウト、絵文字 —— **Markdown 構文を手で打たず、ボタンをクリックするだけ**。
+> 太字、斜体、下線、蛍光ペン、フォント、見出し、リスト、テーブル、コールアウト、絵文字 —— **Markdown 構文を手で打たず、ボタンをクリックするだけ**。  
+> **AI なし。ネットワークなし。テレメトリーなし。アカウント不要。**
 
+[![Privacy](https://img.shields.io/badge/privacy-no%20AI%20%C2%B7%20no%20network%20%C2%B7%20no%20telemetry-brightgreen)](#compatibility)
+[![Last commit](https://img.shields.io/github/last-commit/AwesomeDog/obsidian-awesome-format-bar?label=last%20commit)](https://github.com/AwesomeDog/obsidian-awesome-format-bar/commits/main)
 [![Obsidian](https://img.shields.io/badge/Obsidian-1.13.7%2B-7C3AED)](https://obsidian.md)
 [![GitHub release](https://img.shields.io/github/v/release/AwesomeDog/obsidian-awesome-format-bar)](https://github.com/AwesomeDog/obsidian-awesome-format-bar/releases/latest)
 [![Downloads](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fobsidianmd%2Fobsidian-releases%2Fmaster%2Fcommunity-plugin-stats.json&query=%24%5B%22awesome-format-bar%22%5D.downloads&label=downloads&color=573E7A)](https://obsidian.md/plugins?id=awesome-format-bar)
@@ -75,7 +78,7 @@
 ### 🧭 3 か所のツールバー位置、自由に組み合わせ
 
 - **上部（リボン）** —— エディターの上に固定される、タブ付きのフルツールバー。*既定で有効。*
-- **追従** —— 現在の選択範囲の上に浮かぶコンパクトバー。Word や Google Docs の選択時ツールバーのようなものです。
+- **追従** —— 現在の選択範囲の上に浮かぶコンパクトバー。Word や Google Docs の選択時ツールバーのようなものです。**追従バーが編集中の内容を覆うことは決してありません。**
 - **下部（固定）** —— エディターの下端に固定されるコンパクトバー。
 
 それぞれの位置は個別にオン / オフできるため、追従バーだけ、リボンだけ、あるいは 3 か所すべてを同時に使うこともできます。
@@ -202,7 +205,7 @@ Obsidian **1.13.7 以降**が必要です。
 
 - Obsidian **1.13.7 以上**
 - Markdown エディターで動作し、ライトモードとダークモードの両方でアクティブなテーマに追従します。
-- ネットワークアクセスなし、アカウント不要、テレメトリーなし——すべてローカルで動作します。
+- AI なし、ネットワークアクセスなし、アカウント不要、テレメトリーなし——すべてローカルで動作します。
 - リリース物はちょうど 3 ファイルです：`main.js`、`manifest.json`、`styles.css`。
 
 ---
@@ -229,6 +232,9 @@ Obsidian **1.13.7 以降**が必要です。
 
 **絵文字ピッカーにインターネット接続は必要ですか？**
 いいえ。約 2,150 件の絵文字・顔文字・記号はすべてプラグインに同梱されています。
+
+**プラグインは AI を使ったり、何らかの形で外部に通信したりしますか？**
+いいえ。コードのどこにも AI 機能、API キー、ネットワークリクエスト、解析、テレメトリーはありません——プラグインはローカルの `.md` ファイルを読み書きするだけで、それ以外は何もしません。絵文字ライブラリは同梱されているので、飛行機の中でも動きます。
 
 **リーディングビューでテーブルを並べ替えるとファイルは変更されますか？**
 いいえ。リーディングビューでのヘッダークリックによる並べ替えは表示のみで、ノートを変更することはありません。

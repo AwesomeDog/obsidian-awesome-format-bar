@@ -1,7 +1,10 @@
 # Awesome Format Bar —— una barra de formato Markdown al estilo de Word para Obsidian
 
-> Negrita, cursiva, subrayado, resaltado, fuente, títulos, listas, tablas, recuadros y emoji —— **con solo hacer clic en botones, sin escribir sintaxis Markdown**.
+> Negrita, cursiva, subrayado, resaltado, fuente, títulos, listas, tablas, recuadros y emoji —— **con solo hacer clic en botones, sin escribir sintaxis Markdown**.  
+> **Sin IA. Sin red. Sin telemetría. Sin cuentas.**
 
+[![Privacy](https://img.shields.io/badge/privacy-no%20AI%20%C2%B7%20no%20network%20%C2%B7%20no%20telemetry-brightgreen)](#compatibility)
+[![Last commit](https://img.shields.io/github/last-commit/AwesomeDog/obsidian-awesome-format-bar?label=last%20commit)](https://github.com/AwesomeDog/obsidian-awesome-format-bar/commits/main)
 [![Obsidian](https://img.shields.io/badge/Obsidian-1.13.7%2B-7C3AED)](https://obsidian.md)
 [![GitHub release](https://img.shields.io/github/v/release/AwesomeDog/obsidian-awesome-format-bar)](https://github.com/AwesomeDog/obsidian-awesome-format-bar/releases/latest)
 [![Downloads](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fobsidianmd%2Fobsidian-releases%2Fmaster%2Fcommunity-plugin-stats.json&query=%24%5B%22awesome-format-bar%22%5D.downloads&label=downloads&color=573E7A)](https://obsidian.md/plugins?id=awesome-format-bar)
@@ -75,7 +78,7 @@ Obsidian es rápido **si** ya hablas Markdown. Para todos los demás ——estud
 ### 🧭 Tres posiciones de barra, combinables libremente
 
 - **Cinta（Superior）** —— la barra completa con pestañas, fijada encima del editor. *Activa por defecto.*
-- **Flotante** —— una barra compacta que aparece sobre la selección actual, como la barra de selección de Word o Google Docs.
+- **Flotante** —— una barra compacta que aparece sobre la selección actual, como la barra de selección de Word o Google Docs. **La barra Flotante nunca tapa lo que estás editando.**
 - **Inferior** —— una barra compacta fijada en la parte inferior del editor.
 
 Cada posición se activa de forma independiente, así que puedes usar solo la barra flotante, solo la cinta o las tres a la vez.
@@ -202,7 +205,7 @@ Descarga `main.js`, `manifest.json` y `styles.css` de una versión publicada y c
 
 - Obsidian **1.13.7 o superior**
 - Funciona con el editor Markdown y se adapta a tu tema activo tanto en modo claro como oscuro.
-- Sin acceso a la red, sin cuentas, sin telemetría: todo se ejecuta en local.
+- Sin IA, sin acceso a la red, sin cuentas, sin telemetría: todo se ejecuta en local.
 - La versión publicada son exactamente tres archivos: `main.js`, `manifest.json` y `styles.css`.
 
 ---
@@ -229,6 +232,9 @@ Sí ——para eso está la pestaña **Anclado**——. Ancla cualquier comando 
 
 **¿El selector de emoji necesita conexión a internet?**
 No. Los unos 2.150 emoji, kaomoji y símbolos se incluyen con el plugin.
+
+**¿El plugin usa IA o se conecta a algún servidor?**
+No. No hay ninguna función de IA, ni clave de API, ni petición de red, ni analítica ni telemetría en ninguna parte del código ——el plugin lee y escribe tus archivos `.md` locales y nada más——. La biblioteca de emoji va incluida, así que también funciona en un avión.
 
 **¿Ordenar una tabla en el modo de lectura modifica mi archivo?**
 No. Ordenar al hacer clic en el encabezado en el modo de lectura es solo visual y nunca modifica la nota.

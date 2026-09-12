@@ -1,7 +1,10 @@
 # Awesome Format Bar —— Obsidian 을 위한 Word 스타일 Markdown 서식 바
 
-> 굵게, 기울임꼴, 밑줄, 강조 표시, 글꼴, 제목, 목록, 표, 콜아웃, 이모지 —— **Markdown 문법을 입력하지 않고 버튼만 누르면 됩니다**.
+> 굵게, 기울임꼴, 밑줄, 강조 표시, 글꼴, 제목, 목록, 표, 콜아웃, 이모지 —— **Markdown 문법을 입력하지 않고 버튼만 누르면 됩니다**.  
+> **AI 없음. 네트워크 없음. 원격 측정 없음. 계정 없음.**
 
+[![Privacy](https://img.shields.io/badge/privacy-no%20AI%20%C2%B7%20no%20network%20%C2%B7%20no%20telemetry-brightgreen)](#compatibility)
+[![Last commit](https://img.shields.io/github/last-commit/AwesomeDog/obsidian-awesome-format-bar?label=last%20commit)](https://github.com/AwesomeDog/obsidian-awesome-format-bar/commits/main)
 [![Obsidian](https://img.shields.io/badge/Obsidian-1.13.7%2B-7C3AED)](https://obsidian.md)
 [![GitHub release](https://img.shields.io/github/v/release/AwesomeDog/obsidian-awesome-format-bar)](https://github.com/AwesomeDog/obsidian-awesome-format-bar/releases/latest)
 [![Downloads](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fobsidianmd%2Fobsidian-releases%2Fmaster%2Fcommunity-plugin-stats.json&query=%24%5B%22awesome-format-bar%22%5D.downloads&label=downloads&color=573E7A)](https://obsidian.md/plugins?id=awesome-format-bar)
@@ -75,7 +78,7 @@
 ### 🧭 세 가지 도구 모음 위치, 자유로운 조합
 
 - **리본（위쪽）** —— 편집기 위에 고정되는 탭이 있는 전체 도구 모음. *기본값.*
-- **따라감** —— 현재 선택 영역 위에 떠 있는 간편 도구 모음. Word나 Google Docs의 선택 도구 모음과 같습니다.
+- **따라감** —— 현재 선택 영역 위에 떠 있는 간편 도구 모음. Word나 Google Docs의 선택 도구 모음과 같습니다. **따라감 바가 편집 중인 내용을 가리는 일은 결코 없습니다.**
 - **아래쪽** —— 편집기 맨 아래에 고정되는 간편 도구 모음.
 
 각 위치는 독립적으로 켜고 끌 수 있어, 따라감 바만, 리본만, 또는 세 곳 모두를 함께 쓸 수 있습니다.
@@ -202,7 +205,7 @@ Obsidian **1.13.7 이상**이 필요합니다.
 
 - Obsidian **1.13.7 이상**
 - Markdown 편집기에서 동작하며, 밝은 모드와 어두운 모드 모두 현재 테마에 맞춥니다.
-- 네트워크 접속도, 계정도, 원격 측정도 없습니다——모든 것이 로컬에서 실행됩니다.
+- AI 없음, 네트워크 접속도, 계정도, 원격 측정도 없습니다——모든 것이 로컬에서 실행됩니다.
 - 릴리스 파일은 정확히 세 개입니다: `main.js`, `manifest.json`, `styles.css`.
 
 ---
@@ -229,6 +232,9 @@ Obsidian **1.13.7 이상**이 필요합니다.
 
 **이모지 선택기에 인터넷 연결이 필요한가요?**
 아니요. 약 2,150개의 이모지, 카오모지, 기호가 모두 플러그인에 포함되어 있습니다.
+
+**이 플러그인은 AI를 쓰거나, 어떤 식으로든 외부로 연결되나요?**
+아니요. 코드 어디에도 AI 기능, API 키, 네트워크 요청, 분석, 원격 측정이 없습니다——플러그인은 로컬 `.md` 파일을 읽고 쓸 뿐, 그 외에는 아무 일도 하지 않습니다. 이모지 라이브러리는 플러그인에 포함되어 있어 비행기 안에서도 동작합니다.
 
 **읽기 모드에서 표를 정렬하면 파일이 바뀌나요?**
 아니요. 읽기 모드에서 머리글을 클릭해 정렬하는 것은 표시만 바꾸며 노트를 절대 수정하지 않습니다.
