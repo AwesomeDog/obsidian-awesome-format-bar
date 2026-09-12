@@ -195,7 +195,7 @@ Téléchargez `main.js`、`manifest.json` et `styles.css` depuis une version pub
 | ---------------- | ---------------------------------------------------------------------------------------------------------- |
 | **Barre d'outils** | Interrupteurs indépendants pour Haut / Flottante / Bas                                                    |
 | **Épinglé**      | Vos commandes épinglées —— ajouter, changer l'icône, réorganiser, supprimer                                |
-| **Tableau**      | Entrée passe à la ligne suivante ; Remplir les cellules avec des espaces ; Trier au clic sur l'en-tête en mode lecture（ne modifie jamais le fichier） |
+| **Tableau**      | Entrée passe à la ligne suivante ; Tab / Shift+Tab passent d'une cellule à l'autre et Tab au bord droit ajoute une colonne ; Remplir les cellules avec des espaces ; Trier au clic sur l'en-tête en mode lecture（ne modifie jamais le fichier） |
 
 ## Compatibilité
 

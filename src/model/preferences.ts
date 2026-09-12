@@ -15,6 +15,7 @@ export const DEFAULT_SETTINGS = {
   mobile: { top: false, following: false, fixed: true },
   enableOnMobile: false,
   bindEnterToNextRow: true,
+  bindTabToNextCell: true,
   padCellWidthWithSpaces: true,
   sortTableOnHeaderClick: true,
   showWhitespace: false,
@@ -98,6 +99,10 @@ export function normalizeSettings(raw: unknown): Settings {
     bindEnterToNextRow: normalizeFlag(
       source["bindEnterToNextRow"],
       "bindEnterToNextRow",
+    ),
+    bindTabToNextCell: normalizeFlag(
+      source["bindTabToNextCell"],
+      "bindTabToNextCell",
     ),
     padCellWidthWithSpaces: normalizeFlag(
       source["padCellWidthWithSpaces"],

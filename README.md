@@ -194,7 +194,7 @@ Download `main.js`, `manifest.json` and `styles.css` from a release into `<vault
 | ----------- | ------------------------------------------------------------------------------------------------------------------------ |
 | **Toolbar** | Independent toggles for Top / Following / Fixed                                                                          |
 | **Pinned**  | Open the Pinned manager to add commands, choose icons, manage groups, reorder, and delete                                  |
-| **Table**   | Enter moves to the next row; pad cell width with spaces; sort on header click in Reading view (never modifies the file)   |
+| **Table**   | Enter moves to the next row; Tab / Shift+Tab move between cells and Tab adds a column at the right edge; pad cell width with spaces; sort on header click in Reading view (never modifies the file)   |
 
 ## Compatibility
 

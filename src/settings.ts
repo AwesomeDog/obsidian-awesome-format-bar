@@ -18,12 +18,16 @@ import type {
 
 type PlatformKey = "desktop" | "mobile";
 type TableKey =
-  "bindEnterToNextRow" | "padCellWidthWithSpaces" | "sortTableOnHeaderClick";
+  | "bindEnterToNextRow"
+  | "bindTabToNextCell"
+  | "padCellWidthWithSpaces"
+  | "sortTableOnHeaderClick";
 type SettingKey =
   `${PlatformKey}.${ToolbarPosition}` | "enableOnMobile" | TableKey;
 
 const TABLE_KEYS: readonly TableKey[] = [
   "bindEnterToNextRow",
+  "bindTabToNextCell",
   "padCellWidthWithSpaces",
   "sortTableOnHeaderClick",
 ];
@@ -91,6 +95,11 @@ export class FormatBarSettingTab extends PluginSettingTab {
             "bindEnterToNextRow",
             "Enter moves to the next row",
             "Pressing Enter inside a table jumps to the cell below and adds a row at the end. Live Preview already does this on its own, so this only applies in Source mode.",
+          ),
+          toggle(
+            "bindTabToNextCell",
+            "Tab moves to the next cell",
+            "Pressing Tab inside a table moves to the next cell, Shift+Tab moves back, and Tab at the right edge adds a column. This only applies in Source mode.",
           ),
           toggle(
             "padCellWidthWithSpaces",

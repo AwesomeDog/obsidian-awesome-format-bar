@@ -13,6 +13,8 @@ export interface Settings {
   enableOnMobile: boolean;
   /** Enter in a table moves to the cell below, adding a row at the end. */
   bindEnterToNextRow: boolean;
+  /** Tab in a table moves between cells, adding a column at the right edge. */
+  bindTabToNextCell: boolean;
   /** Pad cells with spaces so the pipes of a column line up. */
   padCellWidthWithSpaces: boolean;
   /** Reading view: click a table header to sort its rows. */

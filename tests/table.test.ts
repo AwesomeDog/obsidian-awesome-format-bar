@@ -12,6 +12,7 @@ import {
   insertRowBelow,
   moveColumn,
   planTableEnter,
+  planTableTab,
   moveRow,
   sortRows,
   tableToText,
@@ -421,6 +422,44 @@ describe("planTableEnter", () => {
 
   it("returns null outside a table so the newline goes through", () => {
     expect(planTableEnter("plain^ text", 5, PADDED)).toBeNull();
+  });
+});
+
+describe("planTableTab", () => {
+  it("moves to the next cell and selects its content", () => {
+    const { doc, offset } = caret("|a|b|\n|-|-|\n|c^|d|");
+    const plan = planTableTab(doc, offset, PADDED, false);
+    const next = applyChanges(doc, plan?.changes ?? []);
+    expect(next).toBe(
+      ["| a   | b   |", "| --- | --- |", "| c   | d   |"].join("\n"),
+    );
+    expect(plan?.select).toEqual({ from: 36, to: 37 });
+  });
+
+  it("moves backward across the first body cell", () => {
+    const { doc, offset } = caret("|a^|b|\n|-|-|\n|c|d|");
+    const plan = planTableTab(doc, offset, PADDED, true);
+    expect(applyChanges(doc, plan?.changes ?? [])).toBe(
+      ["| a   | b   |", "| --- | --- |", "| c   | d   |"].join("\n"),
+    );
+    expect(plan?.select).toEqual({ from: 2, to: 3 });
+  });
+
+  it("adds a column at the right edge", () => {
+    const { doc, offset } = caret("|a|b^|\n|-|-|\n|c|d|");
+    const plan = planTableTab(doc, offset, PADDED, false);
+    expect(applyChanges(doc, plan?.changes ?? [])).toBe(
+      [
+        "| a   | b   |     |",
+        "| --- | --- | --- |",
+        "| c   | d   |     |",
+      ].join("\n"),
+    );
+    expect(plan?.select).toEqual({ from: 14, to: 14 });
+  });
+
+  it("returns null outside a table", () => {
+    expect(planTableTab("plain^ text", 5, PADDED, false)).toBeNull();
   });
 });
 

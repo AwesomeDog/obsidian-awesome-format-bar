@@ -174,6 +174,9 @@ export default {
   "Enter moves to the next row": "Entrar pasa a la fila siguiente",
   "Pressing Enter inside a table jumps to the cell below and adds a row at the end. Live Preview already does this on its own, so this only applies in Source mode.":
     "Dentro de una tabla, la tecla Entrar salta a la celda inferior y añade una fila al final. La vista previa en directo ya lo hace por sí sola, por lo que esta opción solo se aplica en el modo de origen.",
+  "Tab moves to the next cell": "Tab pasa a la siguiente celda",
+  "Pressing Tab inside a table moves to the next cell, Shift+Tab moves back, and Tab at the right edge adds a column. This only applies in Source mode.":
+    "Dentro de una tabla, Tab pasa a la siguiente celda y Shift+Tab vuelve a la anterior. Tab en el borde derecho añade una columna. Esta opción solo se aplica en el modo de origen.",
   "Pad cells with spaces": "Rellenar celdas con espacios",
   "Lines the pipes of each column up by padding cells with spaces. Live Preview always pads, so turning this off makes tables flip between the two styles as you edit.":
     "Rellena las celdas con espacios para alinear las barras verticales de cada columna. La vista previa en directo siempre rellena, por lo que desactivar esta opción hará que las tablas alternen entre los dos estilos al editarlas.",

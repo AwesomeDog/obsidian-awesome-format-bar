@@ -244,6 +244,7 @@ describe("setting keys", () => {
       "mobile.fixed",
       "enableOnMobile",
       "bindEnterToNextRow",
+      "bindTabToNextCell",
       "padCellWidthWithSpaces",
       "sortTableOnHeaderClick",
     ] as const) {

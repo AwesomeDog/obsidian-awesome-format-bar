@@ -574,3 +574,58 @@ export function planTableEnter(
     change.from + cellOffset(change.text, cell.row + 2, cell.column);
   return { changes: plan.changes, select: { from: caret, to: caret } };
 }
+
+/** Tab moves horizontally; the right edge grows the table by one column. */
+export function planTableTab(
+  doc: string,
+  offset: number,
+  format: TableFormat,
+  backwards: boolean,
+): Plan | null {
+  const hit = findTableEditContext(doc, offset);
+  if (!hit) return null;
+  const { cell, columns, table } = hit;
+  let row = cell.row;
+  let column = cell.column;
+  let rows = table.rows;
+  let align = table.align;
+
+  if (backwards) {
+    if (column > 0) column--;
+    else if (row > 0) {
+      row--;
+      column = columns - 1;
+    }
+  } else if (column + 1 < columns) column++;
+  else {
+    rows = table.rows.map((current) => [...current, ""]);
+    align = [...table.align, "none"];
+    column++;
+  }
+
+  const plan = edit(table, format, rows, align);
+  const change = plan.changes[0];
+  if (!change) return null;
+  const renderedLine = row === 0 ? 0 : row + 1;
+  const value = rows[row]?.[column] ?? "";
+  const caret = change.from + cellOffset(change.text, renderedLine, column);
+  if (value === "")
+    return { changes: plan.changes, select: { from: caret, to: caret } };
+
+  const lines = change.text.split("\n");
+  let before = 0;
+  for (let i = 0; i < renderedLine; i++) before += (lines[i] ?? "").length + 1;
+  const raw = escapeCell(value);
+  const lineText = lines[renderedLine] ?? "";
+  const start = Math.max(0, caret - change.from - before);
+  const content = lineText.indexOf(raw, start);
+  if (content < 0)
+    return { changes: plan.changes, select: { from: caret, to: caret } };
+  return {
+    changes: plan.changes,
+    select: {
+      from: change.from + before + content,
+      to: change.from + before + content + raw.length,
+    },
+  };
+}

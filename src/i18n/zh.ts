@@ -173,6 +173,9 @@ export default {
   "Enter moves to the next row": "回车移动到下一行",
   "Pressing Enter inside a table jumps to the cell below and adds a row at the end. Live Preview already does this on its own, so this only applies in Source mode.":
     "在表格中按回车会跳到下方单元格，并在表格末尾追加一行。实时预览本身已支持此行为，因此该项仅适用于源码模式。",
+  "Tab moves to the next cell": "Tab 移动到下一个单元格",
+  "Pressing Tab inside a table moves to the next cell, Shift+Tab moves back, and Tab at the right edge adds a column. This only applies in Source mode.":
+    "在表格中按 Tab 会移动到下一个单元格，Shift+Tab 返回上一个单元格，在右侧边缘按 Tab 会添加一列。该项仅适用于源码模式。",
   "Pad cells with spaces": "用空格填充单元格",
   "Lines the pipes of each column up by padding cells with spaces. Live Preview always pads, so turning this off makes tables flip between the two styles as you edit.":
     "用空格填充单元格，使各列的竖线对齐。实时预览始终保持填充，关闭此项会让表格在编辑时来回切换两种样式。",

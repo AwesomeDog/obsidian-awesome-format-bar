@@ -174,6 +174,9 @@ export default {
   "Enter moves to the next row": "Enter 키로 다음 행으로 이동",
   "Pressing Enter inside a table jumps to the cell below and adds a row at the end. Live Preview already does this on its own, so this only applies in Source mode.":
     "표 안에서 Enter 키를 누르면 아래 셀로 이동하고 끝에 새 행이 추가됩니다. 실시간 미리보기는 이미 이렇게 동작하므로 이 설정은 원본 모드에만 적용됩니다.",
+  "Tab moves to the next cell": "Tab으로 다음 셀로 이동",
+  "Pressing Tab inside a table moves to the next cell, Shift+Tab moves back, and Tab at the right edge adds a column. This only applies in Source mode.":
+    "표 안에서 Tab을 누르면 다음 셀로 이동하고 Shift+Tab으로 돌아갑니다. 오른쪽 끝에서 Tab을 누르면 열이 추가됩니다. 이 설정은 원본 모드에만 적용됩니다.",
   "Pad cells with spaces": "공백으로 셀 채우기",
   "Lines the pipes of each column up by padding cells with spaces. Live Preview always pads, so turning this off makes tables flip between the two styles as you edit.":
     "공백으로 셀을 채워 각 열의 세로줄을 맞춥니다. 실시간 미리보기는 항상 공백으로 채우므로 이 옵션을 끄면 편집할 때 표가 두 가지 스타일 사이에서 왕복합니다.",

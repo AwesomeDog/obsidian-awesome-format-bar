@@ -12,7 +12,11 @@ import {
   missingForwardedCommands,
   registeredCommandName,
 } from "./commands/registered";
-import { planTableEnter, type TableFormat } from "./editor-ops/table";
+import {
+  planTableEnter,
+  planTableTab,
+  type TableFormat,
+} from "./editor-ops/table";
 import { setLanguage } from "./i18n/i18n";
 import { COMMANDS, commandById } from "./model/command-table";
 import {
@@ -195,8 +199,8 @@ export default class AwesomeFormatBarPlugin extends Plugin {
     doc.addEventListener("scroll", refresh, true);
     this.register(() => doc.removeEventListener("scroll", refresh, true));
 
-    // Capture, ahead of CodeMirror: a handled Enter must not also insert a newline.
-    const onKeyDown = (evt: KeyboardEvent): void => this.onTableEnter(evt);
+    // Capture before the editor so handled navigation does not run its default.
+    const onKeyDown = (evt: KeyboardEvent): void => this.onTableKeydown(evt);
     doc.addEventListener("keydown", onKeyDown, true);
     this.register(() => doc.removeEventListener("keydown", onKeyDown, true));
 
@@ -210,11 +214,15 @@ export default class AwesomeFormatBarPlugin extends Plugin {
     if (win) this.registerDomEvent(win, "resize", refresh);
   }
 
-  /** Enter in a table moves to the cell below, as Live Preview does. */
-  private onTableEnter(evt: KeyboardEvent): void {
-    if (evt.key !== "Enter" || evt.isComposing) return;
-    if (evt.shiftKey || evt.ctrlKey || evt.metaKey || evt.altKey) return;
-    if (!this.settings.bindEnterToNextRow) return;
+  /** Table navigation runs before the editor's normal Enter and Tab behavior. */
+  private onTableKeydown(evt: KeyboardEvent): void {
+    if (evt.isComposing) return;
+    const isEnter = evt.key === "Enter";
+    const isTab = evt.key === "Tab";
+    if (!isEnter && !isTab) return;
+    if (evt.ctrlKey || evt.metaKey || evt.altKey) return;
+    if (isEnter && (evt.shiftKey || !this.settings.bindEnterToNextRow)) return;
+    if (isTab && !this.settings.bindTabToNextCell) return;
 
     const target = evt.target;
     if (!(target instanceof Element)) return;
@@ -226,10 +234,17 @@ export default class AwesomeFormatBarPlugin extends Plugin {
     if (!view || view.getMode() !== "source") return;
     const editor = view.editor;
     // A selection would be replaced; let Enter do that.
-    if (hasSelection(editor)) return;
+    if (isEnter && hasSelection(editor)) return;
 
     const offset = editor.posToOffset(editor.getCursor());
-    const plan = planTableEnter(editor.getValue(), offset, this.tableFormat());
+    const plan = isEnter
+      ? planTableEnter(editor.getValue(), offset, this.tableFormat())
+      : planTableTab(
+          editor.getValue(),
+          offset,
+          this.tableFormat(),
+          evt.shiftKey,
+        );
     if (!plan) return;
     evt.preventDefault();
     commit(editor, plan);

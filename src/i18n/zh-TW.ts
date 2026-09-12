@@ -173,6 +173,9 @@ export default {
   "Enter moves to the next row": "按下 Enter 移至下一列",
   "Pressing Enter inside a table jumps to the cell below and adds a row at the end. Live Preview already does this on its own, so this only applies in Source mode.":
     "在表格中按下 Enter 會跳到下方儲存格，並在表格末端新增一列。即時預覽本身已支援此行為，因此此項僅適用於原始碼模式。",
+  "Tab moves to the next cell": "按 Tab 移至下一個儲存格",
+  "Pressing Tab inside a table moves to the next cell, Shift+Tab moves back, and Tab at the right edge adds a column. This only applies in Source mode.":
+    "在表格中按下 Tab 會移至下一個儲存格，Shift+Tab 返回上一個儲存格，在右側邊緣按 Tab 會新增一欄。此項僅適用於原始碼模式。",
   "Pad cells with spaces": "以空格填滿儲存格",
   "Lines the pipes of each column up by padding cells with spaces. Live Preview always pads, so turning this off makes tables flip between the two styles as you edit.":
     "以空格填滿儲存格，讓各欄的直線對齊。即時預覽一律會填滿，關閉此項會讓表格在編輯時於兩種樣式之間來回切換。",
