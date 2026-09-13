@@ -113,6 +113,7 @@ export const COMMANDS = [
     icon: "eraser",
     kind: "registered",
     registeredCommandId: "editor:clear-formatting",
+    requiresSelection: true,
   },
   {
     id: "change-case",

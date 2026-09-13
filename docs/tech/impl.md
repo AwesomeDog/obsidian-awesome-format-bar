@@ -59,6 +59,8 @@ Local by decision, everything else forwards: **Inline Math** (joins `toggleInlin
 
 **Horizontal Rule** forwards to `editor:insert-horizontal-rule`: it inserts at the caret, handles multiple cursors, replaces a selection, and parks the cursor after the rule — all behaviors worth keeping rather than re-deriving.
 
+Not forwarded on purpose (checked against 1.13.7): `editor:table-*` needs Live Preview's table cell and returns false in Source mode; `editor:indent-list` is `exec("indentMore")`; `editor:copy/cut/paste` are `getSelection()`/`readText()` — no multi-cursor, no HTML; `editor:undo/redo` are `mobileOnly` and never register on desktop.
+
 ### 3.3 One transaction per click
 
 Write through a single `editor.transaction(..., 'awesome-format-bar')`; never `setValue()`. Multi-selection changes are merged where they overlap and then sorted front-to-back — CodeMirror requires sorted, non-overlapping changes — so one click is one undo unit. **Clear Formatting is the deliberate exception:** it removes the plugin's inline HTML in one local transaction, then forwards to Obsidian's native command, so it may create two undo units. Raw Markdown is touched only where the public API cannot express the change.
