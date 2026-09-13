@@ -29,7 +29,7 @@ export const COMMANDS = [
   {
     id: "font-family",
     name: "Font Family",
-    icon: "whole-word",
+    icon: "letter-text",
     kind: "editor",
     requiresSelection: true,
     popup: "font-family",
@@ -275,7 +275,7 @@ export const COMMANDS = [
   {
     id: "horizontal-rule",
     name: "Horizontal Rule",
-    icon: "minus",
+    icon: "separator-horizontal",
     kind: "editor",
   },
 
@@ -301,7 +301,7 @@ export const COMMANDS = [
   {
     id: "external-link",
     name: "External Link",
-    icon: "link",
+    icon: "external-link",
     kind: "registered",
     registeredCommandId: "editor:insert-link",
   },
@@ -405,7 +405,7 @@ export const COMMANDS = [
   {
     id: "math-block",
     name: "Math Block",
-    icon: "sigma",
+    icon: "sigma-square",
     kind: "registered",
     registeredCommandId: "editor:insert-mathblock",
   },
@@ -426,7 +426,7 @@ export const COMMANDS = [
   {
     id: "comment",
     name: "Comment",
-    icon: "percent",
+    icon: "message-square",
     kind: "registered",
     registeredCommandId: "editor:toggle-comments",
   },
@@ -447,13 +447,18 @@ export const COMMANDS = [
     popup: "character-panel",
     commandPalette: false,
   },
-  { id: "date-time", name: "Date and Time", icon: "calendar", kind: "editor" },
+  {
+    id: "date-time",
+    name: "Date and Time",
+    icon: "calendar-clock",
+    kind: "editor",
+  },
 
   // Insert · Reference
   {
     id: "toc",
     name: "Table of Contents",
-    icon: "list-tree",
+    icon: "table-of-contents",
     kind: "editor",
   },
   {
@@ -514,7 +519,7 @@ export const COMMANDS = [
   {
     id: "navigation-pane",
     name: "Navigation Pane",
-    icon: "list",
+    icon: "list-tree",
     kind: "registered",
     registeredCommandId: "outline:open",
   },
@@ -604,7 +609,7 @@ export const COMMANDS = [
   { id: "duplicate", name: "Duplicate", icon: "copy-plus", kind: "editor" },
 
   // Utilities · Sort
-  { id: "sort-list", name: "Sort List", icon: "list-tree", kind: "editor" },
+  { id: "sort-list", name: "Sort List", icon: "list-chevrons-up-down", kind: "editor" },
   {
     id: "sort-headings",
     name: "Sort Headings",
@@ -625,7 +630,7 @@ export const COMMANDS = [
   {
     id: "smart-punctuation",
     name: "Smart Punctuation",
-    icon: "quote",
+    icon: "text-quote",
     kind: "editor",
   },
   {
@@ -657,7 +662,7 @@ export const COMMANDS = [
   {
     id: "clean-up-bare-urls",
     name: "Convert Bare URLs",
-    icon: "link",
+    icon: "link-2",
     kind: "editor",
   },
   {
