@@ -10,8 +10,8 @@ import {
 import { registeredCommands } from "./commands/registered";
 import { t } from "./i18n/i18n";
 import {
-  DEFAULT_PIN_GROUP,
   DEFAULT_PIN_ICON,
+  pinnedGroupLabel,
   pinnedGroups,
 } from "./model/pinned";
 import type { PinnedCommand } from "./model/types";
@@ -235,10 +235,6 @@ function askText(
   return new Promise((resolve) =>
     new TextModal(app, heading, initial, resolve).open(),
   );
-}
-
-function pinnedGroupLabel(name: string): string {
-  return name === DEFAULT_PIN_GROUP ? t("General") : name;
 }
 
 class PinnedManagerModal extends Modal {

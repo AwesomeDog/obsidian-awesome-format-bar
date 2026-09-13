@@ -17,16 +17,14 @@ import type {
 } from "./model/types";
 
 type PlatformKey = "desktop" | "mobile";
-type TableKey =
-  "tableKeyNavigation" | "padCellWidthWithSpaces" | "sortTableOnHeaderClick";
-type SettingKey =
-  `${PlatformKey}.${ToolbarPosition}` | "enableOnMobile" | TableKey;
-
-const TABLE_KEYS: readonly TableKey[] = [
+const TABLE_KEYS = [
   "tableKeyNavigation",
   "padCellWidthWithSpaces",
   "sortTableOnHeaderClick",
-];
+] as const;
+type TableKey = (typeof TABLE_KEYS)[number];
+type SettingKey =
+  `${PlatformKey}.${ToolbarPosition}` | "enableOnMobile" | TableKey;
 
 function isTableKey(key: string): key is TableKey {
   return (TABLE_KEYS as readonly string[]).includes(key);

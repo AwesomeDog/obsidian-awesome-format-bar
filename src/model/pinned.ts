@@ -1,8 +1,14 @@
+import { t } from "../i18n/i18n";
 import type { CommandSpec, PinnedCommand } from "./types";
 
 /** Pinned buttons are user data, rebuilt as specs that forward. */
 export const DEFAULT_PIN_ICON = "command";
 export const DEFAULT_PIN_GROUP = "General";
+
+/** The built-in group is a key; a user group is displayed as typed. */
+export function pinnedGroupLabel(name: string): string {
+  return name === DEFAULT_PIN_GROUP ? t("General") : name;
+}
 
 export interface PinnedGroup {
   readonly name: string;

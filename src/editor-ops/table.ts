@@ -1,4 +1,4 @@
-import { Lines, replaceBlock } from "./lines";
+import { compareText, Lines, replaceBlock } from "./lines";
 import { NO_CHANGE, order, type Change, type Plan } from "./plan";
 import { displayWidth, padToWidth } from "./width";
 
@@ -518,17 +518,11 @@ export function sortRows(
   const { cell, table } = hit;
   const [header, ...body] = table.rows;
   if (!header || body.length < 2) return NO_CHANGE;
-  const collator = new Intl.Collator("en-US", {
-    numeric: true,
-    sensitivity: "base",
-  });
   const key = (row: readonly string[]): string => row[cell.column] ?? "";
   const sorted = body
     .slice()
     .sort((a, b) =>
-      descending
-        ? collator.compare(key(b), key(a))
-        : collator.compare(key(a), key(b)),
+      descending ? compareText(key(b), key(a)) : compareText(key(a), key(b)),
     );
   return edit(table, format, [header, ...sorted]);
 }

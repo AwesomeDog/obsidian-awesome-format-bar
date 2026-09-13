@@ -108,7 +108,7 @@ function toggleFullscreen(context: CommandContext): void {
 let focusRestore: { left: boolean; right: boolean } | null = null;
 
 /** Closes both sidebars through Obsidian's own split state */
-export function toggleFocusMode(app: App): void {
+function toggleFocusMode(app: App): void {
   const { leftSplit, rightSplit } = app.workspace;
   if (leftSplit.collapsed && rightSplit.collapsed) {
     // No memory after a reload while focused: bring both back, never no-op.

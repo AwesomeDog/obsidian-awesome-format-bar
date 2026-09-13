@@ -1,3 +1,4 @@
+import { FENCE } from "./lines";
 import {
   normalizeRanges,
   order,
@@ -6,7 +7,6 @@ import {
   type Range,
 } from "./plan";
 
-const FENCE = /^\s*(?:```|~~~)/;
 const CJK =
   "\\p{Script=Han}\\p{Script=Hiragana}\\p{Script=Katakana}\\p{Script=Hangul}";
 
@@ -69,9 +69,11 @@ export function smartPunctuation(doc: string, ranges: readonly Range[]): Plan {
   return planRanges(doc, scope(doc, ranges), (text) =>
     mapEditable(text, (part) => {
       let opening = true;
+      // Three or more hyphens are a rule, frontmatter or a table delimiter;
+      // only a bare pair is an em dash.
       return part
         .replace(/\.\.\./g, "…")
-        .replace(/--/g, "—")
+        .replace(/-{2,}/g, (run) => (run.length === 2 ? "—" : run))
         .replace(/"/g, () => {
           const quote = opening ? "“" : "”";
           opening = !opening;

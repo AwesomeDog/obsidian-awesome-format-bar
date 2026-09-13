@@ -170,6 +170,20 @@ describe("normalization", () => {
     );
   });
 
+  it("keeps three or more hyphens: rules, frontmatter, table delimiters", () => {
+    expect(apply("[a -- b --- c ---- d]", smartPunctuation)).toBe(
+      "a — b --- c ---- d",
+    );
+    // No selection means the whole note, so a rule must survive untouched.
+    for (const doc of [
+      "a\n\n---\n\nb",
+      "---\ntitle: x\n---\n\nbody",
+      "| a | b |\n| --- | --- |\n| 1 | 2 |",
+    ]) {
+      expect(run(doc, smartPunctuation(doc, []))).toBe(doc);
+    }
+  });
+
   it("adds spaces between CJK and Latin text", () => {
     expect(apply("[中文abc ABC中文 日本語123]", cjkSpacing)).toBe(
       "中文 abc ABC 中文 日本語 123",

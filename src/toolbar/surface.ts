@@ -9,7 +9,7 @@ import {
   type RibbonGroup,
   type TabId,
 } from "../model/layout";
-import { DEFAULT_PIN_GROUP, pinnedGroups } from "../model/pinned";
+import { pinnedGroupLabel, pinnedGroups } from "../model/pinned";
 import type { CommandSpec, ToolbarPosition } from "../model/types";
 import { createButton, createTabButton } from "./button";
 import { openCharPanel } from "./char-panel";
@@ -28,9 +28,6 @@ const FOLLOWING_GAP = 8;
 const SIDE_MARGIN = 16;
 const PINNED_EMPTY = "No pinned commands yet.";
 
-function pinnedGroupLabel(name: string): string {
-  return name === DEFAULT_PIN_GROUP ? t("General") : name;
-}
 export class ToolbarSurface {
   readonly el: HTMLElement;
   private readonly buttons = new Map<HTMLButtonElement, CommandSpec>();

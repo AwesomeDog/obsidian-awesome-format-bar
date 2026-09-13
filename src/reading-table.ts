@@ -1,10 +1,9 @@
-/** Reading view only: the rendered rows move, the file does not. */
-const COLLATOR = new Intl.Collator("en-US", {
-  numeric: true,
-  sensitivity: "base",
-});
+import { compareText } from "./editor-ops/lines";
 
-/** Ascending, then descending, then back to the order Obsidian rendered. */
+/**
+ * Reading view only: the rendered rows move, the file does not.
+ * Ascending, then descending, then back to the order Obsidian rendered.
+ */
 type Order = "asc" | "desc" | "none";
 
 const NEXT: Readonly<Record<Order, Order>> = {
@@ -64,8 +63,8 @@ export function sortTableOnHeaderClick(evt: MouseEvent): void {
       ? [...state.original]
       : Array.from(body.rows).sort((a, b) =>
           order === "desc"
-            ? COLLATOR.compare(key(b), key(a))
-            : COLLATOR.compare(key(a), key(b)),
+            ? compareText(key(b), key(a))
+            : compareText(key(a), key(b)),
         );
   for (const row of rows) body.appendChild(row);
 }
