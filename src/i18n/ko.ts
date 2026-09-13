@@ -118,8 +118,9 @@ export default {
   "Sort Rows A to Z": "오름차순 정렬",
   "Sort Rows Z to A": "내림차순 정렬",
   "Transpose Table": "표 전치",
-  "Convert to Text": "텍스트로 변환",
+  "Convert Table to Text": "표를 텍스트로 변환",
   "Paste as Table": "표로 붙여넣기",
+  "Copy Table as CSV": "표를 CSV로 복사",
   "Paste URI as Link": "URI로 붙여넣기",
   "Smart Punctuation": "스마트 문장 부호",
   "CJK Spacing": "CJK 간격",
@@ -232,4 +233,5 @@ export default {
     "탭이나 쉼표로 구분된 값을 두 행 이상 선택하세요.",
   "Clipboard does not contain a valid URI.":
     "클립보드에 유효한 URI가 없습니다.",
+  "Put the cursor inside a table first.": "먼저 커서를 표 안에 두세요.",
 } satisfies Record<string, string>;

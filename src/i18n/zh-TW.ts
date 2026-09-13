@@ -118,8 +118,9 @@ export default {
   "Sort Rows A to Z": "由 A 到 Z 排序",
   "Sort Rows Z to A": "由 Z 到 A 排序",
   "Transpose Table": "轉置表格",
-  "Convert to Text": "轉換為文字",
+  "Convert Table to Text": "將表格轉換為文字",
   "Paste as Table": "貼上為表格",
+  "Copy Table as CSV": "複製表格為 CSV",
   "Paste URI as Link": "貼上 URI 為連結",
   "Smart Punctuation": "智慧標點",
   "CJK Spacing": "中日韓間距",
@@ -230,4 +231,5 @@ export default {
   "Select two or more rows of tab- or comma-separated values first.":
     "請先選取兩列或以上以 Tab 或逗號分隔的資料。",
   "Clipboard does not contain a valid URI.": "剪貼簿中沒有有效的 URI。",
+  "Put the cursor inside a table first.": "請先將游標放在表格內。",
 } satisfies Record<string, string>;

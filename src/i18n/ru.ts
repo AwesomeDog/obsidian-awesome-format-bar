@@ -118,8 +118,9 @@ export default {
   "Sort Rows A to Z": "Сортировать от А до Я",
   "Sort Rows Z to A": "Сортировать от Я до А",
   "Transpose Table": "Транспонировать таблицу",
-  "Convert to Text": "Преобразовать в текст",
+  "Convert Table to Text": "Преобразовать таблицу в текст",
   "Paste as Table": "Вставить как таблицу",
+  "Copy Table as CSV": "Копировать таблицу как CSV",
   "Paste URI as Link": "Вставить URI как ссылку",
   "Smart Punctuation": "Умная пунктуация",
   "CJK Spacing": "Интервалы CJK",
@@ -233,4 +234,6 @@ export default {
   "This note has no headings to list.": "В этой заметке нет заголовков.",
   "Clipboard does not contain a valid URI.":
     "В буфере обмена нет допустимого URI.",
+  "Put the cursor inside a table first.":
+    "Сначала поместите курсор внутрь таблицы.",
 } satisfies Record<string, string>;

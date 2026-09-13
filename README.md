@@ -145,8 +145,7 @@ Internal Link, External Link, Embed, Tag, Block Reference, **Callout ▼** (Note
 
 ### Table
 
-Available whenever the cursor is inside a table: Delete Rows or Columns, Insert Rows Above / Below, Insert Columns Left / Right, Move Row Up / Down, Move Column Left / Right, Format Tables, Align Column Left / Center / Right, Sort Rows, **Transpose Table**, **Convert to Text**.
-**Convert to Text** writes the table out as tab-separated lines — the exact inverse of **Convert Text to Table** (Insert · Blocks), which turns tab- or comma-separated text into an aligned Markdown table. **Paste as Table** does the same with the clipboard and works anywhere.
+Available whenever the cursor is inside a table: Delete Rows or Columns, Insert Rows Above / Below, Insert Columns Left / Right, Move Row Up / Down, Move Column Left / Right, Format Tables, Align Column Left / Center / Right, Sort Rows, **Transpose Table**, **Convert Table to Text**, **Copy Table as CSV**.
 
 ### Utilities
 

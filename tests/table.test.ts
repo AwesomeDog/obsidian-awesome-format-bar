@@ -14,12 +14,13 @@ import {
   planTableEnter,
   planTableTab,
   moveRow,
+  renderTable,
   sortRows,
   tableToText,
   transposeTable,
   type TableFormat,
 } from "../src/editor-ops/table";
-import { tableFromDelimited } from "../src/editor-ops/tsv";
+import { delimitedFromTable, tableFromDelimited } from "../src/editor-ops/tsv";
 
 const PADDED: TableFormat = { padWidth: true };
 const TIGHT: TableFormat = { padWidth: false };
@@ -566,6 +567,52 @@ describe("tableFromDelimited", () => {
     expect(tableFromDelimited("   \n\n", PADDED)).toBeNull();
     expect(tableFromDelimited("a\tb", PADDED)).toBeNull();
     expect(tableFromDelimited("hello\nworld", PADDED)).toBeNull();
+  });
+});
+
+describe("delimitedFromTable", () => {
+  it("writes one comma-separated line per row", () => {
+    expect(
+      delimitedFromTable(
+        [
+          ["a", "b"],
+          ["c", "d"],
+        ],
+        ",",
+      ),
+    ).toBe("a,b\nc,d");
+  });
+
+  it("quotes a cell holding a comma", () => {
+    expect(delimitedFromTable([["a,b", "c"]], ",")).toBe('"a,b",c');
+  });
+
+  it("doubles a quote inside a quoted cell", () => {
+    expect(delimitedFromTable([['say "hi"', "c"]], ",")).toBe('"say ""hi""",c');
+  });
+
+  it("quotes a cell that starts with a quote", () => {
+    expect(delimitedFromTable([['"a"', "b"]], ",")).toBe('"""a""",b');
+  });
+
+  it("pads a short row out to the widest one", () => {
+    expect(delimitedFromTable([["a", "b", "c"], ["1"]], ",")).toBe(
+      "a,b,c\n1,,",
+    );
+  });
+
+  it("leaves a comma alone when the delimiter is a tab", () => {
+    expect(delimitedFromTable([["a,b", "c"]], "\t")).toBe("a,b\tc");
+  });
+
+  it("round-trips back through tableFromDelimited", () => {
+    const rows = [
+      ["a,b", "c"],
+      ["d", "e"],
+    ];
+    expect(tableFromDelimited(delimitedFromTable(rows, ","), PADDED)).toBe(
+      renderTable(rows, [], PADDED),
+    );
   });
 });
 

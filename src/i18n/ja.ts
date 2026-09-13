@@ -118,8 +118,9 @@ export default {
   "Sort Rows A to Z": "昇順に並べ替え",
   "Sort Rows Z to A": "降順に並べ替え",
   "Transpose Table": "テーブルを転置",
-  "Convert to Text": "テキストに変換",
+  "Convert Table to Text": "テーブルをテキストに変換",
   "Paste as Table": "テーブルとして貼り付け",
+  "Copy Table as CSV": "テーブルを CSV としてコピー",
   "Paste URI as Link": "URI として貼り付け",
   "Smart Punctuation": "スマート句読点",
   "CJK Spacing": "CJKスペース",
@@ -234,4 +235,6 @@ export default {
     "このノートには一覧表示できる見出しがありません。",
   "Clipboard does not contain a valid URI.":
     "クリップボードに有効な URI がありません。",
+  "Put the cursor inside a table first.":
+    "先にカーソルをテーブル内に置いてください。",
 } satisfies Record<string, string>;

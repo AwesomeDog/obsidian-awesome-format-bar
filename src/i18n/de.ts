@@ -118,8 +118,9 @@ export default {
   "Sort Rows A to Z": "Aufsteigend sortieren",
   "Sort Rows Z to A": "Absteigend sortieren",
   "Transpose Table": "Tabelle transponieren",
-  "Convert to Text": "In Text umwandeln",
+  "Convert Table to Text": "Tabelle in Text umwandeln",
   "Paste as Table": "Als Tabelle einfügen",
+  "Copy Table as CSV": "Tabelle als CSV kopieren",
   "Paste URI as Link": "URI als Link einfügen",
   "Smart Punctuation": "Intelligente Zeichensetzung",
   "CJK Spacing": "CJK-Abstände",
@@ -235,4 +236,6 @@ export default {
     "Diese Notiz enthält keine Überschriften.",
   "Clipboard does not contain a valid URI.":
     "Die Zwischenablage enthält keine gültige URI.",
+  "Put the cursor inside a table first.":
+    "Setze den Cursor zuerst in eine Tabelle.",
 } satisfies Record<string, string>;

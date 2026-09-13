@@ -103,10 +103,10 @@ Button placement follows the parts of Word's **Table Layout** tab that apply to 
 - **Rows & Columns** — Delete Rows or Columns ▼ (Delete Rows, Delete Columns), Insert Rows Above, Insert Rows Below, Insert Columns to the Left, Insert Columns to the Right, Move Row Up, Move Row Down, Move Column Left, Move Column Right
 - **Format** — Format Tables ▼ (Format Table, Format All Tables)
 - **Alignment** — Align Column Left, Align Column Center, Align Column Right
-- **Data** — Sort Rows ▼ (Sort Rows A to Z, Sort Rows Z to A), Transpose Table, Convert to Text
-- **Clipboard** — Paste as Table: converts tab- or comma-separated clipboard text into an aligned Markdown table at the cursor. Explicit command only; regular Paste is untouched.
+- **Data** — Sort Rows ▼ (Sort Rows A to Z, Sort Rows Z to A), Transpose Table, Convert Table to Text
+- **Clipboard** — Paste as Table: converts tab- or comma-separated clipboard text into an aligned Markdown table at the cursor. Explicit command only; regular Paste is untouched. Copy Table as CSV: puts the table the caret is in on the clipboard as comma-separated text, leaving the note alone.
 
-**Convert to Text** writes the table out as one tab-separated line per row, header included; **Convert Text to Table** (Insert · Blocks) is its exact inverse, and **Paste as Table** is the same conversion fed from the clipboard instead of the selection. Tab is the delimiter because it is what a spreadsheet puts on the clipboard: the three commands round-trip without a setting.
+**Convert Table to Text** writes the table out as one tab-separated line per row, header included; **Convert Text to Table** (Insert · Blocks) is its exact inverse, and **Paste as Table** is the same conversion fed from the clipboard instead of the selection. Tab is the delimiter because it is what a spreadsheet puts on the clipboard: the three commands round-trip without a setting. **Copy Table as CSV** is the same write with a comma instead, so it quotes a cell that holds a comma, a quote or a line break and pads a short row out to the widest one — the CSV a spreadsheet expects. It goes to the clipboard rather than into the note, because a CSV pasted into a note is just noise.
 
 Column-level names (*Align Column…*, *Sort Rows…*) distinguish these from the paragraph-level Align and Sort Lines on Home. Every command here except **Paste as Table** greys out when the caret is not inside a table; Paste as Table stays available wherever the editor is.
 
@@ -119,7 +119,7 @@ Column-level names (*Align Column…*, *Sort Rows…*) distinguish these from th
 
 ### Tab 6 · Pinned
 
-Pin **any command from the command palette** — core commands, other plugins' commands, or this plugin's own 109 — to the toolbar with an icon of your choice. The built-in set is the intersection of what most people use often; the one or two commands a given user can't live without usually fall outside it.
+Pin **any command from the command palette** — core commands, other plugins' commands, or this plugin's own 110 — to the toolbar with an icon of your choice. The built-in set is the intersection of what most people use often; the one or two commands a given user can't live without usually fall outside it.
 
 | Item | Convention |
 |---|---|

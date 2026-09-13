@@ -78,3 +78,26 @@ export function tableFromDelimited(
   // The first line becomes the header; adding one by hand beats a setting.
   return renderTable(rows, [], format);
 }
+
+/** RFC 4180: quote only when the bare cell would break the row. A leading
+ * quote counts, or the reader would take it for the start of a quoted field. */
+function quoteCell(cell: string, delimiter: string): string {
+  const bare =
+    !cell.includes(delimiter) && !cell.includes('"') && !/[\r\n]/.test(cell);
+  return bare ? cell : `"${cell.replace(/"/g, '""')}"`;
+}
+
+/** Short rows pad out to the widest one: a ragged row reads as a broken file. */
+export function delimitedFromTable(
+  rows: readonly (readonly string[])[],
+  delimiter: string,
+): string {
+  const columns = Math.max(0, ...rows.map((row) => row.length));
+  return rows
+    .map((row) =>
+      Array.from({ length: columns }, (_, column) =>
+        quoteCell(row[column] ?? "", delimiter),
+      ).join(delimiter),
+    )
+    .join("\n");
+}

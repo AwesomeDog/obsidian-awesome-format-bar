@@ -42,11 +42,12 @@ import {
   moveColumn,
   moveRow,
   sortRows,
+  tableAt,
   tableToText,
   transposeTable,
   type TableFormat,
 } from "../editor-ops/table";
-import { tableFromDelimited } from "../editor-ops/tsv";
+import { delimitedFromTable, tableFromDelimited } from "../editor-ops/tsv";
 import { deleteRanges, formatDateTime, insertText } from "../editor-ops/text";
 import { cjkSpacing, cleanUp, smartPunctuation } from "../editor-ops/normalize";
 import { CASE_OPTIONS } from "../model/palettes";
@@ -192,6 +193,19 @@ export async function runClipboard(
       editor,
       insertText(editor.getValue(), selectionRanges(editor), table),
     );
+    return;
+  }
+
+  if (id === "copy-table-as-csv") {
+    const found = tableAt(
+      editor.getValue(),
+      editor.posToOffset(editor.getCursor()),
+    );
+    if (!found) {
+      new Notice(t("Put the cursor inside a table first."));
+      return;
+    }
+    await navigator.clipboard.writeText(delimitedFromTable(found.rows, ","));
     return;
   }
 

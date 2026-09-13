@@ -118,8 +118,9 @@ export default {
   "Sort Rows A to Z": "Trier de A à Z",
   "Sort Rows Z to A": "Trier de Z à A",
   "Transpose Table": "Transposer le tableau",
-  "Convert to Text": "Convertir en texte",
+  "Convert Table to Text": "Convertir le tableau en texte",
   "Paste as Table": "Coller en tant que tableau",
+  "Copy Table as CSV": "Copier le tableau en CSV",
   "Paste URI as Link": "Coller l’URI comme lien",
   "Smart Punctuation": "Ponctuation intelligente",
   "CJK Spacing": "Espacement CJK",
@@ -236,4 +237,6 @@ export default {
     "Cette note ne contient aucun titre à lister.",
   "Clipboard does not contain a valid URI.":
     "Le presse-papiers ne contient pas d’URI valide.",
+  "Put the cursor inside a table first.":
+    "Place d’abord le curseur dans un tableau.",
 } satisfies Record<string, string>;

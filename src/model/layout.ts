@@ -166,7 +166,10 @@ export const BUILT_IN_COMMAND_TABS = [
         name: "Data",
         commands: ["table-sort", "table-transpose", "table-convert-to-text"],
       },
-      { name: "Clipboard", commands: ["paste-as-table"] },
+      {
+        name: "Clipboard",
+        commands: ["paste-as-table", "copy-table-as-csv"],
+      },
     ],
   },
   {

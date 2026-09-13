@@ -132,7 +132,7 @@ function tableScan(
   return parseBlock(lines, lo, hi);
 }
 
-function tableAt(doc: string, offset: number): MarkdownTable | null {
+export function tableAt(doc: string, offset: number): MarkdownTable | null {
   const lines = new Lines(doc);
   return tableScan(lines, fencedLines(lines), lines.lineOf(offset));
 }

@@ -835,7 +835,7 @@ export const COMMANDS = [
   },
   {
     id: "table-convert-to-text",
-    name: "Convert to Text",
+    name: "Convert Table to Text",
     icon: "wrap-text",
     kind: "editor",
     requiresTable: true,
@@ -847,6 +847,13 @@ export const COMMANDS = [
     name: "Paste as Table",
     icon: "clipboard-paste",
     kind: "clipboard",
+  },
+  {
+    id: "copy-table-as-csv",
+    name: "Copy Table as CSV",
+    icon: "clipboard-copy",
+    kind: "clipboard",
+    requiresTable: true,
   },
 ] as const satisfies readonly CommandSpec[];
 
