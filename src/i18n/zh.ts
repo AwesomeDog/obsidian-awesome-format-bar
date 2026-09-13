@@ -34,6 +34,8 @@ export default {
   "Decrease Indent": "减少缩进量",
   "Renumber List": "重新编号",
   "Sort Lines": "段落排序",
+  "Move List Item Up": "上移列表项",
+  "Move List Item Down": "下移列表项",
   "Swap Line Up": "上移一行",
   "Swap Line Down": "下移一行",
   "Align Left": "左对齐",

@@ -51,6 +51,8 @@ export const BUILT_IN_COMMAND_TABS = [
           "increase-indent",
           "renumber-list",
           "sort-lines",
+          "move-list-item-up",
+          "move-list-item-down",
           "swap-line-up",
           "swap-line-down",
           "align-left",

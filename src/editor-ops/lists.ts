@@ -195,6 +195,15 @@ interface ListItem {
   children: ListItem[];
 }
 
+interface MoveItem {
+  start: number;
+  end: number;
+  indent: number;
+  lines: string[];
+  children: MoveItem[];
+  parent: MoveItem | null;
+}
+
 /** Content after the marker, so `2. a` sorts by `a` and not by its number. */
 const ITEM_TEXT = /^\s*(?:\d+[.)]|[-*+])\s*(.*)$/;
 
@@ -238,6 +247,90 @@ function flattenItems(items: readonly ListItem[]): string[] {
   ]);
 }
 
+/** Parses one contiguous list run while retaining each item's own lines. */
+function parseMoveItems(lines: Lines, from: number, to: number): MoveItem[] {
+  const roots: MoveItem[] = [];
+  const stack: MoveItem[] = [];
+
+  for (let line = from; line <= to; line++) {
+    const text = lines.at(line);
+    const marker = ORDERED.exec(text) ?? BULLET.exec(text);
+    if (!marker) {
+      stack[stack.length - 1]?.lines.push(text);
+      continue;
+    }
+
+    const indent = (marker[1] ?? "").length;
+    while (stack.length > 0) {
+      const current = stack[stack.length - 1];
+      if (!current) break;
+      if (current.indent < indent) break;
+      current.end = line - 1;
+      stack.pop();
+    }
+
+    const parent = stack[stack.length - 1] ?? null;
+    const item: MoveItem = {
+      start: line,
+      end: to,
+      indent,
+      lines: [text],
+      children: [],
+      parent,
+    };
+    (parent ? parent.children : roots).push(item);
+    stack.push(item);
+  }
+
+  return roots;
+}
+
+function isMoveContinuation(text: string): boolean {
+  return /^\s{2,}\S/.test(text);
+}
+
+/** The contiguous list run around a cursor; blank lines and fences divide it. */
+function moveRun(lines: Lines, line: number): Block | null {
+  const current = lines.at(line);
+  if (!isListLine(current) && !isMoveContinuation(current)) return null;
+
+  let start = line;
+  while (start > 0) {
+    const previous = lines.at(start - 1);
+    if (previous.trim() === "" || FENCE.test(previous)) break;
+    if (!isListLine(previous) && !isMoveContinuation(previous)) break;
+    start--;
+  }
+
+  let end = line;
+  while (end < lines.count - 1) {
+    const next = lines.at(end + 1);
+    if (next.trim() === "" || FENCE.test(next)) break;
+    if (!isListLine(next) && !isMoveContinuation(next)) break;
+    end++;
+  }
+
+  return [start, end];
+}
+
+function flattenMoveItemsWithTarget(
+  items: readonly MoveItem[],
+  target: MoveItem,
+): { lines: string[]; targetLine: number } {
+  const result: string[] = [];
+  let targetLine = -1;
+  for (const item of items) {
+    const itemStart = result.length;
+    if (item === target) targetLine = itemStart;
+    result.push(...item.lines);
+    const children = flattenMoveItemsWithTarget(item.children, target);
+    if (targetLine < 0 && children.targetLine >= 0)
+      targetLine = itemStart + item.lines.length + children.targetLine;
+    result.push(...children.lines);
+  }
+  return { lines: result, targetLine };
+}
+
 /** Sorting leaves ordered items out of sequence, so they are renumbered. */
 function renumber(text: string): string {
   const changes = renumberList(text, [{ from: 0, to: text.length }]).changes;
@@ -277,6 +370,105 @@ export function sortList(doc: string, ranges: readonly Range[]): Plan {
     }
   }
   return { changes: order(changes) };
+}
+
+function itemAt(items: readonly MoveItem[], line: number): MoveItem | null {
+  for (const item of items) {
+    if (line < item.start || line > item.end) continue;
+    return itemAt(item.children, line) ?? item;
+  }
+  return null;
+}
+
+function offsetAtLine(
+  lines: readonly string[],
+  start: number,
+  line: number,
+  ch: number,
+): number {
+  let offset = start;
+  for (let i = 0; i < line; i++) offset += (lines[i]?.length ?? 0) + 1;
+  return offset + Math.min(ch, lines[line]?.length ?? 0);
+}
+
+/** Moves one list item and its subtree, following Outliner's boundary rules. */
+export function moveListItem(
+  doc: string,
+  ranges: readonly Range[],
+  direction: -1 | 1,
+): Plan {
+  if (ranges.length !== 1) return NO_CHANGE;
+  const range = ranges[0];
+  if (!range || range.from !== range.to) return NO_CHANGE;
+
+  const lines = new Lines(doc);
+  const cursorLine = lines.lineOf(range.from);
+  const run = moveRun(lines, cursorLine);
+  if (!run) return NO_CHANGE;
+
+  const [start, end] = run;
+  const roots = parseMoveItems(lines, start, end);
+  const target = itemAt(roots, cursorLine);
+  if (!target) return NO_CHANGE;
+
+  const siblings = target.parent?.children ?? roots;
+  const index = siblings.indexOf(target);
+  if (index < 0) return NO_CHANGE;
+
+  let moved = false;
+  if (direction < 0) {
+    const previous = siblings[index - 1];
+    if (previous) {
+      siblings[index - 1] = target;
+      siblings[index] = previous;
+      moved = true;
+    } else if (target.parent) {
+      const parentSiblings = target.parent.parent?.children ?? roots;
+      const parentIndex = parentSiblings.indexOf(target.parent);
+      const previousParent = parentSiblings[parentIndex - 1];
+      if (previousParent) {
+        siblings.splice(index, 1);
+        previousParent.children.push(target);
+        target.parent = previousParent;
+        moved = true;
+      }
+    }
+  } else {
+    const next = siblings[index + 1];
+    if (next) {
+      siblings[index + 1] = target;
+      siblings[index] = next;
+      moved = true;
+    } else if (target.parent) {
+      const parentSiblings = target.parent.parent?.children ?? roots;
+      const parentIndex = parentSiblings.indexOf(target.parent);
+      const nextParent = parentSiblings[parentIndex + 1];
+      if (nextParent) {
+        siblings.splice(index, 1);
+        nextParent.children.unshift(target);
+        target.parent = nextParent;
+        moved = true;
+      }
+    }
+  }
+
+  if (!moved) return NO_CHANGE;
+
+  const flattened = flattenMoveItemsWithTarget(roots, target);
+  const result = renumber(flattened.lines.join("\n"));
+  if (result === lines.slice(start, end)) return NO_CHANGE;
+
+  const resultLines = result.split("\n");
+  const relativeLine = cursorLine - target.start;
+  const targetLine = flattened.targetLine + relativeLine;
+  const cursorCh = range.from - lines.start(cursorLine);
+  return {
+    changes: [replaceBlock(lines, start, end, result)],
+    select: {
+      from: offsetAtLine(resultLines, lines.start(start), targetLine, cursorCh),
+      to: offsetAtLine(resultLines, lines.start(start), targetLine, cursorCh),
+    },
+  };
 }
 
 /** Only marks that cannot end a sentence, so prose never shatters. */

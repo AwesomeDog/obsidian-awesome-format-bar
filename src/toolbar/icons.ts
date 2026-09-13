@@ -31,6 +31,8 @@ const ICON_FALLBACKS: Readonly<Record<string, readonly string[]>> = {
   "indent-decrease": ["outdent"],
   "indent-increase": ["indent"],
   "list-start": ["list-ordered", "list-restart"],
+  "list-up": ["arrow-up", "corner-right-up"],
+  "list-down": ["arrow-down", "corner-right-down"],
   "list-tree": ["list", "list-ordered"],
   "more-horizontal": ["ellipsis", "more-vertical"],
   "paint-bucket": ["paintbucket", "palette"],

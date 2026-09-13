@@ -34,6 +34,8 @@ export default {
   "Decrease Indent": "Einzug verkleinern",
   "Renumber List": "Liste neu nummerieren",
   "Sort Lines": "Absätze sortieren",
+  "Move List Item Up": "Listenelement nach oben verschieben",
+  "Move List Item Down": "Listenelement nach unten verschieben",
   "Swap Line Up": "Eine Zeile nach oben",
   "Swap Line Down": "Eine Zeile nach unten",
   "Align Left": "Linksbündig",

@@ -17,6 +17,7 @@ import {
 import {
   duplicate,
   mergeLines,
+  moveListItem,
   renumberList,
   reverseLines,
   sortLines,
@@ -420,6 +421,65 @@ describe("sortList", () => {
 
   it("leaves a loose list alone rather than moving its blank lines", () => {
     expect(apply("[- d\n\n- c\n\n- b]", sortList)).toBe("- d\n\n- c\n\n- b");
+  });
+});
+
+describe("moveListItem", () => {
+  const moveUp = (doc: string, ranges: Range[]): Plan =>
+    moveListItem(doc, ranges, -1);
+  const moveDown = (doc: string, ranges: Range[]): Plan =>
+    moveListItem(doc, ranges, 1);
+
+  it("moves an item and all children as one subtree", () => {
+    expect(apply("|- A\n  - A1\n- B", moveDown)).toBe(
+      "- B\n- A\n  - A1",
+    );
+  });
+
+  it("moves a first child after the previous parent", () => {
+    expect(apply("- A\n  - A1\n- B\n|  - B1", moveUp)).toBe(
+      "- A\n  - A1\n  - B1\n- B",
+    );
+  });
+
+  it("moves a last child before the next parent", () => {
+    expect(apply("- A\n  - A1\n|  - A2\n- B", moveDown)).toBe(
+      "- A\n  - A1\n- B\n  - A2",
+    );
+  });
+
+  it("renumbers ordered lists after moving", () => {
+    expect(apply("1. A\n2. B\n|3. C", moveUp)).toBe("1. A\n2. C\n3. B");
+  });
+
+  it("does nothing at root boundaries", () => {
+    expect(apply("|- A\n- B", moveUp)).toBe("- A\n- B");
+    expect(apply("- A\n- B|", moveDown)).toBe("- A\n- B");
+  });
+
+  it("does not cross blank lines, fences or headings", () => {
+    expect(apply("|## H\n- A\n- B", moveDown)).toBe("## H\n- A\n- B");
+    expect(apply("- A\n\n- B|", moveDown)).toBe("- A\n\n- B");
+    expect(apply("- A\n```\n- B|\n```", moveUp)).toBe(
+      "- A\n```\n- B\n```",
+    );
+    expect(apply("## H\n\n- A\n- B|\n\n## Next", moveDown)).toBe(
+      "## H\n\n- A\n- B\n\n## Next",
+    );
+  });
+
+  it("requires one collapsed cursor", () => {
+    expect(apply("[- A\n- B]", moveDown)).toBe("- A\n- B");
+    expect(moveDown("- A\n- B", [{ from: 0, to: 0 }, { from: 3, to: 3 }])).toEqual({
+      changes: [],
+    });
+  });
+
+  it("keeps the cursor with the moved item", () => {
+    const { doc, ranges } = parse("- A\n- B|");
+    const plan = moveUp(doc, ranges);
+    expect(run(doc, plan)).toBe("- B\n- A");
+    expect(plan.select).toEqual({ from: 3, to: 3 });
   });
 });
 

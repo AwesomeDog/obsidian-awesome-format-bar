@@ -34,6 +34,8 @@ export default {
   "Decrease Indent": "インデントの減少",
   "Renumber List": "リストの再番号付け",
   "Sort Lines": "段落の並べ替え",
+  "Move List Item Up": "リスト項目を上へ移動",
+  "Move List Item Down": "リスト項目を下へ移動",
   "Swap Line Up": "1 行上に移動",
   "Swap Line Down": "1 行下に移動",
   "Align Left": "左揃え",

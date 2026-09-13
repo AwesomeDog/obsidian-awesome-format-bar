@@ -34,6 +34,8 @@ export default {
   "Decrease Indent": "Уменьшить отступ",
   "Renumber List": "Перенумеровать список",
   "Sort Lines": "Сортировать абзацы",
+  "Move List Item Up": "Переместить элемент списка вверх",
+  "Move List Item Down": "Переместить элемент списка вниз",
   "Swap Line Up": "Поднять строку",
   "Swap Line Down": "Опустить строку",
   "Align Left": "По левому краю",

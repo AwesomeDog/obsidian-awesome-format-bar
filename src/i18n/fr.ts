@@ -34,6 +34,8 @@ export default {
   "Decrease Indent": "Diminuer le retrait",
   "Renumber List": "Renuméroter la liste",
   "Sort Lines": "Trier les paragraphes",
+  "Move List Item Up": "Monter l’élément de liste",
+  "Move List Item Down": "Descendre l’élément de liste",
   "Swap Line Up": "Monter d'une ligne",
   "Swap Line Down": "Descendre d'une ligne",
   "Align Left": "Aligner à gauche",

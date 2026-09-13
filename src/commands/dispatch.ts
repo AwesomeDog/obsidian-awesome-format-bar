@@ -20,6 +20,7 @@ import { toggleInlinePair } from "../editor-ops/inline";
 import {
   duplicate,
   mergeLines,
+  moveListItem,
   renumberList,
   reverseLines,
   sortLines,
@@ -276,6 +277,10 @@ export function planFor(context: CommandContext, id: string): Plan | null {
       return renumberList(doc, ranges);
     case "sort-lines":
       return sortLines(doc, ranges);
+    case "move-list-item-up":
+      return moveListItem(doc, ranges, -1);
+    case "move-list-item-down":
+      return moveListItem(doc, ranges, 1);
     case "reverse-lines":
       return reverseLines(doc, ranges);
     case "sort-list":

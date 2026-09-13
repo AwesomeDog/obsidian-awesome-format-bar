@@ -34,6 +34,8 @@ export default {
   "Decrease Indent": "들여쓰기 줄이기",
   "Renumber List": "번호 다시 매기기",
   "Sort Lines": "단락 정렬",
+  "Move List Item Up": "목록 항목 위로 이동",
+  "Move List Item Down": "목록 항목 아래로 이동",
   "Swap Line Up": "한 줄 위로 이동",
   "Swap Line Down": "한 줄 아래로 이동",
   "Align Left": "왼쪽 맞춤",

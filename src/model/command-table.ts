@@ -227,6 +227,18 @@ export const COMMANDS = [
     kind: "editor",
   },
   {
+    id: "move-list-item-up",
+    name: "Move List Item Up",
+    icon: "list-up",
+    kind: "editor",
+  },
+  {
+    id: "move-list-item-down",
+    name: "Move List Item Down",
+    icon: "list-down",
+    kind: "editor",
+  },
+  {
     id: "swap-line-up",
     name: "Swap Line Up",
     icon: "corner-right-up",
