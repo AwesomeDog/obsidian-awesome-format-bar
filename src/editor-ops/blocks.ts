@@ -54,21 +54,6 @@ export function toggleParagraphAlignment(
   return { changes: order(changes) };
 }
 
-/** Inserts `---` after the paragraph, keeping the blank lines around it. */
-export function insertHorizontalRule(
-  doc: string,
-  ranges: readonly Range[],
-): Plan {
-  const lines = new Lines(doc);
-  const blocks = blocksFor(lines, ranges, "paragraph");
-  const block = blocks[blocks.length - 1];
-  if (!block) return NO_CHANGE;
-  const [, end] = block;
-  const at = lines.end(end);
-  const tail = end + 1 < lines.count ? "\n\n---\n" : "\n\n---";
-  return { changes: [{ from: at, to: at, text: tail }] };
-}
-
 export function insertCallout(
   doc: string,
   ranges: readonly Range[],

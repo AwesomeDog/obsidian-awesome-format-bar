@@ -55,7 +55,9 @@ Forwarded commands execute through Obsidian's command registry, but `App.command
 - **Enumeration** for the Pinned picker reads the `commands` registry directly, for the same reason.
 - Release gate: verify IDs against `obsidian commands filter=editor:`. A gate, not a runtime fallback.
 
-Local by decision, everything else forwards: **Inline Math** (joins `toggleInlinePair()`), **Horizontal Rule** (needs paragraph-boundary insertion with surrounding blank lines), **Callout** (per PRD). Conversely, a command with a `registeredCommandId` must execute through it — no shadow implementation of the same name in `editor-ops/`.
+Local by decision, everything else forwards: **Inline Math** (joins `toggleInlinePair()`), **Callout** (per PRD). Conversely, a command with a `registeredCommandId` must execute through it — no shadow implementation of the same name in `editor-ops/`.
+
+**Horizontal Rule** forwards to `editor:insert-horizontal-rule`: it inserts at the caret, handles multiple cursors, replaces a selection, and parks the cursor after the rule — all behaviors worth keeping rather than re-deriving.
 
 ### 3.3 One transaction per click
 

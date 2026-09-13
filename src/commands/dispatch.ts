@@ -9,7 +9,6 @@ import { t } from "../i18n/i18n";
 import {
   insertBlockReference,
   insertCallout,
-  insertHorizontalRule,
   sortHeadings,
   tableOfContents,
   toggleParagraphAlignment,
@@ -322,8 +321,6 @@ export function planFor(context: CommandContext, id: string): Plan | null {
       return cleanUp(doc, ranges, "emphasis-strong");
     case "clean-up-bullet-style":
       return cleanUp(doc, ranges, "bullet-style");
-    case "horizontal-rule":
-      return insertHorizontalRule(doc, ranges);
     case "block-reference":
       return insertBlockReference(
         doc,

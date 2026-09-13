@@ -271,12 +271,12 @@ export const COMMANDS = [
     icon: "align-justify",
     kind: "editor",
   },
-  // Local: `editor:insert-horizontal-rule` drops the surrounding blank lines.
   {
     id: "horizontal-rule",
     name: "Horizontal Rule",
     icon: "separator-horizontal",
-    kind: "editor",
+    kind: "registered",
+    registeredCommandId: "editor:insert-horizontal-rule",
   },
 
   // Home · Editing

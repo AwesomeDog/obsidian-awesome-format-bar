@@ -2,7 +2,6 @@ import { describe, expect, it } from "vitest";
 import {
   insertBlockReference,
   insertCallout,
-  insertHorizontalRule,
   sortHeadings,
   toggleParagraphAlignment,
 } from "../src/editor-ops/blocks";
@@ -623,10 +622,6 @@ describe("toggleParagraphAlignment", () => {
 });
 
 describe("insertions", () => {
-  it("adds a rule after the paragraph", () => {
-    expect(apply("|a", insertHorizontalRule)).toBe("a\n\n---");
-  });
-
   it("quotes a selection into a callout", () => {
     expect(apply("[a\nb]", (d, r) => insertCallout(d, r, "note"))).toBe(
       "> [!note]\n> a\n> b",
