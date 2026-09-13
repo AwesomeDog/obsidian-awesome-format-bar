@@ -72,7 +72,7 @@ export function openPopover(
   layer.place();
 }
 
-/** Its own popup mode nests a panel inside the button; unused. */
+/** Renders inline in the floating layer rather than in the picker's own popup. */
 function openColorPicker(
   anchor: HTMLElement,
   host: ToolbarHost,

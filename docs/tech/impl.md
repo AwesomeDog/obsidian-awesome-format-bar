@@ -44,7 +44,7 @@ Pinned commands stay out of both tables:
 - `pinned` stays a flat array. Each entry keeps `commandId`, `icon` and the captured `name`, and may add `group`; missing or invalid groups resolve to `General`.
 - `pinnedGroups()` is only a derived view. First appearance fixes group order, and every write flattens grouped entries back into one contiguous array.
 
-Contract tests in `tests/settings.test.ts` pin what the tables promise: `BUILT_IN_COMMAND_TABS` = 5 tabs / 22 groups with each non-dropdown command in exactly one group; the 18 dropdown items are listed only in `DROPDOWN_ITEMS`; `COMPACT_ORDER` is free of duplicate or unknown IDs. Startup itself only warns — `reportStartupGaps()` checks icon names and forwarded command IDs.
+Contract tests in `tests/settings.test.ts` pin what the tables promise: `BUILT_IN_COMMAND_TABS` = 5 tabs / 24 groups with each non-dropdown command in exactly one group; the 23 dropdown items that have their own IDs are listed only in `DROPDOWN_ITEMS`; `COMPACT_ORDER` is free of duplicate or unknown IDs. Startup itself only warns — `reportStartupGaps()` checks icon names and forwarded command IDs.
 
 ### 3.2 Registered-command bridge
 

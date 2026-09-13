@@ -430,9 +430,7 @@ describe("moveListItem", () => {
     moveListItem(doc, ranges, 1);
 
   it("moves an item and all children as one subtree", () => {
-    expect(apply("|- A\n  - A1\n- B", moveDown)).toBe(
-      "- B\n- A\n  - A1",
-    );
+    expect(apply("|- A\n  - A1\n- B", moveDown)).toBe("- B\n- A\n  - A1");
   });
 
   it("moves a first child after the previous parent", () => {
@@ -459,9 +457,7 @@ describe("moveListItem", () => {
   it("does not cross blank lines, fences or headings", () => {
     expect(apply("|## H\n- A\n- B", moveDown)).toBe("## H\n- A\n- B");
     expect(apply("- A\n\n- B|", moveDown)).toBe("- A\n\n- B");
-    expect(apply("- A\n```\n- B|\n```", moveUp)).toBe(
-      "- A\n```\n- B\n```",
-    );
+    expect(apply("- A\n```\n- B|\n```", moveUp)).toBe("- A\n```\n- B\n```");
     expect(apply("## H\n\n- A\n- B|\n\n## Next", moveDown)).toBe(
       "## H\n\n- A\n- B\n\n## Next",
     );
@@ -469,7 +465,12 @@ describe("moveListItem", () => {
 
   it("requires one collapsed cursor", () => {
     expect(apply("[- A\n- B]", moveDown)).toBe("- A\n- B");
-    expect(moveDown("- A\n- B", [{ from: 0, to: 0 }, { from: 3, to: 3 }])).toEqual({
+    expect(
+      moveDown("- A\n- B", [
+        { from: 0, to: 0 },
+        { from: 3, to: 3 },
+      ]),
+    ).toEqual({
       changes: [],
     });
   });

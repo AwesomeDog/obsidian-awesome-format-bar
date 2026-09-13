@@ -319,6 +319,10 @@
     & .char-cell {
       block-size: var(--formatbar-cell-size);
       font-size: 21px;
+      &.is-inserted {
+        background: var(--background-modifier-active-hover);
+        border-radius: var(--radius-s);
+      }
     }
     & .menu-grid.is-wide .char-cell {
       font-size: var(--font-ui-smaller);

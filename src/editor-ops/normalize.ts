@@ -10,26 +10,38 @@ const FENCE = /^\s*(?:```|~~~)/;
 const CJK =
   "\\p{Script=Han}\\p{Script=Hiragana}\\p{Script=Katakana}\\p{Script=Hangul}";
 
+/**
+ * The one walk over fenced code. `editable` is false for fence markers and
+ * everything inside them; returning `null` drops the line.
+ */
+function editLines(
+  text: string,
+  edit: (line: string, editable: boolean) => string | null,
+): string {
+  const kept: string[] = [];
+  let fenced = false;
+  for (const line of text.split("\n")) {
+    const marker = FENCE.test(line);
+    if (marker) fenced = !fenced;
+    const edited = edit(line, !fenced && !marker);
+    if (edited !== null) kept.push(edited);
+  }
+  return kept.join("\n");
+}
+
+/** Character-level: an editable line is split around its inline code. */
 function mapEditable(
   text: string,
   transform: (part: string) => string,
 ): string {
-  let fenced = false;
-  return text
-    .split(/(\n)/)
-    .map((part) => {
-      if (part === "\n") return part;
-      if (FENCE.test(part)) {
-        fenced = !fenced;
-        return part;
-      }
-      if (fenced) return part;
-      return part
-        .split(/(`+[^`\n]*`+)/g)
-        .map((chunk, index) => (index % 2 === 0 ? transform(chunk) : chunk))
-        .join("");
-    })
-    .join("");
+  return editLines(text, (line, editable) =>
+    editable
+      ? line
+          .split(/(`+[^`\n]*`+)/g)
+          .map((chunk, index) => (index % 2 === 0 ? transform(chunk) : chunk))
+          .join("")
+      : line,
+  );
 }
 
 function planRanges(
@@ -84,39 +96,22 @@ export function cjkSpacing(doc: string, ranges: readonly Range[]): Plan {
 }
 
 function cleanTrailing(text: string): string {
-  let fenced = false;
-  return text
-    .split("\n")
-    .map((line) => {
-      if (FENCE.test(line)) {
-        fenced = !fenced;
-        return line;
-      }
-      return fenced ? line : line.replace(/[ \t]+$/u, "");
-    })
-    .join("\n");
+  return editLines(text, (line, editable) =>
+    editable ? line.replace(/[ \t]+$/u, "") : line,
+  );
 }
 
 function collapseBlanks(text: string): string {
-  let fenced = false;
   let blank = false;
-  return text
-    .split("\n")
-    .filter((line) => {
-      if (FENCE.test(line)) {
-        fenced = !fenced;
-        blank = false;
-        return true;
-      }
-      if (fenced || line.trim() !== "") {
-        blank = false;
-        return true;
-      }
-      if (blank) return false;
-      blank = true;
-      return true;
-    })
-    .join("\n");
+  return editLines(text, (line, editable) => {
+    if (!editable || line.trim() !== "") {
+      blank = false;
+      return line;
+    }
+    if (blank) return null;
+    blank = true;
+    return line;
+  });
 }
 
 function bareUrls(text: string): string {
@@ -140,17 +135,9 @@ function normalizeMarkup(text: string): string {
 }
 
 function normalizeBullets(text: string): string {
-  let fenced = false;
-  return text
-    .split("\n")
-    .map((line) => {
-      if (FENCE.test(line)) {
-        fenced = !fenced;
-        return line;
-      }
-      return fenced ? line : line.replace(/^(\s*)[+*](\s+)/u, "$1-$2");
-    })
-    .join("\n");
+  return editLines(text, (line, editable) =>
+    editable ? line.replace(/^(\s*)[+*](\s+)/u, "$1-$2") : line,
+  );
 }
 
 export type CleanupKind =

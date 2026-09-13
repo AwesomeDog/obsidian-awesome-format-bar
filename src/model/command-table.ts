@@ -610,7 +610,12 @@ export const COMMANDS = [
   { id: "duplicate", name: "Duplicate", icon: "copy-plus", kind: "editor" },
 
   // Utilities · Sort
-  { id: "sort-list", name: "Sort List", icon: "list-chevrons-up-down", kind: "editor" },
+  {
+    id: "sort-list",
+    name: "Sort List",
+    icon: "list-chevrons-up-down",
+    kind: "editor",
+  },
   {
     id: "sort-headings",
     name: "Sort Headings",

@@ -188,33 +188,28 @@ export function reverseLines(doc: string, ranges: readonly Range[]): Plan {
   return reorderRuns(new Lines(doc), ranges, (run) => run.slice().reverse());
 }
 
-interface ListItem {
-  indent: number;
-  /** The item's own line, plus any line that is not a marker of its own. */
-  lines: string[];
-  children: ListItem[];
-}
-
-interface MoveItem {
+/** One list item: its line span, its subtree and its parent. Sort and move share it. */
+interface Item {
   start: number;
   end: number;
   indent: number;
+  /** The item's own line, plus any line that is not a marker of its own. */
   lines: string[];
-  children: MoveItem[];
-  parent: MoveItem | null;
+  children: Item[];
+  parent: Item | null;
 }
 
 /** Content after the marker, so `2. a` sorts by `a` and not by its number. */
 const ITEM_TEXT = /^\s*(?:\d+[.)]|[-*+])\s*(.*)$/;
 
-function itemText(item: ListItem): string {
+function itemText(item: Item): string {
   return (ITEM_TEXT.exec(item.lines[0] ?? "")?.[1] ?? "").trim();
 }
 
 /** Items begin at a marker; any other line rides with the item above it. */
-function parseItems(lines: Lines, from: number, to: number): ListItem[] {
-  const roots: ListItem[] = [];
-  const stack: ListItem[] = [];
+function parseItems(lines: Lines, from: number, to: number): Item[] {
+  const roots: Item[] = [];
+  const stack: Item[] = [];
 
   for (let line = from; line <= to; line++) {
     const text = lines.at(line);
@@ -223,54 +218,15 @@ function parseItems(lines: Lines, from: number, to: number): ListItem[] {
       stack[stack.length - 1]?.lines.push(text);
       continue;
     }
-    const indent = (marker[1] ?? "").length;
-    const item: ListItem = { indent, lines: [text], children: [] };
-    while (stack.length > 0 && (stack[stack.length - 1]?.indent ?? 0) >= indent)
-      stack.pop();
-    const parent = stack[stack.length - 1];
-    (parent ? parent.children : roots).push(item);
-    stack.push(item);
-  }
-  return roots;
-}
-
-function sortItems(items: readonly ListItem[]): ListItem[] {
-  return items
-    .map((item) => ({ ...item, children: sortItems(item.children) }))
-    .sort((a, b) => compareText(itemText(a), itemText(b)));
-}
-
-function flattenItems(items: readonly ListItem[]): string[] {
-  return items.flatMap((item) => [
-    ...item.lines,
-    ...flattenItems(item.children),
-  ]);
-}
-
-/** Parses one contiguous list run while retaining each item's own lines. */
-function parseMoveItems(lines: Lines, from: number, to: number): MoveItem[] {
-  const roots: MoveItem[] = [];
-  const stack: MoveItem[] = [];
-
-  for (let line = from; line <= to; line++) {
-    const text = lines.at(line);
-    const marker = ORDERED.exec(text) ?? BULLET.exec(text);
-    if (!marker) {
-      stack[stack.length - 1]?.lines.push(text);
-      continue;
-    }
-
     const indent = (marker[1] ?? "").length;
     while (stack.length > 0) {
       const current = stack[stack.length - 1];
-      if (!current) break;
-      if (current.indent < indent) break;
+      if (!current || current.indent < indent) break;
       current.end = line - 1;
       stack.pop();
     }
-
     const parent = stack[stack.length - 1] ?? null;
-    const item: MoveItem = {
+    const item: Item = {
       start: line,
       end: to,
       indent,
@@ -281,8 +237,32 @@ function parseMoveItems(lines: Lines, from: number, to: number): MoveItem[] {
     (parent ? parent.children : roots).push(item);
     stack.push(item);
   }
-
   return roots;
+}
+
+function sortItems(items: readonly Item[]): Item[] {
+  return items
+    .map((item) => ({ ...item, children: sortItems(item.children) }))
+    .sort((a, b) => compareText(itemText(a), itemText(b)));
+}
+
+/** Depth-first, an item before its children; `targetLine` is where `target` landed. */
+function flatten(
+  items: readonly Item[],
+  target?: Item,
+): { lines: string[]; targetLine: number } {
+  const result: string[] = [];
+  let targetLine = -1;
+  for (const item of items) {
+    const itemStart = result.length;
+    if (item === target) targetLine = itemStart;
+    result.push(...item.lines);
+    const children = flatten(item.children, target);
+    if (targetLine < 0 && children.targetLine >= 0)
+      targetLine = itemStart + item.lines.length + children.targetLine;
+    result.push(...children.lines);
+  }
+  return { lines: result, targetLine };
 }
 
 function isMoveContinuation(text: string): boolean {
@@ -311,24 +291,6 @@ function moveRun(lines: Lines, line: number): Block | null {
   }
 
   return [start, end];
-}
-
-function flattenMoveItemsWithTarget(
-  items: readonly MoveItem[],
-  target: MoveItem,
-): { lines: string[]; targetLine: number } {
-  const result: string[] = [];
-  let targetLine = -1;
-  for (const item of items) {
-    const itemStart = result.length;
-    if (item === target) targetLine = itemStart;
-    result.push(...item.lines);
-    const children = flattenMoveItemsWithTarget(item.children, target);
-    if (targetLine < 0 && children.targetLine >= 0)
-      targetLine = itemStart + item.lines.length + children.targetLine;
-    result.push(...children.lines);
-  }
-  return { lines: result, targetLine };
 }
 
 /** Sorting leaves ordered items out of sequence, so they are renumbered. */
@@ -361,7 +323,7 @@ export function sortList(doc: string, ranges: readonly Range[]): Plan {
       while (end < last && lines.at(end + 1).trim() !== "") end++;
       const source = lines.slice(start, end);
       const result = renumber(
-        flattenItems(sortItems(parseItems(lines, start, end))).join("\n"),
+        flatten(sortItems(parseItems(lines, start, end))).lines.join("\n"),
       );
       if (result !== source)
         changes.push(replaceBlock(lines, start, end, result));
@@ -372,7 +334,7 @@ export function sortList(doc: string, ranges: readonly Range[]): Plan {
   return { changes: order(changes) };
 }
 
-function itemAt(items: readonly MoveItem[], line: number): MoveItem | null {
+function itemAt(items: readonly Item[], line: number): Item | null {
   for (const item of items) {
     if (line < item.start || line > item.end) continue;
     return itemAt(item.children, line) ?? item;
@@ -407,7 +369,7 @@ export function moveListItem(
   if (!run) return NO_CHANGE;
 
   const [start, end] = run;
-  const roots = parseMoveItems(lines, start, end);
+  const roots = parseItems(lines, start, end);
   const target = itemAt(roots, cursorLine);
   if (!target) return NO_CHANGE;
 
@@ -454,7 +416,7 @@ export function moveListItem(
 
   if (!moved) return NO_CHANGE;
 
-  const flattened = flattenMoveItemsWithTarget(roots, target);
+  const flattened = flatten(roots, target);
   const result = renumber(flattened.lines.join("\n"));
   if (result === lines.slice(start, end)) return NO_CHANGE;
 
