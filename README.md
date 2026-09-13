@@ -95,7 +95,7 @@ A searchable **Emoji & Symbols** panel with three sources — emoji, kaomoji and
 
 ### 📊 Markdown table editor
 
-Insert and delete rows/columns, move rows and columns, align columns left/center/right, sort rows, re-format (pretty-print) tables — plus **Paste as Table**, which turns tab- or comma-separated clipboard text (straight out of Excel, Numbers or Google Sheets) into an aligned Markdown table.
+Insert and delete rows/columns, move rows and columns, align columns left/center/right, sort rows, transpose tables, re-format (pretty-print) tables — plus **Paste as Table**, which turns tab- or comma-separated clipboard text (straight out of Excel, Numbers or Google Sheets) into an aligned Markdown table.
 
 ### 📌 Pin any command — including other plugins' commands
 
@@ -145,7 +145,7 @@ Internal Link, External Link, Embed, Tag, Block Reference, **Callout ▼** (Note
 
 ### Table
 
-Available whenever the cursor is inside a table: Delete Rows or Columns, Insert Rows Above / Below, Insert Columns Left / Right, Move Row Up / Down, Move Column Left / Right, Format Tables, Align Column Left / Center / Right, Sort Rows, **Convert to Text**.
+Available whenever the cursor is inside a table: Delete Rows or Columns, Insert Rows Above / Below, Insert Columns Left / Right, Move Row Up / Down, Move Column Left / Right, Format Tables, Align Column Left / Center / Right, Sort Rows, **Transpose Table**, **Convert to Text**.
 **Convert to Text** writes the table out as tab-separated lines — the exact inverse of **Convert Text to Table** (Insert · Blocks), which turns tab- or comma-separated text into an aligned Markdown table. **Paste as Table** does the same with the clipboard and works anywhere.
 
 ### Utilities

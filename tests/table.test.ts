@@ -16,6 +16,7 @@ import {
   moveRow,
   sortRows,
   tableToText,
+  transposeTable,
   type TableFormat,
 } from "../src/editor-ops/table";
 import { tableFromDelimited } from "../src/editor-ops/tsv";
@@ -460,6 +461,66 @@ describe("planTableTab", () => {
 
   it("returns null outside a table", () => {
     expect(planTableTab("plain^ text", 5, PADDED, false)).toBeNull();
+  });
+});
+
+describe("transposeTable", () => {
+  it("transposes header and body while regenerating alignment", () => {
+    expect(
+      run("|A|B|\n|---|:--:|\n|1|2|\n|3^|4|", (doc, at) =>
+        transposeTable(doc, at, PADDED),
+      ),
+    ).toBe(
+      [
+        "| A   | 1   | 3   |",
+        "| --- | --- | --- |",
+        "| B   | 2   | 4   |",
+      ].join("\n"),
+    );
+  });
+
+  it("pads short rows before transposing", () => {
+    expect(
+      run("|A|B|C|\n|-|-|-|\n|x^|y|", (doc, at) =>
+        transposeTable(doc, at, TIGHT),
+      ),
+    ).toBe(["| A | x |", "| --- | --- |", "| B | y |", "| C |  |"].join("\n"));
+  });
+
+  it("transposes a header-only table", () => {
+    expect(
+      run("|A|B|C|\n|-|-|-|", (doc, at) => transposeTable(doc, at, PADDED)),
+    ).toBe(["| A   |", "| --- |", "| B   |", "| C   |"].join("\n"));
+  });
+
+  it("keeps indentation and escaped pipes", () => {
+    expect(
+      run("- item\n  |A|B|\n  |-|:-:|\n  |x\\|y^|z|", (doc, at) =>
+        transposeTable(doc, at, TIGHT),
+      ),
+    ).toBe(
+      ["- item", "  | A | x\\|y |", "  | --- | --- |", "  | B | z |"].join(
+        "\n",
+      ),
+    );
+  });
+
+  it("keeps the caret in the corresponding logical cell", () => {
+    const { doc, offset } = caret("|A|B|\n|-|-|\n|1^|2|\n|3|4|");
+    const plan = transposeTable(doc, offset, PADDED);
+    const next = applyChanges(doc, plan.changes);
+    expect(
+      next.slice(plan.select?.from ?? 0, (plan.select?.from ?? 0) + 1),
+    ).toBe("1");
+  });
+
+  it("does nothing outside a table or inside a fence", () => {
+    const outside = transposeTable("plain^ text", 5, PADDED);
+    expect(outside.changes).toHaveLength(0);
+    const fenced = ["```", "|A|B|", "|-|-|", "|^1|2|", "```"].join("\n");
+    expect(run(fenced, (doc, at) => transposeTable(doc, at, PADDED))).toBe(
+      fenced.replace("^", ""),
+    );
   });
 });
 

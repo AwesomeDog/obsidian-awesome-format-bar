@@ -117,6 +117,7 @@ export default {
   "Sort Rows": "행 정렬",
   "Sort Rows A to Z": "오름차순 정렬",
   "Sort Rows Z to A": "내림차순 정렬",
+  "Transpose Table": "표 전치",
   "Convert to Text": "텍스트로 변환",
   "Paste as Table": "표로 붙여넣기",
   "Paste URI as Link": "URI로 붙여넣기",

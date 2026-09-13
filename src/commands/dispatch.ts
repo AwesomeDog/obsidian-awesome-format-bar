@@ -43,6 +43,7 @@ import {
   moveRow,
   sortRows,
   tableToText,
+  transposeTable,
   type TableFormat,
 } from "../editor-ops/table";
 import { tableFromDelimited } from "../editor-ops/tsv";
@@ -358,6 +359,8 @@ export function planFor(context: CommandContext, id: string): Plan | null {
       return sortRows(doc, caret, format, false);
     case "table-sort-za":
       return sortRows(doc, caret, format, true);
+    case "table-transpose":
+      return transposeTable(doc, caret, format);
     case "table-convert-to-text":
       return tableToText(doc, caret);
     case "convert-text-to-table": {

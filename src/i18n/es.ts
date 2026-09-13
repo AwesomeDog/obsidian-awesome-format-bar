@@ -117,6 +117,7 @@ export default {
   "Sort Rows": "Ordenar filas",
   "Sort Rows A to Z": "Ordenar de A a Z",
   "Sort Rows Z to A": "Ordenar de Z a A",
+  "Transpose Table": "Transponer tabla",
   "Convert to Text": "Convertir en texto",
   "Paste as Table": "Pegar como tabla",
   "Paste URI as Link": "Pegar URI como vínculo",

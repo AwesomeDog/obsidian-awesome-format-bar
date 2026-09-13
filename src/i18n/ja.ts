@@ -117,6 +117,7 @@ export default {
   "Sort Rows": "行の並べ替え",
   "Sort Rows A to Z": "昇順に並べ替え",
   "Sort Rows Z to A": "降順に並べ替え",
+  "Transpose Table": "テーブルを転置",
   "Convert to Text": "テキストに変換",
   "Paste as Table": "テーブルとして貼り付け",
   "Paste URI as Link": "URI として貼り付け",

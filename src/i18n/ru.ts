@@ -117,6 +117,7 @@ export default {
   "Sort Rows": "Сортировать строки",
   "Sort Rows A to Z": "Сортировать от А до Я",
   "Sort Rows Z to A": "Сортировать от Я до А",
+  "Transpose Table": "Транспонировать таблицу",
   "Convert to Text": "Преобразовать в текст",
   "Paste as Table": "Вставить как таблицу",
   "Paste URI as Link": "Вставить URI как ссылку",

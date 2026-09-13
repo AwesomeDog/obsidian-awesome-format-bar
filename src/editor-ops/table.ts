@@ -532,6 +532,39 @@ export function sortRows(
     );
   return edit(table, format, [header, ...sorted]);
 }
+
+/** Transposes the header and body while regenerating the delimiter row. */
+export function transposeTable(
+  doc: string,
+  offset: number,
+  format: TableFormat,
+): Plan {
+  const hit = findTableEditContext(doc, offset);
+  if (!hit) return NO_CHANGE;
+  const { cell, columns, table } = hit;
+  const rows = Array.from({ length: columns }, (_, column) =>
+    Array.from(
+      { length: table.rows.length },
+      (_, row) => table.rows[row]?.[column] ?? "",
+    ),
+  );
+  // Alignment belongs to columns; after transposition the new columns were rows.
+  const align = Array.from(
+    { length: table.rows.length },
+    () => "none" as const,
+  );
+  const plan = edit(table, format, rows, align);
+  const change = plan.changes[0];
+  if (!change) return NO_CHANGE;
+
+  // Keep the caret in the corresponding logical cell: (row, column) -> (column, row).
+  const targetRow = Math.min(cell.column, rows.length - 1);
+  const targetColumn = Math.min(cell.row, table.rows.length - 1);
+  const renderedLine = targetRow === 0 ? 0 : targetRow + 1;
+  const caret =
+    change.from + cellOffset(change.text, renderedLine, targetColumn);
+  return { changes: plan.changes, select: { from: caret, to: caret } };
+}
 /** Offset of the first character of `column` on rendered line `line`. */
 function cellOffset(rendered: string, line: number, column: number): number {
   const lines = rendered.split("\n");

@@ -827,6 +827,13 @@ export const COMMANDS = [
     requiresTable: true,
   },
   {
+    id: "table-transpose",
+    name: "Transpose Table",
+    icon: "repeat",
+    kind: "editor",
+    requiresTable: true,
+  },
+  {
     id: "table-convert-to-text",
     name: "Convert to Text",
     icon: "wrap-text",

@@ -117,6 +117,7 @@ export default {
   "Sort Rows": "行排序",
   "Sort Rows A to Z": "升序排序",
   "Sort Rows Z to A": "降序排序",
+  "Transpose Table": "转置表格",
   "Convert to Text": "转换为文本",
   "Paste as Table": "粘贴为表格",
   "Paste URI as Link": "粘贴 URI 为链接",
