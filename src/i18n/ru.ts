@@ -178,12 +178,9 @@ export default {
   "Enable on Mobile": "Включить на мобильных устройствах",
   "Hides every bar on mobile without clearing its positions.":
     "Скрывает все панели на мобильных устройствах, не сбрасывая их положение.",
-  "Enter moves to the next row": "Enter переходит к следующей строке",
-  "Pressing Enter inside a table jumps to the cell below and adds a row at the end. Live Preview already does this on its own, so this only applies in Source mode.":
-    "В таблице нажатие Enter перемещает курсор в ячейку ниже, а в конце таблицы добавляет новую строку. В режиме Live Preview это происходит автоматически, поэтому параметр действует только в режиме исходного текста.",
-  "Tab moves to the next cell": "Tab переходит к следующей ячейке",
-  "Pressing Tab inside a table moves to the next cell, Shift+Tab moves back, and Tab at the right edge adds a column. This only applies in Source mode.":
-    "В таблице Tab перемещает к следующей ячейке, а Shift+Tab возвращает назад. Tab у правого края добавляет столбец. Параметр действует только в режиме исходного текста.",
+  "Keyboard navigation": "Навигация с клавиатуры",
+  "Enter moves down a cell, Tab to the next one and Shift+Tab back. Tab at the right edge adds a column and Enter on the last row adds a row below it. Source mode only.":
+    "Enter перемещает на ячейку ниже, Tab — к следующей, Shift+Tab — назад. Tab у правого края добавляет столбец, Enter на последней строке добавляет строку под ней. Только в режиме исходного текста.",
   "Pad cells with spaces": "Дополнять ячейки пробелами",
   "Lines the pipes of each column up by padding cells with spaces. Live Preview always pads, so turning this off makes tables flip between the two styles as you edit.":
     "Выравнивает вертикальные разделители столбцов, дополняя ячейки пробелами. В режиме Live Preview выравнивание выполняется всегда, поэтому при отключении таблица будет менять вид при каждом редактировании.",

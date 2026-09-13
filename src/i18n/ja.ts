@@ -178,12 +178,9 @@ export default {
   "Enable on Mobile": "モバイルで有効にする",
   "Hides every bar on mobile without clearing its positions.":
     "モバイルではすべてのバーを非表示にします。各位置のオン/オフの設定は保持されます。",
-  "Enter moves to the next row": "Enter キーで次の行に移動",
-  "Pressing Enter inside a table jumps to the cell below and adds a row at the end. Live Preview already does this on its own, so this only applies in Source mode.":
-    "テーブル内で Enter キーを押すと、下のセルに移動し、末尾に新しい行を追加します。ライブプレビューは既定でこの動作を行うため、この設定はソースモードにのみ適用されます。",
-  "Tab moves to the next cell": "Tab で次のセルに移動",
-  "Pressing Tab inside a table moves to the next cell, Shift+Tab moves back, and Tab at the right edge adds a column. This only applies in Source mode.":
-    "テーブル内で Tab キーを押すと次のセルに移動し、Shift+Tab で戻ります。右端で Tab を押すと列を追加します。この設定はソースモードにのみ適用されます。",
+  "Keyboard navigation": "キーボード操作",
+  "Enter moves down a cell, Tab to the next one and Shift+Tab back. Tab at the right edge adds a column and Enter on the last row adds a row below it. Source mode only.":
+    "Enter で下のセル、Tab で次のセル、Shift+Tab で前のセルに移動します。右端で Tab を押すと列が追加され、最後の行で Enter を押すとその下に行が追加されます。ソースモードのみ。",
   "Pad cells with spaces": "セルをスペースで埋める",
   "Lines the pipes of each column up by padding cells with spaces. Live Preview always pads, so turning this off makes tables flip between the two styles as you edit.":
     "セルをスペースで埋めて、各列の縦線の位置を揃えます。ライブプレビューでは常に埋められるため、この設定をオフにすると、編集のたびにテーブルが 2 つのスタイルを行き来します。",

@@ -167,7 +167,7 @@ The character data ships with the plugin — emoji from `@emoji-mart/data`, kaom
 |---|---|
 | **Toolbar** | Independent toggles for Top / Following / Fixed |
 | **Pinned** | Open the Pinned manager to add commands, choose icons, create or rename groups, drag to reorder, move commands, and delete |
-| **Table** | Enter moves to the next row (on); Tab moves between cells and adds a column at the right edge (on); pad cell width with spaces (on); sort by clicking a header in Reading view (on) |
+| **Table** | Keyboard navigation: Enter moves down a cell, Tab moves between cells, Tab at the right edge adds a column and Enter on the last row adds a row (on); pad cell width with spaces (on); sort by clicking a header in Reading view (on) |
 
 Entry usage counts are stored with the settings but have no control: the Emoji & Symbols panel writes and prunes them automatically.
 

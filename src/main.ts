@@ -221,8 +221,9 @@ export default class AwesomeFormatBarPlugin extends Plugin {
     const isTab = evt.key === "Tab";
     if (!isEnter && !isTab) return;
     if (evt.ctrlKey || evt.metaKey || evt.altKey) return;
-    if (isEnter && (evt.shiftKey || !this.settings.bindEnterToNextRow)) return;
-    if (isTab && !this.settings.bindTabToNextCell) return;
+    if (!this.settings.tableKeyNavigation) return;
+    // Shift+Enter keeps the editor's default.
+    if (isEnter && evt.shiftKey) return;
 
     const target = evt.target;
     if (!(target instanceof Element)) return;

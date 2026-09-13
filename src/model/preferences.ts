@@ -14,8 +14,7 @@ export const DEFAULT_SETTINGS = {
   desktop: { top: true, following: false, fixed: false },
   mobile: { top: false, following: false, fixed: true },
   enableOnMobile: false,
-  bindEnterToNextRow: true,
-  bindTabToNextCell: true,
+  tableKeyNavigation: true,
   padCellWidthWithSpaces: true,
   sortTableOnHeaderClick: true,
   showWhitespace: false,
@@ -96,13 +95,9 @@ export function normalizeSettings(raw: unknown): Settings {
     desktop: normalizeVisibility(source["desktop"], DEFAULT_SETTINGS.desktop),
     mobile: normalizeVisibility(source["mobile"], DEFAULT_SETTINGS.mobile),
     enableOnMobile: normalizeFlag(source["enableOnMobile"], "enableOnMobile"),
-    bindEnterToNextRow: normalizeFlag(
-      source["bindEnterToNextRow"],
-      "bindEnterToNextRow",
-    ),
-    bindTabToNextCell: normalizeFlag(
-      source["bindTabToNextCell"],
-      "bindTabToNextCell",
+    tableKeyNavigation: normalizeFlag(
+      source["tableKeyNavigation"],
+      "tableKeyNavigation",
     ),
     padCellWidthWithSpaces: normalizeFlag(
       source["padCellWidthWithSpaces"],

@@ -179,12 +179,9 @@ export default {
   "Enable on Mobile": "Auf Mobilgeräten aktivieren",
   "Hides every bar on mobile without clearing its positions.":
     "Blendet auf Mobilgeräten alle Leisten aus, ohne die Positionen zurückzusetzen.",
-  "Enter moves to the next row": "Eingabetaste wechselt zur nächsten Zeile",
-  "Pressing Enter inside a table jumps to the cell below and adds a row at the end. Live Preview already does this on its own, so this only applies in Source mode.":
-    "Innerhalb einer Tabelle springt die Eingabetaste in die darunterliegende Zelle und fügt am Ende eine Zeile ein. Die Live-Vorschau erledigt das bereits von selbst, daher gilt diese Einstellung nur im Quellmodus.",
-  "Tab moves to the next cell": "Tab wechselt zur nächsten Zelle",
-  "Pressing Tab inside a table moves to the next cell, Shift+Tab moves back, and Tab at the right edge adds a column. This only applies in Source mode.":
-    "Innerhalb einer Tabelle wechselt Tab zur nächsten Zelle und Shift+Tab zurück. Tab am rechten Rand fügt eine Spalte hinzu. Dies gilt nur im Quellmodus.",
+  "Keyboard navigation": "Tastaturnavigation",
+  "Enter moves down a cell, Tab to the next one and Shift+Tab back. Tab at the right edge adds a column and Enter on the last row adds a row below it. Source mode only.":
+    "Enter springt eine Zelle nach unten, Tab zur nächsten und Shift+Tab zurück. Tab am rechten Rand fügt eine Spalte hinzu, Enter in der letzten Zeile eine Zeile darunter. Nur im Quellmodus.",
   "Pad cells with spaces": "Zellen mit Leerzeichen auffüllen",
   "Lines the pipes of each column up by padding cells with spaces. Live Preview always pads, so turning this off makes tables flip between the two styles as you edit.":
     "Füllt Zellen mit Leerzeichen auf, sodass die senkrechten Striche einer Spalte bündig stehen. Die Live-Vorschau füllt immer auf; wenn Sie dies deaktivieren, wechselt die Tabelle beim Bearbeiten zwischen beiden Darstellungen.",

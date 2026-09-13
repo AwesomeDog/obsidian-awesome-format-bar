@@ -52,19 +52,19 @@ Obsidian is fast **if** you already speak Markdown. For everyone else — studen
 - **Discover what Obsidian can do.** Callouts, block references, embeds, math blocks and tags all get a button — features many users never find in the syntax.
 - **Do what Markdown can't.** Underline, superscript, subscript, paragraph alignment, text/highlight colors and font family/size, written as clean inline HTML.
 - **Plain text forever.** No proprietary format, no database, no lock-in — your notes are still just `.md` files.
-- **Offline & private.** No network calls, no accounts, no telemetry. The ~2,150-entry emoji library ships inside the plugin.
-- **Keyboard-friendly too.** Switch every toolbar position off and the interface disappears completely — all 105 palette-registered commands stay available and can be bound to your own hotkeys.
+- **Offline & private.** No network calls, no accounts, no telemetry. The ~2,140-entry emoji library ships inside the plugin.
+- **Keyboard-friendly too.** Switch every toolbar position off and the interface disappears completely — all 119 palette-registered commands stay available and can be bound to your own hotkeys.
 
 ## At a glance
 
 | | |
 | --- | --- |
 | **Toolbar positions** | Top ribbon, floating bar above the selection, fixed bottom bar — combine freely |
-| **Commands** | **115** built-in, **105** available in the command palette for custom hotkeys |
+| **Commands** | **130** built-in, **119** available in the command palette for custom hotkeys |
 | **Tabs** | Home · Insert · View · Table · Utilities · **Pinned** |
 | **Callouts** | All 12 Obsidian callout types in one drop-down |
-| **Emoji & symbols** | ~2,150 emoji, kaomoji and symbols, fully offline |
-| **Table editing** | Insert/delete/move rows & columns, align, sort, re-format, paste as table |
+| **Emoji & symbols** | ~2,140 emoji, kaomoji and symbols, fully offline |
+| **Table editing** | Insert/delete/move rows & columns, align, sort, transpose, re-format, convert to text, paste as table, copy as CSV |
 | **Custom buttons** | Pin *any* command — core, this plugin's, or another plugin's |
 | **Setup required** | None. Theme-aware, zero configuration |
 | **Requires** | Obsidian **1.13.7+** |
@@ -81,7 +81,7 @@ Obsidian is fast **if** you already speak Markdown. For everyone else — studen
 
 Each position is toggled independently, so you can run just the floating bar, just the ribbon, or all three.
 
-### 🅰️ 115 formatting commands in a familiar layout
+### 🅰️ 130 formatting commands in a familiar layout
 
 Bold, italic, underline, strikethrough, inline code, inline math, highlight (with color), font color, **font family**, **font size**, clear formatting, change case, headings 1–6, bullet / numbered / task lists, quotes, indentation, horizontal rules, undo/redo, find & replace, paragraph alignment — grouped exactly where a Word user expects them.
 
@@ -89,13 +89,15 @@ Bold, italic, underline, strikethrough, inline code, inline math, highlight (wit
 
 One **Callout** button opens a drop-down with `note`, `abstract`, `info`, `tip`, `success`, `question`, `warning`, `failure`, `danger`, `bug`, `example` and `quote`. No more looking up `> [!tip]` syntax.
 
-### 😀 Offline emoji, kaomoji & symbol picker (~2,150 entries)
+### 😀 Offline emoji, kaomoji & symbol picker (~2,140 entries)
 
 A searchable **Emoji & Symbols** panel with three sources — emoji, kaomoji and typographic symbols — bundled with the plugin. Inserts at the caret or over the selection as a single undo step, keeps a *Frequently used* group per source, and stays open for inserting several characters in a row.
 
 ### 📊 Markdown table editor
 
-Insert and delete rows/columns, move rows and columns, align columns left/center/right, sort rows, transpose tables, re-format (pretty-print) tables — plus **Paste as Table**, which turns tab- or comma-separated clipboard text (straight out of Excel, Numbers or Google Sheets) into an aligned Markdown table.
+Insert and delete rows/columns, move rows and columns, align columns left/center/right, sort rows A to Z or Z to A, transpose tables, re-format (pretty-print) the current table or every table in the note, and convert a table back to delimited text — plus **Paste as Table**, which turns tab- or comma-separated clipboard text (straight out of Excel, Numbers or Google Sheets) into an aligned Markdown table, and **Copy Table as CSV** for the way back into a spreadsheet.
+
+Put the caret inside a table and the ribbon switches to the **Table** tab by itself; pick another tab and it stays where you put it. In **Source mode**, Enter moves to the row below (adding one at the end) and Tab / Shift+Tab walk the cells, adding a column past the right edge.
 
 ### 📌 Pin any command — including other plugins' commands
 
@@ -103,7 +105,7 @@ The **Pinned** tab turns the toolbar into your own launcher: pick any command fr
 
 ### 👁️ Reading, focus and outlining tools
 
-**Show Whitespace** (dots for spaces, arrows for tabs, orange markers for NBSP / ideographic / EN & EM spaces), **Show Line Numbers**, **Readable Line Length**, **Navigation Pane** (Obsidian's Outline), **Zoom In / Out / 100%**, **Split Right / Down**, **Collapse / Expand (All)**, **Focus Mode** (collapse both sidebars), **Zen Mode** (true fullscreen) and **Typewriter Mode** (caret line parked mid-editor, highlighted, with the rest dimmed).
+**Live Preview/Source** (flip the pane between rendered and raw Markdown), **Show Whitespace** (dots for spaces, arrows for tabs, orange markers for NBSP / ideographic / EN & EM spaces), **Show Line Numbers**, **Readable Line Length**, **Navigation Pane** (Obsidian's Outline), **Zoom In / Out / 100%**, **Split Right / Down**, **Collapse / Expand (All)**, **Focus Mode** (collapse both sidebars), **Zen Mode** (true fullscreen) and **Typewriter Mode** (caret line parked mid-editor, highlighted, with the rest dimmed).
 
 ### 📑 Table of contents in one click
 
@@ -111,7 +113,9 @@ The **Pinned** tab turns the toolbar into your own launcher: pick any command fr
 
 ### 🧹 Line & list utilities
 
-**Merge Lines**, **Split Lines** (at the punctuation the selection uses most), **Reverse Lines** — none of which cross a blank line or a code fence — plus **Sort List** (level by level, children and bodies preserved, ordered items renumbered) and **Sort Headings** (reorders the outline and carries every section's body along).
+**Merge Lines**, **Split Lines** (at the punctuation the selection uses most), **Reverse Lines** — none of which cross a blank line or a code fence — and **Duplicate** (a copy of the caret's line below it, or of the selection right after it — VS Code's *Duplicate Selection*). Plus **Sort List** (level by level, children and bodies preserved, ordered items renumbered) and **Sort Headings** (reorders the outline and carries every section's body along).
+
+**Clean Up** gathers the tidy-ups people otherwise do by hand into one menu: **Remove Trailing Spaces**, **Collapse Blank Lines**, **Convert Bare URLs**, **Normalize Emphasis & Strong** and **Normalize Bullet Style**.
 
 ### 🎨 Zero configuration, theme-aware
 
@@ -121,13 +125,13 @@ Fixed, opinionated layout that inherits your active Obsidian theme in light and 
 
 ## Full command reference
 
-105 of the 115 commands are registered in the **command palette**, so you can assign your own keyboard shortcuts. (Drop-down containers and the Emoji & Symbols panel are toolbar-only.)
+119 of the 130 commands are registered in the **command palette**, so you can assign your own keyboard shortcuts. (Drop-down containers and the Emoji & Symbols panel are toolbar-only.)
 
 ### Home
 
 - **Clipboard** — Paste, Cut, Copy, Paste as Plain Text
 - **Font** — Font Family, Font Size, Bold, Italic, Underline, Strikethrough, Subscript, Superscript, Inline Code, Inline Math, Highlight, Highlight Color, Font Color, Clear Formatting, Change Case
-- **Paragraph** — Bullet / Numbered / Task List, Quote, Decrease / Increase Indent, Renumber List, Sort Lines, Swap Line Up / Down, Align Left / Center / Right / Justify, Horizontal Rule
+- **Paragraph** — Bullet / Numbered / Task List, Quote, Decrease / Increase Indent, Renumber List, Sort Lines, Move List Item Up / Down, Swap Line Up / Down, Align Left / Center / Right / Justify, Horizontal Rule
 - **Styles** — Heading 1–6, Remove Heading
 - **Editing** — Undo, Redo, Find and Replace
 
@@ -137,6 +141,7 @@ Internal Link, External Link, Embed, Tag, Block Reference, **Callout ▼** (Note
 
 ### View
 
+- **Views** — Live Preview/Source (toggle the pane between Live Preview and raw Markdown)
 - **Show** — Show Whitespace, Show Line Numbers, Readable Line Length, Navigation Pane (Obsidian's Outline)
 - **Zoom** — Zoom In, Zoom Out, 100%
 - **Window** — Split Right, Split Down
@@ -145,13 +150,13 @@ Internal Link, External Link, Embed, Tag, Block Reference, **Callout ▼** (Note
 
 ### Table
 
-Available whenever the cursor is inside a table: Delete Rows or Columns, Insert Rows Above / Below, Insert Columns Left / Right, Move Row Up / Down, Move Column Left / Right, Format Tables, Align Column Left / Center / Right, Sort Rows, **Transpose Table**, **Convert Table to Text**, **Copy Table as CSV**.
+Available whenever the cursor is inside a table: **Delete Rows or Columns ▼** (Delete Rows, Delete Columns), Insert Rows Above / Below, Insert Columns Left / Right, Move Row Up / Down, Move Column Left / Right, **Format Tables ▼** (Format Table, Format All Tables), Align Column Left / Center / Right, **Sort Rows ▼** (Sort Rows A to Z, Sort Rows Z to A), **Transpose Table**, **Convert Table to Text**, **Paste as Table**, **Copy Table as CSV**.
 
 ### Utilities
 
-**Merge Lines** joins a run of lines into one; **Split Lines** breaks them at the punctuation the selection uses most; **Reverse Lines** flips the order of each run. None of the three crosses a blank line or a code fence.
+**Merge Lines** joins a run of lines into one; **Split Lines** breaks them at the punctuation the selection uses most; **Reverse Lines** flips the order of each run; **Duplicate** copies the caret's line below it, or the selection right after it. None of the four crosses a blank line or a code fence.
 **Sort List** sorts a list level by level — an item keeps its own body and its own children, and ordered items come out renumbered. **Sort Headings** reorders each level of the note's outline and carries every section's body along with it.
-**Paste URI as Link** wraps selected text with the URI currently on the clipboard. **Smart Punctuation** and **CJK Spacing** normalize selected text, while **Clean Up** groups common Markdown cleanup actions in one menu.
+**Paste URI as Link** wraps selected text with the URI currently on the clipboard. **Smart Punctuation** and **CJK Spacing** normalize selected text, while **Clean Up ▼** groups five cleanup actions in one menu: **Remove Trailing Spaces**, **Collapse Blank Lines**, **Convert Bare URLs**, **Normalize Emphasis & Strong** and **Normalize Bullet Style**.
 
 ### Pinned
 
@@ -161,7 +166,7 @@ Your own commands, with your own icons. See [Getting started](#getting-started).
 
 | Source  | Entries (approx.) | Example groups                                                   |
 | ------- | ----------------- | ---------------------------------------------------------------- |
-| Emoji   | ~1,900            | Smileys & People, Animals & Nature, Food & Drink, Objects, Flags |
+| Emoji   | ~1,870            | Smileys & People, Animals & Nature, Food & Drink, Objects, Flags |
 | Kaomoji | ~70               | Emotion, Animal, Behavior, People, Holiday                       |
 | Symbols | ~200              | Arrows, Math, Typographic, Currency, Enclosed, Dingbats          |
 
@@ -188,7 +193,7 @@ Download `main.js`, `manifest.json` and `styles.css` from a release into `<vault
 2. The **Ribbon (Top)** has six tabs; the last one, **Pinned**, holds the commands you pin yourself. While it is empty it shows an add hint; use the edit button to manage commands and groups.
 3. The **compact bars** (Following / Fixed) carry a fixed subset of commands; anything that doesn't fit collapses into the `⋯` overflow menu.
 4. Open the **Pinned** edit button to add commands, choose icons, create or rename groups, drag to reorder, move commands, or delete them. Settings keeps a fallback entry for the same manager. Pinned commands behave exactly like their command-palette counterparts.
-5. Prefer the keyboard? Turn **all three position toggles off** and the toolbar disappears from the interface entirely — the plugin then adds nothing to your screen, while all **105 palette-registered commands** keep working and can be bound to your own hotkeys in **Settings → Hotkeys**. In other words: you can use it as a pure command/hotkey pack and never click a button.
+5. Prefer the keyboard? Turn **all three position toggles off** and the toolbar disappears from the interface entirely — the plugin then adds nothing to your screen, while all **119 palette-registered commands** keep working and can be bound to your own hotkeys in **Settings → Hotkeys**. In other words: you can use it as a pure command/hotkey pack and never click a button.
 
 ## Settings
 
@@ -196,7 +201,7 @@ Download `main.js`, `manifest.json` and `styles.css` from a release into `<vault
 | ----------- | ------------------------------------------------------------------------------------------------------------------------ |
 | **Toolbar** | Independent toggles for Top / Following / Fixed                                                                          |
 | **Pinned**  | Open the Pinned manager to add commands, choose icons, manage groups, reorder, and delete                                  |
-| **Table**   | Enter moves to the next row; Tab / Shift+Tab move between cells and Tab adds a column at the right edge; pad cell width with spaces; sort on header click in Reading view (never modifies the file)   |
+| **Table**   | Keyboard navigation: Enter moves down a cell, Tab / Shift+Tab move between cells, Tab at the right edge adds a column and Enter on the last row adds a row; pad cell width with spaces; sort on header click in Reading view (never modifies the file)   |
 
 ## Compatibility
 
@@ -219,16 +224,16 @@ No. Bold, headings, lists, links, tables, callouts, code blocks and math are all
 Standard Markdown and Obsidian-flavoured Markdown. Only where Markdown has no syntax — underline, superscript, subscript, paragraph alignment, text and highlight colors, font family and font size — does the plugin emit small, standard inline HTML tags, which Obsidian renders natively.
 
 **Can I keep using my keyboard shortcuts?**
-Yes. 105 of the 115 commands appear in the command palette and can be bound to any hotkey.
+Yes. 119 of the 130 commands appear in the command palette and can be bound to any hotkey.
 
 **I'm a keyboard person — can I hide the toolbar completely?**
-Yes, and nothing is lost by doing it. Switch off all three positions (**Top / Following / Fixed**) in **Settings → Awesome Format Bar** and the plugin leaves zero footprint on the screen: no ribbon, no floating bar, no bottom bar. Every one of the **105 palette-registered commands** still runs, from the command palette or from a hotkey you assign in **Settings → Hotkeys** — including commands Obsidian has no built-in shortcut for, such as font color, highlight color, change case, callouts, table sorting and the line utilities. Think of it as an optional keyboard-only layer you can switch on whenever the mouse starts feeling slow.
+Yes, and nothing is lost by doing it. Switch off all three positions (**Top / Following / Fixed**) in **Settings → Awesome Format Bar** and the plugin leaves zero footprint on the screen: no ribbon, no floating bar, no bottom bar. Every one of the **119 palette-registered commands** still runs, from the command palette or from a hotkey you assign in **Settings → Hotkeys** — including commands Obsidian has no built-in shortcut for, such as font color, highlight color, change case, callouts, table sorting and the line utilities. Think of it as an optional keyboard-only layer you can switch on whenever the mouse starts feeling slow.
 
 **Can I add buttons for commands from other plugins?**
 Yes — that's the **Pinned** tab. Pin any command from the palette and choose an icon. If the owning plugin is disabled, the button greys out and the pin is preserved.
 
 **Does the emoji picker need an internet connection?**
-No. All ~2,150 emoji, kaomoji and symbols are bundled with the plugin.
+No. All ~2,140 emoji, kaomoji and symbols are bundled with the plugin.
 
 **Does the plugin use AI, or phone home in any way?**
 No. There is no AI feature, no API key, no network request, no analytics and no telemetry anywhere in the code — the plugin reads and writes your local `.md` files and nothing else. The emoji library is bundled, so it works on a plane.

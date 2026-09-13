@@ -11,10 +11,8 @@ export interface Settings {
   desktop: ToolbarPositionVisibility;
   mobile: ToolbarPositionVisibility;
   enableOnMobile: boolean;
-  /** Enter in a table moves to the cell below, adding a row at the end. */
-  bindEnterToNextRow: boolean;
-  /** Tab in a table moves between cells, adding a column at the right edge. */
-  bindTabToNextCell: boolean;
+  /** Source mode: Enter and Tab walk a table's cells instead of the text. */
+  tableKeyNavigation: boolean;
   /** Pad cells with spaces so the pipes of a column line up. */
   padCellWidthWithSpaces: boolean;
   /** Reading view: click a table header to sort its rows. */

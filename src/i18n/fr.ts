@@ -179,12 +179,9 @@ export default {
   "Enable on Mobile": "Activer sur mobile",
   "Hides every bar on mobile without clearing its positions.":
     "Masque toutes les barres sur mobile sans réinitialiser leurs positions.",
-  "Enter moves to the next row": "Entrée passe à la ligne suivante",
-  "Pressing Enter inside a table jumps to the cell below and adds a row at the end. Live Preview already does this on its own, so this only applies in Source mode.":
-    "Dans un tableau, la touche Entrée passe à la cellule inférieure et ajoute une ligne à la fin. L'aperçu en direct le fait déjà naturellement : cette option ne s'applique donc qu'en mode source.",
-  "Tab moves to the next cell": "Tab passe à la cellule suivante",
-  "Pressing Tab inside a table moves to the next cell, Shift+Tab moves back, and Tab at the right edge adds a column. This only applies in Source mode.":
-    "Dans un tableau, Tab passe à la cellule suivante et Shift+Tab revient à la précédente. Tab au bord droit ajoute une colonne. Cette option ne s'applique qu'en mode source.",
+  "Keyboard navigation": "Navigation au clavier",
+  "Enter moves down a cell, Tab to the next one and Shift+Tab back. Tab at the right edge adds a column and Enter on the last row adds a row below it. Source mode only.":
+    "Entrée descend d'une cellule, Tab passe à la suivante et Maj+Tab revient en arrière. Tab au bord droit ajoute une colonne et Entrée sur la dernière ligne ajoute une ligne dessous. Mode source uniquement.",
   "Pad cells with spaces": "Remplir les cellules avec des espaces",
   "Lines the pipes of each column up by padding cells with spaces. Live Preview always pads, so turning this off makes tables flip between the two styles as you edit.":
     "Remplit les cellules avec des espaces pour aligner les barres verticales de chaque colonne. L'aperçu en direct remplit toujours les cellules : désactiver cette option fait donc alterner les tableaux entre les deux styles pendant la saisie.",
