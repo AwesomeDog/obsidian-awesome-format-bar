@@ -55,6 +55,7 @@ Obsidian ist schnell — **wenn** Sie bereits Markdown beherrschen. Für alle an
 - **Tun, was Markdown nicht kann.** Unterstreichen, Hochstellen, Tiefstellen, Absatzausrichtung, Text- und Hervorhebungsfarbe sowie Schriftart und Schriftgröße, geschrieben als sauberes Inline-HTML.
 - **Für immer reiner Text.** Kein proprietäres Format, keine Datenbank, keine Bindung — Ihre Notizen bleiben schlicht `.md`-Dateien.
 - **Offline und privat.** Keine Netzwerkaufrufe, keine Konten, keine Telemetrie. Die rund 2.140 Einträge der Emoji-Bibliothek werden mit dem Plugin ausgeliefert.
+- **Ihr eigener Starter, wenn Sie einen wollen.** Die Registerkarte **Angeheftet** nimmt jeden Befehl auf, den Sie auswählen — einen aus dem Kern, aus diesem Plugin oder aus einem anderen —, damit sich die Leiste nach Ihnen richtet, ohne zu einem Konfigurationsprojekt zu werden.
 - **Auch tastaturfreundlich.** Schalten Sie alle drei Leistenpositionen aus und die Oberfläche verschwindet vollständig — alle 119 in der Befehlspalette registrierten Befehle bleiben verfügbar und lassen sich an eigene Tastenkürzel binden.
 
 ## Auf einen Blick
@@ -67,7 +68,7 @@ Obsidian ist schnell — **wenn** Sie bereits Markdown beherrschen. Für alle an
 | **Callouts**        | Alle 12 Obsidian-Callout-Typen in einem Aufklappmenü                                               |
 | **Emoji und Symbole** | Rund 2.140 Emoji, Kaomoji und Symbole, vollständig offline                                       |
 | **Tabellenbearbeitung** | Zeilen und Spalten einfügen, löschen und verschieben, ausrichten, sortieren, transponieren, neu formatieren, in Text umwandeln, als Tabelle einfügen, als CSV kopieren |
-| **Eigene Schaltflächen** | Heften Sie **beliebige** Befehle an — Kernbefehle, die dieses Plugins oder die eines anderen    |
+| **Eigene Schaltflächen** | Registerkarte **Angeheftet** — heften Sie **beliebige** Befehle an (Kernbefehle, die dieses Plugins oder die eines anderen), mit eigenen Symbolen und Gruppen |
 | **Einrichtung nötig** | Keine. Themenangepasst, ohne Konfiguration                                                       |
 | **Voraussetzung**   | Obsidian **1.13.7+**                                                                                |
 
@@ -103,7 +104,9 @@ Setzen Sie den Cursor in eine Tabelle, wechselt das Menüband von selbst zur Reg
 
 ### 📌 Beliebige Befehle anheften, auch aus anderen Plugins
 
-Die Registerkarte **Angeheftet** macht die Leiste zu Ihrem eigenen Starter: Wählen Sie einen beliebigen Befehl aus der Befehlspalette (Obsidian-Kern, ein anderes Community-Plugin oder dieses Plugin), bestimmen Sie ein Symbol und ordnen Sie per Ziehen um. Ist das Quell-Plugin deaktiviert, wird die Schaltfläche lediglich ausgegraut — Ihre Anheftung bleibt erhalten.
+**Angeheftet ist der einzige Teil der Leiste, den Sie selbst anordnen.** Sie macht die Leiste zu Ihrem eigenen Starter: Wählen Sie einen beliebigen Befehl aus der Befehlspalette (Obsidian-Kern, ein anderes Community-Plugin oder dieses Plugin), bestimmen Sie ein Symbol, weisen Sie ihm eine Gruppe zu und ordnen Sie per Ziehen um. Ist das Quell-Plugin deaktiviert, wird die Schaltfläche lediglich ausgegraut — Ihre Anheftung bleibt erhalten.
+
+Die fünf integrierten Registerkarten decken ab, was die meisten häufig brauchen. Die ein oder zwei Befehle, auf die *Sie* nicht verzichten können, fallen meist aus dieser Menge heraus — statt Sie fünf Registerkarten neu aufbauen zu lassen, nur um sie zu erreichen, gibt Ihnen die Leiste eine sechste, die ganz Ihnen gehört und die bei einem Update niemals überschrieben wird.
 
 ### 👁️ Lese-, Fokus- und Gliederungswerkzeuge
 
@@ -121,7 +124,9 @@ Die Registerkarte **Angeheftet** macht die Leiste zu Ihrem eigenen Starter: Wäh
 
 ### 🎨 Keine Konfiguration, themenangepasst
 
-Festes, zurückhaltendes Layout, das im hellen wie im dunklen Modus das aktive Obsidian-Theme erbt. Das Einzige, was Sie selbst einrichten, ist die Registerkarte **Angeheftet**.
+Das integrierte Layout ist fest und erbt im hellen wie im dunklen Modus das aktive Obsidian-Theme — es wirkt direkt nach der Installation nativ und bleibt so. Das Einzige, was Sie selbst anordnen, ist Ihre Registerkarte **Angeheftet**.
+
+Das ist eine bewusste Entscheidung, kein fehlendes Feature. Eine Leiste, die Ihnen erlaubt, jede Schaltfläche neu zu bauen, muss zusätzlich einen Ziehen-und-Ablegen-Editor, einen Symbolbrowser, ein Import-/Exportformat und eine Einstellungsseite mitschleppen, die das alles aufnimmt — und genau aus diesem Räderwerk stammen die Fehler von Symbolleisten: Schaltflächen, die sich nicht umordnen lassen, Layouts, die ein Update zurücksetzt, Einstellungsbereiche, die hängen bleiben. Ein festes Layout hat davon nichts. Sie bekommen eine Leiste, die sofort funktioniert und weiter funktioniert, und der Ausweg für die Befehle, die wirklich Ihre sind, heißt **Angeheftet**.
 
 ---
 
@@ -248,7 +253,7 @@ Nein. Die Sortierung per Klick auf die Kopfzeile in der Leseansicht betrifft nur
 Ja — schalten Sie eine beliebige Position in den Einstellungen aus oder alle drei, um sie ganz zu verbergen (was dann noch funktioniert, steht in der Frage zur Tastatur weiter oben).
 
 **Ist es konfigurierbar?**
-Bewusst minimal: Das Layout ist fest und themenangepasst, damit es immer nativ wirkt. Die Registerkarte **Angeheftet** gehört Ihnen.
+Bewusst minimal — und genau das ist der Punkt. Das integrierte Layout ist fest und themenangepasst, damit es immer nativ wirkt, nie neu geordnet werden muss und sich bei einem Update nicht selbst zurücksetzt. Alles, was Sie tatsächlich ändern wollen, liegt an einem Ort: der Registerkarte **Angeheftet**, wo Sie einen beliebigen Befehl hinzufügen, sein Symbol wählen, ihn gruppieren und per Ziehen in die richtige Reihenfolge bringen. Die Begründung steht unter *Funktionen → Keine Konfiguration, themenangepasst*.
 
 ---
 

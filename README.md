@@ -53,6 +53,7 @@ Obsidian is fast **if** you already speak Markdown. For everyone else — studen
 - **Do what Markdown can't.** Underline, superscript, subscript, paragraph alignment, text/highlight colors and font family/size, written as clean inline HTML.
 - **Plain text forever.** No proprietary format, no database, no lock-in — your notes are still just `.md` files.
 - **Offline & private.** No network calls, no accounts, no telemetry. The ~2,140-entry emoji library ships inside the plugin.
+- **Your own launcher, if you want one.** The **Pinned** tab holds any command you pick — core, this plugin's, or another plugin's — so the toolbar bends to you without turning into a settings project.
 - **Keyboard-friendly too.** Switch every toolbar position off and the interface disappears completely — all 119 palette-registered commands stay available and can be bound to your own hotkeys.
 
 ## At a glance
@@ -65,7 +66,7 @@ Obsidian is fast **if** you already speak Markdown. For everyone else — studen
 | **Callouts** | All 12 Obsidian callout types in one drop-down |
 | **Emoji & symbols** | ~2,140 emoji, kaomoji and symbols, fully offline |
 | **Table editing** | Insert/delete/move rows & columns, align, sort, transpose, re-format, convert to text, paste as table, copy as CSV |
-| **Custom buttons** | Pin *any* command — core, this plugin's, or another plugin's |
+| **Custom buttons** | **Pinned** tab — pin *any* command (core, this plugin's, or another plugin's) with your own icons and groups |
 | **Setup required** | None. Theme-aware, zero configuration |
 | **Requires** | Obsidian **1.13.7+** |
 
@@ -101,7 +102,9 @@ Put the caret inside a table and the ribbon switches to the **Table** tab by its
 
 ### 📌 Pin any command — including other plugins' commands
 
-The **Pinned** tab turns the toolbar into your own launcher: pick any command from the command palette (Obsidian core, another community plugin, or this plugin), choose an icon, drag to reorder. If the source plugin is disabled, the button simply greys out — your pin is kept.
+**Pinned is the one part of the toolbar you arrange yourself.** It turns the toolbar into your own launcher: pick any command from the command palette (Obsidian core, another community plugin, or this plugin), choose an icon, give it a group, and drag to reorder. If the source plugin is disabled, the button simply greys out — your pin is kept.
+
+The five built-in tabs cover what most people use often. The one or two commands *you* can't live without usually fall outside that set — so rather than making you rebuild five tabs to reach them, the toolbar gives you a sixth one that is entirely yours, and never overwrites it on update.
 
 ### 👁️ Reading, focus and outlining tools
 
@@ -119,7 +122,9 @@ The **Pinned** tab turns the toolbar into your own launcher: pick any command fr
 
 ### 🎨 Zero configuration, theme-aware
 
-Fixed, opinionated layout that inherits your active Obsidian theme in light and dark mode. The only thing to arrange is your Pinned tab.
+The built-in layout is fixed and inherits your active Obsidian theme in light and dark mode, so it looks native on install and keeps looking that way. The one thing you arrange is your **Pinned** tab.
+
+That is a deliberate trade-off, not a missing feature. A toolbar that lets you rebuild every button also has to ship a drag-and-drop editor, an icon browser, an import/export format and a settings page to hold it all — and that machinery is where toolbar bugs actually come from: buttons that won't reorder, layouts reset by an update, settings panels that hang. A fixed layout has none of it. You get a toolbar that works immediately and keeps working, and the escape hatch for the commands that are genuinely yours is **Pinned**.
 
 ---
 
@@ -245,7 +250,7 @@ No. Reading-view header-click sorting is display-only and never modifies the not
 Yes — toggle any position off in settings, or all three to hide it entirely (see the keyboard question above for what still works).
 
 **Is it configurable?**
-Deliberately minimal: the layout is fixed and theme-aware so it always looks native. The Pinned tab is yours to arrange.
+Deliberately minimal — and that's the point. The built-in layout is fixed and theme-aware so it always looks native, never needs re-arranging, and never resets itself on update. Everything you'd actually want to change lives in one place: the **Pinned** tab, where you add any command, pick its icon, group it and drag it into order. The reasoning is in *Features → Zero configuration, theme-aware*.
 
 ---
 

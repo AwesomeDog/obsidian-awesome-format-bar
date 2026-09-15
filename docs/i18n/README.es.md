@@ -55,6 +55,7 @@ Obsidian es rápido **si** ya hablas Markdown. Para todos los demás ——estud
 - **Haz lo que Markdown no puede.** Subrayado, superíndice, subíndice, alineación de párrafo, colores de texto y de resaltado, fuente y tamaño de fuente, escritos como HTML en línea limpio.
 - **Texto plano para siempre.** Nada de formato propietario, ni base de datos, ni cautividad: tus notas siguen siendo simples archivos `.md`.
 - **Sin conexión y privado.** Sin llamadas de red, sin cuentas, sin telemetría. La biblioteca de unos 2.140 emoji viaja dentro del plugin.
+- **Tu propio lanzador, si lo quieres.** La pestaña **Anclado** guarda cualquier comando que elijas ——del núcleo, de este plugin o de otro——, así que la barra se adapta a ti sin convertirse en un proyecto de configuración.
 - **También para el teclado.** Desactiva las tres posiciones de la barra y la interfaz desaparece por completo: los 119 comandos registrados en la paleta siguen disponibles y puedes asignarles tus propios atajos.
 
 ## De un vistazo
@@ -67,7 +68,7 @@ Obsidian es rápido **si** ya hablas Markdown. Para todos los demás ——estud
 | **Recuadros**       | Los 12 tipos de recuadro de Obsidian en un solo desplegable               |
 | **Emoji y símbolos** | Unos 2.140 emoji, kaomoji y símbolos, totalmente sin conexión            |
 | **Edición de tablas** | Insertar / eliminar / mover filas y columnas, alinear, ordenar, transponer, reformatear, convertir en texto, pegar como tabla, copiar como CSV |
-| **Botones propios** | Ancla **cualquier** comando: del núcleo, de este plugin o de otro         |
+| **Botones propios** | Pestaña **Anclado** —— ancla **cualquier** comando（del núcleo, de este plugin o de otro）con tus propios iconos y grupos |
 | **Configuración**   | Ninguna. Se adapta al tema, listo para usar                               |
 | **Requiere**        | Obsidian **1.13.7 o superior**                                            |
 
@@ -103,7 +104,9 @@ Coloca el cursor dentro de una tabla y la cinta cambia por sí sola a la pestañ
 
 ### 📌 Ancla cualquier comando —— incluidos los de otros plugins
 
-La pestaña **Anclado** convierte la barra en tu propio lanzador: elige cualquier comando de la paleta de comandos（del núcleo de Obsidian, de otro plugin de la comunidad o de este）, escoge un icono y arrastra para reordenar. Si el plugin de origen está desactivado, el botón simplemente se atenúa; tu anclado se conserva.
+**Anclado es la única parte de la barra que organizas tú.** Convierte la barra en tu propio lanzador: elige cualquier comando de la paleta de comandos（del núcleo de Obsidian, de otro plugin de la comunidad o de este）, escoge un icono, asígnale un grupo y arrastra para reordenar. Si el plugin de origen está desactivado, el botón simplemente se atenúa; tu anclado se conserva.
+
+Las cinco pestañas integradas cubren lo que la mayoría de la gente usa a menudo. El comando ——o los dos comandos—— sin el que *tú* no puedes vivir suele quedar fuera de ese conjunto, así que, en vez de obligarte a reconstruir cinco pestañas para llegar a él, la barra te da una sexta que es enteramente tuya y que ninguna actualización sobrescribe.
 
 ### 👁️ Herramientas de lectura, enfoque y esquema
 
@@ -121,7 +124,9 @@ La pestaña **Anclado** convierte la barra en tu propio lanzador: elige cualquie
 
 ### 🎨 Configuración cero, se adapta al tema
 
-Distribución fija y cuidada que hereda tu tema activo de Obsidian en modo claro y oscuro. Lo único que tienes que organizar tú es la pestaña Anclado.
+La distribución integrada es fija y hereda tu tema activo de Obsidian en modo claro y oscuro, así que se ve nativa desde la instalación y sigue viéndose así. Lo único que organizas tú es tu pestaña **Anclado**.
+
+Es una compensación deliberada, no una función que falta. Una barra que te deja reconstruir cada botón tiene que arrastrar también un editor de arrastrar y soltar, un explorador de iconos, un formato de importación y exportación y una página de ajustes donde quepa todo eso ——y esa maquinaria es justo de donde salen los fallos de las barras de herramientas: botones que no se reordenan, distribuciones que una actualización reinicia, paneles de ajustes que se cuelgan——. Una distribución fija no tiene nada de eso. Obtienes una barra que funciona desde el primer momento y sigue funcionando, y la salida para los comandos que de verdad son tuyos es **Anclado**.
 
 ---
 
@@ -248,7 +253,7 @@ No. Ordenar al hacer clic en el encabezado en el modo de lectura es solo visual 
 Sí: desactiva cualquier posición en los ajustes, o las tres para ocultarla del todo（mira la pregunta del teclado para ver qué sigue funcionando）.
 
 **¿Es configurable?**
-Deliberadamente mínimo: la distribución es fija y se adapta al tema, así que siempre se ve nativa. La pestaña Anclado es tuya para organizarla.
+Deliberadamente mínimo ——y ahí está la gracia——. La distribución integrada es fija y se adapta al tema, así que siempre se ve nativa, nunca necesita que la reorganices y una actualización nunca la reinicia. Todo lo que de verdad querrías cambiar vive en un solo lugar: la pestaña **Anclado**, donde añades cualquier comando, eliges su icono, lo agrupas y lo arrastras hasta ponerlo en orden. El razonamiento está en *Funciones → Configuración cero, se adapta al tema*.
 
 ---
 

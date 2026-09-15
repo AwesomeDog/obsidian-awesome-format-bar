@@ -55,6 +55,7 @@ Obsidian est rapide **à condition** de déjà parler Markdown. Pour tous les au
 - **Faites ce que Markdown ne peut pas.** Souligné, exposant, indice, alignement des paragraphes, couleurs du texte et du surlignage, police et taille de police, écrits en HTML en ligne propre.
 - **Du texte brut pour toujours.** Pas de format propriétaire, pas de base de données, pas d'enfermement —— vos notes restent de simples fichiers `.md`.
 - **Hors ligne et privé.** Aucun appel réseau, aucun compte, aucune télémétrie. La bibliothèque d'environ 2 140 emoji est livrée dans le plugin.
+- **Votre propre lanceur, si vous en voulez un.** L'onglet **Épinglé** accueille n'importe quelle commande de votre choix —— du cœur d'Obsidian, de ce plugin ou d'un autre —— pour que la barre se plie à vous au lieu de devenir un projet de configuration.
 - **Aussi pensé pour le clavier.** Désactivez les trois positions de la barre et l'interface disparaît complètement —— les 119 commandes enregistrées dans la palette restent disponibles et peuvent être associées à vos propres raccourcis.
 
 ## En un coup d'œil
@@ -67,7 +68,7 @@ Obsidian est rapide **à condition** de déjà parler Markdown. Pour tous les au
 | **Encadrés**           | Les 12 types d'encadrés Obsidian dans une seule liste déroulante            |
 | **Emoji et symboles**  | Environ 2 140 emoji, kaomoji et symboles, entièrement hors ligne            |
 | **Édition de tableau** | Insérer / supprimer / déplacer lignes et colonnes, aligner, trier, transposer, remettre en forme, convertir en texte, coller en tant que tableau, copier en CSV |
-| **Boutons personnalisés** | Épinglez **n'importe quelle** commande —— du cœur, de ce plugin ou d'un autre plugin |
+| **Boutons personnalisés** | Onglet **Épinglé** —— épinglez *n'importe quelle* commande（du cœur, de ce plugin ou d'un autre）avec vos propres icônes et vos propres groupes |
 | **Configuration**      | Aucune. Suit le thème, prêt à l'emploi                                      |
 | **Requis**             | Obsidian **1.13.7 et plus**                                                |
 
@@ -103,7 +104,9 @@ Placez le curseur dans un tableau et le ruban bascule de lui-même sur l'onglet 
 
 ### 📌 Épinglez n'importe quelle commande —— y compris celles d'autres plugins
 
-L'onglet **Épinglé** transforme la barre en votre propre lanceur : choisissez n'importe quelle commande de la palette（cœur d'Obsidian, autre plugin communautaire, ou ce plugin）, choisissez une icône, glissez pour réorganiser. Si le plugin d'origine est désactivé, le bouton se contente de griser —— votre épingle est conservée.
+**Épinglé est la seule partie de la barre que vous organisez vous-même.** Il transforme la barre en votre propre lanceur : choisissez n'importe quelle commande de la palette（cœur d'Obsidian, autre plugin communautaire, ou ce plugin）, choisissez une icône, attribuez-lui un groupe, puis glissez pour réorganiser. Si le plugin d'origine est désactivé, le bouton se contente de griser —— votre épingle est conservée.
+
+Les cinq onglets intégrés couvrent ce dont la plupart des gens se servent souvent. Il y a toujours une ou deux commandes dont *vous* ne pouvez pas vous passer, et elles se trouvent généralement en dehors de cet ensemble —— alors, plutôt que de vous faire reconstruire cinq onglets pour les atteindre, la barre vous en offre un sixième, entièrement vôtre, qu'aucune mise à jour n'écrase jamais.
 
 ### 👁️ Outils de lecture, de concentration et de plan
 
@@ -121,7 +124,9 @@ L'onglet **Épinglé** transforme la barre en votre propre lanceur : choisissez 
 
 ### 🎨 Zéro configuration, sensible au thème
 
-Une disposition fixe et sobre qui hérite de votre thème Obsidian actif, en mode clair comme en mode sombre. La seule chose à organiser, c'est votre onglet Épinglé.
+La disposition intégrée est fixe et hérite de votre thème Obsidian actif, en mode clair comme en mode sombre : elle paraît donc native dès l'installation et le reste. La seule chose que vous organisez, c'est votre onglet **Épinglé**.
+
+C'est un compromis délibéré, pas une fonction manquante. Une barre qui vous laisse reconstruire chaque bouton doit aussi embarquer un éditeur glisser-déposer, un navigateur d'icônes, un format d'import/export et une page de paramètres pour loger tout cela —— et c'est précisément cette mécanique qui fait naître les bugs des barres d'outils : des boutons qui refusent de se réorganiser, des dispositions réinitialisées par une mise à jour, des panneaux de paramètres qui se figent. Une disposition fixe n'a rien de tout cela. Vous obtenez une barre qui fonctionne tout de suite et continue de fonctionner, et la porte de sortie pour les commandes qui vous appartiennent vraiment, c'est **Épinglé**.
 
 ---
 
@@ -248,7 +253,7 @@ Non. Le tri au clic sur l'en-tête en mode lecture est purement visuel et ne mod
 Oui —— désactivez n'importe quelle position dans les paramètres, ou les trois pour la masquer entièrement（voir la question sur le clavier ci-dessus pour ce qui reste utilisable）.
 
 **Est-ce configurable ?**
-Délibérément minimal : la disposition est fixe et suit le thème, pour paraître toujours native. L'onglet Épinglé, lui, vous appartient.
+Délibérément minimal —— et c'est justement le but. La disposition intégrée est fixe et suit le thème : elle paraît toujours native, n'a jamais besoin d'être réorganisée et ne se réinitialise jamais à la mise à jour. Tout ce que vous voudriez vraiment changer se trouve au même endroit : l'onglet **Épinglé**, où vous ajoutez n'importe quelle commande, choisissez son icône, la regroupez et la glissez à la place voulue. Le raisonnement est dans *Fonctionnalités → Zéro configuration, sensible au thème*.
 
 ---
 
