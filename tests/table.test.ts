@@ -7,6 +7,7 @@ import {
   formatAllTables,
   formatTable,
   insertColumnLeft,
+  isTableLine,
   insertColumnRight,
   insertRowAbove,
   insertRowBelow,
@@ -90,6 +91,22 @@ describe("formatTable", () => {
   it("does nothing outside a table", () => {
     const doc = "just text\nand|more^";
     expect(applyChanges(doc, formatTable(doc, 12, PADDED).changes)).toBe(doc);
+  });
+
+  it("ignores the size pipe of an embed below the table", () => {
+    // `![[a.png|100]]` held a pipe, so the scan swallowed it as a body row.
+    expect(
+      run("|a|b|\n|-|-|\n|c^|d|\n![[a.png|100]]", (doc, at) =>
+        formatTable(doc, at, PADDED),
+      ),
+    ).toBe(
+      [
+        "| a   | b   |",
+        "| --- | --- |",
+        "| c   | d   |",
+        "![[a.png|100]]",
+      ].join("\n"),
+    );
   });
 
   it("ignores pipes inside a fenced code block", () => {
@@ -655,5 +672,27 @@ describe("tableToText", () => {
     expect(applyChanges(table, tableToText(table, 0).changes)).toBe(
       "a\tb\nc\td",
     );
+  });
+});
+
+describe("isTableLine", () => {
+  it("rejects a line whose only pipe is an embed size", () => {
+    expect(isTableLine("![[Pasted image.png|100]]")).toBe(false);
+  });
+
+  it("rejects a line whose only pipe is a link alias", () => {
+    expect(isTableLine("[[Note|alias]]")).toBe(false);
+    expect(isTableLine("![[Note#^abc|alias]]")).toBe(false);
+  });
+
+  it("accepts a row whose pipes sit outside the link", () => {
+    expect(isTableLine("| a | ![[b.png|100]] |")).toBe(true);
+    expect(isTableLine("| a | [[b|alias]] |")).toBe(true);
+  });
+
+  it("accepts a plain row", () => {
+    expect(isTableLine("| a | b |")).toBe(true);
+    expect(isTableLine("a | b")).toBe(true);
+    expect(isTableLine("|-|-|")).toBe(true);
   });
 });

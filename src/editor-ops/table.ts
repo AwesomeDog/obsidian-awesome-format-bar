@@ -21,9 +21,12 @@ const DELIMITER = /^:?-+:?$/;
 /** Captured markers: a ``` block never closes on `~~~`; a miss reformats code. */
 const FENCE = /^\s*(`{3,}|~{3,}|\${2,})/;
 
+/** A size or an alias: a pipe inside `[[…]]` is not a cell edge. */
+const WIKI_LINK = /!?\[\[[^\]]*\]\]/g;
+
 /** A table row, but never a bare `---` rule. */
 export function isTableLine(line: string): boolean {
-  return line.trim().includes("|");
+  return line.replace(WIKI_LINK, "").trim().includes("|");
 }
 
 /** Pipes inside a fence are content, not cells. */
