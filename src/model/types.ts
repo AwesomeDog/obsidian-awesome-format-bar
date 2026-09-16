@@ -47,6 +47,7 @@ type CommandPopup =
   | "case"
   | "character-panel"
   | "callout"
+  | "image-size"
   | "table-delete"
   | "table-format"
   | "table-sort"
@@ -61,6 +62,8 @@ export interface CommandSpec {
   readonly requiresSelection?: boolean;
   /** Greyed out unless the caret is inside a GFM table. */
   readonly requiresTable?: boolean;
+  /** Greyed out unless the caret is on a line holding a picture. */
+  readonly requiresImage?: boolean;
   readonly popup?: CommandPopup;
   /** Drop-down buttons stay off the command palette: alone they do nothing. */
   readonly commandPalette?: false;

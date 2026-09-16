@@ -6,6 +6,11 @@ import {
   toggleParagraphAlignment,
 } from "../src/editor-ops/blocks";
 import { changeCase, convertCase } from "../src/editor-ops/case";
+import {
+  insertImageCaption,
+  isImageLine,
+  setImageSize,
+} from "../src/editor-ops/image";
 import { toggleInlinePair } from "../src/editor-ops/inline";
 import { Lines, blocksFor } from "../src/editor-ops/lines";
 import {
@@ -662,5 +667,99 @@ describe("formatDateTime", () => {
       "2026-09-01 04:41",
     );
     expect(formatDateTime(new Date(2026, 0, 9, 0, 5))).toBe("2026-01-09 00:05");
+  });
+});
+
+/** Wiki brackets are the test grammar's own markers, so no `parse` here. */
+function size(doc: string, caret: number, width: string | null): string {
+  return run(doc, setImageSize(doc, [{ from: caret, to: caret }], width));
+}
+
+function caption(
+  doc: string,
+  caret: number,
+): { text: string; select: Range | undefined } {
+  const plan = insertImageCaption(doc, [{ from: caret, to: caret }], "Caption");
+  return { text: run(doc, plan), select: plan.select };
+}
+
+describe("isImageLine", () => {
+  it("tells a picture from every other embed", () => {
+    expect(isImageLine("![[a.png]]")).toBe(true);
+    expect(isImageLine("![[folder/a.jpeg|300]]")).toBe(true);
+    expect(isImageLine("text ![alt](https://x/y) more")).toBe(true);
+    expect(isImageLine("![[note]]")).toBe(false);
+    expect(isImageLine("![[doc.pdf]]")).toBe(false);
+    expect(isImageLine("![[clip.mp3]]")).toBe(false);
+  });
+});
+
+describe("setImageSize", () => {
+  it("sets and clears a wiki embed's width", () => {
+    expect(size("![[a.png]]", 0, "300")).toBe("![[a.png|300]]");
+    expect(size("![[a.png|300]]", 0, "400")).toBe("![[a.png|400]]");
+    expect(size("![[a.png|300]]", 0, null)).toBe("![[a.png]]");
+  });
+
+  it("sets a Markdown image's width", () => {
+    expect(size("![alt](https://x/y.png)", 0, "200")).toBe(
+      "![alt](https://x/y.png|200)",
+    );
+    expect(size("![alt](https://x/y.png|200)", 0, null)).toBe(
+      "![alt](https://x/y.png)",
+    );
+  });
+
+  it("escapes the pipe inside a table cell", () => {
+    expect(size("|![[a.png]]|b|", 1, "300")).toBe("|![[a.png\\|300]]|b|");
+  });
+
+  it("leaves an alias, a note and a titled link alone", () => {
+    expect(size("![[a.png|图 1]]", 0, "300")).toBe("![[a.png|图 1]]");
+    expect(size("![[note]]", 0, "300")).toBe("![[note]]");
+    expect(size('![alt](url "title")', 0, "300")).toBe('![alt](url "title")');
+  });
+});
+
+describe("insertImageCaption", () => {
+  it("writes a selected caption under the picture", () => {
+    expect(caption("![[a.png]]", 0)).toEqual({
+      text: "![[a.png]]\n*Caption*",
+      select: { from: 12, to: 19 },
+    });
+  });
+
+  it("keeps the blank line after a trailing picture", () => {
+    expect(caption("![[a.png]]\n", 0)).toEqual({
+      text: "![[a.png]]\n*Caption*\n",
+      select: { from: 12, to: 19 },
+    });
+  });
+
+  it("selects a caption that is already there", () => {
+    expect(caption("![[a.png]]\n*Old*", 0)).toEqual({
+      text: "![[a.png]]\n*Old*",
+      select: { from: 12, to: 15 },
+    });
+  });
+
+  it("pushes a following line down instead of overwriting it", () => {
+    expect(caption("![[a.png]]\ntext", 0)).toEqual({
+      text: "![[a.png]]\n*Caption*\ntext",
+      select: { from: 12, to: 19 },
+    });
+  });
+
+  it("stays inside the div a centred picture is wrapped in", () => {
+    expect(
+      caption('<div style="text-align: center">\n![[a.png]]\n</div>', 33),
+    ).toEqual({
+      text: '<div style="text-align: center">\n![[a.png]]\n*Caption*\n</div>',
+      select: { from: 45, to: 52 },
+    });
+  });
+
+  it("does nothing off a picture", () => {
+    expect(caption("text", 0)).toEqual({ text: "text", select: undefined });
   });
 });

@@ -1,6 +1,7 @@
 import { MarkdownView, Notice, type App, type Editor } from "obsidian";
 import { t } from "../i18n/i18n";
 import type { CommandSpec } from "../model/types";
+import { isImageLine } from "../editor-ops/image";
 import { isTableLine } from "../editor-ops/table";
 import type { TableFormat } from "../editor-ops/table";
 import { clearOwnedInlineHtml } from "../editor-ops/spans";
@@ -23,6 +24,7 @@ interface RunConditions {
   readonly hasEditor: boolean;
   readonly hasSelection: boolean;
   readonly inTable: boolean;
+  readonly inImage: boolean;
 }
 
 export function runConditions(app: App, editor: Editor | null): RunConditions {
@@ -33,6 +35,8 @@ export function runConditions(app: App, editor: Editor | null): RunConditions {
     // One line, not the document: enough to grey buttons out.
     inTable:
       editor !== null && isTableLine(editor.getLine(editor.getCursor().line)),
+    inImage:
+      editor !== null && isImageLine(editor.getLine(editor.getCursor().line)),
   };
 }
 
@@ -46,6 +50,7 @@ export function canRun(spec: CommandSpec, conditions: RunConditions): boolean {
   if (!conditions.hasEditor) return false;
   if (spec.requiresSelection && !conditions.hasSelection) return false;
   if (spec.requiresTable && !conditions.inTable) return false;
+  if (spec.requiresImage && !conditions.inImage) return false;
   return true;
 }
 

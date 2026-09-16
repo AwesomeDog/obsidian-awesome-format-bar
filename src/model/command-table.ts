@@ -432,6 +432,70 @@ export const COMMANDS = [
     registeredCommandId: "editor:toggle-comments",
   },
 
+  // Insert · Picture
+  {
+    id: "image-size",
+    name: "Image Size",
+    icon: "a-large-small",
+    kind: "editor",
+    popup: "image-size",
+    requiresImage: true,
+    commandPalette: false,
+  },
+  // Drop-down items: the widths Word offers, plus a way back to the file's own
+  // size. Obsidian scales on width alone, so no `WxH` variants.
+  {
+    id: "image-size-100",
+    name: "100 px",
+    icon: "a-large-small",
+    kind: "editor",
+    requiresImage: true,
+  },
+  {
+    id: "image-size-200",
+    name: "200 px",
+    icon: "a-large-small",
+    kind: "editor",
+    requiresImage: true,
+  },
+  {
+    id: "image-size-300",
+    name: "300 px",
+    icon: "a-large-small",
+    kind: "editor",
+    requiresImage: true,
+  },
+  {
+    id: "image-size-400",
+    name: "400 px",
+    icon: "a-large-small",
+    kind: "editor",
+    requiresImage: true,
+  },
+  {
+    id: "image-size-600",
+    name: "600 px",
+    icon: "a-large-small",
+    kind: "editor",
+    requiresImage: true,
+  },
+  {
+    id: "image-size-original",
+    name: "Original Size",
+    icon: "a-large-small",
+    kind: "editor",
+    requiresImage: true,
+  },
+  // The caption goes on the line below the picture; centring the picture is
+  // `align-center`, which already wraps the block it sits on.
+  {
+    id: "image-caption",
+    name: "Caption",
+    icon: "type",
+    kind: "editor",
+    requiresImage: true,
+  },
+
   // Insert · Media & Symbols
   {
     id: "attach-file",
@@ -885,6 +949,14 @@ export const DROPDOWN_ITEMS: Readonly<Record<string, readonly CommandId[]>> = {
     "callout-bug",
     "callout-example",
     "callout-quote",
+  ],
+  "image-size": [
+    "image-size-100",
+    "image-size-200",
+    "image-size-300",
+    "image-size-400",
+    "image-size-600",
+    "image-size-original",
   ],
   "table-delete": ["table-delete-rows", "table-delete-columns"],
   "table-format": ["table-format-table", "table-format-all-tables"],

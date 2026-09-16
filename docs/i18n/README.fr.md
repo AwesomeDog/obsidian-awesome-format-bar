@@ -56,14 +56,14 @@ Obsidian est rapide **à condition** de déjà parler Markdown. Pour tous les au
 - **Du texte brut pour toujours.** Pas de format propriétaire, pas de base de données, pas d'enfermement —— vos notes restent de simples fichiers `.md`.
 - **Hors ligne et privé.** Aucun appel réseau, aucun compte, aucune télémétrie. La bibliothèque d'environ 2 140 emoji est livrée dans le plugin.
 - **Votre propre lanceur, si vous en voulez un.** L'onglet **Épinglé** accueille n'importe quelle commande de votre choix —— du cœur d'Obsidian, de ce plugin ou d'un autre —— pour que la barre se plie à vous au lieu de devenir un projet de configuration.
-- **Aussi pensé pour le clavier.** Désactivez les trois positions de la barre et l'interface disparaît complètement —— les 119 commandes enregistrées dans la palette restent disponibles et peuvent être associées à vos propres raccourcis.
+- **Aussi pensé pour le clavier.** Désactivez les trois positions de la barre et l'interface disparaît complètement —— les 126 commandes enregistrées dans la palette restent disponibles et peuvent être associées à vos propres raccourcis.
 
 ## En un coup d'œil
 
 |                        |                                                                          |
 | ---------------------- | ------------------------------------------------------------------------ |
 | **Positions**          | Ruban en haut, barre flottante au-dessus de la sélection, barre en bas —— à combiner librement |
-| **Commandes**          | **130** intégrées, dont **119** dans la palette de commandes pour des raccourcis personnalisés |
+| **Commandes**          | **138** intégrées, dont **126** dans la palette de commandes pour des raccourcis personnalisés |
 | **Onglets**            | Accueil · Insertion · Affichage · Tableau · Utilitaires · **Épinglé**      |
 | **Encadrés**           | Les 12 types d'encadrés Obsidian dans une seule liste déroulante            |
 | **Emoji et symboles**  | Environ 2 140 emoji, kaomoji et symboles, entièrement hors ligne            |
@@ -84,9 +84,11 @@ Obsidian est rapide **à condition** de déjà parler Markdown. Pour tous les au
 
 Chaque position s'active indépendamment : vous pouvez n'utiliser que la barre flottante, que le ruban, ou les trois.
 
-### 🅰️ 130 commandes de mise en forme dans une disposition familière
+### 🅰️ 138 commandes de mise en forme dans une disposition familière
 
 Gras, Italique, Souligné, Barré, Code en ligne, Formule en ligne, Surligner（avec couleur）, Couleur de police, **Police**, **Taille de police**, Effacer la mise en forme, Modifier la casse, Titre 1 à 6, listes à puces / numérotées / de tâches, Citation, retraits, Ligne horizontale, Annuler / Rétablir, Rechercher et remplacer, alignement des paragraphes —— regroupés exactement là où un utilisateur de Word les attend.
+
+Les images ont leur propre groupe sur **Insertion** : **Taille de l’image ▼** définit une largeur de 100 à 600 px —— ou rétablit la taille propre du fichier —— et **Légende** écrit une ligne de légende sous l'image et la sélectionne, prête à accueillir votre texte.
 
 ### 💬 Sélecteur d'encadrés —— les 12 types d'encadrés Obsidian
 
@@ -132,7 +134,7 @@ C'est un compromis délibéré, pas une fonction manquante. Une barre qui vous l
 
 ## Liste complète des commandes
 
-119 des 130 commandes sont enregistrées dans la **palette de commandes**, vous pouvez donc leur attribuer vos propres raccourcis clavier.（Les conteneurs déroulants et le panneau Emoji et symboles n'existent que dans la barre d'outils.）
+126 des 138 commandes sont enregistrées dans la **palette de commandes**, vous pouvez donc leur attribuer vos propres raccourcis clavier.（Les conteneurs déroulants et le panneau Emoji et symboles n'existent que dans la barre d'outils.）
 
 ### Accueil
 
@@ -144,7 +146,7 @@ C'est un compromis délibéré, pas une fonction manquante. Une barre qui vous l
 
 ### Insertion
 
-Lien interne, Lien externe, Incorporer, Étiquette, Référence de bloc, **Encadré ▼**（Note, Résumé, Info, Astuce, Succès, Question, Avertissement, Échec, Danger, Bogue, Exemple, Citation）, Bloc de code, Bloc de formule, Tableau, Convertir le texte en tableau, Commentaire, Joindre un fichier, **Emoji et symboles**, Date et heure, **Table des matières**, Note de bas de page.
+Lien interne, Lien externe, Incorporer, Étiquette, Référence de bloc, **Encadré ▼**（Note, Résumé, Info, Astuce, Succès, Question, Avertissement, Échec, Danger, Bogue, Exemple, Citation）, Bloc de code, Bloc de formule, Tableau, Convertir le texte en tableau, Commentaire, **Taille de l’image ▼** (100 px, 200 px, 300 px, 400 px, 600 px, Taille d’origine), Légende, Joindre un fichier, **Emoji et symboles**, Date et heure, **Table des matières**, Note de bas de page.
 
 ### Affichage
 
@@ -201,7 +203,7 @@ Téléchargez `main.js`、`manifest.json` et `styles.css` depuis une version pub
 2. Le **ruban（Haut）** comporte six onglets ; le dernier, **Épinglé**, contient les commandes que vous épinglez vous-même. Tant qu'il est vide, il affiche un rappel renvoyant vers les paramètres.
 3. Les **barres compactes**（Flottante / Bas）n'emportent qu'un sous-ensemble fixe de commandes ; ce qui ne tient pas se replie dans le menu `⋯`.
 4. Épinglez des commandes sous **Paramètres → Épinglé** : ajouter（choisir une commande, puis une icône）, changer l'icône, glisser pour réorganiser, ou supprimer. Les commandes épinglées se comportent exactement comme leurs équivalents de la palette.
-5. Vous préférez le clavier ? Désactivez **les trois positions** et la barre disparaît entièrement de l'interface —— le plugin n'ajoute alors plus rien à votre écran, tandis que les **119 commandes enregistrées dans la palette** continuent de fonctionner et peuvent être associées à vos propres raccourcis dans **Paramètres → Raccourcis**. Autrement dit : vous pouvez l'utiliser comme un simple lot de commandes et de raccourcis, sans jamais cliquer sur un bouton.
+5. Vous préférez le clavier ? Désactivez **les trois positions** et la barre disparaît entièrement de l'interface —— le plugin n'ajoute alors plus rien à votre écran, tandis que les **126 commandes enregistrées dans la palette** continuent de fonctionner et peuvent être associées à vos propres raccourcis dans **Paramètres → Raccourcis**. Autrement dit : vous pouvez l'utiliser comme un simple lot de commandes et de raccourcis, sans jamais cliquer sur un bouton.
 
 ## Paramètres
 
@@ -232,10 +234,10 @@ Non. Gras, titres, listes, liens, tableaux, encadrés, blocs de code et formules
 Du Markdown standard et du Markdown saveur Obsidian. Ce n'est que là où le Markdown n'a pas de syntaxe —— souligné, exposant, indice, alignement des paragraphes, couleurs du texte et du surlignage, police et taille de police —— que le plugin émet quelques balises HTML en ligne standard, qu'Obsidian affiche nativement.
 
 **Puis-je continuer à utiliser mes raccourcis clavier ?**
-Oui. 119 des 130 commandes apparaissent dans la palette de commandes et peuvent être associées à n'importe quel raccourci.
+Oui. 126 des 138 commandes apparaissent dans la palette de commandes et peuvent être associées à n'importe quel raccourci.
 
 **Je suis un adepte du clavier —— puis-je masquer complètement la barre d'outils ?**
-Oui, et vous ne perdez rien à le faire. Désactivez les trois positions（**Haut / Flottante / Bas**）dans **Paramètres → Awesome Format Bar** et le plugin ne laisse aucune trace à l'écran : ni ruban, ni barre flottante, ni barre en bas. Les **119 commandes enregistrées dans la palette** fonctionnent toutes encore, depuis la palette de commandes ou depuis un raccourci que vous attribuez dans **Paramètres → Raccourcis** —— y compris des commandes pour lesquelles Obsidian n'a aucun raccourci intégré, comme la Couleur de police, la Couleur de surlignage, Modifier la casse, les Encadrés, Trier les lignes et les utilitaires de lignes. Voyez-y une couche clavier facultative, à activer dès que la souris commence à sembler lente.
+Oui, et vous ne perdez rien à le faire. Désactivez les trois positions（**Haut / Flottante / Bas**）dans **Paramètres → Awesome Format Bar** et le plugin ne laisse aucune trace à l'écran : ni ruban, ni barre flottante, ni barre en bas. Les **126 commandes enregistrées dans la palette** fonctionnent toutes encore, depuis la palette de commandes ou depuis un raccourci que vous attribuez dans **Paramètres → Raccourcis** —— y compris des commandes pour lesquelles Obsidian n'a aucun raccourci intégré, comme la Couleur de police, la Couleur de surlignage, Modifier la casse, les Encadrés, Trier les lignes et les utilitaires de lignes. Voyez-y une couche clavier facultative, à activer dès que la souris commence à sembler lente.
 
 **Puis-je ajouter des boutons pour les commandes d'autres plugins ?**
 Oui —— c'est l'onglet **Épinglé**. Épinglez n'importe quelle commande de la palette et choisissez une icône. Si le plugin propriétaire est désactivé, le bouton se grise et l'épingle est conservée.
@@ -248,6 +250,9 @@ Non. Aucune fonction d'IA, aucune clé d'API, aucune requête réseau, aucune an
 
 **Trier un tableau en mode lecture modifie-t-il mon fichier ?**
 Non. Le tri au clic sur l'en-tête en mode lecture est purement visuel et ne modifie jamais la note.
+
+**Comment centrer une image, ou modifier sa taille ?**
+Placez le curseur sur la ligne de l'image elle-même. **Centrer** (Accueil · Paragraphe) s'en charge —— une image seule sur une ligne *est* un paragraphe, aucune commande distincte n'est donc nécessaire —— et **Taille de l’image ▼** (Insertion · Image) définit sa largeur de 100 à 600 px, ou **Taille d’origine** pour lui rendre la taille propre du fichier. **Légende** écrit une ligne de légende en dessous et la sélectionne, prête à accueillir votre texte. Tout est écrit en syntaxe Obsidian ordinaire (un segment `|300` après le nom du fichier) : la note se lit donc de la même façon sans le plugin.
 
 **Puis-je masquer la barre d'outils quand je veux un écran épuré ?**
 Oui —— désactivez n'importe quelle position dans les paramètres, ou les trois pour la masquer entièrement（voir la question sur le clavier ci-dessus pour ce qui reste utilisable）.

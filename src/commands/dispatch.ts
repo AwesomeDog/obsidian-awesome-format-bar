@@ -15,6 +15,7 @@ import {
   type ParagraphAlignment,
 } from "../editor-ops/blocks";
 import { changeCase, type CaseMode } from "../editor-ops/case";
+import { insertImageCaption, setImageSize } from "../editor-ops/image";
 import { toggleInlinePair } from "../editor-ops/inline";
 import {
   duplicate,
@@ -269,6 +270,16 @@ const CALLOUT_TYPES: Readonly<Record<string, string>> = {
   "callout-quote": "quote",
 };
 
+/** The widths Word offers; `null` clears the size back to the file's own. */
+const IMAGE_WIDTHS: Readonly<Record<string, string | null>> = {
+  "image-size-100": "100",
+  "image-size-200": "200",
+  "image-size-300": "300",
+  "image-size-400": "400",
+  "image-size-600": "600",
+  "image-size-original": null,
+};
+
 /** The local half of the command table; registered commands forward instead. */
 export function planFor(context: CommandContext, id: string): Plan | null {
   const { editor, format, optionValue } = context;
@@ -285,6 +296,9 @@ export function planFor(context: CommandContext, id: string): Plan | null {
 
   const callout = CALLOUT_TYPES[id];
   if (callout) return insertCallout(doc, ranges, callout);
+
+  const width = IMAGE_WIDTHS[id];
+  if (width !== undefined) return setImageSize(doc, ranges, width);
 
   switch (id) {
     case "renumber-list":
@@ -329,6 +343,8 @@ export function planFor(context: CommandContext, id: string): Plan | null {
       );
     case "date-time":
       return insertText(doc, ranges, formatDateTime(new Date()));
+    case "image-caption":
+      return insertImageCaption(doc, ranges, t("Caption"));
     case "toc": {
       const plan = tableOfContents(doc, ranges, t("Table of Contents"));
       if (plan.changes.length === 0)

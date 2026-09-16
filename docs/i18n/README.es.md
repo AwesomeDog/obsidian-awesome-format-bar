@@ -56,14 +56,14 @@ Obsidian es rápido **si** ya hablas Markdown. Para todos los demás ——estud
 - **Texto plano para siempre.** Nada de formato propietario, ni base de datos, ni cautividad: tus notas siguen siendo simples archivos `.md`.
 - **Sin conexión y privado.** Sin llamadas de red, sin cuentas, sin telemetría. La biblioteca de unos 2.140 emoji viaja dentro del plugin.
 - **Tu propio lanzador, si lo quieres.** La pestaña **Anclado** guarda cualquier comando que elijas ——del núcleo, de este plugin o de otro——, así que la barra se adapta a ti sin convertirse en un proyecto de configuración.
-- **También para el teclado.** Desactiva las tres posiciones de la barra y la interfaz desaparece por completo: los 119 comandos registrados en la paleta siguen disponibles y puedes asignarles tus propios atajos.
+- **También para el teclado.** Desactiva las tres posiciones de la barra y la interfaz desaparece por completo: los 126 comandos registrados en la paleta siguen disponibles y puedes asignarles tus propios atajos.
 
 ## De un vistazo
 
 |                     |                                                                          |
 | ------------------- | ------------------------------------------------------------------------ |
 | **Posiciones**      | Cinta superior, barra flotante sobre la selección, barra inferior fija —— combinables libremente |
-| **Comandos**        | **130** integrados, **119** disponibles en la paleta de comandos para atajos propios |
+| **Comandos**        | **138** integrados, **126** disponibles en la paleta de comandos para atajos propios |
 | **Pestañas**        | Inicio · Insertar · Vista · Tabla · Utilidades · **Anclado**               |
 | **Recuadros**       | Los 12 tipos de recuadro de Obsidian en un solo desplegable               |
 | **Emoji y símbolos** | Unos 2.140 emoji, kaomoji y símbolos, totalmente sin conexión            |
@@ -84,9 +84,11 @@ Obsidian es rápido **si** ya hablas Markdown. Para todos los demás ——estud
 
 Cada posición se activa de forma independiente, así que puedes usar solo la barra flotante, solo la cinta o las tres a la vez.
 
-### 🅰️ 130 comandos de formato en una distribución conocida
+### 🅰️ 138 comandos de formato en una distribución conocida
 
 Negrita, cursiva, subrayado, tachado, código en línea, fórmula en línea, resaltar（con color）, color de fuente, **fuente**, **tamaño de fuente**, borrar formato, cambiar mayúsculas y minúsculas, títulos 1–6, viñetas / numeración / lista de tareas, cita, sangría, línea horizontal, deshacer / rehacer, buscar y reemplazar, alineación de párrafo —— agrupados exactamente donde un usuario de Word los espera.
+
+Las imágenes tienen su propio grupo en **Insertar**: **Tamaño de imagen ▼** fija un ancho de 100–600 px ——o devuelve el tamaño propio del archivo——, y **Título** escribe una línea de título debajo de la imagen y la selecciona, lista para escribir encima.
 
 ### 💬 Selector de recuadros —— los 12 tipos de Obsidian
 
@@ -132,7 +134,7 @@ Es una compensación deliberada, no una función que falta. Una barra que te dej
 
 ## Referencia completa de comandos
 
-119 de los 130 comandos están registrados en la **paleta de comandos**, así que puedes asignarles tus propios atajos de teclado. （Los contenedores desplegables y el panel de emoji y símbolos solo existen en la barra.）
+126 de los 138 comandos están registrados en la **paleta de comandos**, así que puedes asignarles tus propios atajos de teclado. （Los contenedores desplegables y el panel de emoji y símbolos solo existen en la barra.）
 
 ### Inicio
 
@@ -144,7 +146,7 @@ Es una compensación deliberada, no una función que falta. Una barra que te dej
 
 ### Insertar
 
-Vínculo interno, Vínculo externo, Incrustar, Etiqueta, Referencia de bloque, **Recuadro ▼**（Nota, Resumen, Información, Sugerencia, Éxito, Pregunta, Advertencia, Fallo, Peligro, Error, Ejemplo, Cita）, Bloque de código, Bloque de fórmula, Tabla, Convertir texto en tabla, Comentario, Adjuntar archivo, **Emoji y símbolos**, Fecha y hora, **Índice**, Nota al pie.
+Vínculo interno, Vínculo externo, Incrustar, Etiqueta, Referencia de bloque, **Recuadro ▼**（Nota, Resumen, Información, Sugerencia, Éxito, Pregunta, Advertencia, Fallo, Peligro, Error, Ejemplo, Cita）, Bloque de código, Bloque de fórmula, Tabla, Convertir texto en tabla, Comentario, **Tamaño de imagen ▼**（100 px, 200 px, 300 px, 400 px, 600 px, Tamaño original）, Título, Adjuntar archivo, **Emoji y símbolos**, Fecha y hora, **Índice**, Nota al pie.
 
 ### Vista
 
@@ -201,7 +203,7 @@ Descarga `main.js`, `manifest.json` y `styles.css` de una versión publicada y c
 2. La **cinta（Superior）** tiene seis pestañas; la última, **Anclado**, guarda los comandos que ancles tú. Mientras está vacía muestra un aviso que te devuelve a Configuración.
 3. Las **barras compactas**（Flotante / Inferior）llevan un subconjunto fijo de comandos; lo que no cabe se recoge en el menú de desbordamiento `⋯`.
 4. Ancla comandos en **Configuración → Anclado**: agregar（elige un comando y luego un icono）, cambiar el icono, arrastrar para reordenar o eliminar. Los comandos anclados se comportan exactamente igual que en la paleta de comandos.
-5. ¿Prefieres el teclado? Desactiva **los tres interruptores de posición** y la barra desaparece por completo de la interfaz ——el plugin no añade nada a tu pantalla——, mientras los **119 comandos registrados en la paleta** siguen funcionando y puedes asignarles tus propios atajos en **Configuración → Atajos de teclado**. Dicho de otro modo: puedes usarlo como un paquete puro de comandos y atajos sin pulsar un solo botón.
+5. ¿Prefieres el teclado? Desactiva **los tres interruptores de posición** y la barra desaparece por completo de la interfaz ——el plugin no añade nada a tu pantalla——, mientras los **126 comandos registrados en la paleta** siguen funcionando y puedes asignarles tus propios atajos en **Configuración → Atajos de teclado**. Dicho de otro modo: puedes usarlo como un paquete puro de comandos y atajos sin pulsar un solo botón.
 
 ## Ajustes
 
@@ -232,10 +234,10 @@ No. Negrita, títulos, listas, vínculos, tablas, recuadros, bloques de código 
 Markdown estándar y Markdown con sabor a Obsidian. Solo donde Markdown no tiene sintaxis ——subrayado, superíndice, subíndice, alineación de párrafo, colores de texto y de resaltado, fuente y tamaño de fuente—— el plugin emite pequeñas etiquetas HTML en línea estándar, que Obsidian renderiza de forma nativa.
 
 **¿Puedo seguir usando mis atajos de teclado?**
-Sí. 119 de los 130 comandos aparecen en la paleta de comandos y se pueden asociar a cualquier atajo.
+Sí. 126 de los 138 comandos aparecen en la paleta de comandos y se pueden asociar a cualquier atajo.
 
 **Soy de teclado ——¿puedo ocultar la barra por completo?**
-Sí, y no pierdes nada por hacerlo. Desactiva las tres posiciones（**Superior / Flotante / Inferior**）en **Configuración → Awesome Format Bar** y el plugin no deja rastro en la pantalla: ni cinta, ni barra flotante, ni barra inferior. Los **119 comandos registrados en la paleta** siguen funcionando todos, desde la paleta de comandos o desde un atajo que asignes en **Configuración → Atajos de teclado** ——incluidos comandos para los que Obsidian no tiene atajo propio, como el color de fuente, el color de resaltado, cambiar mayúsculas y minúsculas, los recuadros, ordenar tablas y las utilidades de líneas——. Piénsalo como una capa opcional solo de teclado que puedes activar cuando el ratón empiece a sentirse lento.
+Sí, y no pierdes nada por hacerlo. Desactiva las tres posiciones（**Superior / Flotante / Inferior**）en **Configuración → Awesome Format Bar** y el plugin no deja rastro en la pantalla: ni cinta, ni barra flotante, ni barra inferior. Los **126 comandos registrados en la paleta** siguen funcionando todos, desde la paleta de comandos o desde un atajo que asignes en **Configuración → Atajos de teclado** ——incluidos comandos para los que Obsidian no tiene atajo propio, como el color de fuente, el color de resaltado, cambiar mayúsculas y minúsculas, los recuadros, ordenar tablas y las utilidades de líneas——. Piénsalo como una capa opcional solo de teclado que puedes activar cuando el ratón empiece a sentirse lento.
 
 **¿Puedo añadir botones para comandos de otros plugins?**
 Sí ——para eso está la pestaña **Anclado**——. Ancla cualquier comando de la paleta y elige un icono. Si el plugin propietario está desactivado, el botón se atenúa y el anclado se conserva.
@@ -248,6 +250,9 @@ No. No hay ninguna función de IA, ni clave de API, ni petición de red, ni anal
 
 **¿Ordenar una tabla en el modo de lectura modifica mi archivo?**
 No. Ordenar al hacer clic en el encabezado en el modo de lectura es solo visual y nunca modifica la nota.
+
+**¿Cómo centro una imagen o cambio su tamaño?**
+Coloca el cursor en la propia línea de la imagen. **Centrar**（Inicio · Párrafo）la centra ——una imagen sola en una línea *es* un párrafo, así que no hace falta ningún comando aparte——, y **Tamaño de imagen ▼**（Insertar · Imagen）fija su ancho en 100–600 px, o **Tamaño original** para devolverle el tamaño propio del archivo. **Título** escribe una línea de título debajo y la selecciona, lista para escribir encima. Todo se escribe con la sintaxis propia de Obsidian（un segmento `|300` después del nombre del archivo）, así que la nota se lee igual sin el plugin.
 
 **¿Puedo ocultar la barra cuando quiera una pantalla limpia?**
 Sí: desactiva cualquier posición en los ajustes, o las tres para ocultarla del todo（mira la pregunta del teclado para ver qué sigue funcionando）.

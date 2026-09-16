@@ -54,14 +54,14 @@ Obsidian is fast **if** you already speak Markdown. For everyone else — studen
 - **Plain text forever.** No proprietary format, no database, no lock-in — your notes are still just `.md` files.
 - **Offline & private.** No network calls, no accounts, no telemetry. The ~2,140-entry emoji library ships inside the plugin.
 - **Your own launcher, if you want one.** The **Pinned** tab holds any command you pick — core, this plugin's, or another plugin's — so the toolbar bends to you without turning into a settings project.
-- **Keyboard-friendly too.** Switch every toolbar position off and the interface disappears completely — all 119 palette-registered commands stay available and can be bound to your own hotkeys.
+- **Keyboard-friendly too.** Switch every toolbar position off and the interface disappears completely — all 126 palette-registered commands stay available and can be bound to your own hotkeys.
 
 ## At a glance
 
 | | |
 | --- | --- |
 | **Toolbar positions** | Top ribbon, floating bar above the selection, fixed bottom bar — combine freely |
-| **Commands** | **130** built-in, **119** available in the command palette for custom hotkeys |
+| **Commands** | **138** built-in, **126** available in the command palette for custom hotkeys |
 | **Tabs** | Home · Insert · View · Table · Utilities · **Pinned** |
 | **Callouts** | All 12 Obsidian callout types in one drop-down |
 | **Emoji & symbols** | ~2,140 emoji, kaomoji and symbols, fully offline |
@@ -82,9 +82,11 @@ Obsidian is fast **if** you already speak Markdown. For everyone else — studen
 
 Each position is toggled independently, so you can run just the floating bar, just the ribbon, or all three.
 
-### 🅰️ 130 formatting commands in a familiar layout
+### 🅰️ 138 formatting commands in a familiar layout
 
 Bold, italic, underline, strikethrough, inline code, inline math, highlight (with color), font color, **font family**, **font size**, clear formatting, change case, headings 1–6, bullet / numbered / task lists, quotes, indentation, horizontal rules, undo/redo, find & replace, paragraph alignment — grouped exactly where a Word user expects them.
+
+Pictures get their own group on **Insert**: **Image Size ▼** sets a width of 100–600 px — or restores the file's own size — and **Caption** writes a caption line under the picture and selects it, ready to type over.
 
 ### 💬 Callout picker — all 12 Obsidian callout types
 
@@ -130,7 +132,7 @@ That is a deliberate trade-off, not a missing feature. A toolbar that lets you r
 
 ## Full command reference
 
-119 of the 130 commands are registered in the **command palette**, so you can assign your own keyboard shortcuts. (Drop-down containers and the Emoji & Symbols panel are toolbar-only.)
+126 of the 138 commands are registered in the **command palette**, so you can assign your own keyboard shortcuts. (Drop-down containers and the Emoji & Symbols panel are toolbar-only.)
 
 ### Home
 
@@ -142,7 +144,7 @@ That is a deliberate trade-off, not a missing feature. A toolbar that lets you r
 
 ### Insert
 
-Internal Link, External Link, Embed, Tag, Block Reference, **Callout ▼** (Note, Abstract, Info, Tip, Success, Question, Warning, Failure, Danger, Bug, Example, Quote), Code Block, Math Block, Table, Convert Text to Table, Comment, Attach File, **Emoji & Symbols**, Date and Time, **Table of Contents**, Footnote.
+Internal Link, External Link, Embed, Tag, Block Reference, **Callout ▼** (Note, Abstract, Info, Tip, Success, Question, Warning, Failure, Danger, Bug, Example, Quote), Code Block, Math Block, Table, Convert Text to Table, Comment, **Image Size ▼** (100 px, 200 px, 300 px, 400 px, 600 px, Original Size), Caption, Attach File, **Emoji & Symbols**, Date and Time, **Table of Contents**, Footnote.
 
 ### View
 
@@ -229,10 +231,10 @@ No. Bold, headings, lists, links, tables, callouts, code blocks and math are all
 Standard Markdown and Obsidian-flavoured Markdown. Only where Markdown has no syntax — underline, superscript, subscript, paragraph alignment, text and highlight colors, font family and font size — does the plugin emit small, standard inline HTML tags, which Obsidian renders natively.
 
 **Can I keep using my keyboard shortcuts?**
-Yes. 119 of the 130 commands appear in the command palette and can be bound to any hotkey.
+Yes. 126 of the 138 commands appear in the command palette and can be bound to any hotkey.
 
 **I'm a keyboard person — can I hide the toolbar completely?**
-Yes, and nothing is lost by doing it. Switch off all three positions (**Top / Following / Fixed**) in **Settings → Awesome Format Bar** and the plugin leaves zero footprint on the screen: no ribbon, no floating bar, no bottom bar. Every one of the **119 palette-registered commands** still runs, from the command palette or from a hotkey you assign in **Settings → Hotkeys** — including commands Obsidian has no built-in shortcut for, such as font color, highlight color, change case, callouts, table sorting and the line utilities. Think of it as an optional keyboard-only layer you can switch on whenever the mouse starts feeling slow.
+Yes, and nothing is lost by doing it. Switch off all three positions (**Top / Following / Fixed**) in **Settings → Awesome Format Bar** and the plugin leaves zero footprint on the screen: no ribbon, no floating bar, no bottom bar. Every one of the **126 palette-registered commands** still runs, from the command palette or from a hotkey you assign in **Settings → Hotkeys** — including commands Obsidian has no built-in shortcut for, such as font color, highlight color, change case, callouts, table sorting and the line utilities. Think of it as an optional keyboard-only layer you can switch on whenever the mouse starts feeling slow.
 
 **Can I add buttons for commands from other plugins?**
 Yes — that's the **Pinned** tab. Pin any command from the palette and choose an icon. If the owning plugin is disabled, the button greys out and the pin is preserved.
@@ -245,6 +247,9 @@ No. There is no AI feature, no API key, no network request, no analytics and no 
 
 **Does sorting a table in Reading view change my file?**
 No. Reading-view header-click sorting is display-only and never modifies the note.
+
+**How do I center a picture, or change its size?**
+Put the caret on the picture's own line. **Align Center** (Home · Paragraph) centres it — a picture alone on a line *is* a paragraph, so no separate command is needed — and **Image Size ▼** (Insert · Picture) sets its width to 100–600 px, or **Original Size** to give the file's own size back. **Caption** writes a caption line underneath and selects it, ready to type over. Everything is written as plain Obsidian syntax (a `|300` segment after the file name), so the note reads the same without the plugin.
 
 **Can I hide the toolbar when I want a clean screen?**
 Yes — toggle any position off in settings, or all three to hide it entirely (see the keyboard question above for what still works).
