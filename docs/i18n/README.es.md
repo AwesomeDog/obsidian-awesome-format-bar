@@ -54,9 +54,11 @@ Obsidian es rápido **si** ya hablas Markdown. Para todos los demás ——estud
 - **Descubre lo que Obsidian sabe hacer.** Los recuadros, las referencias de bloque, los elementos incrustados, los bloques de fórmula y las etiquetas tienen botón; funciones que muchos usuarios nunca encuentran en la sintaxis.
 - **Haz lo que Markdown no puede.** Subrayado, superíndice, subíndice, alineación de párrafo, colores de texto y de resaltado, fuente y tamaño de fuente, escritos como HTML en línea limpio.
 - **Texto plano para siempre.** Nada de formato propietario, ni base de datos, ni cautividad: tus notas siguen siendo simples archivos `.md`.
-- **Sin conexión y privado.** Sin llamadas de red, sin cuentas, sin telemetría. La biblioteca de unos 2.140 emoji viaja dentro del plugin.
+- **Sin conexión y privado.** Sin llamadas de red, sin cuentas, sin telemetría. La biblioteca de unos 2.150 emoji viaja dentro del plugin.
 - **Tu propio lanzador, si lo quieres.** La pestaña **Anclado** guarda cualquier comando que elijas ——del núcleo, de este plugin o de otro——, así que la barra se adapta a ti sin convertirse en un proyecto de configuración.
 - **También para el teclado.** Desactiva las tres posiciones de la barra y la interfaz desaparece por completo: los 126 comandos registrados en la paleta siguen disponibles y puedes asignarles tus propios atajos.
+
+---
 
 ## De un vistazo
 
@@ -66,8 +68,9 @@ Obsidian es rápido **si** ya hablas Markdown. Para todos los demás ——estud
 | **Comandos**        | **138** integrados, **126** disponibles en la paleta de comandos para atajos propios |
 | **Pestañas**        | Inicio · Insertar · Vista · Tabla · Utilidades · **Anclado**               |
 | **Recuadros**       | Los 12 tipos de recuadro de Obsidian en un solo desplegable               |
-| **Emoji y símbolos** | Unos 2.140 emoji, kaomoji y símbolos, totalmente sin conexión            |
+| **Emoji y símbolos** | Unos 2.150 emoji, kaomoji y símbolos, totalmente sin conexión            |
 | **Edición de tablas** | Insertar / eliminar / mover filas y columnas, alinear, ordenar, transponer, reformatear, convertir en texto, pegar como tabla, copiar como CSV |
+| **Edición de imágenes** | alinear, tamaño, título |
 | **Botones propios** | Pestaña **Anclado** —— ancla **cualquier** comando（del núcleo, de este plugin o de otro）con tus propios iconos y grupos |
 | **Configuración**   | Ninguna. Se adapta al tema, listo para usar                               |
 | **Requiere**        | Obsidian **1.13.7 o superior**                                            |
@@ -94,7 +97,7 @@ Las imágenes tienen su propio grupo en **Insertar**: **Tamaño de imagen ▼** 
 
 Un solo botón **Recuadro** abre un desplegable con `note`、`abstract`、`info`、`tip`、`success`、`question`、`warning`、`failure`、`danger`、`bug`、`example` y `quote`. Se acabó buscar cómo se escribe `> [!tip]`.
 
-### 😀 Selector de emoji, kaomoji y símbolos sin conexión（unos 2.140）
+### 😀 Selector de emoji, kaomoji y símbolos sin conexión（unos 2.150）
 
 Un panel **Emoji y símbolos** con búsqueda y tres fuentes ——emoji, kaomoji y símbolos tipográficos—— incluidas con el plugin. Inserta en el cursor o sobre la selección como un único paso de deshacer, mantiene un grupo de *uso frecuente* por fuente y sigue abierto para insertar varios caracteres seguidos.
 
@@ -146,27 +149,37 @@ Es una compensación deliberada, no una función que falta. Una barra que te dej
 
 ### Insertar
 
-Vínculo interno, Vínculo externo, Incrustar, Etiqueta, Referencia de bloque, **Recuadro ▼**（Nota, Resumen, Información, Sugerencia, Éxito, Pregunta, Advertencia, Fallo, Peligro, Error, Ejemplo, Cita）, Bloque de código, Bloque de fórmula, Tabla, Convertir texto en tabla, Comentario, **Tamaño de imagen ▼**（100 px, 200 px, 300 px, 400 px, 600 px, Tamaño original）, Título, Adjuntar archivo, **Emoji y símbolos**, Fecha y hora, **Índice**, Nota al pie.
+- **Vínculos** —— Vínculo interno, Vínculo externo, Incrustar, Etiqueta, Referencia de bloque
+- **Bloques** —— Recuadro ▼（Nota, Resumen, Información, Sugerencia, Éxito, Pregunta, Advertencia, Fallo, Peligro, Error, Ejemplo, Cita）, Bloque de código, Bloque de fórmula, Tabla, Convertir texto en tabla, Comentario
+- **Imagen** —— Tamaño de imagen ▼（100 px, 200 px, 300 px, 400 px, 600 px, Tamaño original）, Título
+- **Multimedia y símbolos** —— Adjuntar archivo, Emoji y símbolos, Fecha y hora
+- **Referencia** —— Índice, Nota al pie
 
 ### Vista
 
 - **Vistas** —— Live Preview/Origen（alterna el panel entre la vista previa en directo y el Markdown sin formato）
+- **Inmersión** —— Modo de enfoque, Modo zen, Modo máquina de escribir
 - **Mostrar** —— Mostrar espacios, Mostrar números de línea, Ancho de línea legible, Panel de navegación（el esquema de Obsidian）
 - **Zoom** —— Acercar, Alejar, 100 %
 - **Ventana** —— Dividir a la derecha, Dividir hacia abajo
 - **Esquema** —— Contraer, Expandir, Contraer todo, Expandir todo
-- **Inmersión** —— Modo de enfoque, Modo zen, Modo máquina de escribir
 
 ### Tabla
 
-Disponible siempre que el cursor esté dentro de una tabla: **Eliminar filas o columnas ▼**（Eliminar filas, Eliminar columnas）, Insertar filas arriba / abajo, Insertar columnas a la izquierda / derecha, Mover fila hacia arriba / abajo, Mover columna hacia la izquierda / derecha, **Dar formato a las tablas ▼**（Dar formato a esta tabla, Dar formato a todas las tablas）, Alinear columna a la izquierda / Centrar columna / Alinear columna a la derecha, **Ordenar filas ▼**（Ordenar de A a Z, Ordenar de Z a A）, **Transponer tabla**, **Convertir tabla en texto**, **Pegar como tabla**, **Copiar tabla como CSV**.
-**Convertir en texto** escribe la tabla como líneas separadas por tabulaciones ——exactamente lo inverso de **Convertir texto en tabla**（Insertar · Bloques）, que convierte texto separado por tabulaciones o comas en una tabla Markdown alineada. **Pegar como tabla** hace lo mismo con el portapapeles y funciona en cualquier lugar.
+Disponible siempre que el cursor esté dentro de una tabla:
+
+- **Filas y columnas** —— Eliminar filas o columnas ▼（Eliminar filas, Eliminar columnas）, Insertar filas arriba / abajo, Insertar columnas a la izquierda / derecha, Mover fila hacia arriba / abajo, Mover columna hacia la izquierda / derecha
+- **Formato** —— Dar formato a las tablas ▼（Dar formato a esta tabla, Dar formato a todas las tablas）
+- **Alineación** —— Alinear columna a la izquierda / Centrar columna / Alinear columna a la derecha
+- **Datos** —— Ordenar filas ▼（Ordenar de A a Z, Ordenar de Z a A）, Transponer tabla, Convertir tabla en texto
+- **Portapapeles** —— Pegar como tabla, Copiar tabla como CSV
 
 ### Utilidades
 
-**Combinar líneas** une una serie de líneas en una sola; **Dividir líneas** las parte por el signo de puntuación más frecuente en la selección; **Invertir líneas** da la vuelta al orden de cada serie; **Duplicar** copia la línea del cursor debajo de ella, o la selección justo después. Ninguna de las cuatro cruza una línea en blanco ni un bloque de código.
-**Ordenar lista** ordena una lista nivel por nivel ——cada elemento conserva su cuerpo y sus hijos, y los elementos ordenados salen renumerados——. **Ordenar títulos** reordena cada nivel del esquema de la nota y se lleva consigo el cuerpo de cada sección.
-**Pegar URI como vínculo** envuelve el texto seleccionado con la URI del portapapeles. **Puntuación inteligente** y **Espaciado CJK** normalizan el texto seleccionado, mientras **Limpiar ▼** agrupa cinco acciones de limpieza en un menú: **Eliminar espacios finales**, **Contraer líneas en blanco**, **Convertir URL desnudas**, **Normalizar énfasis y negrita** y **Normalizar estilo de viñetas**.
+- **Líneas** —— Combinar líneas, Dividir líneas, Invertir líneas, Duplicar. Combinar líneas une una serie de líneas en una sola; Dividir líneas las parte por el signo de puntuación más frecuente en la selección; Invertir líneas da la vuelta al orden de cada serie; Duplicar copia la línea del cursor debajo de ella, o la selección justo después. Ninguna de las cuatro cruza una línea en blanco ni un bloque de código.
+- **Ordenar** —— Ordenar lista, Ordenar títulos. Ordenar lista ordena una lista nivel por nivel ——cada elemento conserva su cuerpo y sus hijos, y los elementos ordenados salen renumerados——. Ordenar títulos reordena cada nivel del esquema de la nota y se lleva consigo el cuerpo de cada sección.
+- **Vínculos** —— Pegar URI como vínculo, que envuelve el texto seleccionado con la URI que haya en el portapapeles.
+- **Normalizar** —— Puntuación inteligente, Espaciado CJK, Limpiar ▼（Eliminar espacios finales, Contraer líneas en blanco, Convertir URL desnudas, Normalizar énfasis y negrita, Normalizar estilo de viñetas）.
 
 ### Anclado
 
@@ -186,24 +199,20 @@ Todos los datos viajan dentro del plugin, así que el selector funciona totalmen
 
 ## Instalación
 
-Requiere Obsidian **1.13.7 o posterior**.
-
-**Desde la comunidad de plugins（recomendado）**
+**Desde la comunidad de plugins（recomendado）**  
 Configuración → **Plugins de la comunidad** → **Explorar** → busca **“Awesome Format Bar”** → **Instalar** → **Habilitar**.
 
-**Con BRAT（versiones beta）**
-Instala [BRAT](https://github.com/TfTHacker/obsidian42-brat), ejecuta *BRAT: Add a beta plugin* y pega la URL de este repositorio.
-
-**Manualmente**
-Descarga `main.js`, `manifest.json` y `styles.css` de una versión publicada y colócalos en `<biblioteca>/.obsidian/plugins/awesome-format-bar/`; luego habilita el plugin en Configuración → Plugins de la comunidad.
+---
 
 ## Primeros pasos
 
 1. Abre **Configuración → Awesome Format Bar** y activa las posiciones que quieras: **Superior**, **Flotante**, **Inferior**.
-2. La **cinta（Superior）** tiene seis pestañas; la última, **Anclado**, guarda los comandos que ancles tú. Mientras está vacía muestra un aviso que te devuelve a Configuración.
-3. Las **barras compactas**（Flotante / Inferior）llevan un subconjunto fijo de comandos; lo que no cabe se recoge en el menú de desbordamiento `⋯`.
-4. Ancla comandos en **Configuración → Anclado**: agregar（elige un comando y luego un icono）, cambiar el icono, arrastrar para reordenar o eliminar. Los comandos anclados se comportan exactamente igual que en la paleta de comandos.
+2. La **cinta（Superior）** tiene seis pestañas; la última, **Anclado**, guarda los comandos que ancles tú. Mientras está vacía muestra un aviso para añadir; usa el botón de edición para gestionar los comandos y los grupos.
+3. Las **barras compactas**（Flotante / Inferior）llevan un subconjunto fijo de comandos; los botones que no caben en el ancho disponible se recogen en el menú de desbordamiento `⋯`, que también enumera todos los demás comandos agrupados por pestaña, y los que tengas anclados.
+4. Abre el botón de edición de **Anclado** para añadir comandos, elegir iconos, crear un grupo nuevo o cambiar el nombre del grupo, arrastrar para reordenar, mover comandos o eliminarlos. Configuración conserva una entrada alternativa que abre ese mismo gestor. Los comandos anclados se comportan exactamente igual que sus equivalentes en la paleta de comandos.
 5. ¿Prefieres el teclado? Desactiva **los tres interruptores de posición** y la barra desaparece por completo de la interfaz ——el plugin no añade nada a tu pantalla——, mientras los **126 comandos registrados en la paleta** siguen funcionando y puedes asignarles tus propios atajos en **Configuración → Atajos de teclado**. Dicho de otro modo: puedes usarlo como un paquete puro de comandos y atajos sin pulsar un solo botón.
+
+---
 
 ## Ajustes
 
@@ -212,6 +221,8 @@ Descarga `main.js`, `manifest.json` y `styles.css` de una versión publicada y c
 | **Barra de herramientas** | Interruptores independientes para Superior / Flotante / Inferior                               |
 | **Anclado**          | Tus comandos anclados —— agregar, cambiar icono, reordenar, eliminar                                |
 | **Tabla**            | Entrar pasa a la fila siguiente; Tab / Shift+Tab cambian entre celdas y Tab en el borde derecho añade una columna; rellenar celdas con espacios; ordenar al hacer clic en el encabezado en el modo de lectura（nunca modifica el archivo） |
+
+---
 
 ## Compatibilidad
 
@@ -224,40 +235,40 @@ Descarga `main.js`, `manifest.json` y `styles.css` de una versión publicada y c
 
 ## Preguntas frecuentes
 
-**¿Esto convierte Obsidian en un editor WYSIWYG o de texto enriquecido?**
+**¿Esto convierte Obsidian en un editor WYSIWYG o de texto enriquecido?**  
 No ——y ahí está la gracia——. Es una **barra de herramientas** sobre el propio editor de Obsidian. Tus archivos siguen siendo Markdown plano.
 
-**¿Tengo que aprender sintaxis Markdown para usar Obsidian ahora?**
+**¿Tengo que aprender sintaxis Markdown para usar Obsidian ahora?**  
 No. Negrita, títulos, listas, vínculos, tablas, recuadros, bloques de código y fórmulas son botones.
 
-**¿Qué se escribe exactamente en mis notas?**
+**¿Qué se escribe exactamente en mis notas?**  
 Markdown estándar y Markdown con sabor a Obsidian. Solo donde Markdown no tiene sintaxis ——subrayado, superíndice, subíndice, alineación de párrafo, colores de texto y de resaltado, fuente y tamaño de fuente—— el plugin emite pequeñas etiquetas HTML en línea estándar, que Obsidian renderiza de forma nativa.
 
-**¿Puedo seguir usando mis atajos de teclado?**
+**¿Puedo seguir usando mis atajos de teclado?**  
 Sí. 126 de los 138 comandos aparecen en la paleta de comandos y se pueden asociar a cualquier atajo.
 
-**Soy de teclado ——¿puedo ocultar la barra por completo?**
+**Soy de teclado ——¿puedo ocultar la barra por completo?**  
 Sí, y no pierdes nada por hacerlo. Desactiva las tres posiciones（**Superior / Flotante / Inferior**）en **Configuración → Awesome Format Bar** y el plugin no deja rastro en la pantalla: ni cinta, ni barra flotante, ni barra inferior. Los **126 comandos registrados en la paleta** siguen funcionando todos, desde la paleta de comandos o desde un atajo que asignes en **Configuración → Atajos de teclado** ——incluidos comandos para los que Obsidian no tiene atajo propio, como el color de fuente, el color de resaltado, cambiar mayúsculas y minúsculas, los recuadros, ordenar tablas y las utilidades de líneas——. Piénsalo como una capa opcional solo de teclado que puedes activar cuando el ratón empiece a sentirse lento.
 
-**¿Puedo añadir botones para comandos de otros plugins?**
+**¿Puedo añadir botones para comandos de otros plugins?**  
 Sí ——para eso está la pestaña **Anclado**——. Ancla cualquier comando de la paleta y elige un icono. Si el plugin propietario está desactivado, el botón se atenúa y el anclado se conserva.
 
-**¿El selector de emoji necesita conexión a internet?**
-No. Los unos 2.140 emoji, kaomoji y símbolos se incluyen con el plugin.
+**¿El selector de emoji necesita conexión a internet?**  
+No. Los unos 2.150 emoji, kaomoji y símbolos se incluyen con el plugin.
 
-**¿El plugin usa IA o se conecta a algún servidor?**
+**¿El plugin usa IA o se conecta a algún servidor?**  
 No. No hay ninguna función de IA, ni clave de API, ni petición de red, ni analítica ni telemetría en ninguna parte del código ——el plugin lee y escribe tus archivos `.md` locales y nada más——. La biblioteca de emoji va incluida, así que también funciona en un avión.
 
-**¿Ordenar una tabla en el modo de lectura modifica mi archivo?**
+**¿Ordenar una tabla en el modo de lectura modifica mi archivo?**  
 No. Ordenar al hacer clic en el encabezado en el modo de lectura es solo visual y nunca modifica la nota.
 
-**¿Cómo centro una imagen o cambio su tamaño?**
+**¿Cómo centro una imagen o cambio su tamaño?**  
 Coloca el cursor en la propia línea de la imagen. **Centrar**（Inicio · Párrafo）la centra ——una imagen sola en una línea *es* un párrafo, así que no hace falta ningún comando aparte——, y **Tamaño de imagen ▼**（Insertar · Imagen）fija su ancho en 100–600 px, o **Tamaño original** para devolverle el tamaño propio del archivo. **Título** escribe una línea de título debajo y la selecciona, lista para escribir encima. Todo se escribe con la sintaxis propia de Obsidian（un segmento `|300` después del nombre del archivo）, así que la nota se lee igual sin el plugin.
 
-**¿Puedo ocultar la barra cuando quiera una pantalla limpia?**
+**¿Puedo ocultar la barra cuando quiera una pantalla limpia?**  
 Sí: desactiva cualquier posición en los ajustes, o las tres para ocultarla del todo（mira la pregunta del teclado para ver qué sigue funcionando）.
 
-**¿Es configurable?**
+**¿Es configurable?**  
 Deliberadamente mínimo ——y ahí está la gracia——. La distribución integrada es fija y se adapta al tema, así que siempre se ve nativa, nunca necesita que la reorganices y una actualización nunca la reinicia. Todo lo que de verdad querrías cambiar vive en un solo lugar: la pestaña **Anclado**, donde añades cualquier comando, eliges su icono, lo agrupas y lo arrastras hasta ponerlo en orden. El razonamiento está en *Funciones → Configuración cero, se adapta al tema*.
 
 ---
@@ -266,15 +277,13 @@ Deliberadamente mínimo ——y ahí está la gracia——. La distribución int
 
 ```shell
 npm install        # instala las dependencias
-npm run dev        # compila en modo vigilancia
 npm run build      # comprobación de tipos + pruebas + compilación de producción
-npm run test       # ejecuta las pruebas unitarias
-npm run lint       # eslint
-npm run typecheck  # tsc --noEmit
 npm run deploy -- /path/to/vault   # copia main.js, manifest.json y styles.css en una biblioteca
 ```
 
 La versión publicada son exactamente tres archivos: `main.js`, `manifest.json` y `styles.css`.
+
+---
 
 ## Publicación
 
@@ -294,11 +303,12 @@ Al enviar la etiqueta se ejecuta `.github/workflows/release.yml`, que compila el
 Plugin de barra de herramientas para Obsidian · barra de formato para Obsidian · barra de formato · barra de herramientas Markdown · botones de formato Markdown · cinta tipo Word para Obsidian · barra de herramientas de texto enriquecido · barra de edición estilo WYSIWYG · barra del editor · barra flotante de selección · color de texto y resaltado en Obsidian · subrayado / superíndice / subíndice en Markdown · alineación del texto · selector de recuadros · selector de emoji · kaomoji · selector de símbolos · editor de tablas Markdown · ordenar tabla · pegar como tabla · generador de índices · anclar comandos · Obsidian para principiantes · edición Markdown sin sintaxis
 
 **Otros idiomas / Other languages:**
-Obsidian 工具栏插件、格式栏、富文本工具栏、Markdown 快捷按钮、表情符号选择器、表格编辑 ·  
-Obsidian 工具列外掛、格式列 ·  
-Obsidian ツールバー・書式設定バー・絵文字ピッカー ·  
-Obsidian 툴바 · 서식 도구 모음 ·  
-Obsidian Symbolleiste / Formatierungsleiste ·  
-Barre d'outils / barre de mise en forme pour Obsidian ·  
-Barra de herramientas / barra de formato para Obsidian  
-Панель инструментов / панель форматирования для Obsidian
+
+- Obsidian 工具栏插件、格式栏、富文本工具栏、Markdown 快捷按钮、表情符号选择器、表格编辑
+- Obsidian 工具列外掛、格式列
+- Obsidian ツールバー・書式設定バー・絵文字ピッカー
+- Obsidian 툴바 · 서식 도구 모음
+- Obsidian Symbolleiste / Formatierungsleiste
+- Barre d'outils / barre de mise en forme pour Obsidian
+- Barra de herramientas / barra de formato para Obsidian
+- Панель инструментов / панель форматирования для Obsidian

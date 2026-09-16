@@ -54,9 +54,11 @@ Obsidian est rapide **à condition** de déjà parler Markdown. Pour tous les au
 - **Découvrez ce qu'Obsidian sait faire.** Encadrés, références de bloc, incorporations, blocs de formule et étiquettes ont tous un bouton —— des fonctions que bien des utilisateurs ne trouvent jamais dans la syntaxe.
 - **Faites ce que Markdown ne peut pas.** Souligné, exposant, indice, alignement des paragraphes, couleurs du texte et du surlignage, police et taille de police, écrits en HTML en ligne propre.
 - **Du texte brut pour toujours.** Pas de format propriétaire, pas de base de données, pas d'enfermement —— vos notes restent de simples fichiers `.md`.
-- **Hors ligne et privé.** Aucun appel réseau, aucun compte, aucune télémétrie. La bibliothèque d'environ 2 140 emoji est livrée dans le plugin.
+- **Hors ligne et privé.** Aucun appel réseau, aucun compte, aucune télémétrie. La bibliothèque d'environ 2 150 emoji est livrée dans le plugin.
 - **Votre propre lanceur, si vous en voulez un.** L'onglet **Épinglé** accueille n'importe quelle commande de votre choix —— du cœur d'Obsidian, de ce plugin ou d'un autre —— pour que la barre se plie à vous au lieu de devenir un projet de configuration.
 - **Aussi pensé pour le clavier.** Désactivez les trois positions de la barre et l'interface disparaît complètement —— les 126 commandes enregistrées dans la palette restent disponibles et peuvent être associées à vos propres raccourcis.
+
+---
 
 ## En un coup d'œil
 
@@ -66,8 +68,9 @@ Obsidian est rapide **à condition** de déjà parler Markdown. Pour tous les au
 | **Commandes**          | **138** intégrées, dont **126** dans la palette de commandes pour des raccourcis personnalisés |
 | **Onglets**            | Accueil · Insertion · Affichage · Tableau · Utilitaires · **Épinglé**      |
 | **Encadrés**           | Les 12 types d'encadrés Obsidian dans une seule liste déroulante            |
-| **Emoji et symboles**  | Environ 2 140 emoji, kaomoji et symboles, entièrement hors ligne            |
+| **Emoji et symboles**  | Environ 2 150 emoji, kaomoji et symboles, entièrement hors ligne            |
 | **Édition de tableau** | Insérer / supprimer / déplacer lignes et colonnes, aligner, trier, transposer, remettre en forme, convertir en texte, coller en tant que tableau, copier en CSV |
+| **Édition d’image**    | aligner, taille, légende                                                     |
 | **Boutons personnalisés** | Onglet **Épinglé** —— épinglez *n'importe quelle* commande（du cœur, de ce plugin ou d'un autre）avec vos propres icônes et vos propres groupes |
 | **Configuration**      | Aucune. Suit le thème, prêt à l'emploi                                      |
 | **Requis**             | Obsidian **1.13.7 et plus**                                                |
@@ -94,7 +97,7 @@ Les images ont leur propre groupe sur **Insertion** : **Taille de l’image ▼*
 
 Un seul bouton **Encadré** ouvre une liste déroulante avec `note`、`abstract`、`info`、`tip`、`success`、`question`、`warning`、`failure`、`danger`、`bug`、`example` et `quote`. Fini les recherches sur la syntaxe `> [!tip]`.
 
-### 😀 Sélecteur d'emoji, de kaomoji et de symboles hors ligne（environ 2 140 entrées）
+### 😀 Sélecteur d'emoji, de kaomoji et de symboles hors ligne（environ 2 150 entrées）
 
 Un panneau **Emoji et symboles** recherchable, avec trois sources —— emoji, kaomoji et symboles typographiques —— fournies avec le plugin. L'insertion se fait au curseur ou sur la sélection en une seule étape d'annulation, chaque source conserve son propre groupe « fréquemment utilisés », et le panneau reste ouvert pour insérer plusieurs caractères à la suite.
 
@@ -146,27 +149,37 @@ C'est un compromis délibéré, pas une fonction manquante. Une barre qui vous l
 
 ### Insertion
 
-Lien interne, Lien externe, Incorporer, Étiquette, Référence de bloc, **Encadré ▼**（Note, Résumé, Info, Astuce, Succès, Question, Avertissement, Échec, Danger, Bogue, Exemple, Citation）, Bloc de code, Bloc de formule, Tableau, Convertir le texte en tableau, Commentaire, **Taille de l’image ▼** (100 px, 200 px, 300 px, 400 px, 600 px, Taille d’origine), Légende, Joindre un fichier, **Emoji et symboles**, Date et heure, **Table des matières**, Note de bas de page.
+- **Liens** —— Lien interne, Lien externe, Incorporer, Étiquette, Référence de bloc
+- **Blocs** —— Encadré ▼（Note, Résumé, Info, Astuce, Succès, Question, Avertissement, Échec, Danger, Bogue, Exemple, Citation）, Bloc de code, Bloc de formule, Tableau, Convertir le texte en tableau, Commentaire
+- **Image** —— Taille de l’image ▼（100 px, 200 px, 300 px, 400 px, 600 px, Taille d’origine）, Légende
+- **Médias et symboles** —— Joindre un fichier, Emoji et symboles, Date et heure
+- **Référence** —— Table des matières, Note de bas de page
 
 ### Affichage
 
 - **Vues** —— Aperçu en direct/Source（bascule le volet entre l'aperçu en direct et le Markdown brut）
+- **Immersion** —— Mode focus, Mode zen, Mode machine à écrire
 - **Afficher** —— Afficher les espaces, Afficher les numéros de ligne, Largeur de ligne lisible, Volet de navigation（le plan d'Obsidian）
 - **Zoom** —— Zoom avant, Zoom arrière, 100 %
 - **Fenêtre** —— Fractionner vers la droite, Fractionner vers le bas
 - **Plan** —— Réduire, Développer, Tout réduire, Tout développer
-- **Immersion** —— Mode focus, Mode zen, Mode machine à écrire
 
 ### Tableau
 
-Disponible dès que le curseur se trouve dans un tableau : **Supprimer des lignes ou des colonnes ▼**（Supprimer les lignes, Supprimer les colonnes）、Insérer des lignes au-dessus / en dessous, Insérer des colonnes à gauche / à droite, Déplacer la ligne vers le haut / vers le bas, Déplacer la colonne vers la gauche / vers la droite, **Mettre en forme les tableaux ▼**（Mettre en forme ce tableau, Mettre en forme tous les tableaux）、Aligner la colonne à gauche / Centrer la colonne / Aligner la colonne à droite, **Trier les lignes ▼**（Trier de A à Z, Trier de Z à A）、**Transposer le tableau**、**Convertir le tableau en texte**、**Coller en tant que tableau**、**Copier le tableau en CSV**。
-**Convertir en texte** écrit le tableau sous forme de lignes séparées par des tabulations —— l'exact inverse de **Convertir le texte en tableau**（Insertion · Blocs）, qui transforme un texte séparé par des tabulations ou des virgules en tableau Markdown aligné. **Coller en tant que tableau** fait la même chose avec le presse-papiers et fonctionne partout.
+Disponible dès que le curseur se trouve dans un tableau :
+
+- **Lignes et colonnes** —— Supprimer des lignes ou des colonnes ▼（Supprimer les lignes, Supprimer les colonnes）, Insérer des lignes au-dessus / en dessous, Insérer des colonnes à gauche / à droite, Déplacer la ligne vers le haut / vers le bas, Déplacer la colonne vers la gauche / vers la droite
+- **Format** —— Mettre en forme les tableaux ▼（Mettre en forme ce tableau, Mettre en forme tous les tableaux）
+- **Alignement** —— Aligner la colonne à gauche / Centrer la colonne / Aligner la colonne à droite
+- **Données** —— Trier les lignes ▼（Trier de A à Z, Trier de Z à A）, Transposer le tableau, Convertir le tableau en texte
+- **Presse-papiers** —— Coller en tant que tableau, Copier le tableau en CSV
 
 ### Utilitaires
 
-**Fusionner les lignes** rassemble une série de lignes en une seule ; **Diviser les lignes** les coupe au signe de ponctuation le plus fréquent dans la sélection ; **Inverser les lignes** inverse l'ordre de chaque série ; **Dupliquer** copie la ligne du curseur en dessous, ou la sélection juste après. Aucun des quatre ne franchit une ligne vide ou un bloc de code.
-**Trier la liste** trie une liste niveau par niveau —— chaque élément conserve son propre corps et ses propres enfants, et les éléments numérotés ressortent renumérotés. **Trier les titres** réordonne chaque niveau du plan de la note et emporte le corps de chaque section avec lui.
-**Coller l’URI comme lien** entoure le texte sélectionné avec l’URI du presse-papiers. **Ponctuation intelligente** et **Espacement CJK** normalisent le texte sélectionné, tandis que **Nettoyer ▼** regroupe cinq actions de nettoyage dans un même menu : **Supprimer les espaces de fin**, **Réduire les lignes vides**, **Convertir les URL nues**, **Normaliser les emphases et le gras** et **Normaliser le style des puces**.
+- **Lignes** —— Fusionner les lignes, Diviser les lignes, Inverser les lignes, Dupliquer. Fusionner les lignes rassemble une série de lignes en une seule ; Diviser les lignes les coupe au signe de ponctuation le plus fréquent dans la sélection ; Inverser les lignes inverse l'ordre de chaque série ; Dupliquer copie la ligne du curseur en dessous, ou la sélection juste après. Aucun des quatre ne franchit une ligne vide ou un bloc de code.
+- **Trier** —— Trier la liste, Trier les titres. Trier la liste trie une liste niveau par niveau —— chaque élément conserve son propre corps et ses propres enfants, et les éléments numérotés ressortent renumérotés. Trier les titres réordonne chaque niveau du plan de la note et emporte le corps de chaque section avec lui.
+- **Liens** —— Coller l’URI comme lien, qui entoure le texte sélectionné avec l’URI actuellement présente dans le presse-papiers.
+- **Normaliser** —— Ponctuation intelligente, Espacement CJK, Nettoyer ▼（Supprimer les espaces de fin, Réduire les lignes vides, Convertir les URL nues, Normaliser les emphases et le gras, Normaliser le style des puces）.
 
 ### Épinglé
 
@@ -186,24 +199,20 @@ Toutes les données sont fournies avec le plugin : le sélecteur fonctionne donc
 
 ## Installation
 
-Requiert Obsidian **1.13.7 ou version ultérieure**.
-
-**Depuis les plugins communautaires（recommandé）**
+**Depuis les plugins communautaires（recommandé）**  
 Paramètres → **Plugins communautaires** → **Parcourir** → recherchez **« Awesome Format Bar »** → **Installer** → **Activer**.
 
-**Avec BRAT（versions bêta）**
-Installez [BRAT](https://github.com/TfTHacker/obsidian42-brat), lancez *BRAT: Add a beta plugin*, et collez l'URL de ce dépôt.
-
-**Manuellement**
-Téléchargez `main.js`、`manifest.json` et `styles.css` depuis une version publiée dans `<coffre>/.obsidian/plugins/awesome-format-bar/`, puis activez le plugin dans Paramètres → Plugins communautaires.
+---
 
 ## Premiers pas
 
 1. Ouvrez **Paramètres → Awesome Format Bar** et activez les positions souhaitées : **Haut**、**Flottante**、**Bas**.
-2. Le **ruban（Haut）** comporte six onglets ; le dernier, **Épinglé**, contient les commandes que vous épinglez vous-même. Tant qu'il est vide, il affiche un rappel renvoyant vers les paramètres.
-3. Les **barres compactes**（Flottante / Bas）n'emportent qu'un sous-ensemble fixe de commandes ; ce qui ne tient pas se replie dans le menu `⋯`.
-4. Épinglez des commandes sous **Paramètres → Épinglé** : ajouter（choisir une commande, puis une icône）, changer l'icône, glisser pour réorganiser, ou supprimer. Les commandes épinglées se comportent exactement comme leurs équivalents de la palette.
+2. Le **ruban（Haut）** comporte six onglets ; le dernier, **Épinglé**, contient les commandes que vous épinglez vous-même. Tant qu'il est vide, il affiche une invite à ajouter une commande ; utilisez le bouton d'édition pour gérer les commandes et les groupes.
+3. Les **barres compactes**（Flottante / Bas）n'emportent qu'un sous-ensemble fixe de commandes ; les boutons qui ne tiennent pas dans la largeur disponible se replient dans le menu de débordement `⋯`, qui liste aussi toutes les autres commandes regroupées par onglet, ainsi que vos commandes épinglées.
+4. Ouvrez le bouton d'édition de l'onglet **Épinglé** pour ajouter des commandes, choisir des icônes, créer un nouveau groupe ou renommer un groupe, glisser pour réorganiser, déplacer une commande vers un autre groupe, ou les supprimer. Les paramètres conservent une entrée de repli —— « Gérer les commandes et groupes épinglés. » —— qui ouvre le même gestionnaire. Les commandes épinglées se comportent exactement comme leurs équivalents de la palette de commandes.
 5. Vous préférez le clavier ? Désactivez **les trois positions** et la barre disparaît entièrement de l'interface —— le plugin n'ajoute alors plus rien à votre écran, tandis que les **126 commandes enregistrées dans la palette** continuent de fonctionner et peuvent être associées à vos propres raccourcis dans **Paramètres → Raccourcis**. Autrement dit : vous pouvez l'utiliser comme un simple lot de commandes et de raccourcis, sans jamais cliquer sur un bouton.
+
+---
 
 ## Paramètres
 
@@ -212,6 +221,8 @@ Téléchargez `main.js`、`manifest.json` et `styles.css` depuis une version pub
 | **Barre d'outils** | Interrupteurs indépendants pour Haut / Flottante / Bas                                                    |
 | **Épinglé**      | Vos commandes épinglées —— ajouter, changer l'icône, réorganiser, supprimer                                |
 | **Tableau**      | Entrée passe à la ligne suivante ; Tab / Shift+Tab passent d'une cellule à l'autre et Tab au bord droit ajoute une colonne ; Remplir les cellules avec des espaces ; Trier au clic sur l'en-tête en mode lecture（ne modifie jamais le fichier） |
+
+---
 
 ## Compatibilité
 
@@ -224,40 +235,40 @@ Téléchargez `main.js`、`manifest.json` et `styles.css` depuis une version pub
 
 ## Questions fréquentes
 
-**Est-ce que cela transforme Obsidian en éditeur WYSIWYG ou en éditeur de texte enrichi ?**
+**Est-ce que cela transforme Obsidian en éditeur WYSIWYG ou en éditeur de texte enrichi ?**  
 Non —— et c'est justement le but. C'est une **barre d'outils** posée sur l'éditeur d'Obsidian. Vos fichiers restent du Markdown brut.
 
-**Dois-je maintenant apprendre la syntaxe Markdown pour utiliser Obsidian ?**
+**Dois-je maintenant apprendre la syntaxe Markdown pour utiliser Obsidian ?**  
 Non. Gras, titres, listes, liens, tableaux, encadrés, blocs de code et formules sont tous des boutons.
 
-**Qu'est-ce qui est exactement écrit dans mes notes ?**
+**Qu'est-ce qui est exactement écrit dans mes notes ?**  
 Du Markdown standard et du Markdown saveur Obsidian. Ce n'est que là où le Markdown n'a pas de syntaxe —— souligné, exposant, indice, alignement des paragraphes, couleurs du texte et du surlignage, police et taille de police —— que le plugin émet quelques balises HTML en ligne standard, qu'Obsidian affiche nativement.
 
-**Puis-je continuer à utiliser mes raccourcis clavier ?**
+**Puis-je continuer à utiliser mes raccourcis clavier ?**  
 Oui. 126 des 138 commandes apparaissent dans la palette de commandes et peuvent être associées à n'importe quel raccourci.
 
-**Je suis un adepte du clavier —— puis-je masquer complètement la barre d'outils ?**
+**Je suis un adepte du clavier —— puis-je masquer complètement la barre d'outils ?**  
 Oui, et vous ne perdez rien à le faire. Désactivez les trois positions（**Haut / Flottante / Bas**）dans **Paramètres → Awesome Format Bar** et le plugin ne laisse aucune trace à l'écran : ni ruban, ni barre flottante, ni barre en bas. Les **126 commandes enregistrées dans la palette** fonctionnent toutes encore, depuis la palette de commandes ou depuis un raccourci que vous attribuez dans **Paramètres → Raccourcis** —— y compris des commandes pour lesquelles Obsidian n'a aucun raccourci intégré, comme la Couleur de police, la Couleur de surlignage, Modifier la casse, les Encadrés, Trier les lignes et les utilitaires de lignes. Voyez-y une couche clavier facultative, à activer dès que la souris commence à sembler lente.
 
-**Puis-je ajouter des boutons pour les commandes d'autres plugins ?**
+**Puis-je ajouter des boutons pour les commandes d'autres plugins ?**  
 Oui —— c'est l'onglet **Épinglé**. Épinglez n'importe quelle commande de la palette et choisissez une icône. Si le plugin propriétaire est désactivé, le bouton se grise et l'épingle est conservée.
 
-**Le sélecteur d'emoji a-t-il besoin d'une connexion Internet ?**
-Non. Les quelque 2 140 emoji, kaomoji et symboles sont tous fournis avec le plugin.
+**Le sélecteur d'emoji a-t-il besoin d'une connexion Internet ?**  
+Non. Les quelque 2 150 emoji, kaomoji et symboles sont tous fournis avec le plugin.
 
-**Le plugin utilise-t-il l'IA, ou contacte-t-il des serveurs d'une manière ou d'une autre ?**
+**Le plugin utilise-t-il l'IA, ou contacte-t-il des serveurs d'une manière ou d'une autre ?**  
 Non. Aucune fonction d'IA, aucune clé d'API, aucune requête réseau, aucune analyse d'usage et aucune télémétrie nulle part dans le code —— le plugin ne fait que lire et écrire vos fichiers `.md` locaux, et rien d'autre. La bibliothèque d'emoji est fournie avec le plugin : il fonctionne donc même en avion.
 
-**Trier un tableau en mode lecture modifie-t-il mon fichier ?**
+**Trier un tableau en mode lecture modifie-t-il mon fichier ?**  
 Non. Le tri au clic sur l'en-tête en mode lecture est purement visuel et ne modifie jamais la note.
 
-**Comment centrer une image, ou modifier sa taille ?**
+**Comment centrer une image, ou modifier sa taille ?**  
 Placez le curseur sur la ligne de l'image elle-même. **Centrer** (Accueil · Paragraphe) s'en charge —— une image seule sur une ligne *est* un paragraphe, aucune commande distincte n'est donc nécessaire —— et **Taille de l’image ▼** (Insertion · Image) définit sa largeur de 100 à 600 px, ou **Taille d’origine** pour lui rendre la taille propre du fichier. **Légende** écrit une ligne de légende en dessous et la sélectionne, prête à accueillir votre texte. Tout est écrit en syntaxe Obsidian ordinaire (un segment `|300` après le nom du fichier) : la note se lit donc de la même façon sans le plugin.
 
-**Puis-je masquer la barre d'outils quand je veux un écran épuré ?**
+**Puis-je masquer la barre d'outils quand je veux un écran épuré ?**  
 Oui —— désactivez n'importe quelle position dans les paramètres, ou les trois pour la masquer entièrement（voir la question sur le clavier ci-dessus pour ce qui reste utilisable）.
 
-**Est-ce configurable ?**
+**Est-ce configurable ?**  
 Délibérément minimal —— et c'est justement le but. La disposition intégrée est fixe et suit le thème : elle paraît toujours native, n'a jamais besoin d'être réorganisée et ne se réinitialise jamais à la mise à jour. Tout ce que vous voudriez vraiment changer se trouve au même endroit : l'onglet **Épinglé**, où vous ajoutez n'importe quelle commande, choisissez son icône, la regroupez et la glissez à la place voulue. Le raisonnement est dans *Fonctionnalités → Zéro configuration, sensible au thème*.
 
 ---
@@ -266,15 +277,13 @@ Délibérément minimal —— et c'est justement le but. La disposition intégr
 
 ```shell
 npm install        # installer les dépendances
-npm run dev        # construire en mode surveillance
 npm run build      # vérification des types + tests + build de production
-npm run test       # exécuter les tests unitaires
-npm run lint       # eslint
-npm run typecheck  # tsc --noEmit
 npm run deploy -- /path/to/vault   # copier main.js, manifest.json, styles.css dans un coffre
 ```
 
 La version publiée ne contient que trois fichiers : `main.js`、`manifest.json` et `styles.css`.
+
+---
 
 ## Publication
 
@@ -294,11 +303,12 @@ Pousser le tag déclenche `.github/workflows/release.yml`, qui construit le plug
 Plugin de barre d'outils Obsidian · barre de mise en forme Obsidian · barre de format Obsidian · barre d'outils Markdown · boutons de mise en forme Markdown · ruban façon Word pour Obsidian · barre d'outils de texte enrichi · barre d'édition WYSIWYG · barre d'outils d'éditeur · barre de sélection flottante · couleur du texte et surlignage dans Obsidian · souligné / exposant / indice en Markdown · alignement du texte · sélecteur d'encadrés · sélecteur d'emoji · kaomoji · sélecteur de symboles · éditeur de tableaux Markdown · trier un tableau · coller en tant que tableau · générateur de table des matières · épingler des commandes · Obsidian pour débutants · édition Markdown sans syntaxe
 
 **Autres langues / Other languages:**
-Obsidian 工具栏插件、格式栏、富文本工具栏、Markdown 快捷按钮、表情符号选择器、表格编辑 ·  
-Obsidian 工具列外掛、格式列 ·  
-Obsidian ツールバー・書式設定バー・絵文字ピッカー ·  
-Obsidian 툴바 · 서식 도구 모음 ·  
-Obsidian Symbolleiste / Formatierungsleiste ·  
-Barre d'outils / barre de mise en forme pour Obsidian ·  
-Barra de herramientas / barra de formato para Obsidian  
-Панель инструментов / панель форматирования для Obsidian
+
+- Obsidian 工具栏插件、格式栏、富文本工具栏、Markdown 快捷按钮、表情符号选择器、表格编辑
+- Obsidian 工具列外掛、格式列
+- Obsidian ツールバー・書式設定バー・絵文字ピッカー
+- Obsidian 툴바 · 서식 도구 모음
+- Obsidian Symbolleiste / Formatierungsleiste
+- Barre d'outils / barre de mise en forme pour Obsidian
+- Barra de herramientas / barra de formato para Obsidian
+- Панель инструментов / панель форматирования для Obsidian

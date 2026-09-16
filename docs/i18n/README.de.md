@@ -54,9 +54,11 @@ Obsidian ist schnell — **wenn** Sie bereits Markdown beherrschen. Für alle an
 - **Entdecken, was Obsidian kann.** Callouts, Blockverweise, Einbettungen, Formelblöcke und Tags bekommen je eine Schaltfläche — Funktionen, die viele Nutzer in der Syntax nie finden.
 - **Tun, was Markdown nicht kann.** Unterstreichen, Hochstellen, Tiefstellen, Absatzausrichtung, Text- und Hervorhebungsfarbe sowie Schriftart und Schriftgröße, geschrieben als sauberes Inline-HTML.
 - **Für immer reiner Text.** Kein proprietäres Format, keine Datenbank, keine Bindung — Ihre Notizen bleiben schlicht `.md`-Dateien.
-- **Offline und privat.** Keine Netzwerkaufrufe, keine Konten, keine Telemetrie. Die rund 2.140 Einträge der Emoji-Bibliothek werden mit dem Plugin ausgeliefert.
+- **Offline und privat.** Keine Netzwerkaufrufe, keine Konten, keine Telemetrie. Die rund 2.150 Einträge der Emoji-Bibliothek werden mit dem Plugin ausgeliefert.
 - **Ihr eigener Starter, wenn Sie einen wollen.** Die Registerkarte **Angeheftet** nimmt jeden Befehl auf, den Sie auswählen — einen aus dem Kern, aus diesem Plugin oder aus einem anderen —, damit sich die Leiste nach Ihnen richtet, ohne zu einem Konfigurationsprojekt zu werden.
 - **Auch tastaturfreundlich.** Schalten Sie alle drei Leistenpositionen aus und die Oberfläche verschwindet vollständig — alle 126 in der Befehlspalette registrierten Befehle bleiben verfügbar und lassen sich an eigene Tastenkürzel binden.
+
+---
 
 ## Auf einen Blick
 
@@ -66,8 +68,9 @@ Obsidian ist schnell — **wenn** Sie bereits Markdown beherrschen. Für alle an
 | **Befehle**         | **138** integrierte, davon **126** in der Befehlspalette für eigene Tastenkürzel                   |
 | **Registerkarten**  | Start · Einfügen · Ansicht · Tabelle · Hilfsprogramme · **Angeheftet**                              |
 | **Callouts**        | Alle 12 Obsidian-Callout-Typen in einem Aufklappmenü                                               |
-| **Emoji und Symbole** | Rund 2.140 Emoji, Kaomoji und Symbole, vollständig offline                                       |
+| **Emoji und Symbole** | Rund 2.150 Emoji, Kaomoji und Symbole, vollständig offline                                       |
 | **Tabellenbearbeitung** | Zeilen und Spalten einfügen, löschen und verschieben, ausrichten, sortieren, transponieren, neu formatieren, in Text umwandeln, als Tabelle einfügen, als CSV kopieren |
+| **Bildbearbeitung** | ausrichten, Größe, Beschriftung |
 | **Eigene Schaltflächen** | Registerkarte **Angeheftet** — heften Sie **beliebige** Befehle an (Kernbefehle, die dieses Plugins oder die eines anderen), mit eigenen Symbolen und Gruppen |
 | **Einrichtung nötig** | Keine. Themenangepasst, ohne Konfiguration                                                       |
 | **Voraussetzung**   | Obsidian **1.13.7+**                                                                                |
@@ -94,7 +97,7 @@ Bilder bekommen auf **Einfügen** ihre eigene Gruppe: **Bildgröße ▼** legt e
 
 Eine einzige Schaltfläche **Hinweis (Callout)** öffnet ein Aufklappmenü mit `note`, `abstract`, `info`, `tip`, `success`, `question`, `warning`, `failure`, `danger`, `bug`, `example` und `quote`. Nie wieder die Syntax `> [!tip]` nachschlagen.
 
-### 😀 Offline-Auswahl für Emoji, Kaomoji und Symbole mit rund 2.140 Einträgen
+### 😀 Offline-Auswahl für Emoji, Kaomoji und Symbole mit rund 2.150 Einträgen
 
 Ein durchsuchbares Panel **Emoji und Symbole** mit drei Quellen — Emoji, Kaomoji und typografische Symbole — wird mit dem Plugin mitgeliefert. Es fügt an der Cursorposition ein oder ersetzt die Auswahl in einem einzigen Undo-Schritt, führt pro Quelle eine Gruppe *Häufig verwendet* und bleibt geöffnet, damit Sie mehrere Zeichen hintereinander einfügen können.
 
@@ -146,27 +149,37 @@ Das ist eine bewusste Entscheidung, kein fehlendes Feature. Eine Leiste, die Ihn
 
 ### Einfügen
 
-Interner Link, Externer Link, Einbetten, Tag, Blockverweis, **Hinweis (Callout) ▼** (Notiz-Callout, Zusammenfassung-Callout, Info-Callout, Tipp-Callout, Erfolg-Callout, Frage-Callout, Warnung-Callout, Fehlschlag-Callout, Gefahr-Callout, Fehler-Callout, Beispiel-Callout, Zitat-Callout), Codeblock, Formelblock, Tabelle, Text in Tabelle umwandeln, Kommentar, **Bildgröße ▼** (100 px, 200 px, 300 px, 400 px, 600 px, Ursprüngliche Größe), Beschriftung, Datei anfügen, **Emoji und Symbole**, Datum und Uhrzeit, **Inhaltsverzeichnis**, Fußnote.
+- **Links** — Interner Link, Externer Link, Einbetten, Tag, Blockverweis
+- **Blöcke** — Hinweis ▼ (Notiz-Callout, Zusammenfassung-Callout, Info-Callout, Tipp-Callout, Erfolg-Callout, Frage-Callout, Warnung-Callout, Fehlschlag-Callout, Gefahr-Callout, Fehler-Callout, Beispiel-Callout, Zitat-Callout), Codeblock, Formelblock, Tabelle, Text in Tabelle umwandeln, Kommentar
+- **Bild** — Bildgröße ▼ (100 px, 200 px, 300 px, 400 px, 600 px, Ursprüngliche Größe), Beschriftung
+- **Medien und Symbole** — Datei anfügen, Emoji und Symbole, Datum und Uhrzeit
+- **Referenz** — Inhaltsverzeichnis, Fußnote
 
 ### Ansicht
 
 - **Ansichten** — Live Preview/Quellmodus (das Fenster zwischen Live-Vorschau und rohem Markdown umschalten)
+- **Immersiv** — Fokusmodus, Zen-Modus, Schreibmaschinen-Modus
 - **Anzeigen** — Leerzeichen anzeigen, Zeilennummern anzeigen, Lesbare Zeilenbreite, Navigationsbereich (die Gliederung von Obsidian)
 - **Zoom** — Vergrößern, Verkleinern, 100 %
 - **Fenster** — Nach rechts teilen, Nach unten teilen
 - **Gliederung** — Reduzieren, Erweitern, Alle reduzieren, Alle erweitern
-- **Immersiv** — Fokusmodus, Zen-Modus, Schreibmaschinen-Modus
 
 ### Tabelle
 
-Verfügbar, sobald sich der Cursor in einer Tabelle befindet: **Zeilen oder Spalten löschen ▼** (Zeilen löschen, Spalten löschen), Zeilen oben / unten einfügen, Spalten links / rechts einfügen, Zeile nach oben / unten verschieben, Spalte nach links / rechts verschieben, **Tabellen formatieren ▼** (Diese Tabelle formatieren, Alle Tabellen formatieren), Spalte linksbündig / zentriert / rechtsbündig ausrichten, **Zeilen sortieren ▼** (Aufsteigend sortieren, Absteigend sortieren), **Tabelle transponieren**, **Tabelle in Text umwandeln**, **Als Tabelle einfügen**, **Tabelle als CSV kopieren**.
-**In Text umwandeln** schreibt die Tabelle als tabulatorgetrennte Zeilen — genau die Umkehrung von **Text in Tabelle umwandeln** (Einfügen · Blöcke), das tabulator- oder kommagetrennten Text in eine ausgerichtete Markdown-Tabelle verwandelt. **Als Tabelle einfügen** tut dasselbe mit der Zwischenablage und funktioniert überall.
+Verfügbar, sobald sich der Cursor in einer Tabelle befindet:
+
+- **Zeilen und Spalten** — Zeilen oder Spalten löschen ▼ (Zeilen löschen, Spalten löschen), Zeilen oben / unten einfügen, Spalten links / rechts einfügen, Zeile nach oben / unten verschieben, Spalte nach links / rechts verschieben
+- **Format** — Tabellen formatieren ▼ (Diese Tabelle formatieren, Alle Tabellen formatieren)
+- **Ausrichtung** — Spalte linksbündig / zentriert / rechtsbündig ausrichten
+- **Daten** — Zeilen sortieren ▼ (Aufsteigend sortieren, Absteigend sortieren), Tabelle transponieren, Tabelle in Text umwandeln
+- **Zwischenablage** — Als Tabelle einfügen, Tabelle als CSV kopieren
 
 ### Hilfsprogramme
 
-**Zeilen zusammenführen** fasst eine Folge von Zeilen zu einer zusammen; **Zeilen teilen** bricht sie am Satzzeichen um, das in der Auswahl am häufigsten vorkommt; **Zeilen umkehren** dreht die Reihenfolge jeder Folge um; **Duplizieren** kopiert die Zeile des Cursors darunter bzw. die Auswahl direkt dahinter. Keiner der vier überschreitet eine Leerzeile oder einen Codeblock.
-**Liste sortieren** sortiert eine Liste Ebene für Ebene — ein Eintrag behält seinen eigenen Textkörper und seine eigenen Unterpunkte, und nummerierte Einträge kommen neu nummeriert heraus. **Überschriften sortieren** ordnet jede Ebene der Notizgliederung neu und nimmt den Textkörper jedes Abschnitts dabei mit.
-**URI als Link einfügen** umschließt den ausgewählten Text mit der URI aus der Zwischenablage. **Intelligente Zeichensetzung** und **CJK-Abstände** normalisieren den ausgewählten Text, während **Bereinigen ▼** fünf Bereinigungsaktionen in einem Menü bündelt: **Nachgestellte Leerzeichen entfernen**, **Leere Zeilen zusammenfassen**, **Nackte URLs umwandeln**, **Hervorhebung und Fettdruck normieren** und **Aufzählungszeichen normieren**.
+- **Zeilen** — Zeilen zusammenführen, Zeilen teilen, Zeilen umkehren, Duplizieren. Zeilen zusammenführen fasst eine Folge von Zeilen zu einer zusammen; Zeilen teilen bricht sie am Satzzeichen um, das in der Auswahl am häufigsten vorkommt; Zeilen umkehren dreht die Reihenfolge jeder Folge um; Duplizieren kopiert die Zeile des Cursors darunter bzw. die Auswahl direkt dahinter. Keiner der vier überschreitet eine Leerzeile oder einen Codeblock.
+- **Sortieren** — Liste sortieren, Überschriften sortieren. Liste sortieren sortiert eine Liste Ebene für Ebene — ein Eintrag behält seinen eigenen Textkörper und seine eigenen Unterpunkte, und nummerierte Einträge kommen neu nummeriert heraus. Überschriften sortieren ordnet jede Ebene der Notizgliederung neu und nimmt den Textkörper jedes Abschnitts dabei mit.
+- **Links** — URI als Link einfügen, das den ausgewählten Text mit der URI aus der Zwischenablage umschließt.
+- **Normalisieren** — Intelligente Zeichensetzung, CJK-Abstände, Bereinigen ▼ (Nachgestellte Leerzeichen entfernen, Leere Zeilen zusammenfassen, Nackte URLs umwandeln, Hervorhebung und Fettdruck normieren, Aufzählungszeichen normieren).
 
 ### Angeheftet
 
@@ -186,24 +199,20 @@ Alle Daten werden mit dem Plugin ausgeliefert, die Auswahl funktioniert also vol
 
 ## Installation
 
-Voraussetzung ist Obsidian **1.13.7 oder höher**.
-
-**Aus den Community-Plugins (empfohlen)**
+**Aus den Community-Plugins (empfohlen)**  
 Einstellungen → **Community-Plugins** → **Durchsuchen** → nach **„Awesome Format Bar"** suchen → **Installieren** → **Aktivieren**.
 
-**Mit BRAT (Beta-Versionen)**
-Installieren Sie [BRAT](https://github.com/TfTHacker/obsidian42-brat), führen Sie *BRAT: Add a beta plugin* aus und fügen Sie die URL dieses Repositories ein.
-
-**Manuell**
-Laden Sie `main.js`, `manifest.json` und `styles.css` aus einem Release in `<Tresor>/.obsidian/plugins/awesome-format-bar/` und aktivieren Sie das Plugin anschließend unter Einstellungen → Community-Plugins.
+---
 
 ## Erste Schritte
 
 1. Öffnen Sie **Einstellungen → Awesome Format Bar** und schalten Sie die gewünschten Positionen ein: **Oben**, **Mitlaufend**, **Unten**.
-2. Das **Menüband (Oben)** hat sechs Registerkarten; die letzte, **Angeheftet**, enthält die Befehle, die Sie selbst anheften. Solange sie leer ist, zeigt sie einen Hinweis, der zurück zu den Einstellungen verweist.
-3. Die **kompakten Leisten** (Mitlaufend / Unten) tragen eine feste Auswahl an Befehlen; was nicht hineinpasst, wandert in das Überlaufmenü `⋯`.
-4. Heften Sie Befehle unter **Einstellungen → Angeheftet** an: hinzufügen (Befehl wählen, dann Symbol), Symbol ändern, per Ziehen umordnen oder löschen. Angeheftete Befehle verhalten sich genau wie ihre Gegenstücke in der Befehlspalette.
+2. Das **Menüband (Oben)** hat sechs Registerkarten; die letzte, **Angeheftet**, enthält die Befehle, die Sie selbst anheften. Solange sie leer ist, zeigt sie einen Hinweis zum Hinzufügen; nutzen Sie die Bearbeiten-Schaltfläche, um Befehle und Gruppen zu verwalten.
+3. Die **kompakten Leisten** (Mitlaufend / Unten) tragen eine feste Auswahl an Befehlen; Schaltflächen, die nicht in die verfügbare Breite passen, wandern in das Überlaufmenü `⋯`, das außerdem jeden weiteren nach Registerkarte gruppierten Befehl sowie Ihre angehefteten auflistet.
+4. Öffnen Sie die Bearbeiten-Schaltfläche von **Angeheftet**, um Befehle hinzuzufügen, Symbole zu wählen, neue Gruppen zu erstellen oder Gruppen umzubenennen, per Ziehen umzuordnen, Befehle in andere Gruppen zu verschieben oder sie zu löschen. Die Einstellungen halten zusätzlich einen Eintrag bereit, der denselben Manager öffnet. Angeheftete Befehle verhalten sich genau wie ihre Gegenstücke in der Befehlspalette.
 5. Lieber Tastatur? Schalten Sie **alle drei Positionsschalter aus** und die Leiste verschwindet vollständig aus der Oberfläche — das Plugin fügt Ihrem Bildschirm nichts hinzu, während alle **126 in der Palette registrierten Befehle** weiter funktionieren und unter **Einstellungen → Tastenkürzel** an eigene Hotkeys gebunden werden können. Anders gesagt: Sie können es als reines Befehls- und Hotkey-Paket nutzen und nie eine Schaltfläche anklicken.
+
+---
 
 ## Einstellungen
 
@@ -212,6 +221,8 @@ Laden Sie `main.js`, `manifest.json` und `styles.css` aus einem Release in `<Tre
 | **Symbolleiste** | Unabhängige Schalter für Oben / Mitlaufend / Unten                                                          |
 | **Angeheftet**  | Ihre angehefteten Befehle — hinzufügen, Symbol ändern, umordnen, löschen                                    |
 | **Tabelle**     | Eingabetaste wechselt zur nächsten Zeile; Tab / Shift+Tab wechseln zwischen Zellen, und Tab am rechten Rand fügt eine Spalte hinzu; Zellen mit Leerzeichen auffüllen; in der Leseansicht beim Klicken auf die Kopfzeile sortieren (ändert die Datei niemals) |
+
+---
 
 ## Kompatibilität
 
@@ -224,40 +235,40 @@ Laden Sie `main.js`, `manifest.json` und `styles.css` aus einem Release in `<Tre
 
 ## Häufige Fragen
 
-**Macht das aus Obsidian einen WYSIWYG- oder Rich-Text-Editor?**
+**Macht das aus Obsidian einen WYSIWYG- oder Rich-Text-Editor?**  
 Nein — und genau das ist der Punkt. Es ist eine **Symbolleiste** über dem eigenen Editor von Obsidian. Ihre Dateien bleiben reines Markdown.
 
-**Muss ich jetzt Markdown-Syntax lernen, um Obsidian zu nutzen?**
+**Muss ich jetzt Markdown-Syntax lernen, um Obsidian zu nutzen?**  
 Nein. Fett, Überschriften, Listen, Links, Tabellen, Callouts, Codeblöcke und Formeln sind alles Schaltflächen.
 
-**Was genau wird in meine Notizen geschrieben?**
+**Was genau wird in meine Notizen geschrieben?**  
 Standard-Markdown und Obsidian-Markdown. Nur dort, wo Markdown keine Syntax hat — Unterstreichen, Hochstellen, Tiefstellen, Absatzausrichtung, Text- und Hervorhebungsfarbe, Schriftart und Schriftgröße — schreibt das Plugin wenige, standardkonforme Inline-HTML-Tags, die Obsidian nativ darstellt.
 
-**Kann ich meine Tastenkürzel weiter verwenden?**
+**Kann ich meine Tastenkürzel weiter verwenden?**  
 Ja. 126 der 138 Befehle erscheinen in der Befehlspalette und lassen sich an ein beliebiges Tastenkürzel binden.
 
-**Ich arbeite lieber mit der Tastatur — kann ich die Leiste komplett ausblenden?**
+**Ich arbeite lieber mit der Tastatur — kann ich die Leiste komplett ausblenden?**  
 Ja, und Sie verlieren dabei nichts. Schalten Sie in **Einstellungen → Awesome Format Bar** alle drei Positionen (**Oben / Mitlaufend / Unten**) aus und das Plugin hinterlässt auf dem Bildschirm keine Spur: kein Menüband, keine schwebende Leiste, keine Leiste unten. Alle **126 in der Palette registrierten Befehle** funktionieren weiterhin — über die Befehlspalette oder über ein Tastenkürzel, das Sie unter **Einstellungen → Tastenkürzel** festlegen — darunter auch Befehle, für die Obsidian kein eingebautes Kürzel hat, etwa Schriftfarbe, Hervorhebungsfarbe, Groß-/Kleinschreibung ändern, Callouts, Tabellensortierung und die Zeilenwerkzeuge. Betrachten Sie es als eine optionale Nur-Tastatur-Ebene, die Sie zuschalten können, wann immer die Maus sich zu langsam anfühlt.
 
-**Kann ich Schaltflächen für Befehle anderer Plugins hinzufügen?**
+**Kann ich Schaltflächen für Befehle anderer Plugins hinzufügen?**  
 Ja — dafür ist die Registerkarte **Angeheftet** da. Heften Sie einen beliebigen Befehl aus der Palette an und wählen Sie ein Symbol. Ist das bereitstellende Plugin deaktiviert, wird die Schaltfläche ausgegraut und die Anheftung bleibt erhalten.
 
-**Braucht die Emoji-Auswahl eine Internetverbindung?**
-Nein. Alle rund 2.140 Emoji, Kaomoji und Symbole sind im Plugin enthalten.
+**Braucht die Emoji-Auswahl eine Internetverbindung?**  
+Nein. Alle rund 2.150 Emoji, Kaomoji und Symbole sind im Plugin enthalten.
 
-**Nutzt das Plugin KI oder telefoniert es in irgendeiner Weise nach Hause?**
+**Nutzt das Plugin KI oder telefoniert es in irgendeiner Weise nach Hause?**  
 Nein. Im gesamten Code gibt es keine KI-Funktion, keinen API-Schlüssel, keine Netzwerkanfrage, keine Nutzungsanalyse und keine Telemetrie — das Plugin liest und schreibt Ihre lokalen `.md`-Dateien und sonst nichts. Die Emoji-Bibliothek ist im Plugin enthalten und funktioniert daher auch im Flugzeug.
 
-**Ändert das Sortieren einer Tabelle in der Leseansicht meine Datei?**
+**Ändert das Sortieren einer Tabelle in der Leseansicht meine Datei?**  
 Nein. Die Sortierung per Klick auf die Kopfzeile in der Leseansicht betrifft nur die Anzeige und ändert die Notiz niemals.
 
-**Wie zentriere ich ein Bild oder ändere seine Größe?**
+**Wie zentriere ich ein Bild oder ändere seine Größe?**  
 Setzen Sie den Cursor in die Zeile des Bildes. **Zentriert** (Start · Absatz) zentriert es — ein Bild, das allein in einer Zeile steht, *ist* ein Absatz, also ist kein eigener Befehl nötig — und **Bildgröße ▼** (Einfügen · Bild) legt seine Breite auf 100–600 px fest, **Ursprüngliche Größe** gibt der Datei ihre eigene Größe zurück. **Beschriftung** schreibt darunter eine Beschriftungszeile und markiert sie, bereit zum Überschreiben. Alles wird als einfache Obsidian-Syntax geschrieben (ein Abschnitt `|300` hinter dem Dateinamen), die Notiz liest sich also auch ohne Plugin genauso.
 
-**Kann ich die Leiste ausblenden, wenn ich einen aufgeräumten Bildschirm möchte?**
+**Kann ich die Leiste ausblenden, wenn ich einen aufgeräumten Bildschirm möchte?**  
 Ja — schalten Sie eine beliebige Position in den Einstellungen aus oder alle drei, um sie ganz zu verbergen (was dann noch funktioniert, steht in der Frage zur Tastatur weiter oben).
 
-**Ist es konfigurierbar?**
+**Ist es konfigurierbar?**  
 Bewusst minimal — und genau das ist der Punkt. Das integrierte Layout ist fest und themenangepasst, damit es immer nativ wirkt, nie neu geordnet werden muss und sich bei einem Update nicht selbst zurücksetzt. Alles, was Sie tatsächlich ändern wollen, liegt an einem Ort: der Registerkarte **Angeheftet**, wo Sie einen beliebigen Befehl hinzufügen, sein Symbol wählen, ihn gruppieren und per Ziehen in die richtige Reihenfolge bringen. Die Begründung steht unter *Funktionen → Keine Konfiguration, themenangepasst*.
 
 ---
@@ -266,15 +277,13 @@ Bewusst minimal — und genau das ist der Punkt. Das integrierte Layout ist fest
 
 ```shell
 npm install        # Abhängigkeiten installieren
-npm run dev        # im Watch-Modus bauen
 npm run build      # Typprüfung + Tests + Produktions-Build
-npm run test       # Unit-Tests ausführen
-npm run lint       # eslint
-npm run typecheck  # tsc --noEmit
 npm run deploy -- /path/to/vault   # main.js, manifest.json und styles.css in einen Tresor kopieren
 ```
 
 Das Release besteht aus genau drei Dateien: `main.js`, `manifest.json` und `styles.css`.
+
+---
 
 ## Veröffentlichung
 
@@ -294,11 +303,12 @@ Wird das Tag gepusht, läuft `.github/workflows/release.yml`: Es baut das Plugin
 Obsidian-Symbolleisten-Plugin · Obsidian-Formatierungsleiste · Obsidian-Formatleiste · Markdown-Symbolleiste · Markdown-Formatierungsschaltflächen · Word-ähnliches Menüband für Obsidian · Rich-Text-Symbolleiste · WYSIWYG-artige Bearbeitungsleiste · Editor-Symbolleiste · schwebende Auswahl-Symbolleiste · Textfarbe und Hervorhebung in Obsidian · Unterstreichen, Hochstellen und Tiefstellen in Markdown · Textausrichtung · Callout-Auswahl · Emoji-Auswahl · Kaomoji · Symbolauswahl · Markdown-Tabelleneditor · Tabelle sortieren · als Tabelle einfügen · Inhaltsverzeichnis-Generator · Befehle anheften · einsteigerfreundliches Obsidian · Markdown ohne Syntax bearbeiten
 
 **Andere Sprachen / Other languages:**
-Obsidian 工具栏插件、格式栏、富文本工具栏、Markdown 快捷按钮、表情符号选择器、表格编辑 ·  
-Obsidian 工具列外掛、格式列 ·  
-Obsidian ツールバー・書式設定バー・絵文字ピッカー ·  
-Obsidian 툴바 · 서식 도구 모음 ·  
-Obsidian Symbolleiste / Formatierungsleiste ·  
-Barre d'outils / barre de mise en forme pour Obsidian ·  
-Barra de herramientas / barra de formato para Obsidian  
-Панель инструментов / панель форматирования для Obsidian
+
+- Obsidian 工具栏插件、格式栏、富文本工具栏、Markdown 快捷按钮、表情符号选择器、表格编辑
+- Obsidian 工具列外掛、格式列
+- Obsidian ツールバー・書式設定バー・絵文字ピッカー
+- Obsidian 툴바 · 서식 도구 모음
+- Obsidian Symbolleiste / Formatierungsleiste
+- Barre d'outils / barre de mise en forme pour Obsidian
+- Barra de herramientas / barra de formato para Obsidian
+- Панель инструментов / панель форматирования для Obsidian
