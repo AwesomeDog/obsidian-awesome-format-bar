@@ -1,4 +1,4 @@
-import { compareText } from "./editor-ops/lines";
+import { asNumbers, compareText } from "./editor-ops/lines";
 
 /**
  * Reading view only: the rendered rows move, the file does not.
@@ -56,15 +56,23 @@ export function sortTableOnHeaderClick(evt: MouseEvent): void {
     cell.removeAttribute(SORT_ATTR);
   if (order !== "none") header.setAttribute(SORT_ATTR, order);
 
-  const key = (row: HTMLTableRowElement): string =>
-    row.cells[column]?.textContent?.trim() ?? "";
-  const rows =
+  // Same keys as `sortRows`, so clicking a header agrees with the command.
+  const rows = Array.from(body.rows);
+  const text = rows.map((row) => row.cells[column]?.textContent?.trim() ?? "");
+  const numbers = asNumbers(text);
+  const before = (x: number, y: number): number =>
+    numbers
+      ? (numbers[x] ?? 0) - (numbers[y] ?? 0)
+      : compareText(text[x] ?? "", text[y] ?? "");
+
+  const sorted =
     order === "none"
       ? [...state.original]
-      : Array.from(body.rows).sort((a, b) =>
-          order === "desc"
-            ? compareText(key(b), key(a))
-            : compareText(key(a), key(b)),
-        );
-  for (const row of rows) body.appendChild(row);
+      : rows
+          .map((row, at) => ({ at, row }))
+          .sort((x, y) =>
+            order === "desc" ? before(y.at, x.at) : before(x.at, y.at),
+          )
+          .map((entry) => entry.row);
+  for (const row of sorted) body.appendChild(row);
 }

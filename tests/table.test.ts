@@ -415,6 +415,45 @@ describe("sortRows", () => {
       ),
     ).toBe(["| n |", "| --- |", "| 1 |", "| 9 |", "| 10 |"].join("\n"));
   });
+
+  it("sorts Chinese by pinyin rather than by code point", () => {
+    expect(
+      run("|n|\n|-|\n|王五|\n|^阿明|\n|李四|", (doc, at) =>
+        sortRows(doc, at, TIGHT, false),
+      ),
+    ).toBe(["| n |", "| --- |", "| 阿明 |", "| 李四 |", "| 王五 |"].join("\n"));
+  });
+
+  it("reads a money column as amounts, separator included", () => {
+    expect(
+      run("|v|\n|-|\n|¥900|\n|^¥1,200|\n|¥80|", (doc, at) =>
+        sortRows(doc, at, TIGHT, false),
+      ),
+    ).toBe(
+      ["| v |", "| --- |", "| ¥80 |", "| ¥900 |", "| ¥1,200 |"].join("\n"),
+    );
+  });
+
+  it("reads decimals, signs and percentages as numbers", () => {
+    expect(
+      run("|v|\n|-|\n|1.5|\n|^1.10|\n|-2|\n|87%|", (doc, at) =>
+        sortRows(doc, at, TIGHT, false),
+      ),
+    ).toBe(
+      ["| v |", "| --- |", "| -2 |", "| 1.10 |", "| 1.5 |", "| 87% |"].join(
+        "\n",
+      ),
+    );
+  });
+
+  it("treats the column as text once one cell is not a number", () => {
+    // `1.5` before `1.10` is text order; read as numbers they would swap.
+    expect(
+      run("|v|\n|-|\n|1.5|\n|^1.10|\n|x|", (doc, at) =>
+        sortRows(doc, at, TIGHT, false),
+      ),
+    ).toBe(["| v |", "| --- |", "| 1.5 |", "| 1.10 |", "| x |"].join("\n"));
+  });
 });
 
 describe("planTableEnter", () => {

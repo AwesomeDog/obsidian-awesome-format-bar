@@ -3,14 +3,34 @@ import { normalizeRanges, type Change, type Range } from "./plan";
 /** A fence is a divider for renumbering, sorting, joining and splitting alike. */
 export const FENCE = /^\s*(?:```|~~~)/;
 
-const collator = new Intl.Collator("en-US", {
+const LATIN = new Intl.Collator("en-US", {
   numeric: true,
   sensitivity: "base",
 });
 
+/** Han only sorts by pinyin under `zh`; latin, hangul and cyrillic come out
+ * the same under either, so the script decides which collator to ask. */
+const HAN = new Intl.Collator("zh-Hans-CN", {
+  numeric: true,
+  sensitivity: "base",
+});
+
+const HAN_SCRIPT = /\p{Script=Han}/u;
+
 /** Shared by every sort, so `Item 2` comes before `Item 10`. */
 export function compareText(a: string, b: string): number {
+  const collator = HAN_SCRIPT.test(a) || HAN_SCRIPT.test(b) ? HAN : LATIN;
   return collator.compare(a, b);
+}
+
+/** A number as a spreadsheet writes one: `1.5`, `-3`, `¥1,200`, `87%`. */
+const NUMBER = /^[-+]?\p{Sc}?\d[\d,]*(?:\.\d+)?%?$/u;
+
+/** Numbers for a whole column of them, else `null`: one `n/a` and the column
+ * is text again, because half a column sorted numerically is just wrong. */
+export function asNumbers(values: readonly string[]): readonly number[] | null {
+  if (!values.every((value) => NUMBER.test(value))) return null;
+  return values.map((value) => parseFloat(value.replace(/[\p{Sc}%,]/gu, "")));
 }
 
 export class Lines {

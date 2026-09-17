@@ -369,6 +369,10 @@ describe("sortLines", () => {
     expect(apply("[b\nB\na]", sortLines)).toBe("a\nb\nB");
   });
 
+  it("sorts Chinese by pinyin rather than by code point", () => {
+    expect(apply("[王五\n阿明\n李四]", sortLines)).toBe("阿明\n李四\n王五");
+  });
+
   it("treats a blank line as a divider", () => {
     expect(apply("[c\na\n\nz\nb]", sortLines)).toBe("a\nc\n\nb\nz");
   });

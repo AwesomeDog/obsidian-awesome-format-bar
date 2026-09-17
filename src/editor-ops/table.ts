@@ -1,4 +1,4 @@
-import { compareText, Lines, replaceBlock } from "./lines";
+import { asNumbers, compareText, Lines, replaceBlock } from "./lines";
 import { NO_CHANGE, order, type Change, type Plan } from "./plan";
 import { displayWidth, padToWidth } from "./width";
 
@@ -521,13 +521,17 @@ export function sortRows(
   const { cell, table } = hit;
   const [header, ...body] = table.rows;
   if (!header || body.length < 2) return NO_CHANGE;
-  const key = (row: readonly string[]): string => row[cell.column] ?? "";
-  const sorted = body
-    .slice()
-    .sort((a, b) =>
-      descending ? compareText(key(b), key(a)) : compareText(key(a), key(b)),
-    );
-  return edit(table, format, [header, ...sorted]);
+
+  const text = body.map((row) => row[cell.column] ?? "");
+  const numbers = asNumbers(text);
+  const before = (x: number, y: number): number =>
+    numbers
+      ? (numbers[x] ?? 0) - (numbers[y] ?? 0)
+      : compareText(text[x] ?? "", text[y] ?? "");
+
+  const order = body.map((row, at) => ({ at, row }));
+  order.sort((x, y) => (descending ? before(y.at, x.at) : before(x.at, y.at)));
+  return edit(table, format, [header, ...order.map((entry) => entry.row)]);
 }
 
 /** Transposes the header and body while regenerating the delimiter row. */
