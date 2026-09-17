@@ -88,7 +88,7 @@ export class FormatBarSettingTab extends PluginSettingTab {
           toggle(
             "tableKeyNavigation",
             "Keyboard navigation",
-            "Enter moves down a cell, Tab to the next one and Shift+Tab back. Tab at the right edge adds a column and Enter on the last row adds a row below it. Source mode only.",
+            "Enter moves down a cell, Tab to the next one and Shift+Tab back, and Shift+Enter starts a new line inside the cell. Tab at the right edge adds a column and Enter on the last row adds a row below it. Source mode only.",
           ),
           toggle(
             "padCellWidthWithSpaces",

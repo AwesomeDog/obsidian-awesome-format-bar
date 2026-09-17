@@ -1,5 +1,6 @@
 import { asNumbers, compareText, Lines, replaceBlock } from "./lines";
-import { NO_CHANGE, order, type Change, type Plan } from "./plan";
+import { NO_CHANGE, order, type Change, type Plan, type Range } from "./plan";
+import { insertText } from "./text";
 import { displayWidth, padToWidth } from "./width";
 
 export type ColumnAlignment = "none" | "left" | "center" | "right";
@@ -559,6 +560,17 @@ export function removeDuplicateRows(
   const removed = body.length - kept.length;
   if (removed === 0) return { plan: NO_CHANGE, removed };
   return { plan: edit(table, format, [header, ...kept]), removed };
+}
+
+/** Shift+Enter inside a cell. GFM keeps a row on one line, so the break has to
+ * be `<br>` — the same text `escapeCell` turns a stray newline into on the way
+ * out. `null` outside a table, so the editor keeps its own Shift+Enter there. */
+export function insertCellBreak(
+  doc: string,
+  ranges: readonly Range[],
+): Plan | null {
+  const cells = ranges.filter((range) => tableAt(doc, range.from));
+  return cells.length === 0 ? null : insertText(doc, cells, "<br>");
 }
 
 /** Transposes the header and body while regenerating the delimiter row. */

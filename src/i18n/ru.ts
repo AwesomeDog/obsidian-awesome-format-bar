@@ -189,8 +189,8 @@ export default {
   "Hides every bar on mobile without clearing its positions.":
     "Скрывает все панели на мобильных устройствах, не сбрасывая их положение.",
   "Keyboard navigation": "Навигация с клавиатуры",
-  "Enter moves down a cell, Tab to the next one and Shift+Tab back. Tab at the right edge adds a column and Enter on the last row adds a row below it. Source mode only.":
-    "Enter перемещает на ячейку ниже, Tab — к следующей, Shift+Tab — назад. Tab у правого края добавляет столбец, Enter на последней строке добавляет строку под ней. Только в режиме исходного текста.",
+  "Enter moves down a cell, Tab to the next one and Shift+Tab back, and Shift+Enter starts a new line inside the cell. Tab at the right edge adds a column and Enter on the last row adds a row below it. Source mode only.":
+    "Enter перемещает на ячейку ниже, Tab — к следующей, Shift+Tab — назад, а Shift+Enter начинает новую строку внутри ячейки. Tab у правого края добавляет столбец, Enter на последней строке добавляет строку под ней. Только в режиме исходного текста.",
   "Pad cells with spaces": "Дополнять ячейки пробелами",
   "Lines the pipes of each column up by padding cells with spaces. Live Preview always pads, so turning this off makes tables flip between the two styles as you edit.":
     "Выравнивает вертикальные разделители столбцов, дополняя ячейки пробелами. В режиме Live Preview выравнивание выполняется всегда, поэтому при отключении таблица будет менять вид при каждом редактировании.",

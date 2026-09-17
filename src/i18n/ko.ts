@@ -189,8 +189,8 @@ export default {
   "Hides every bar on mobile without clearing its positions.":
     "모바일에서 모든 도구 모음을 숨기며, 각 위치 설정은 지워지지 않습니다.",
   "Keyboard navigation": "키보드 탐색",
-  "Enter moves down a cell, Tab to the next one and Shift+Tab back. Tab at the right edge adds a column and Enter on the last row adds a row below it. Source mode only.":
-    "Enter는 아래 셀로, Tab은 다음 셀로, Shift+Tab은 이전 셀로 이동합니다. 오른쪽 끝에서 Tab을 누르면 열이 추가되고, 마지막 행에서 Enter를 누르면 그 아래에 행이 추가됩니다. 원본 모드에만 적용됩니다.",
+  "Enter moves down a cell, Tab to the next one and Shift+Tab back, and Shift+Enter starts a new line inside the cell. Tab at the right edge adds a column and Enter on the last row adds a row below it. Source mode only.":
+    "Enter는 아래 셀로, Tab은 다음 셀로, Shift+Tab은 이전 셀로 이동하고, Shift+Enter는 셀 안에서 새 줄을 시작합니다. 오른쪽 끝에서 Tab을 누르면 열이 추가되고, 마지막 행에서 Enter를 누르면 그 아래에 행이 추가됩니다. 원본 모드에만 적용됩니다.",
   "Pad cells with spaces": "공백으로 셀 채우기",
   "Lines the pipes of each column up by padding cells with spaces. Live Preview always pads, so turning this off makes tables flip between the two styles as you edit.":
     "공백으로 셀을 채워 각 열의 세로줄을 맞춥니다. 실시간 미리보기는 항상 공백으로 채우므로 이 옵션을 끄면 편집할 때 표가 두 가지 스타일 사이에서 왕복합니다.",

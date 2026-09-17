@@ -188,8 +188,8 @@ export default {
   "Hides every bar on mobile without clearing its positions.":
     "在移动端隐藏所有工具栏，但不会清空各位置的开关状态。",
   "Keyboard navigation": "键盘导航",
-  "Enter moves down a cell, Tab to the next one and Shift+Tab back. Tab at the right edge adds a column and Enter on the last row adds a row below it. Source mode only.":
-    "回车移到下方单元格，Tab 移到下一个，Shift+Tab 回到上一个；在最右列按 Tab 会添加一列，在最后一行按回车会在其下方添加一行。仅适用于源码模式。",
+  "Enter moves down a cell, Tab to the next one and Shift+Tab back, and Shift+Enter starts a new line inside the cell. Tab at the right edge adds a column and Enter on the last row adds a row below it. Source mode only.":
+    "回车移到下方单元格，Tab 移到下一个，Shift+Tab 回到上一个，Shift+回车在单元格内换行；在最右列按 Tab 会添加一列，在最后一行按回车会在其下方添加一行。仅适用于源码模式。",
   "Pad cells with spaces": "用空格填充单元格",
   "Lines the pipes of each column up by padding cells with spaces. Live Preview always pads, so turning this off makes tables flip between the two styles as you edit.":
     "用空格填充单元格，使各列的竖线对齐。实时预览始终保持填充，关闭此项会让表格在编辑时来回切换两种样式。",

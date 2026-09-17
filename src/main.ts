@@ -1,6 +1,6 @@
 import type { Extension } from "@codemirror/state";
 import { MarkdownView, Platform, Plugin, addIcon, getLanguage } from "obsidian";
-import { commit, hasSelection } from "./commands/apply";
+import { commit, hasSelection, selectionRanges } from "./commands/apply";
 import { exitFullscreen } from "./commands/dispatch";
 import {
   canRun,
@@ -13,6 +13,7 @@ import {
   registeredCommandName,
 } from "./commands/registered";
 import {
+  insertCellBreak,
   planTableEnter,
   planTableTab,
   type TableFormat,
@@ -222,8 +223,6 @@ export default class AwesomeFormatBarPlugin extends Plugin {
     if (!isEnter && !isTab) return;
     if (evt.ctrlKey || evt.metaKey || evt.altKey) return;
     if (!this.settings.tableKeyNavigation) return;
-    // Shift+Enter keeps the editor's default.
-    if (isEnter && evt.shiftKey) return;
 
     const target = evt.target;
     if (!(target instanceof Element)) return;
@@ -234,18 +233,17 @@ export default class AwesomeFormatBarPlugin extends Plugin {
     const view = this.app.workspace.getActiveViewOfType(MarkdownView);
     if (!view || view.getMode() !== "source") return;
     const editor = view.editor;
-    // A selection would be replaced; let Enter do that.
-    if (isEnter && hasSelection(editor)) return;
+    // A selection would be replaced; let Enter do that. Shift+Enter replaces
+    // it with the break instead, or the default newline would break the row.
+    if (isEnter && !evt.shiftKey && hasSelection(editor)) return;
 
+    const doc = editor.getValue();
     const offset = editor.posToOffset(editor.getCursor());
     const plan = isEnter
-      ? planTableEnter(editor.getValue(), offset, this.tableFormat())
-      : planTableTab(
-          editor.getValue(),
-          offset,
-          this.tableFormat(),
-          evt.shiftKey,
-        );
+      ? evt.shiftKey
+        ? insertCellBreak(doc, selectionRanges(editor))
+        : planTableEnter(doc, offset, this.tableFormat())
+      : planTableTab(doc, offset, this.tableFormat(), evt.shiftKey);
     if (!plan) return;
     evt.preventDefault();
     commit(editor, plan);

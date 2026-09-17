@@ -189,8 +189,8 @@ export default {
   "Hides every bar on mobile without clearing its positions.":
     "Oculta todas las barras en móvil sin borrar sus posiciones.",
   "Keyboard navigation": "Navegación con el teclado",
-  "Enter moves down a cell, Tab to the next one and Shift+Tab back. Tab at the right edge adds a column and Enter on the last row adds a row below it. Source mode only.":
-    "Enter baja una celda, Tab pasa a la siguiente y Shift+Tab vuelve. Tab en el borde derecho añade una columna y Enter en la última fila añade una fila debajo. Solo en el modo de origen.",
+  "Enter moves down a cell, Tab to the next one and Shift+Tab back, and Shift+Enter starts a new line inside the cell. Tab at the right edge adds a column and Enter on the last row adds a row below it. Source mode only.":
+    "Enter baja una celda, Tab pasa a la siguiente y Shift+Tab vuelve, y Shift+Enter inicia una línea nueva dentro de la celda. Tab en el borde derecho añade una columna y Enter en la última fila añade una fila debajo. Solo en el modo de origen.",
   "Pad cells with spaces": "Rellenar celdas con espacios",
   "Lines the pipes of each column up by padding cells with spaces. Live Preview always pads, so turning this off makes tables flip between the two styles as you edit.":
     "Rellena las celdas con espacios para alinear las barras verticales de cada columna. La vista previa en directo siempre rellena, por lo que desactivar esta opción hará que las tablas alternen entre los dos estilos al editarlas.",

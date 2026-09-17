@@ -190,8 +190,8 @@ export default {
   "Hides every bar on mobile without clearing its positions.":
     "Blendet auf Mobilgeräten alle Leisten aus, ohne die Positionen zurückzusetzen.",
   "Keyboard navigation": "Tastaturnavigation",
-  "Enter moves down a cell, Tab to the next one and Shift+Tab back. Tab at the right edge adds a column and Enter on the last row adds a row below it. Source mode only.":
-    "Enter springt eine Zelle nach unten, Tab zur nächsten und Shift+Tab zurück. Tab am rechten Rand fügt eine Spalte hinzu, Enter in der letzten Zeile eine Zeile darunter. Nur im Quellmodus.",
+  "Enter moves down a cell, Tab to the next one and Shift+Tab back, and Shift+Enter starts a new line inside the cell. Tab at the right edge adds a column and Enter on the last row adds a row below it. Source mode only.":
+    "Enter springt eine Zelle nach unten, Tab zur nächsten und Shift+Tab zurück, Shift+Enter beginnt eine neue Zeile innerhalb der Zelle. Tab am rechten Rand fügt eine Spalte hinzu, Enter in der letzten Zeile eine Zeile darunter. Nur im Quellmodus.",
   "Pad cells with spaces": "Zellen mit Leerzeichen auffüllen",
   "Lines the pipes of each column up by padding cells with spaces. Live Preview always pads, so turning this off makes tables flip between the two styles as you edit.":
     "Füllt Zellen mit Leerzeichen auf, sodass die senkrechten Striche einer Spalte bündig stehen. Die Live-Vorschau füllt immer auf; wenn Sie dies deaktivieren, wechselt die Tabelle beim Bearbeiten zwischen beiden Darstellungen.",

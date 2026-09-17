@@ -189,8 +189,8 @@ export default {
   "Hides every bar on mobile without clearing its positions.":
     "モバイルではすべてのバーを非表示にします。各位置のオン/オフの設定は保持されます。",
   "Keyboard navigation": "キーボード操作",
-  "Enter moves down a cell, Tab to the next one and Shift+Tab back. Tab at the right edge adds a column and Enter on the last row adds a row below it. Source mode only.":
-    "Enter で下のセル、Tab で次のセル、Shift+Tab で前のセルに移動します。右端で Tab を押すと列が追加され、最後の行で Enter を押すとその下に行が追加されます。ソースモードのみ。",
+  "Enter moves down a cell, Tab to the next one and Shift+Tab back, and Shift+Enter starts a new line inside the cell. Tab at the right edge adds a column and Enter on the last row adds a row below it. Source mode only.":
+    "Enter で下のセル、Tab で次のセル、Shift+Tab で前のセルに移動し、Shift+Enter でセル内に改行を入れます。右端で Tab を押すと列が追加され、最後の行で Enter を押すとその下に行が追加されます。ソースモードのみ。",
   "Pad cells with spaces": "セルをスペースで埋める",
   "Lines the pipes of each column up by padding cells with spaces. Live Preview always pads, so turning this off makes tables flip between the two styles as you edit.":
     "セルをスペースで埋めて、各列の縦線の位置を揃えます。ライブプレビューでは常に埋められるため、この設定をオフにすると、編集のたびにテーブルが 2 つのスタイルを行き来します。",

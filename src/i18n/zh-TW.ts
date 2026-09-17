@@ -188,8 +188,8 @@ export default {
   "Hides every bar on mobile without clearing its positions.":
     "在行動裝置上隱藏所有工具列，但不會清除各位置的開關狀態。",
   "Keyboard navigation": "鍵盤導航",
-  "Enter moves down a cell, Tab to the next one and Shift+Tab back. Tab at the right edge adds a column and Enter on the last row adds a row below it. Source mode only.":
-    "Enter 移到下方儲存格，Tab 移到下一個，Shift+Tab 回到上一個；在最右欄按 Tab 會新增一欄，在最後一列按 Enter 會在其下方新增一列。僅適用於原始碼模式。",
+  "Enter moves down a cell, Tab to the next one and Shift+Tab back, and Shift+Enter starts a new line inside the cell. Tab at the right edge adds a column and Enter on the last row adds a row below it. Source mode only.":
+    "Enter 移到下方儲存格，Tab 移到下一個，Shift+Tab 回到上一個，Shift+Enter 在儲存格內換行；在最右欄按 Tab 會新增一欄，在最後一列按 Enter 會在其下方新增一列。僅適用於原始碼模式。",
   "Pad cells with spaces": "以空格填滿儲存格",
   "Lines the pipes of each column up by padding cells with spaces. Live Preview always pads, so turning this off makes tables flip between the two styles as you edit.":
     "以空格填滿儲存格，讓各欄的直線對齊。即時預覽一律會填滿，關閉此項會讓表格在編輯時於兩種樣式之間來回切換。",

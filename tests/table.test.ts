@@ -6,6 +6,7 @@ import {
   deleteRow,
   formatAllTables,
   formatTable,
+  insertCellBreak,
   insertColumnLeft,
   isTableLine,
   insertColumnRight,
@@ -760,6 +761,29 @@ describe("tableToText", () => {
     expect(applyChanges(table, tableToText(table, 0).changes)).toBe(
       "a\tb\nc\td",
     );
+  });
+});
+
+describe("insertCellBreak", () => {
+  /** `[` … `]` is the selection, a bare `[` a caret. */
+  function breakAt(input: string): string | null {
+    const from = input.indexOf("[");
+    const to = input.indexOf("]");
+    const doc = input.replace("]", "").replace("[", "");
+    const plan = insertCellBreak(doc, [{ from, to: to < 0 ? from : to - 1 }]);
+    return plan && applyChanges(doc, plan.changes);
+  }
+
+  it("inserts a break where the caret is", () => {
+    expect(breakAt("|a|b|\n|-|-|\n|one[|d|")).toBe("|a|b|\n|-|-|\n|one<br>|d|");
+  });
+
+  it("replaces the selection instead of breaking the row", () => {
+    expect(breakAt("|a|b|\n|-|-|\n|o[ne]|d|")).toBe("|a|b|\n|-|-|\n|o<br>|d|");
+  });
+
+  it("leaves prose alone so the editor keeps its own Shift+Enter", () => {
+    expect(breakAt("plain [prose")).toBeNull();
   });
 });
 
