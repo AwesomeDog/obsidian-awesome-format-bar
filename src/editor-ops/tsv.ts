@@ -4,16 +4,20 @@ import { renderTable, tableAt, type TableFormat } from "./table";
 
 /** Escaping and padding stay `renderTable`'s job, so output matches a table op. */
 
-/** Counted over the whole text: a quoted cell may hold a newline. */
+/** `null` means one column. Excel copies one column without any tab, so
+ * reading "Smith, John" as two fields would silently corrupt it; a real CSV
+ * never puts a space beside its comma, and quotes a field that holds one. */
 function detectDelimiter(text: string): string | null {
   const tabs = (text.match(/\t/g) ?? []).length;
-  const commas = (text.match(/,/g) ?? []).length;
-  if (tabs === 0 && commas === 0) return null;
-  return tabs > 0 ? "\t" : ",";
+  if (tabs > 0) return "\t";
+  if ((text.match(/,/g) ?? []).length === 0) return null;
+  if (text.includes('"')) return ",";
+  return /,\s|\s,/u.test(text) ? null : ",";
 }
 
-/** Without quoting, a cell holding a comma or newline splits silently. */
-function parseRows(text: string, delimiter: string): string[][] {
+/** Without quoting, a cell holding a comma or newline splits silently.
+ * A `null` delimiter splits on newlines only, so each line is one cell. */
+function parseRows(text: string, delimiter: string | null): string[][] {
   const rows: string[][] = [];
   let row: string[] = [];
   let cell = "";
@@ -65,8 +69,6 @@ export function tableFromDelimited(
   if (body.trim() === "") return null;
 
   const delimiter = detectDelimiter(body);
-  if (!delimiter) return null;
-
   const rows = parseRows(body, delimiter).map((row) =>
     row.map((cell) => cell.trim()),
   );

@@ -672,11 +672,28 @@ describe("tableFromDelimited", () => {
     );
   });
 
+  it("builds a one-column table from lines without a separator", () => {
+    expect(tableFromDelimited("hello\nworld", PADDED)).toBe(
+      ["| hello |", "| ----- |", "| world |"].join("\n"),
+    );
+  });
+
+  it("keeps a name's comma in one cell instead of splitting it", () => {
+    expect(tableFromDelimited("Smith, John\nDoe, Jane", PADDED)).toBe(
+      ["| Smith, John |", "| ----------- |", "| Doe, Jane   |"].join("\n"),
+    );
+  });
+
+  it("still reads an unquoted CSV as comma-separated", () => {
+    expect(tableFromDelimited("a,b\nc,d", PADDED)).toBe(
+      ["| a   | b   |", "| --- | --- |", "| c   | d   |"].join("\n"),
+    );
+  });
+
   it("refuses text that cannot be a table", () => {
     expect(tableFromDelimited("", PADDED)).toBeNull();
     expect(tableFromDelimited("   \n\n", PADDED)).toBeNull();
     expect(tableFromDelimited("a\tb", PADDED)).toBeNull();
-    expect(tableFromDelimited("hello\nworld", PADDED)).toBeNull();
   });
 });
 
