@@ -125,6 +125,7 @@ export default {
   "Sort Rows": "列排序",
   "Sort Rows A to Z": "由 A 到 Z 排序",
   "Sort Rows Z to A": "由 Z 到 A 排序",
+  "Remove Duplicate Rows": "刪除重複列",
   "Transpose Table": "轉置表格",
   "Convert Table to Text": "將表格轉換為文字",
   "Paste as Table": "貼上為表格",
@@ -237,5 +238,7 @@ export default {
   "Select two or more rows of tab- or comma-separated values first.":
     "請先選取兩列或以上以 Tab 或逗號分隔的資料。",
   "Clipboard does not contain a valid URI.": "剪貼簿中沒有有效的 URI。",
+  "No duplicate rows found.": "找不到重複列。",
+  "Removed duplicate rows: {count}": "已刪除重複列：{count}",
   "Put the cursor inside a table first.": "請先將游標放在表格內。",
 } satisfies Record<string, string>;

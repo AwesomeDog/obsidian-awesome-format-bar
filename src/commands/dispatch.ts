@@ -41,6 +41,7 @@ import {
   insertRowBelow,
   moveColumn,
   moveRow,
+  removeDuplicateRows,
   sortRows,
   tableAt,
   tableToText,
@@ -386,6 +387,17 @@ export function planFor(context: CommandContext, id: string): Plan | null {
       return sortRows(doc, caret, format, false);
     case "table-sort-za":
       return sortRows(doc, caret, format, true);
+    case "table-remove-duplicate-rows": {
+      const { plan, removed } = removeDuplicateRows(doc, caret, format);
+      if (removed === null)
+        new Notice(t("Put the cursor inside a table first."));
+      else if (removed === 0) new Notice(t("No duplicate rows found."));
+      else
+        new Notice(
+          t("Removed duplicate rows: {count}", { count: String(removed) }),
+        );
+      return plan;
+    }
     case "table-transpose":
       return transposeTable(doc, caret, format);
     case "table-convert-to-text":

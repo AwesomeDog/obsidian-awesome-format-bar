@@ -143,7 +143,7 @@ Unavailable commands set both `disabled` and `aria-disabled`. The toolbar handle
 
 - **`editor-ops`** — overlapping selections; wrap/unwrap over existing wrappers; Renumber List nesting, blank lines, paragraph boundaries, mixed delimiters; Sort Lines stability and fences; Merge / Split Lines over fences, lone lines and CJK; color removal touching only its own property.
 - **`settings`** — per-field defaulting, explicit all-`false` surviving, bad version reset, values preserved when disabled; `pinned` round-trip, dedupe, group compaction and name fallback; the layout contract.
-- **Integration** on exactly 1.13.7 — platform defaults; all 8 position combinations without overlap; splits and pop-outs; deferred tabs; Following never covering the selection; all 109 palette commands executing with no missing forwarded mapping; one undo per transform; settings search and persistence; Pinned staying in sync and greying out when its source plugin is disabled; nothing left behind after unload.
+- **Integration** on exactly 1.13.7 — platform defaults; all 8 position combinations without overlap; splits and pop-outs; deferred tabs; Following never covering the selection; all 127 palette commands executing with no missing forwarded mapping; one undo per transform; settings search and persistence; Pinned staying in sync and greying out when its source plugin is disabled; nothing left behind after unload.
 - **Gate** — `lint`, `test`, `build` pass; no source map; release contains only `main.js`, `manifest.json`, `styles.css`.
 
 ## 9. Maintenance map

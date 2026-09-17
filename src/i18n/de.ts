@@ -125,6 +125,7 @@ export default {
   "Sort Rows": "Zeilen sortieren",
   "Sort Rows A to Z": "Aufsteigend sortieren",
   "Sort Rows Z to A": "Absteigend sortieren",
+  "Remove Duplicate Rows": "Doppelte Zeilen entfernen",
   "Transpose Table": "Tabelle transponieren",
   "Convert Table to Text": "Tabelle in Text umwandeln",
   "Paste as Table": "Als Tabelle einfügen",
@@ -242,6 +243,8 @@ export default {
     "Diese Notiz enthält keine Überschriften.",
   "Clipboard does not contain a valid URI.":
     "Die Zwischenablage enthält keine gültige URI.",
+  "No duplicate rows found.": "Keine doppelten Zeilen gefunden.",
+  "Removed duplicate rows: {count}": "Doppelte Zeilen entfernt: {count}",
   "Put the cursor inside a table first.":
     "Setze den Cursor zuerst in eine Tabelle.",
 } satisfies Record<string, string>;

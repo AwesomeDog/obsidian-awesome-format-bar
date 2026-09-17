@@ -125,6 +125,7 @@ export default {
   "Sort Rows": "Сортировать строки",
   "Sort Rows A to Z": "Сортировать от А до Я",
   "Sort Rows Z to A": "Сортировать от Я до А",
+  "Remove Duplicate Rows": "Удалить повторяющиеся строки",
   "Transpose Table": "Транспонировать таблицу",
   "Convert Table to Text": "Преобразовать таблицу в текст",
   "Paste as Table": "Вставить как таблицу",
@@ -240,6 +241,8 @@ export default {
   "This note has no headings to list.": "В этой заметке нет заголовков.",
   "Clipboard does not contain a valid URI.":
     "В буфере обмена нет допустимого URI.",
+  "No duplicate rows found.": "Повторяющиеся строки не найдены.",
+  "Removed duplicate rows: {count}": "Удалено повторяющихся строк: {count}",
   "Put the cursor inside a table first.":
     "Сначала поместите курсор внутрь таблицы.",
 } satisfies Record<string, string>;

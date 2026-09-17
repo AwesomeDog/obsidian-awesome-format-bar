@@ -15,6 +15,7 @@ import {
   planTableEnter,
   planTableTab,
   moveRow,
+  removeDuplicateRows,
   renderTable,
   sortRows,
   tableToText,
@@ -35,6 +36,13 @@ function caret(input: string): { doc: string; offset: number } {
 function run(input: string, fn: (doc: string, at: number) => Plan): string {
   const { doc, offset } = caret(input);
   return applyChanges(doc, fn(doc, offset).changes);
+}
+
+/** `removeDuplicateRows` also reports how many rows it dropped. */
+function dedupe(input: string): { text: string; removed: number | null } {
+  const { doc, offset } = caret(input);
+  const { plan, removed } = removeDuplicateRows(doc, offset, TIGHT);
+  return { text: applyChanges(doc, plan.changes), removed };
 }
 
 describe("formatTable", () => {
@@ -453,6 +461,47 @@ describe("sortRows", () => {
         sortRows(doc, at, TIGHT, false),
       ),
     ).toBe(["| v |", "| --- |", "| 1.5 |", "| 1.10 |", "| x |"].join("\n"));
+  });
+});
+
+describe("removeDuplicateRows", () => {
+  it("keeps the first row of a kind and drops later copies", () => {
+    const { text, removed } = dedupe("|a|b|\n|-|-|\n|1|x|\n|^2|y|\n|1|x|");
+    expect(text).toBe(
+      ["| a | b |", "| --- | --- |", "| 1 | x |", "| 2 | y |"].join("\n"),
+    );
+    expect(removed).toBe(1);
+  });
+
+  it("drops copies anywhere in the body, not just adjacent ones", () => {
+    const { text, removed } = dedupe("|a|\n|-|\n|^1|\n|2|\n|1|\n|2|\n|1|");
+    expect(text).toBe(["| a |", "| --- |", "| 1 |", "| 2 |"].join("\n"));
+    expect(removed).toBe(3);
+  });
+
+  it("reads a row as a whole: one cell apart and both stay", () => {
+    // Nothing to drop, so the table is not even re-rendered.
+    const { text, removed } = dedupe("|a|b|\n|-|-|\n|^1|x|\n|1|y|");
+    expect(text).toBe("|a|b|\n|-|-|\n|1|x|\n|1|y|");
+    expect(removed).toBe(0);
+  });
+
+  it("never counts the header as the first of a kind", () => {
+    const { text, removed } = dedupe("|a|b|\n|-|-|\n|^a|b|\n|a|b|");
+    expect(text).toBe(["| a | b |", "| --- | --- |", "| a | b |"].join("\n"));
+    expect(removed).toBe(1);
+  });
+
+  it("changes nothing when no row repeats", () => {
+    const { text, removed } = dedupe("|a|\n|-|\n|^1|\n|2|");
+    expect(text).toBe("|a|\n|-|\n|1|\n|2|");
+    expect(removed).toBe(0);
+  });
+
+  it("does nothing outside a table", () => {
+    const { text, removed } = dedupe("plain prose\n^no table here");
+    expect(text).toBe("plain prose\nno table here");
+    expect(removed).toBeNull();
   });
 });
 

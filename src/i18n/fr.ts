@@ -125,6 +125,7 @@ export default {
   "Sort Rows": "Trier les lignes",
   "Sort Rows A to Z": "Trier de A à Z",
   "Sort Rows Z to A": "Trier de Z à A",
+  "Remove Duplicate Rows": "Supprimer les lignes en double",
   "Transpose Table": "Transposer le tableau",
   "Convert Table to Text": "Convertir le tableau en texte",
   "Paste as Table": "Coller en tant que tableau",
@@ -243,6 +244,8 @@ export default {
     "Cette note ne contient aucun titre à lister.",
   "Clipboard does not contain a valid URI.":
     "Le presse-papiers ne contient pas d’URI valide.",
+  "No duplicate rows found.": "Aucune ligne en double trouvée.",
+  "Removed duplicate rows: {count}": "Lignes en double supprimées : {count}",
   "Put the cursor inside a table first.":
     "Place d’abord le curseur dans un tableau.",
 } satisfies Record<string, string>;

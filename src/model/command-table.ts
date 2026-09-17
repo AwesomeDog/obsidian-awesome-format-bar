@@ -902,6 +902,13 @@ export const COMMANDS = [
     requiresTable: true,
   },
   {
+    id: "table-remove-duplicate-rows",
+    name: "Remove Duplicate Rows",
+    icon: "copy-minus",
+    kind: "editor",
+    requiresTable: true,
+  },
+  {
     id: "table-transpose",
     name: "Transpose Table",
     icon: "repeat",

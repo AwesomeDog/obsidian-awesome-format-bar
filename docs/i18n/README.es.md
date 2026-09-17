@@ -56,7 +56,7 @@ Obsidian es rápido **si** ya hablas Markdown. Para todos los demás ——estud
 - **Texto plano para siempre.** Nada de formato propietario, ni base de datos, ni cautividad: tus notas siguen siendo simples archivos `.md`.
 - **Sin conexión y privado.** Sin llamadas de red, sin cuentas, sin telemetría. La biblioteca de unos 2.150 emoji viaja dentro del plugin.
 - **Tu propio lanzador, si lo quieres.** La pestaña **Anclado** guarda cualquier comando que elijas ——del núcleo, de este plugin o de otro——, así que la barra se adapta a ti sin convertirse en un proyecto de configuración.
-- **También para el teclado.** Desactiva las tres posiciones de la barra y la interfaz desaparece por completo: los 126 comandos registrados en la paleta siguen disponibles y puedes asignarles tus propios atajos.
+- **También para el teclado.** Desactiva las tres posiciones de la barra y la interfaz desaparece por completo: los 127 comandos registrados en la paleta siguen disponibles y puedes asignarles tus propios atajos.
 
 ---
 
@@ -65,11 +65,11 @@ Obsidian es rápido **si** ya hablas Markdown. Para todos los demás ——estud
 |                     |                                                                          |
 | ------------------- | ------------------------------------------------------------------------ |
 | **Posiciones**      | Cinta superior, barra flotante sobre la selección, barra inferior fija —— combinables libremente |
-| **Comandos**        | **138** integrados, **126** disponibles en la paleta de comandos para atajos propios |
+| **Comandos**        | **139** integrados, **127** disponibles en la paleta de comandos para atajos propios |
 | **Pestañas**        | Inicio · Insertar · Vista · Tabla · Utilidades · **Anclado**               |
 | **Recuadros**       | Los 12 tipos de recuadro de Obsidian en un solo desplegable               |
 | **Emoji y símbolos** | Unos 2.150 emoji, kaomoji y símbolos, totalmente sin conexión            |
-| **Edición de tablas** | Insertar / eliminar / mover filas y columnas, alinear, ordenar, transponer, reformatear, convertir en texto, pegar como tabla, copiar como CSV |
+| **Edición de tablas** | Insertar / eliminar / mover filas y columnas, alinear, ordenar, quitar filas duplicadas, transponer, reformatear, convertir en texto, pegar como tabla, copiar como CSV |
 | **Edición de imágenes** | alinear, tamaño, título |
 | **Botones propios** | Pestaña **Anclado** —— ancla **cualquier** comando（del núcleo, de este plugin o de otro）con tus propios iconos y grupos |
 | **Configuración**   | Ninguna. Se adapta al tema, listo para usar                               |
@@ -87,7 +87,7 @@ Obsidian es rápido **si** ya hablas Markdown. Para todos los demás ——estud
 
 Cada posición se activa de forma independiente, así que puedes usar solo la barra flotante, solo la cinta o las tres a la vez.
 
-### 🅰️ 138 comandos de formato en una distribución conocida
+### 🅰️ 139 comandos de formato en una distribución conocida
 
 Negrita, cursiva, subrayado, tachado, código en línea, fórmula en línea, resaltar（con color）, color de fuente, **fuente**, **tamaño de fuente**, borrar formato, cambiar mayúsculas y minúsculas, títulos 1–6, viñetas / numeración / lista de tareas, cita, sangría, línea horizontal, deshacer / rehacer, buscar y reemplazar, alineación de párrafo —— agrupados exactamente donde un usuario de Word los espera.
 
@@ -103,7 +103,7 @@ Un panel **Emoji y símbolos** con búsqueda y tres fuentes ——emoji, kaomoji
 
 ### 📊 Editor de tablas Markdown
 
-Inserta y elimina filas y columnas, muévelas, alinea las columnas a la izquierda / centro / derecha, ordena las filas de A a Z o de Z a A, transpone tablas, reformatea（embellece）la tabla actual o todas las tablas de la nota y convierte una tabla de nuevo en texto delimitado —— más **Pegar como tabla**, que convierte el texto del portapapeles separado por tabulaciones o comas（recién salido de Excel, Numbers o Google Sheets）en una tabla Markdown alineada, y **Copiar tabla como CSV** para el camino de vuelta a la hoja de cálculo.
+Inserta y elimina filas y columnas, muévelas, alinea las columnas a la izquierda / centro / derecha, ordena las filas de A a Z o de Z a A, quita las filas duplicadas, transpone tablas, reformatea（embellece）la tabla actual o todas las tablas de la nota y convierte una tabla de nuevo en texto delimitado —— más **Pegar como tabla**, que convierte el texto del portapapeles separado por tabulaciones o comas（recién salido de Excel, Numbers o Google Sheets）en una tabla Markdown alineada, y **Copiar tabla como CSV** para el camino de vuelta a la hoja de cálculo.
 
 Coloca el cursor dentro de una tabla y la cinta cambia por sí sola a la pestaña **Tabla**; si eliges otra pestaña, se queda donde la pusiste. En el **modo de origen**, Entrar pasa a la fila siguiente（añadiendo una al final）y Tab / Shift+Tab recorren las celdas, añadiendo una columna más allá del borde derecho.
 
@@ -137,7 +137,7 @@ Es una compensación deliberada, no una función que falta. Una barra que te dej
 
 ## Referencia completa de comandos
 
-126 de los 138 comandos están registrados en la **paleta de comandos**, así que puedes asignarles tus propios atajos de teclado. （Los contenedores desplegables y el panel de emoji y símbolos solo existen en la barra.）
+127 de los 139 comandos están registrados en la **paleta de comandos**, así que puedes asignarles tus propios atajos de teclado. （Los contenedores desplegables y el panel de emoji y símbolos solo existen en la barra.）
 
 ### Inicio
 
@@ -171,7 +171,7 @@ Disponible siempre que el cursor esté dentro de una tabla:
 - **Filas y columnas** —— Eliminar filas o columnas ▼（Eliminar filas, Eliminar columnas）, Insertar filas arriba / abajo, Insertar columnas a la izquierda / derecha, Mover fila hacia arriba / abajo, Mover columna hacia la izquierda / derecha
 - **Formato** —— Dar formato a las tablas ▼（Dar formato a esta tabla, Dar formato a todas las tablas）
 - **Alineación** —— Alinear columna a la izquierda / Centrar columna / Alinear columna a la derecha
-- **Datos** —— Ordenar filas ▼（Ordenar de A a Z, Ordenar de Z a A）, Transponer tabla, Convertir tabla en texto
+- **Datos** —— Ordenar filas ▼（Ordenar de A a Z, Ordenar de Z a A）, Quitar filas duplicadas, Transponer tabla, Convertir tabla en texto
 - **Portapapeles** —— Pegar como tabla, Copiar tabla como CSV
 
 ### Utilidades
@@ -210,7 +210,7 @@ Configuración → **Plugins de la comunidad** → **Explorar** → busca **“A
 2. La **cinta（Superior）** tiene seis pestañas; la última, **Anclado**, guarda los comandos que ancles tú. Mientras está vacía muestra un aviso para añadir; usa el botón de edición para gestionar los comandos y los grupos.
 3. Las **barras compactas**（Flotante / Inferior）llevan un subconjunto fijo de comandos; los botones que no caben en el ancho disponible se recogen en el menú de desbordamiento `⋯`, que también enumera todos los demás comandos agrupados por pestaña, y los que tengas anclados.
 4. Abre el botón de edición de **Anclado** para añadir comandos, elegir iconos, crear un grupo nuevo o cambiar el nombre del grupo, arrastrar para reordenar, mover comandos o eliminarlos. Configuración conserva una entrada alternativa que abre ese mismo gestor. Los comandos anclados se comportan exactamente igual que sus equivalentes en la paleta de comandos.
-5. ¿Prefieres el teclado? Desactiva **los tres interruptores de posición** y la barra desaparece por completo de la interfaz ——el plugin no añade nada a tu pantalla——, mientras los **126 comandos registrados en la paleta** siguen funcionando y puedes asignarles tus propios atajos en **Configuración → Atajos de teclado**. Dicho de otro modo: puedes usarlo como un paquete puro de comandos y atajos sin pulsar un solo botón.
+5. ¿Prefieres el teclado? Desactiva **los tres interruptores de posición** y la barra desaparece por completo de la interfaz ——el plugin no añade nada a tu pantalla——, mientras los **127 comandos registrados en la paleta** siguen funcionando y puedes asignarles tus propios atajos en **Configuración → Atajos de teclado**. Dicho de otro modo: puedes usarlo como un paquete puro de comandos y atajos sin pulsar un solo botón.
 
 ---
 
@@ -245,10 +245,10 @@ No. Negrita, títulos, listas, vínculos, tablas, recuadros, bloques de código 
 Markdown estándar y Markdown con sabor a Obsidian. Solo donde Markdown no tiene sintaxis ——subrayado, superíndice, subíndice, alineación de párrafo, colores de texto y de resaltado, fuente y tamaño de fuente—— el plugin emite pequeñas etiquetas HTML en línea estándar, que Obsidian renderiza de forma nativa.
 
 **¿Puedo seguir usando mis atajos de teclado?**  
-Sí. 126 de los 138 comandos aparecen en la paleta de comandos y se pueden asociar a cualquier atajo.
+Sí. 127 de los 139 comandos aparecen en la paleta de comandos y se pueden asociar a cualquier atajo.
 
 **Soy de teclado ——¿puedo ocultar la barra por completo?**  
-Sí, y no pierdes nada por hacerlo. Desactiva las tres posiciones（**Superior / Flotante / Inferior**）en **Configuración → Awesome Format Bar** y el plugin no deja rastro en la pantalla: ni cinta, ni barra flotante, ni barra inferior. Los **126 comandos registrados en la paleta** siguen funcionando todos, desde la paleta de comandos o desde un atajo que asignes en **Configuración → Atajos de teclado** ——incluidos comandos para los que Obsidian no tiene atajo propio, como el color de fuente, el color de resaltado, cambiar mayúsculas y minúsculas, los recuadros, ordenar tablas y las utilidades de líneas——. Piénsalo como una capa opcional solo de teclado que puedes activar cuando el ratón empiece a sentirse lento.
+Sí, y no pierdes nada por hacerlo. Desactiva las tres posiciones（**Superior / Flotante / Inferior**）en **Configuración → Awesome Format Bar** y el plugin no deja rastro en la pantalla: ni cinta, ni barra flotante, ni barra inferior. Los **127 comandos registrados en la paleta** siguen funcionando todos, desde la paleta de comandos o desde un atajo que asignes en **Configuración → Atajos de teclado** ——incluidos comandos para los que Obsidian no tiene atajo propio, como el color de fuente, el color de resaltado, cambiar mayúsculas y minúsculas, los recuadros, ordenar tablas y las utilidades de líneas——. Piénsalo como una capa opcional solo de teclado que puedes activar cuando el ratón empiece a sentirse lento.
 
 **¿Puedo añadir botones para comandos de otros plugins?**  
 Sí ——para eso está la pestaña **Anclado**——. Ancla cualquier comando de la paleta y elige un icono. Si el plugin propietario está desactivado, el botón se atenúa y el anclado se conserva.

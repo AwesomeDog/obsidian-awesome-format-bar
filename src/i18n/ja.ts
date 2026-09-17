@@ -125,6 +125,7 @@ export default {
   "Sort Rows": "行の並べ替え",
   "Sort Rows A to Z": "昇順に並べ替え",
   "Sort Rows Z to A": "降順に並べ替え",
+  "Remove Duplicate Rows": "重複行を削除",
   "Transpose Table": "テーブルを転置",
   "Convert Table to Text": "テーブルをテキストに変換",
   "Paste as Table": "テーブルとして貼り付け",
@@ -241,6 +242,8 @@ export default {
     "このノートには一覧表示できる見出しがありません。",
   "Clipboard does not contain a valid URI.":
     "クリップボードに有効な URI がありません。",
+  "No duplicate rows found.": "重複行は見つかりませんでした。",
+  "Removed duplicate rows: {count}": "重複行を削除しました：{count}",
   "Put the cursor inside a table first.":
     "先にカーソルをテーブル内に置いてください。",
 } satisfies Record<string, string>;

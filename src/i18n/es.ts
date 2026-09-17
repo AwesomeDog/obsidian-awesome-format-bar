@@ -125,6 +125,7 @@ export default {
   "Sort Rows": "Ordenar filas",
   "Sort Rows A to Z": "Ordenar de A a Z",
   "Sort Rows Z to A": "Ordenar de Z a A",
+  "Remove Duplicate Rows": "Quitar filas duplicadas",
   "Transpose Table": "Transponer tabla",
   "Convert Table to Text": "Convertir tabla en texto",
   "Paste as Table": "Pegar como tabla",
@@ -241,6 +242,8 @@ export default {
     "Esta nota no tiene títulos que mostrar.",
   "Clipboard does not contain a valid URI.":
     "El portapapeles no contiene una URI válida.",
+  "No duplicate rows found.": "No se encontraron filas duplicadas.",
+  "Removed duplicate rows: {count}": "Filas duplicadas eliminadas: {count}",
   "Put the cursor inside a table first.":
     "Coloca primero el cursor dentro de una tabla.",
 } satisfies Record<string, string>;

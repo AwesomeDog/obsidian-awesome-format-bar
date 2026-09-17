@@ -534,6 +534,33 @@ export function sortRows(
   return edit(table, format, [header, ...order.map((entry) => entry.row)]);
 }
 
+/** Excel's Remove Duplicates: the first row of a kind stays, later copies go.
+ * Whole rows, so a row differing in any column survives; the header is excluded.
+ * `removed` is what the caller reports; `null` means there was no table at all. */
+export function removeDuplicateRows(
+  doc: string,
+  offset: number,
+  format: TableFormat,
+): { plan: Plan; removed: number | null } {
+  const hit = findTableEditContext(doc, offset);
+  if (!hit) return { plan: NO_CHANGE, removed: null };
+  const { table } = hit;
+  const [header, ...body] = table.rows;
+  if (!header) return { plan: NO_CHANGE, removed: null };
+
+  const seen = new Set<string>();
+  const kept = body.filter((row) => {
+    // `JSON.stringify`: no separator can occur inside a cell.
+    const key = JSON.stringify(row);
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+  const removed = body.length - kept.length;
+  if (removed === 0) return { plan: NO_CHANGE, removed };
+  return { plan: edit(table, format, [header, ...kept]), removed };
+}
+
 /** Transposes the header and body while regenerating the delimiter row. */
 export function transposeTable(
   doc: string,

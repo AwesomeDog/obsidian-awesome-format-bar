@@ -125,6 +125,7 @@ export default {
   "Sort Rows": "행 정렬",
   "Sort Rows A to Z": "오름차순 정렬",
   "Sort Rows Z to A": "내림차순 정렬",
+  "Remove Duplicate Rows": "중복 행 제거",
   "Transpose Table": "표 전치",
   "Convert Table to Text": "표를 텍스트로 변환",
   "Paste as Table": "표로 붙여넣기",
@@ -239,5 +240,7 @@ export default {
     "탭이나 쉼표로 구분된 값을 두 행 이상 선택하세요.",
   "Clipboard does not contain a valid URI.":
     "클립보드에 유효한 URI가 없습니다.",
+  "No duplicate rows found.": "중복 행을 찾지 못했습니다.",
+  "Removed duplicate rows: {count}": "중복 행 제거됨: {count}",
   "Put the cursor inside a table first.": "먼저 커서를 표 안에 두세요.",
 } satisfies Record<string, string>;
