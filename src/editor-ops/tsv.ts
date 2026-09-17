@@ -1,4 +1,6 @@
-import { renderTable, type TableFormat } from "./table";
+import { replaceBlock } from "./lines";
+import { NO_CHANGE, type Plan } from "./plan";
+import { renderTable, tableAt, type TableFormat } from "./table";
 
 /** Escaping and padding stay `renderTable`'s job, so output matches a table op. */
 
@@ -100,4 +102,49 @@ export function delimitedFromTable(
       ).join(delimiter),
     )
     .join("\n");
+}
+
+/** Tab-separated and quoted like the Copy as TSV command: a cell holding a tab
+ * would otherwise shift every column after it. */
+export function tableToText(doc: string, offset: number): Plan {
+  const found = tableAt(doc, offset);
+  if (!found) return NO_CHANGE;
+  const text = delimitedFromTable(found.rows, "\t");
+  return {
+    changes: [
+      replaceBlock(
+        found.lines,
+        found.start,
+        found.start + found.rows.length,
+        text,
+      ),
+    ],
+  };
+}
+
+/** Header row first: its cells name the keys, the rest become one record each.
+ * Values stay strings — a `007` or `1.50` turned into a number is data loss,
+ * and a Markdown table carries no type to put back. */
+export function jsonFromTable(rows: readonly (readonly string[])[]): string {
+  const [header, ...body] = rows;
+  if (!header) return "[]";
+  const keys = keysFor(header);
+  return JSON.stringify(
+    body.map((row) =>
+      Object.fromEntries(keys.map((key, column) => [key, row[column] ?? ""])),
+    ),
+  );
+}
+
+/** A Markdown table allows two things JSON keys do not: a blank header and two
+ * columns of the same name. Excel's Power Query fills those in as `Column3` and
+ * `Name2`; matching it beats silently dropping one of the columns. */
+function keysFor(header: readonly string[]): readonly string[] {
+  const used = new Map<string, number>();
+  return header.map((cell, index) => {
+    const base = cell === "" ? `column-${index + 1}` : cell;
+    const seen = used.get(base) ?? 0;
+    used.set(base, seen + 1);
+    return seen === 0 ? base : `${base}-${seen + 1}`;
+  });
 }

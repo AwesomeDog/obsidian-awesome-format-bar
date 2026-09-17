@@ -129,7 +129,11 @@ export default {
   "Transpose Table": "轉置表格",
   "Convert Table to Text": "將表格轉換為文字",
   "Paste as Table": "貼上為表格",
-  "Copy Table as CSV": "複製表格為 CSV",
+  "Copy as": "複製為",
+  "Copy as TSV": "複製為 TSV",
+  "Copy as CSV": "複製為 CSV",
+  "Copy as JSON": "複製為 JSON",
+  "Copy as Markdown": "複製為 Markdown",
   "Paste URI as Link": "貼上 URI 為連結",
   "Smart Punctuation": "智慧標點",
   "CJK Spacing": "中日韓間距",
@@ -241,4 +245,5 @@ export default {
   "No duplicate rows found.": "找不到重複列。",
   "Removed duplicate rows: {count}": "已刪除重複列：{count}",
   "Put the cursor inside a table first.": "請先將游標放在表格內。",
+  "Table copied as {format}.": "已複製表格為 {format}。",
 } satisfies Record<string, string>;

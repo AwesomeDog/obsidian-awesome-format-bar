@@ -169,6 +169,7 @@ export function popoverSectionsFor(
     case "table-delete":
     case "table-format":
     case "table-sort":
+    case "table-copy-as":
     case "clean-up":
       return [
         {

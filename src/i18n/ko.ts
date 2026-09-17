@@ -129,7 +129,11 @@ export default {
   "Transpose Table": "표 전치",
   "Convert Table to Text": "표를 텍스트로 변환",
   "Paste as Table": "표로 붙여넣기",
-  "Copy Table as CSV": "표를 CSV로 복사",
+  "Copy as": "다른 형식으로 복사",
+  "Copy as TSV": "TSV로 복사",
+  "Copy as CSV": "CSV로 복사",
+  "Copy as JSON": "JSON으로 복사",
+  "Copy as Markdown": "Markdown으로 복사",
   "Paste URI as Link": "URI로 붙여넣기",
   "Smart Punctuation": "스마트 문장 부호",
   "CJK Spacing": "CJK 간격",
@@ -243,4 +247,5 @@ export default {
   "No duplicate rows found.": "중복 행을 찾지 못했습니다.",
   "Removed duplicate rows: {count}": "중복 행 제거됨: {count}",
   "Put the cursor inside a table first.": "먼저 커서를 표 안에 두세요.",
+  "Table copied as {format}.": "{format} 형식으로 표를 복사했습니다.",
 } satisfies Record<string, string>;

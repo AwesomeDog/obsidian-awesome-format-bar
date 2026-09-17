@@ -174,7 +174,7 @@ export const BUILT_IN_COMMAND_TABS = [
       },
       {
         name: "Clipboard",
-        commands: ["paste-as-table", "copy-table-as-csv"],
+        commands: ["paste-as-table", "table-copy-as"],
       },
     ],
   },

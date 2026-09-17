@@ -129,7 +129,11 @@ export default {
   "Transpose Table": "Транспонировать таблицу",
   "Convert Table to Text": "Преобразовать таблицу в текст",
   "Paste as Table": "Вставить как таблицу",
-  "Copy Table as CSV": "Копировать таблицу как CSV",
+  "Copy as": "Копировать как",
+  "Copy as TSV": "Копировать как TSV",
+  "Copy as CSV": "Копировать как CSV",
+  "Copy as JSON": "Копировать как JSON",
+  "Copy as Markdown": "Копировать как Markdown",
   "Paste URI as Link": "Вставить URI как ссылку",
   "Smart Punctuation": "Умная пунктуация",
   "CJK Spacing": "Интервалы CJK",
@@ -245,4 +249,5 @@ export default {
   "Removed duplicate rows: {count}": "Удалено повторяющихся строк: {count}",
   "Put the cursor inside a table first.":
     "Сначала поместите курсор внутрь таблицы.",
+  "Table copied as {format}.": "Таблица скопирована как {format}.",
 } satisfies Record<string, string>;

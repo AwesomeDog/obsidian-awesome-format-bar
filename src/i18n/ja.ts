@@ -129,7 +129,11 @@ export default {
   "Transpose Table": "テーブルを転置",
   "Convert Table to Text": "テーブルをテキストに変換",
   "Paste as Table": "テーブルとして貼り付け",
-  "Copy Table as CSV": "テーブルを CSV としてコピー",
+  "Copy as": "別形式でコピー",
+  "Copy as TSV": "TSV としてコピー",
+  "Copy as CSV": "CSV としてコピー",
+  "Copy as JSON": "JSON としてコピー",
+  "Copy as Markdown": "Markdown としてコピー",
   "Paste URI as Link": "URI として貼り付け",
   "Smart Punctuation": "スマート句読点",
   "CJK Spacing": "CJKスペース",
@@ -246,4 +250,5 @@ export default {
   "Removed duplicate rows: {count}": "重複行を削除しました：{count}",
   "Put the cursor inside a table first.":
     "先にカーソルをテーブル内に置いてください。",
+  "Table copied as {format}.": "{format} としてテーブルをコピーしました。",
 } satisfies Record<string, string>;

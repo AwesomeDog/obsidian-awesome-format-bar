@@ -51,6 +51,7 @@ type CommandPopup =
   | "table-delete"
   | "table-format"
   | "table-sort"
+  | "table-copy-as"
   | "clean-up";
 
 export interface CommandSpec {

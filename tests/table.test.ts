@@ -19,11 +19,15 @@ import {
   removeDuplicateRows,
   renderTable,
   sortRows,
-  tableToText,
   transposeTable,
   type TableFormat,
 } from "../src/editor-ops/table";
-import { delimitedFromTable, tableFromDelimited } from "../src/editor-ops/tsv";
+import {
+  delimitedFromTable,
+  jsonFromTable,
+  tableFromDelimited,
+  tableToText,
+} from "../src/editor-ops/tsv";
 
 const PADDED: TableFormat = { padWidth: true };
 const TIGHT: TableFormat = { padWidth: false };
@@ -722,6 +726,47 @@ describe("delimitedFromTable", () => {
   });
 });
 
+describe("jsonFromTable", () => {
+  it("turns the header row into keys", () => {
+    expect(
+      jsonFromTable([
+        ["a", "b"],
+        ["1", "2"],
+      ]),
+    ).toBe('[{"a":"1","b":"2"}]');
+  });
+
+  it("keeps every value a string", () => {
+    expect(jsonFromTable([["n"], ["007"]])).toBe('[{"n":"007"}]');
+  });
+
+  it("names a blank header after its column", () => {
+    expect(
+      jsonFromTable([
+        ["a", ""],
+        ["1", "2"],
+      ]),
+    ).toBe('[{"a":"1","column-2":"2"}]');
+  });
+
+  it("numbers a repeated header", () => {
+    expect(
+      jsonFromTable([
+        ["a", "a"],
+        ["1", "2"],
+      ]),
+    ).toBe('[{"a":"1","a-2":"2"}]');
+  });
+
+  it("pads a short row out", () => {
+    expect(jsonFromTable([["a", "b"], ["1"]])).toBe('[{"a":"1","b":""}]');
+  });
+
+  it("writes an empty array for a header-only table", () => {
+    expect(jsonFromTable([["a"]])).toBe("[]");
+  });
+});
+
 describe("tableToText", () => {
   it("writes one tab-separated line per row", () => {
     expect(
@@ -754,6 +799,14 @@ describe("tableToText", () => {
   it("does nothing outside a table", () => {
     const { doc, offset } = caret("plain ^text");
     expect(tableToText(doc, offset).changes.length).toBe(0);
+  });
+
+  it("quotes a cell holding a tab, which would otherwise shift a column", () => {
+    expect(
+      run("| a | b |\n| - | - |\n| c\td^ | e |", (doc, at) =>
+        tableToText(doc, at),
+      ),
+    ).toBe(["a\tb", '"c\td"\te'].join("\n"));
   });
 
   it("round-trips back through tableFromDelimited", () => {

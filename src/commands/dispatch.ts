@@ -42,13 +42,19 @@ import {
   moveColumn,
   moveRow,
   removeDuplicateRows,
+  renderTable,
   sortRows,
   tableAt,
-  tableToText,
   transposeTable,
+  type MarkdownTable,
   type TableFormat,
 } from "../editor-ops/table";
-import { delimitedFromTable, tableFromDelimited } from "../editor-ops/tsv";
+import {
+  delimitedFromTable,
+  jsonFromTable,
+  tableFromDelimited,
+  tableToText,
+} from "../editor-ops/tsv";
 import { deleteRanges, formatDateTime, insertText } from "../editor-ops/text";
 import { cjkSpacing, cleanUp, smartPunctuation } from "../editor-ops/normalize";
 import { CASE_OPTIONS } from "../model/palettes";
@@ -158,6 +164,36 @@ function nativePaste(plain: boolean): boolean {
   return true;
 }
 
+/** The Copy as drop-down. Markdown re-renders through `renderTable`, so what
+ * lands on the clipboard is a valid table even where the source was not.
+ * `label` stays untranslated: it names a file format. */
+const COPY_TABLE_AS: Readonly<
+  Record<
+    string,
+    {
+      readonly label: string;
+      readonly write: (table: MarkdownTable, format: TableFormat) => string;
+    }
+  >
+> = {
+  "copy-table-as-tsv": {
+    label: "TSV",
+    write: (table) => delimitedFromTable(table.rows, "\t"),
+  },
+  "copy-table-as-csv": {
+    label: "CSV",
+    write: (table) => delimitedFromTable(table.rows, ","),
+  },
+  "copy-table-as-json": {
+    label: "JSON",
+    write: (table) => jsonFromTable(table.rows),
+  },
+  "copy-table-as-markdown": {
+    label: "Markdown",
+    write: (table, format) => renderTable(table.rows, table.align, format),
+  },
+};
+
 export async function runClipboard(
   context: CommandContext,
   id: string,
@@ -197,7 +233,8 @@ export async function runClipboard(
     return;
   }
 
-  if (id === "copy-table-as-csv") {
+  const copyAs = COPY_TABLE_AS[id];
+  if (copyAs) {
     const found = tableAt(
       editor.getValue(),
       editor.posToOffset(editor.getCursor()),
@@ -206,7 +243,9 @@ export async function runClipboard(
       new Notice(t("Put the cursor inside a table first."));
       return;
     }
-    await navigator.clipboard.writeText(delimitedFromTable(found.rows, ","));
+    await navigator.clipboard.writeText(copyAs.write(found, context.format));
+    // No row or column count: German and Russian inflect those on the number.
+    new Notice(t("Table copied as {format}.", { format: copyAs.label }));
     return;
   }
 

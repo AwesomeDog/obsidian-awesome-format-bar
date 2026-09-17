@@ -129,7 +129,11 @@ export default {
   "Transpose Table": "Transponer tabla",
   "Convert Table to Text": "Convertir tabla en texto",
   "Paste as Table": "Pegar como tabla",
-  "Copy Table as CSV": "Copiar tabla como CSV",
+  "Copy as": "Copiar como",
+  "Copy as TSV": "Copiar como TSV",
+  "Copy as CSV": "Copiar como CSV",
+  "Copy as JSON": "Copiar como JSON",
+  "Copy as Markdown": "Copiar como Markdown",
   "Paste URI as Link": "Pegar URI como vínculo",
   "Smart Punctuation": "Puntuación inteligente",
   "CJK Spacing": "Espaciado CJK",
@@ -246,4 +250,5 @@ export default {
   "Removed duplicate rows: {count}": "Filas duplicadas eliminadas: {count}",
   "Put the cursor inside a table first.":
     "Coloca primero el cursor dentro de una tabla.",
+  "Table copied as {format}.": "Tabla copiada como {format}.",
 } satisfies Record<string, string>;
