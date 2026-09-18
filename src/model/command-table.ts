@@ -495,6 +495,75 @@ export const COMMANDS = [
     kind: "editor",
     requiresImage: true,
   },
+  // The same widths again, for every picture in the note at once. It ignores
+  // the caret, so it stays live wherever the editor is.
+  {
+    id: "image-size-all",
+    name: "All Images",
+    icon: "a-large-small",
+    kind: "editor",
+    popup: "image-size-all",
+    commandPalette: false,
+  },
+  {
+    id: "image-size-all-100",
+    name: "All Images 100 px",
+    icon: "a-large-small",
+    kind: "editor",
+  },
+  {
+    id: "image-size-all-200",
+    name: "All Images 200 px",
+    icon: "a-large-small",
+    kind: "editor",
+  },
+  {
+    id: "image-size-all-300",
+    name: "All Images 300 px",
+    icon: "a-large-small",
+    kind: "editor",
+  },
+  {
+    id: "image-size-all-400",
+    name: "All Images 400 px",
+    icon: "a-large-small",
+    kind: "editor",
+  },
+  {
+    id: "image-size-all-600",
+    name: "All Images 600 px",
+    icon: "a-large-small",
+    kind: "editor",
+  },
+  {
+    id: "image-size-all-original",
+    name: "All Images Original Size",
+    icon: "a-large-small",
+    kind: "editor",
+  },
+  // Word writes this into a panel; here it is written in place and selected,
+  // the way Caption is, because both are text a note carries itself.
+  {
+    id: "image-alt",
+    name: "Alt Text",
+    icon: "text-cursor-input",
+    kind: "editor",
+    requiresImage: true,
+  },
+  {
+    id: "image-reset",
+    name: "Reset Picture",
+    icon: "rotate-ccw",
+    kind: "editor",
+    requiresImage: true,
+  },
+  {
+    id: "image-convert-syntax",
+    name: "Convert Syntax",
+    icon: "arrow-left-right",
+    kind: "editor",
+    requiresImage: true,
+  },
 
   // Insert · Media & Symbols
   {
@@ -994,6 +1063,14 @@ export const DROPDOWN_ITEMS: Readonly<Record<string, readonly CommandId[]>> = {
     "image-size-400",
     "image-size-600",
     "image-size-original",
+  ],
+  "image-size-all": [
+    "image-size-all-100",
+    "image-size-all-200",
+    "image-size-all-300",
+    "image-size-all-400",
+    "image-size-all-600",
+    "image-size-all-original",
   ],
   "table-delete": ["table-delete-rows", "table-delete-columns"],
   "table-format": ["table-format-table", "table-format-all-tables"],

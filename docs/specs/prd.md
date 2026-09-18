@@ -66,7 +66,7 @@ A fixed built-in subset of commands, grouped by dividers. Buttons that don't fit
 
 ## 5. Commands
 
-**143 built-in commands** across 5 tabs and 25 groups, plus the Pinned tab. Drop-down items stay under their parent buttons, while the other commands are registered in the command palette, so users can assign their own shortcuts. That leaves **130** palette entries: the 13 left out are the 12 drop-down parents and the emoji panel, which only open a menu instead of acting.
+**153 built-in commands** across 5 tabs and 25 groups, plus the Pinned tab. Drop-down items stay under their parent buttons, while the other commands are registered in the command palette, so users can assign their own shortcuts. That leaves **139** palette entries: the 14 left out are the 13 drop-down parents and the emoji panel, which only open a menu instead of acting.
 
 ### Tab 1 · Home
 
@@ -82,11 +82,11 @@ A fixed built-in subset of commands, grouped by dividers. Buttons that don't fit
 
 - **Links** — Internal Link, External Link, Embed, Tag, Block Reference
 - **Blocks** — Callout ▼ (Note Callout, Abstract Callout, Info Callout, Tip Callout, Success Callout, Question Callout, Warning Callout, Failure Callout, Danger Callout, Bug Callout, Example Callout, Quote Callout), Code Block, Math Block, Table, Convert Text to Table, Comment
-- **Picture** — Image Size ▼ (100 px, 200 px, 300 px, 400 px, 600 px, Original Size), Caption
+- **Picture** — Image Size ▼ (100 px, 200 px, 300 px, 400 px, 600 px, Original Size), All Images ▼ (All Images 100 px, All Images 200 px, All Images 300 px, All Images 400 px, All Images 600 px, All Images Original Size), Alt Text, Caption, Reset Picture, Convert Syntax
 - **Media & Symbols** — Attach File, Emoji & Symbols, Date and Time
 - **Reference** — **Table of Contents** writes a snapshot after the paragraph at the caret: a bold title followed by one nested `- [[#Heading|Heading]]` link per heading; headings inside code fences or quoted into callouts are ignored. **Footnote** forwards to Obsidian's footnote command.
 
-Both Picture commands act on the picture the caret is on and grey out when the line holds none: `![alt](url)` always counts as one, and `![[file]]` counts when its extension is an image one, so an embedded note, PDF or audio leaves them dark. **Image Size ▼** writes or replaces Obsidian's own width (`![[a.png|300]]`), and **Original Size** drops it; a pipe segment that is not a size — an alias such as `![[logo.png|pic 1]]` — is left alone rather than rewritten, and inside a table cell the pipe is escaped as `\|`. **Caption** writes `*Caption*` on the line below the picture and selects it, or selects the caption already there instead of writing a second one; written at the picture's own line end, it lands inside the `<div>` a centred picture is wrapped in. Centring a picture needs no command of its own: a picture alone on a line *is* a paragraph, so **Align Center** (Home · Paragraph) does it.
+Every Picture command except **All Images ▼** acts on the picture the caret is on and greys out when the line holds none: `![alt](url)` always counts as one, and `![[file]]` counts when its extension is an image one, so an embedded note, PDF or audio leaves them dark. **Image Size ▼** writes or replaces Obsidian's own width (`![[a.png|300]]`), and **Original Size** drops it; the width is whichever pipe segment looks like a size, so an alias written by hand is kept and the size goes after it (`![[a.png|pic 1|300]]`), and inside a table cell the pipe is escaped as `\|`. **All Images ▼** writes the same width on every picture in the note, so it ignores the caret and never greys out. **Alt Text** writes the alt text of one picture and selects it — the first pipe segment of a wiki embed, the brackets of a Markdown image — or selects the one already there; the width is kept either way, and **Reset Picture** drops both again. **Convert Syntax** swaps one picture between `![[a.png]]` and `![](a.png)`, carrying the alt text and the width across and trading a space for `%20` so the link stays valid; an external URL cannot become a wiki embed, so those are left alone. **Caption** writes `*Caption*` on the line below the picture and selects it, or selects the caption already there instead of writing a second one; written at the picture's own line end, it lands inside the `<div>` a centred picture is wrapped in. Centring a picture needs no command of its own: a picture alone on a line *is* a paragraph, so **Align Center** (Home · Paragraph) does it.
 
 ### Tab 3 · View
 
@@ -122,7 +122,7 @@ Column-level names (*Align Column…*, *Sort Rows…*) distinguish these from th
 
 ### Tab 6 · Pinned
 
-Pin **any command from the command palette** — core commands, other plugins' commands, or this plugin's own 123 — to the toolbar with an icon of your choice. The built-in set is the intersection of what most people use often; the one or two commands a given user can't live without usually fall outside it.
+Pin **any command from the command palette** — core commands, other plugins' commands, or this plugin's own 95 — to the toolbar with an icon of your choice. The built-in set is the intersection of what most people use often; the one or two commands a given user can't live without usually fall outside it.
 
 | Item | Convention |
 |---|---|
@@ -196,7 +196,7 @@ The Table options govern editing behavior and text output, not toolbar layout, s
 - User-created commands — Pinned surfaces existing commands, it doesn't create new ones.
 - Emoji shortcodes: no `:smile:` expansion, no autocomplete while typing; the panel inserts raw characters.
 - Custom emoji sets, user-editable character lists.
-- Reordering, hiding or showing the 143 built-in commands.
+- Reordering, hiding or showing the 153 built-in commands.
 - Toolbar appearance customization: background or icon color pickers, theme variants.
 
 ---
@@ -208,7 +208,7 @@ The Table options govern editing behavior and text output, not toolbar layout, s
 | **Position** | Where a toolbar renders: **Top**, **Following**, **Fixed**. Three independent toggles. |
 | **Layout** | How a position renders: **Ribbon** (Top) or **Compact** (Following / Fixed). |
 | **Tab · Group · Button** | Ribbon structure. A **drop-down** button holds several commands; a Compact **overflow menu** (`⋯`) holds the buttons that don't fit. |
-| **Command** | An action the toolbar runs. **143 built-in commands** plus any **pinned command**. |
+| **Command** | An action the toolbar runs. **153 built-in commands** plus any **pinned command**. |
 | **Source · Group · Entry** | Emoji & Symbols panel structure: three sources (Emoji, Kaomoji, Symbols) → groups → entries. Picking an entry inserts a character. |
 | **Word terminology** | Display names follow Microsoft Word (*Bold*, *Clear Formatting*), initial capitals, no `Toggle` prefix. |
 | **Plugin icon** | The plugin's icon in Obsidian's left sidebar. "Ribbon" on its own always means the toolbar layout. |

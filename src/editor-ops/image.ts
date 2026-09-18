@@ -1,4 +1,4 @@
-import { NO_CHANGE, type Plan, type Range } from "./plan";
+import { NO_CHANGE, order, type Change, type Plan, type Range } from "./plan";
 import { Lines } from "./lines";
 
 /** `![[a.png]]`, `![[a.png|300]]`; the pipe segment is a size or an alias. */
@@ -77,6 +77,93 @@ function caretEmbed(embeds: readonly Embed[], column: number): Embed | null {
   );
 }
 
+/** The embed the caret sits on, as offsets into the whole document. */
+function caretPicture(
+  doc: string,
+  range: Range | undefined,
+): {
+  readonly start: number;
+  readonly end: number;
+  readonly wiki: boolean;
+  readonly marker: string;
+  readonly source: string;
+} | null {
+  if (!range) return null;
+  const lines = new Lines(doc);
+  const line = lines.lineOf(range.from);
+  const text = lines.at(line);
+  const embed = caretEmbed(embedsIn(text), range.from - lines.start(line));
+  if (!embed) return null;
+  return {
+    start: lines.start(line) + embed.from,
+    end: lines.start(line) + embed.to,
+    wiki: embed.wiki,
+    // Inside a table cell the pipe has to be escaped, or it splits the row.
+    marker: pipe(text),
+    source: text.slice(embed.from, embed.to),
+  };
+}
+
+interface Parts {
+  /** `![[target]]` / `![](url)`: what the picture points at. */
+  readonly target: string;
+  /** The alias after the first pipe, or the alt text inside `[]`. */
+  readonly alt: string;
+  readonly size: string | null;
+}
+
+/**
+ * Splits a wiki embed's inner text. Obsidian allows `![[a.png|alias|300]]` and
+ * reads the width from the **last** pipe, so a written alias no longer hides
+ * the size — and a size that is not last is not a size at all.
+ */
+function wikiParts(inner: string, marker: string): Parts {
+  const segments = inner.split(marker);
+  const target = segments[0] ?? "";
+  const rest = segments.slice(1);
+  const last = rest[rest.length - 1];
+  if (last !== undefined && SIZE.test(last))
+    return { target, alt: rest.slice(0, -1).join(marker), size: last };
+  return { target, alt: rest.join(marker), size: null };
+}
+
+function wikiEmbed(parts: Parts, marker: string): string {
+  const segments = [parts.target];
+  if (parts.alt !== "") segments.push(parts.alt);
+  if (parts.size !== null) segments.push(parts.size);
+  return `![[${segments.join(marker)}]]`;
+}
+
+const MARKDOWN_PARTS = /^!\[([^\]]*)\]\((.*)\)$/;
+
+/**
+ * A Markdown image carries its width in the **alt text**, not the URL:
+ * `![alt|300](url)`, or `![300](url)` with no alt text. Obsidian reads the size
+ * from the last pipe there, and with no pipe at all a bare width still counts.
+ */
+function linkParts(text: string, marker: string): Parts | null {
+  const parsed = MARKDOWN_PARTS.exec(text);
+  if (!parsed) return null;
+  const written = parsed[1] ?? "";
+  const url = parsed[2] ?? "";
+
+  const at = written.lastIndexOf(marker);
+  const tail = at < 0 ? written : written.slice(at + marker.length);
+  const sized = SIZE.test(tail);
+
+  return {
+    target: url,
+    alt: sized ? (at < 0 ? "" : written.slice(0, at)) : written,
+    size: sized ? tail : null,
+  };
+}
+
+function linkEmbed(parts: Parts, marker: string): string {
+  const alt = parts.alt === "" ? [] : [parts.alt];
+  if (parts.size !== null) alt.push(parts.size);
+  return `![${alt.join(marker)}](${parts.target})`;
+}
+
 /** `null` clears the size; `string` sets it. Returns `null` to leave the line. */
 function sizedEmbed(
   line: string,
@@ -84,30 +171,17 @@ function sizedEmbed(
   width: string | null,
 ): string | null {
   const text = line.slice(embed.from, embed.to);
-  // Inside a table cell the pipe has to be escaped, or it splits the row.
   const marker = pipe(line);
 
   if (embed.wiki) {
-    const inner = text.slice(3, -2);
-    const at = inner.indexOf(marker);
-    const target = at < 0 ? inner : inner.slice(0, at);
-    const size = at < 0 ? null : inner.slice(at + marker.length);
-    if (!IMAGE_EXTENSION.test(fileOf(target))) return null;
-    // A pipe segment that is not a size is an alias: leave it alone.
-    if (size !== null && !SIZE.test(size)) return null;
-    return `![[${width === null ? target : `${target}${marker}${width}`}]]`;
+    const parts = wikiParts(text.slice(3, -2), marker);
+    if (!IMAGE_EXTENSION.test(fileOf(parts.target))) return null;
+    return wikiEmbed({ ...parts, size: width }, marker);
   }
 
-  const parsed = /^!\[([^\]]*)\]\((.*)\)$/.exec(text);
-  const alt = parsed?.[1] ?? "";
-  const url = parsed?.[2] ?? "";
-  // A title after the URL leaves nowhere to put the size.
-  if (!parsed || url.includes('"')) return null;
-  const at = url.indexOf(marker);
-  const base = at < 0 ? url : url.slice(0, at);
-  const size = at < 0 ? null : url.slice(at + marker.length);
-  if (size !== null && !SIZE.test(size)) return null;
-  return `![${alt}](${width === null ? base : `${base}${marker}${width}`})`;
+  const parts = linkParts(text, marker);
+  if (!parts) return null;
+  return linkEmbed({ ...parts, size: width }, marker);
 }
 
 /**
@@ -119,22 +193,182 @@ export function setImageSize(
   ranges: readonly Range[],
   width: string | null,
 ): Plan {
-  const range = ranges[0];
-  if (!range) return NO_CHANGE;
-  const lines = new Lines(doc);
-  const line = lines.lineOf(range.from);
-  const text = lines.at(line);
-  const embed = caretEmbed(embedsIn(text), range.from - lines.start(line));
-  if (!embed) return NO_CHANGE;
+  const found = caretPicture(doc, ranges[0]);
+  if (!found) return NO_CHANGE;
+  const { start, end, wiki, marker, source } = found;
 
-  const next = sizedEmbed(text, embed, width);
-  if (next === null) return NO_CHANGE;
+  if (wiki) {
+    const parts = wikiParts(source.slice(3, -2), marker);
+    if (!IMAGE_EXTENSION.test(fileOf(parts.target))) return NO_CHANGE;
+    return {
+      changes: [
+        {
+          from: start,
+          to: end,
+          text: wikiEmbed({ ...parts, size: width }, marker),
+        },
+      ],
+    };
+  }
+
+  const parts = linkParts(source, marker);
+  if (!parts) return NO_CHANGE;
   return {
     changes: [
       {
+        from: start,
+        to: end,
+        text: linkEmbed({ ...parts, size: width }, marker),
+      },
+    ],
+  };
+}
+
+/**
+ * The same width on every picture in the note. Unlike the single-picture
+ * commands it ignores the caret, so it runs from anywhere in the note.
+ */
+export function setAllImageSizes(doc: string, width: string | null): Plan {
+  const lines = new Lines(doc);
+  const changes: Change[] = [];
+  for (let line = 0; line < lines.count; line++) {
+    const text = lines.at(line);
+    for (const embed of embedsIn(text)) {
+      const source = text.slice(embed.from, embed.to);
+      const next = sizedEmbed(text, embed, width);
+      if (next === null || next === source) continue;
+      changes.push({
         from: lines.start(line) + embed.from,
         to: lines.start(line) + embed.to,
         text: next,
+      });
+    }
+  }
+  return changes.length === 0 ? NO_CHANGE : { changes: order(changes) };
+}
+
+/**
+ * Writes the alt text of one picture and selects it, so typing replaces it.
+ * Alt text already there is selected instead of duplicated.
+ */
+export function insertImageAlt(
+  doc: string,
+  ranges: readonly Range[],
+  placeholder: string,
+): Plan {
+  const found = caretPicture(doc, ranges[0]);
+  if (!found) return NO_CHANGE;
+  const { start, end, wiki, marker, source } = found;
+
+  if (wiki) {
+    const parts = wikiParts(source.slice(3, -2), marker);
+    if (!IMAGE_EXTENSION.test(fileOf(parts.target))) return NO_CHANGE;
+    const alt = parts.alt === "" ? placeholder : parts.alt;
+    const from = start + `![[${parts.target}${marker}`.length;
+    return {
+      changes: [
+        { from: start, to: end, text: wikiEmbed({ ...parts, alt }, marker) },
+      ],
+      select: { from, to: from + alt.length },
+    };
+  }
+
+  const parts = linkParts(source, marker);
+  if (!parts) return NO_CHANGE;
+  const alt = parts.alt === "" ? placeholder : parts.alt;
+  const from = start + "![".length;
+  return {
+    changes: [
+      { from: start, to: end, text: linkEmbed({ ...parts, alt }, marker) },
+    ],
+    select: { from, to: from + alt.length },
+  };
+}
+
+/** Word's Reset Picture: drops the size and the alt text, keeps the picture. */
+export function resetImage(doc: string, ranges: readonly Range[]): Plan {
+  const found = caretPicture(doc, ranges[0]);
+  if (!found) return NO_CHANGE;
+  const { start, end, wiki, marker, source } = found;
+
+  if (wiki) {
+    const parts = wikiParts(source.slice(3, -2), marker);
+    if (!IMAGE_EXTENSION.test(fileOf(parts.target))) return NO_CHANGE;
+    if (parts.alt === "" && parts.size === null) return NO_CHANGE;
+    return {
+      changes: [
+        {
+          from: start,
+          to: end,
+          text: wikiEmbed(
+            { target: parts.target, alt: "", size: null },
+            marker,
+          ),
+        },
+      ],
+    };
+  }
+
+  const parts = linkParts(source, marker);
+  if (!parts) return NO_CHANGE;
+  if (parts.alt === "" && parts.size === null) return NO_CHANGE;
+  return {
+    changes: [
+      {
+        from: start,
+        to: end,
+        text: linkEmbed({ ...parts, alt: "", size: null }, marker),
+      },
+    ],
+  };
+}
+
+/** A URL has no place inside `![[]]`, so those stay Markdown links. */
+const ABSOLUTE_URL = /^[a-z][a-z0-9+.-]*:\/\//i;
+
+/**
+ * Swaps one picture between the two syntaxes. A space has to change sides
+ * with it: `%20` in a URL, a plain space inside a wiki embed.
+ */
+export function convertImageSyntax(
+  doc: string,
+  ranges: readonly Range[],
+): Plan {
+  const found = caretPicture(doc, ranges[0]);
+  if (!found) return NO_CHANGE;
+  const { start, end, wiki, marker, source } = found;
+
+  if (wiki) {
+    const parts = wikiParts(source.slice(3, -2), marker);
+    if (!IMAGE_EXTENSION.test(fileOf(parts.target))) return NO_CHANGE;
+    return {
+      changes: [
+        {
+          from: start,
+          to: end,
+          text: linkEmbed(
+            {
+              ...parts,
+              target: parts.target.replace(/ /g, "%20"),
+            },
+            marker,
+          ),
+        },
+      ],
+    };
+  }
+
+  const parts = linkParts(source, marker);
+  if (!parts || ABSOLUTE_URL.test(parts.target)) return NO_CHANGE;
+  return {
+    changes: [
+      {
+        from: start,
+        to: end,
+        text: wikiEmbed(
+          { ...parts, target: parts.target.replace(/%20/g, " ") },
+          marker,
+        ),
       },
     ],
   };

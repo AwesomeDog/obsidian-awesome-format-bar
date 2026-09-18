@@ -7,8 +7,12 @@ import {
 } from "../src/editor-ops/blocks";
 import { changeCase, convertCase } from "../src/editor-ops/case";
 import {
+  convertImageSyntax,
+  insertImageAlt,
   insertImageCaption,
   isImageLine,
+  resetImage,
+  setAllImageSizes,
   setImageSize,
 } from "../src/editor-ops/image";
 import { toggleInlinePair } from "../src/editor-ops/inline";
@@ -705,12 +709,28 @@ describe("setImageSize", () => {
     expect(size("![[a.png|300]]", 0, null)).toBe("![[a.png]]");
   });
 
-  it("sets a Markdown image's width", () => {
+  it("sets a Markdown image's width in the alt text", () => {
     expect(size("![alt](https://x/y.png)", 0, "200")).toBe(
-      "![alt](https://x/y.png|200)",
+      "![alt|200](https://x/y.png)",
     );
-    expect(size("![alt](https://x/y.png|200)", 0, null)).toBe(
+    expect(size("![alt|200](https://x/y.png)", 0, "300")).toBe(
+      "![alt|300](https://x/y.png)",
+    );
+    expect(size("![alt|200](https://x/y.png)", 0, null)).toBe(
       "![alt](https://x/y.png)",
+    );
+    // A bare width with no alt text is Obsidian's own short form.
+    expect(size("![](https://x/y.png)", 0, "200")).toBe(
+      "![200](https://x/y.png)",
+    );
+    expect(size("![200](https://x/y.png)", 0, null)).toBe(
+      "![](https://x/y.png)",
+    );
+  });
+
+  it("leaves the URL alone: a pipe there is part of the path", () => {
+    expect(size("![alt](https://x/y.png|300)", 0, "600")).toBe(
+      "![alt|600](https://x/y.png|300)",
     );
   });
 
@@ -718,10 +738,158 @@ describe("setImageSize", () => {
     expect(size("|![[a.png]]|b|", 1, "300")).toBe("|![[a.png\\|300]]|b|");
   });
 
-  it("leaves an alias, a note and a titled link alone", () => {
-    expect(size("![[a.png|图 1]]", 0, "300")).toBe("![[a.png|图 1]]");
+  it("keeps an alias and writes the size after it", () => {
+    expect(size("![[a.png|图 1]]", 0, "300")).toBe("![[a.png|图 1|300]]");
+    expect(size("![[a.png|图 1|300]]", 0, "400")).toBe("![[a.png|图 1|400]]");
+    expect(size("![[a.png|图 1|300]]", 0, null)).toBe("![[a.png|图 1]]");
+    // Obsidian only reads the last segment, so a size that is not last is
+    // alias text: the width goes after it rather than replacing it.
+    expect(size("![[a.png|300|图 1]]", 0, "400")).toBe(
+      "![[a.png|300|图 1|400]]",
+    );
+  });
+
+  it("leaves a note alone and sizes a titled link", () => {
     expect(size("![[note]]", 0, "300")).toBe("![[note]]");
-    expect(size('![alt](url "title")', 0, "300")).toBe('![alt](url "title")');
+    expect(size('![alt](url "title")', 0, "300")).toBe(
+      '![alt|300](url "title")',
+    );
+  });
+});
+
+describe("setAllImageSizes", () => {
+  function all(doc: string, width: string | null): string {
+    return run(doc, setAllImageSizes(doc, width));
+  }
+
+  it("sizes every picture in the note", () => {
+    expect(all("![[a.png]]\n\n![[b.png|100]]\n", "300")).toBe(
+      "![[a.png|300]]\n\n![[b.png|300]]\n",
+    );
+  });
+
+  it("clears every width at once", () => {
+    expect(all("![[a.png|300]]\ntext\n![[b.png|100]]", null)).toBe(
+      "![[a.png]]\ntext\n![[b.png]]",
+    );
+  });
+
+  it("leaves a picture that already has the width alone", () => {
+    expect(all("![[a.png|300]]", "300")).toBe("![[a.png|300]]");
+  });
+
+  it("does nothing when the note has no picture", () => {
+    expect(all("just text\n![[note]]", "300")).toBe("just text\n![[note]]");
+  });
+
+  it("escapes the pipe of a picture inside a table", () => {
+    expect(all("|![[a.png]]|b|\n|-|-|", "300")).toBe(
+      "|![[a.png\\|300]]|b|\n|-|-|",
+    );
+  });
+});
+
+describe("insertImageAlt", () => {
+  function alt(
+    doc: string,
+    caret: number,
+  ): {
+    text: string;
+    select: Range | undefined;
+  } {
+    const plan = insertImageAlt(doc, [{ from: caret, to: caret }], "Alt Text");
+    return { text: run(doc, plan), select: plan.select };
+  }
+
+  it("writes a selected alt text into a wiki embed", () => {
+    expect(alt("![[a.png]]", 0)).toEqual({
+      text: "![[a.png|Alt Text]]",
+      select: { from: 9, to: 17 },
+    });
+  });
+
+  it("writes a selected alt text into a Markdown image", () => {
+    expect(alt("![](https://x/y.png)", 0)).toEqual({
+      text: "![Alt Text](https://x/y.png)",
+      select: { from: 2, to: 10 },
+    });
+  });
+
+  it("keeps the width and puts the alt text before it", () => {
+    expect(alt("![[a.png|300]]", 0).text).toBe("![[a.png|Alt Text|300]]");
+    expect(alt("![300](https://x/y.png)", 0)).toEqual({
+      text: "![Alt Text|300](https://x/y.png)",
+      select: { from: 2, to: 10 },
+    });
+  });
+
+  it("selects an alt text that is already there", () => {
+    expect(alt("![[a.png|图 1]]", 0)).toEqual({
+      text: "![[a.png|图 1]]",
+      select: { from: 9, to: 12 },
+    });
+  });
+
+  it("does nothing off a picture", () => {
+    expect(alt("![[note]]", 0)).toEqual({
+      text: "![[note]]",
+      select: undefined,
+    });
+  });
+});
+
+describe("resetImage", () => {
+  function reset(doc: string, caret: number): string {
+    return run(doc, resetImage(doc, [{ from: caret, to: caret }]));
+  }
+
+  it("drops the width and the alt text of a wiki embed", () => {
+    expect(reset("![[a.png|图 1|300]]", 0)).toBe("![[a.png]]");
+  });
+
+  it("drops the width and the alt text of a Markdown image", () => {
+    expect(reset("![alt|300](https://x/y.png)", 0)).toBe(
+      "![](https://x/y.png)",
+    );
+  });
+
+  it("does nothing to a picture that has neither", () => {
+    expect(reset("![[a.png]]", 0)).toBe("![[a.png]]");
+  });
+
+  it("does nothing off a picture", () => {
+    expect(reset("![[note|300]]", 0)).toBe("![[note|300]]");
+  });
+});
+
+describe("convertImageSyntax", () => {
+  function convert(doc: string, caret: number): string {
+    return run(doc, convertImageSyntax(doc, [{ from: caret, to: caret }]));
+  }
+
+  it("turns a wiki embed into a Markdown image and back", () => {
+    expect(convert("![[a.png]]", 0)).toBe("![](a.png)");
+    expect(convert("![](a.png)", 0)).toBe("![[a.png]]");
+  });
+
+  it("carries the alt text and the width across", () => {
+    expect(convert("![[a.png|图 1|300]]", 0)).toBe("![图 1|300](a.png)");
+    expect(convert("![图 1|300](a.png)", 0)).toBe("![[a.png|图 1|300]]");
+  });
+
+  it("swaps a space for %20 so the link stays valid", () => {
+    expect(convert("![[pasted image.png]]", 0)).toBe("![](pasted%20image.png)");
+    expect(convert("![](pasted%20image.png)", 0)).toBe("![[pasted image.png]]");
+  });
+
+  it("leaves an external image alone: it cannot be a wiki embed", () => {
+    expect(convert("![alt](https://x/y.png)", 0)).toBe(
+      "![alt](https://x/y.png)",
+    );
+  });
+
+  it("does nothing off a picture", () => {
+    expect(convert("![[note]]", 0)).toBe("![[note]]");
   });
 });
 

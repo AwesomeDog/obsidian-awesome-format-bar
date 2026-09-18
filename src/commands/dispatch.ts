@@ -15,7 +15,14 @@ import {
   type ParagraphAlignment,
 } from "../editor-ops/blocks";
 import { changeCase, type CaseMode } from "../editor-ops/case";
-import { insertImageCaption, setImageSize } from "../editor-ops/image";
+import {
+  convertImageSyntax,
+  insertImageAlt,
+  insertImageCaption,
+  resetImage,
+  setAllImageSizes,
+  setImageSize,
+} from "../editor-ops/image";
 import { toggleInlinePair } from "../editor-ops/inline";
 import {
   duplicate,
@@ -320,6 +327,16 @@ const IMAGE_WIDTHS: Readonly<Record<string, string | null>> = {
   "image-size-original": null,
 };
 
+/** The same widths, applied to every picture in the note. */
+const ALL_IMAGE_WIDTHS: Readonly<Record<string, string | null>> = {
+  "image-size-all-100": "100",
+  "image-size-all-200": "200",
+  "image-size-all-300": "300",
+  "image-size-all-400": "400",
+  "image-size-all-600": "600",
+  "image-size-all-original": null,
+};
+
 /** The local half of the command table; registered commands forward instead. */
 export function planFor(context: CommandContext, id: string): Plan | null {
   const { editor, format, optionValue } = context;
@@ -339,6 +356,9 @@ export function planFor(context: CommandContext, id: string): Plan | null {
 
   const width = IMAGE_WIDTHS[id];
   if (width !== undefined) return setImageSize(doc, ranges, width);
+
+  const allWidth = ALL_IMAGE_WIDTHS[id];
+  if (allWidth !== undefined) return setAllImageSizes(doc, allWidth);
 
   switch (id) {
     case "renumber-list":
@@ -385,6 +405,12 @@ export function planFor(context: CommandContext, id: string): Plan | null {
       return insertText(doc, ranges, formatDateTime(new Date()));
     case "image-caption":
       return insertImageCaption(doc, ranges, t("Caption"));
+    case "image-alt":
+      return insertImageAlt(doc, ranges, t("Alt Text"));
+    case "image-reset":
+      return resetImage(doc, ranges);
+    case "image-convert-syntax":
+      return convertImageSyntax(doc, ranges);
     case "toc": {
       const plan = tableOfContents(doc, ranges, t("Table of Contents"));
       if (plan.changes.length === 0)

@@ -48,6 +48,7 @@ type CommandPopup =
   | "character-panel"
   | "callout"
   | "image-size"
+  | "image-size-all"
   | "table-delete"
   | "table-format"
   | "table-sort"

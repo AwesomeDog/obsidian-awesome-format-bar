@@ -54,7 +54,7 @@ Obsidian is fast **if** you already speak Markdown. For everyone else — studen
 - **Plain text forever.** No proprietary format, no database, no lock-in — your notes are still just `.md` files.
 - **Offline & private.** No network calls, no accounts, no telemetry. The ~2,150-entry emoji library ships inside the plugin.
 - **Your own launcher, if you want one.** The **Pinned** tab holds any command you pick — core, this plugin's, or another plugin's — so the toolbar bends to you without turning into a settings project.
-- **Keyboard-friendly too.** Switch every toolbar position off and the interface disappears completely — all 130 palette-registered commands stay available and can be bound to your own hotkeys.
+- **Keyboard-friendly too.** Switch every toolbar position off and the interface disappears completely — all 139 palette-registered commands stay available and can be bound to your own hotkeys.
 
 ---
 
@@ -63,12 +63,12 @@ Obsidian is fast **if** you already speak Markdown. For everyone else — studen
 | | |
 | --- | --- |
 | **Toolbar positions** | Top ribbon, floating bar above the selection, fixed bottom bar — combine freely |
-| **Commands** | **143** built-in, **130** available in the command palette for custom hotkeys |
+| **Commands** | **153** built-in, **139** available in the command palette for custom hotkeys |
 | **Tabs** | Home · Insert · View · Table · Utilities · **Pinned** |
 | **Callouts** | All 12 Obsidian callout types in one drop-down |
 | **Emoji & symbols** | ~2,150 emoji, kaomoji and symbols, fully offline |
 | **Table editing** | Insert/delete/move rows & columns, align, sort, remove duplicate rows, transpose, re-format, convert to text, paste as table, copy as CSV |
-| **Image editing** | align, size, caption |
+| **Image editing** | align, size, alt text, caption, reset picture, convert syntax |
 | **Custom buttons** | **Pinned** tab — pin *any* command (core, this plugin's, or another plugin's) with your own icons and groups |
 | **Setup required** | None. Theme-aware, zero configuration |
 | **Requires** | Obsidian **1.13.7+** |
@@ -85,11 +85,11 @@ Obsidian is fast **if** you already speak Markdown. For everyone else — studen
 
 Each position is toggled independently, so you can run just the floating bar, just the ribbon, or all three.
 
-### 🅰️ 143 formatting commands in a familiar layout
+### 🅰️ 153 formatting commands in a familiar layout
 
 Bold, italic, underline, strikethrough, inline code, inline math, highlight (with color), font color, **font family**, **font size**, clear formatting, change case, headings 1–6, bullet / numbered / task lists, quotes, indentation, horizontal rules, undo/redo, find & replace, paragraph alignment — grouped exactly where a Word user expects them.
 
-Pictures get their own group on **Insert**: **Image Size ▼** sets a width of 100–600 px — or restores the file's own size — and **Caption** writes a caption line under the picture and selects it, ready to type over.
+Pictures get their own group on **Insert**: **Image Size ▼** sets a width of 100–600 px — or restores the file's own size — **All Images ▼** applies the same width to every picture in the note at once, **Alt Text** writes the alt text and selects it, and **Caption** writes a caption line under the picture and selects it, ready to type over. **Reset Picture** drops the width and the alt text again, and **Convert Syntax** swaps a picture between `![[a.png]]` and `![](a.png)`.
 
 ### 💬 Callout picker — all 12 Obsidian callout types
 
@@ -135,7 +135,7 @@ That is a deliberate trade-off, not a missing feature. A toolbar that lets you r
 
 ## Full command reference
 
-130 of the 143 commands are registered in the **command palette**, so you can assign your own keyboard shortcuts. (Drop-down containers and the Emoji & Symbols panel are toolbar-only.)
+139 of the 153 commands are registered in the **command palette**, so you can assign your own keyboard shortcuts. (Drop-down containers and the Emoji & Symbols panel are toolbar-only.)
 
 ### Home
 
@@ -149,7 +149,7 @@ That is a deliberate trade-off, not a missing feature. A toolbar that lets you r
 
 - **Links** — Internal Link, External Link, Embed, Tag, Block Reference
 - **Blocks** — Callout ▼ (Note, Abstract, Info, Tip, Success, Question, Warning, Failure, Danger, Bug, Example, Quote), Code Block, Math Block, Table, Convert Text to Table, Comment
-- **Picture** — Image Size ▼ (100 px, 200 px, 300 px, 400 px, 600 px, Original Size), Caption
+- **Picture** — Image Size ▼ (100 px, 200 px, 300 px, 400 px, 600 px, Original Size), All Images ▼ (All Images 100 px, All Images 200 px, All Images 300 px, All Images 400 px, All Images 600 px, All Images Original Size), Alt Text, Caption, Reset Picture, Convert Syntax
 - **Media & Symbols** — Attach File, Emoji & Symbols, Date and Time
 - **Reference** — Table of Contents, Footnote
 
@@ -208,7 +208,7 @@ Settings → **Community plugins** → **Browse** → search for **"Awesome Form
 2. The **Ribbon (Top)** has six tabs; the last one, **Pinned**, holds the commands you pin yourself. While it is empty it shows an add hint; use the edit button to manage commands and groups.
 3. The **compact bars** (Following / Fixed) carry a fixed subset of commands; buttons that don't fit the available width collapse into the `⋯` overflow menu, which also lists every other command grouped by tab, and your pinned ones.
 4. Open the **Pinned** edit button to add commands, choose icons, create or rename groups, drag to reorder, move commands, or delete them. Settings keeps a fallback entry for the same manager. Pinned commands behave exactly like their command-palette counterparts.
-5. Prefer the keyboard? Turn **all three position toggles off** and the toolbar disappears from the interface entirely — the plugin then adds nothing to your screen, while all **130 palette-registered commands** keep working and can be bound to your own hotkeys in **Settings → Hotkeys**. In other words: you can use it as a pure command/hotkey pack and never click a button.
+5. Prefer the keyboard? Turn **all three position toggles off** and the toolbar disappears from the interface entirely — the plugin then adds nothing to your screen, while all **139 palette-registered commands** keep working and can be bound to your own hotkeys in **Settings → Hotkeys**. In other words: you can use it as a pure command/hotkey pack and never click a button.
 
 ---
 
@@ -243,10 +243,10 @@ No. Bold, headings, lists, links, tables, callouts, code blocks and math are all
 Standard Markdown and Obsidian-flavoured Markdown. Only where Markdown has no syntax — underline, superscript, subscript, paragraph alignment, text and highlight colors, font family and font size — does the plugin emit small, standard inline HTML tags, which Obsidian renders natively.
 
 **Can I keep using my keyboard shortcuts?**  
-Yes. 130 of the 143 commands appear in the command palette and can be bound to any hotkey.
+Yes. 139 of the 153 commands appear in the command palette and can be bound to any hotkey.
 
 **I'm a keyboard person — can I hide the toolbar completely?**  
-Yes, and nothing is lost by doing it. Switch off all three positions (**Top / Following / Fixed**) in **Settings → Awesome Format Bar** and the plugin leaves zero footprint on the screen: no ribbon, no floating bar, no bottom bar. Every one of the **130 palette-registered commands** still runs, from the command palette or from a hotkey you assign in **Settings → Hotkeys** — including commands Obsidian has no built-in shortcut for, such as font color, highlight color, change case, callouts, table sorting and the line utilities. Think of it as an optional keyboard-only layer you can switch on whenever the mouse starts feeling slow.
+Yes, and nothing is lost by doing it. Switch off all three positions (**Top / Following / Fixed**) in **Settings → Awesome Format Bar** and the plugin leaves zero footprint on the screen: no ribbon, no floating bar, no bottom bar. Every one of the **139 palette-registered commands** still runs, from the command palette or from a hotkey you assign in **Settings → Hotkeys** — including commands Obsidian has no built-in shortcut for, such as font color, highlight color, change case, callouts, table sorting and the line utilities. Think of it as an optional keyboard-only layer you can switch on whenever the mouse starts feeling slow.
 
 **Can I add buttons for commands from other plugins?**  
 Yes — that's the **Pinned** tab. Pin any command from the palette and choose an icon. If the owning plugin is disabled, the button greys out and the pin is preserved.
@@ -261,7 +261,7 @@ No. There is no AI feature, no API key, no network request, no analytics and no 
 No. Reading-view header-click sorting is display-only and never modifies the note.
 
 **How do I center a picture, or change its size?**  
-Put the caret on the picture's own line. **Align Center** (Home · Paragraph) centres it — a picture alone on a line *is* a paragraph, so no separate command is needed — and **Image Size ▼** (Insert · Picture) sets its width to 100–600 px, or **Original Size** to give the file's own size back. **Caption** writes a caption line underneath and selects it, ready to type over. Everything is written as plain Obsidian syntax (a `|300` segment after the file name), so the note reads the same without the plugin.
+Put the caret on the picture's own line. **Align Center** (Home · Paragraph) centres it — a picture alone on a line *is* a paragraph, so no separate command is needed — and **Image Size ▼** (Insert · Picture) sets its width to 100–600 px, or **Original Size** to give the file's own size back; a width is written after an alias rather than over it, so `![[logo.png|Company logo]]` becomes `![[logo.png|Company logo|300]]`. **All Images ▼** applies the same width to every picture in the note at once, from anywhere in the note. **Alt Text** writes the alt text and selects it, **Caption** writes a caption line underneath and selects it, and **Reset Picture** drops both again. **Convert Syntax** swaps the picture between `![[a.png]]` and `![](a.png)`. Everything is written as plain Obsidian syntax, so the note reads the same without the plugin.
 
 **Can I hide the toolbar when I want a clean screen?**  
 Yes — toggle any position off in settings, or all three to hide it entirely (see the keyboard question above for what still works).

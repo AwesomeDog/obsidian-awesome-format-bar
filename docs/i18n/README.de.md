@@ -56,7 +56,7 @@ Obsidian ist schnell — **wenn** Sie bereits Markdown beherrschen. Für alle an
 - **Für immer reiner Text.** Kein proprietäres Format, keine Datenbank, keine Bindung — Ihre Notizen bleiben schlicht `.md`-Dateien.
 - **Offline und privat.** Keine Netzwerkaufrufe, keine Konten, keine Telemetrie. Die rund 2.150 Einträge der Emoji-Bibliothek werden mit dem Plugin ausgeliefert.
 - **Ihr eigener Starter, wenn Sie einen wollen.** Die Registerkarte **Angeheftet** nimmt jeden Befehl auf, den Sie auswählen — einen aus dem Kern, aus diesem Plugin oder aus einem anderen —, damit sich die Leiste nach Ihnen richtet, ohne zu einem Konfigurationsprojekt zu werden.
-- **Auch tastaturfreundlich.** Schalten Sie alle drei Leistenpositionen aus und die Oberfläche verschwindet vollständig — alle 130 in der Befehlspalette registrierten Befehle bleiben verfügbar und lassen sich an eigene Tastenkürzel binden.
+- **Auch tastaturfreundlich.** Schalten Sie alle drei Leistenpositionen aus und die Oberfläche verschwindet vollständig — alle 139 in der Befehlspalette registrierten Befehle bleiben verfügbar und lassen sich an eigene Tastenkürzel binden.
 
 ---
 
@@ -65,12 +65,12 @@ Obsidian ist schnell — **wenn** Sie bereits Markdown beherrschen. Für alle an
 |                     |                                                                                                    |
 | ------------------- | -------------------------------------------------------------------------------------------------- |
 | **Leistenpositionen** | Menüband oben, mitlaufende Leiste über der Auswahl, feste Leiste unten — frei kombinierbar        |
-| **Befehle**         | **143** integrierte, davon **130** in der Befehlspalette für eigene Tastenkürzel                   |
+| **Befehle**         | **153** integrierte, davon **139** in der Befehlspalette für eigene Tastenkürzel                   |
 | **Registerkarten**  | Start · Einfügen · Ansicht · Tabelle · Hilfsprogramme · **Angeheftet**                              |
 | **Callouts**        | Alle 12 Obsidian-Callout-Typen in einem Aufklappmenü                                               |
 | **Emoji und Symbole** | Rund 2.150 Emoji, Kaomoji und Symbole, vollständig offline                                       |
 | **Tabellenbearbeitung** | Zeilen und Spalten einfügen, löschen und verschieben, ausrichten, sortieren, doppelte Zeilen entfernen, transponieren, neu formatieren, in Text umwandeln, als Tabelle einfügen, als CSV kopieren |
-| **Bildbearbeitung** | ausrichten, Größe, Beschriftung |
+| **Bildbearbeitung** | ausrichten, Größe, Alternativtext, Beschriftung, Bild zurücksetzen, Syntax umwandeln |
 | **Eigene Schaltflächen** | Registerkarte **Angeheftet** — heften Sie **beliebige** Befehle an (Kernbefehle, die dieses Plugins oder die eines anderen), mit eigenen Symbolen und Gruppen |
 | **Einrichtung nötig** | Keine. Themenangepasst, ohne Konfiguration                                                       |
 | **Voraussetzung**   | Obsidian **1.13.7+**                                                                                |
@@ -87,11 +87,11 @@ Obsidian ist schnell — **wenn** Sie bereits Markdown beherrschen. Für alle an
 
 Jede Position wird unabhängig ein- und ausgeschaltet, Sie können also nur die mitlaufende Leiste, nur das Menüband oder alle drei nutzen.
 
-### 🅰️ 143 Formatierungsbefehle in vertrauter Anordnung
+### 🅰️ 153 Formatierungsbefehle in vertrauter Anordnung
 
 Fett, Kursiv, Unterstreichen, Durchstreichen, Inline-Code, Inline-Formel, Text hervorheben (mit Farbe), Schriftfarbe, **Schriftart**, **Schriftgröße**, Formatierung löschen, Groß-/Kleinschreibung ändern, Überschriften 1–6, Aufzählung / Nummerierung / Aufgabenliste, Zitat, Einzüge, horizontale Linien, Rückgängig / Wiederholen, Suchen und Ersetzen, Absatzausrichtung — gruppiert genau dort, wo ein Word-Nutzer sie erwartet.
 
-Bilder bekommen auf **Einfügen** ihre eigene Gruppe: **Bildgröße ▼** legt eine Breite von 100–600 px fest — oder stellt die eigene Größe der Datei wieder her — und **Beschriftung** schreibt eine Beschriftungszeile unter das Bild und markiert sie, bereit zum Überschreiben.
+Bilder bekommen auf **Einfügen** ihre eigene Gruppe: **Bildgröße ▼** legt eine Breite von 100–600 px fest — oder stellt die eigene Größe der Datei wieder her —, **Alle Bilder ▼** wendet dieselbe Breite auf einmal auf jedes Bild der Notiz an, **Alternativtext** schreibt den Alternativtext und markiert ihn, und **Beschriftung** schreibt eine Beschriftungszeile unter das Bild und markiert sie, bereit zum Überschreiben. **Bild zurücksetzen** verwirft Breite und Alternativtext wieder, und **Syntax umwandeln** wechselt zwischen `![[a.png]]` und `![](a.png)`.
 
 ### 💬 Callout-Auswahl mit allen 12 Obsidian-Typen
 
@@ -137,7 +137,7 @@ Das ist eine bewusste Entscheidung, kein fehlendes Feature. Eine Leiste, die Ihn
 
 ## Vollständige Befehlsübersicht
 
-130 der 143 Befehle sind in der **Befehlspalette** registriert, sodass Sie ihnen eigene Tastenkürzel zuweisen können. (Aufklapp-Container und das Emoji- und Symbolpanel gibt es nur in der Leiste.)
+139 der 153 Befehle sind in der **Befehlspalette** registriert, sodass Sie ihnen eigene Tastenkürzel zuweisen können. (Aufklapp-Container und das Emoji- und Symbolpanel gibt es nur in der Leiste.)
 
 ### Start
 
@@ -151,7 +151,7 @@ Das ist eine bewusste Entscheidung, kein fehlendes Feature. Eine Leiste, die Ihn
 
 - **Links** — Interner Link, Externer Link, Einbetten, Tag, Blockverweis
 - **Blöcke** — Hinweis ▼ (Notiz-Callout, Zusammenfassung-Callout, Info-Callout, Tipp-Callout, Erfolg-Callout, Frage-Callout, Warnung-Callout, Fehlschlag-Callout, Gefahr-Callout, Fehler-Callout, Beispiel-Callout, Zitat-Callout), Codeblock, Formelblock, Tabelle, Text in Tabelle umwandeln, Kommentar
-- **Bild** — Bildgröße ▼ (100 px, 200 px, 300 px, 400 px, 600 px, Ursprüngliche Größe), Beschriftung
+- **Bild** — Bildgröße ▼ (100 px, 200 px, 300 px, 400 px, 600 px, Ursprüngliche Größe), Alle Bilder ▼ (Alle Bilder 100 px, Alle Bilder 200 px, Alle Bilder 300 px, Alle Bilder 400 px, Alle Bilder 600 px, Alle Bilder Ursprüngliche Größe), Alternativtext, Beschriftung, Bild zurücksetzen, Syntax umwandeln
 - **Medien und Symbole** — Datei anfügen, Emoji und Symbole, Datum und Uhrzeit
 - **Referenz** — Inhaltsverzeichnis, Fußnote
 
@@ -210,7 +210,7 @@ Einstellungen → **Community-Plugins** → **Durchsuchen** → nach **„Awesom
 2. Das **Menüband (Oben)** hat sechs Registerkarten; die letzte, **Angeheftet**, enthält die Befehle, die Sie selbst anheften. Solange sie leer ist, zeigt sie einen Hinweis zum Hinzufügen; nutzen Sie die Bearbeiten-Schaltfläche, um Befehle und Gruppen zu verwalten.
 3. Die **kompakten Leisten** (Mitlaufend / Unten) tragen eine feste Auswahl an Befehlen; Schaltflächen, die nicht in die verfügbare Breite passen, wandern in das Überlaufmenü `⋯`, das außerdem jeden weiteren nach Registerkarte gruppierten Befehl sowie Ihre angehefteten auflistet.
 4. Öffnen Sie die Bearbeiten-Schaltfläche von **Angeheftet**, um Befehle hinzuzufügen, Symbole zu wählen, neue Gruppen zu erstellen oder Gruppen umzubenennen, per Ziehen umzuordnen, Befehle in andere Gruppen zu verschieben oder sie zu löschen. Die Einstellungen halten zusätzlich einen Eintrag bereit, der denselben Manager öffnet. Angeheftete Befehle verhalten sich genau wie ihre Gegenstücke in der Befehlspalette.
-5. Lieber Tastatur? Schalten Sie **alle drei Positionsschalter aus** und die Leiste verschwindet vollständig aus der Oberfläche — das Plugin fügt Ihrem Bildschirm nichts hinzu, während alle **130 in der Palette registrierten Befehle** weiter funktionieren und unter **Einstellungen → Tastenkürzel** an eigene Hotkeys gebunden werden können. Anders gesagt: Sie können es als reines Befehls- und Hotkey-Paket nutzen und nie eine Schaltfläche anklicken.
+5. Lieber Tastatur? Schalten Sie **alle drei Positionsschalter aus** und die Leiste verschwindet vollständig aus der Oberfläche — das Plugin fügt Ihrem Bildschirm nichts hinzu, während alle **139 in der Palette registrierten Befehle** weiter funktionieren und unter **Einstellungen → Tastenkürzel** an eigene Hotkeys gebunden werden können. Anders gesagt: Sie können es als reines Befehls- und Hotkey-Paket nutzen und nie eine Schaltfläche anklicken.
 
 ---
 
@@ -245,10 +245,10 @@ Nein. Fett, Überschriften, Listen, Links, Tabellen, Callouts, Codeblöcke und F
 Standard-Markdown und Obsidian-Markdown. Nur dort, wo Markdown keine Syntax hat — Unterstreichen, Hochstellen, Tiefstellen, Absatzausrichtung, Text- und Hervorhebungsfarbe, Schriftart und Schriftgröße — schreibt das Plugin wenige, standardkonforme Inline-HTML-Tags, die Obsidian nativ darstellt.
 
 **Kann ich meine Tastenkürzel weiter verwenden?**  
-Ja. 130 der 143 Befehle erscheinen in der Befehlspalette und lassen sich an ein beliebiges Tastenkürzel binden.
+Ja. 139 der 153 Befehle erscheinen in der Befehlspalette und lassen sich an ein beliebiges Tastenkürzel binden.
 
 **Ich arbeite lieber mit der Tastatur — kann ich die Leiste komplett ausblenden?**  
-Ja, und Sie verlieren dabei nichts. Schalten Sie in **Einstellungen → Awesome Format Bar** alle drei Positionen (**Oben / Mitlaufend / Unten**) aus und das Plugin hinterlässt auf dem Bildschirm keine Spur: kein Menüband, keine schwebende Leiste, keine Leiste unten. Alle **130 in der Palette registrierten Befehle** funktionieren weiterhin — über die Befehlspalette oder über ein Tastenkürzel, das Sie unter **Einstellungen → Tastenkürzel** festlegen — darunter auch Befehle, für die Obsidian kein eingebautes Kürzel hat, etwa Schriftfarbe, Hervorhebungsfarbe, Groß-/Kleinschreibung ändern, Callouts, Tabellensortierung und die Zeilenwerkzeuge. Betrachten Sie es als eine optionale Nur-Tastatur-Ebene, die Sie zuschalten können, wann immer die Maus sich zu langsam anfühlt.
+Ja, und Sie verlieren dabei nichts. Schalten Sie in **Einstellungen → Awesome Format Bar** alle drei Positionen (**Oben / Mitlaufend / Unten**) aus und das Plugin hinterlässt auf dem Bildschirm keine Spur: kein Menüband, keine schwebende Leiste, keine Leiste unten. Alle **139 in der Palette registrierten Befehle** funktionieren weiterhin — über die Befehlspalette oder über ein Tastenkürzel, das Sie unter **Einstellungen → Tastenkürzel** festlegen — darunter auch Befehle, für die Obsidian kein eingebautes Kürzel hat, etwa Schriftfarbe, Hervorhebungsfarbe, Groß-/Kleinschreibung ändern, Callouts, Tabellensortierung und die Zeilenwerkzeuge. Betrachten Sie es als eine optionale Nur-Tastatur-Ebene, die Sie zuschalten können, wann immer die Maus sich zu langsam anfühlt.
 
 **Kann ich Schaltflächen für Befehle anderer Plugins hinzufügen?**  
 Ja — dafür ist die Registerkarte **Angeheftet** da. Heften Sie einen beliebigen Befehl aus der Palette an und wählen Sie ein Symbol. Ist das bereitstellende Plugin deaktiviert, wird die Schaltfläche ausgegraut und die Anheftung bleibt erhalten.
@@ -263,7 +263,7 @@ Nein. Im gesamten Code gibt es keine KI-Funktion, keinen API-Schlüssel, keine N
 Nein. Die Sortierung per Klick auf die Kopfzeile in der Leseansicht betrifft nur die Anzeige und ändert die Notiz niemals.
 
 **Wie zentriere ich ein Bild oder ändere seine Größe?**  
-Setzen Sie den Cursor in die Zeile des Bildes. **Zentriert** (Start · Absatz) zentriert es — ein Bild, das allein in einer Zeile steht, *ist* ein Absatz, also ist kein eigener Befehl nötig — und **Bildgröße ▼** (Einfügen · Bild) legt seine Breite auf 100–600 px fest, **Ursprüngliche Größe** gibt der Datei ihre eigene Größe zurück. **Beschriftung** schreibt darunter eine Beschriftungszeile und markiert sie, bereit zum Überschreiben. Alles wird als einfache Obsidian-Syntax geschrieben (ein Abschnitt `|300` hinter dem Dateinamen), die Notiz liest sich also auch ohne Plugin genauso.
+Setzen Sie den Cursor in die Zeile des Bildes. **Zentriert** (Start · Absatz) zentriert es — ein Bild, das allein in einer Zeile steht, *ist* ein Absatz, also ist kein eigener Befehl nötig — und **Bildgröße ▼** (Einfügen · Bild) legt seine Breite auf 100–600 px fest, **Ursprüngliche Größe** gibt der Datei ihre eigene Größe zurück; eine Breite wird hinter einen Alias geschrieben statt ihn zu überschreiben, also wird aus `![[logo.png|Firmenlogo]]` die Form `![[logo.png|Firmenlogo|300]]`. **Alle Bilder ▼** wendet dieselbe Breite von überall in der Notiz auf jedes Bild an. **Alternativtext** schreibt den Alternativtext und markiert ihn, **Beschriftung** schreibt darunter eine Beschriftungszeile und markiert sie, und **Bild zurücksetzen** verwirft beides wieder. **Syntax umwandeln** wechselt zwischen `![[a.png]]` und `![](a.png)`. Alles wird als einfache Obsidian-Syntax geschrieben, die Notiz liest sich also auch ohne Plugin genauso.
 
 **Kann ich die Leiste ausblenden, wenn ich einen aufgeräumten Bildschirm möchte?**  
 Ja — schalten Sie eine beliebige Position in den Einstellungen aus oder alle drei, um sie ganz zu verbergen (was dann noch funktioniert, steht in der Frage zur Tastatur weiter oben).

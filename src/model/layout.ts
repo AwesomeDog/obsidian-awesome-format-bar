@@ -102,7 +102,17 @@ export const BUILT_IN_COMMAND_TABS = [
           "comment",
         ],
       },
-      { name: "Picture", commands: ["image-size", "image-caption"] },
+      {
+        name: "Picture",
+        commands: [
+          "image-size",
+          "image-size-all",
+          "image-alt",
+          "image-caption",
+          "image-reset",
+          "image-convert-syntax",
+        ],
+      },
       {
         name: "Media & Symbols",
         commands: ["attach-file", "emoji", "date-time"],
