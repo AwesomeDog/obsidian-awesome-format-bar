@@ -3,6 +3,22 @@ import { normalizeRanges, type Change, type Range } from "./plan";
 /** A fence is a divider for renumbering, sorting, joining and splitting alike. */
 export const FENCE = /^\s*(?:```|~~~)/;
 
+/**
+ * True for a fence marker and for every line it holds. Unlike a divider,
+ * which the run walkers can spot one line at a time, this is asked per line
+ * so a selection that starts inside a fence is protected too.
+ */
+export function fenceMask(lines: Lines): boolean[] {
+  const out: boolean[] = [];
+  let inside = false;
+  for (let line = 0; line < lines.count; line++) {
+    const marker = FENCE.test(lines.at(line));
+    if (marker) inside = !inside;
+    out.push(inside || marker);
+  }
+  return out;
+}
+
 const LATIN = new Intl.Collator("en-US", {
   numeric: true,
   sensitivity: "base",

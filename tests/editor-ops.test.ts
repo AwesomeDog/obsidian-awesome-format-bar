@@ -193,6 +193,21 @@ describe("normalization", () => {
     }
   });
 
+  it("leaves a URL alone: an em dash where -- was stops it resolving", () => {
+    expect(
+      apply(
+        "[see https://a--b.com/x and https://c.com/a...b]",
+        smartPunctuation,
+      ),
+    ).toBe("see https://a--b.com/x and https://c.com/a...b");
+  });
+
+  it("still pairs the quotes written around a URL", () => {
+    expect(
+      apply('[He said "https://a--b.com is down"]', smartPunctuation),
+    ).toBe("He said “https://a--b.com is down”");
+  });
+
   it("adds spaces between CJK and Latin text", () => {
     expect(apply("[中文abc ABC中文 日本語123]", cjkSpacing)).toBe(
       "中文 abc ABC 中文 日本語 123",
@@ -383,7 +398,7 @@ describe("sortLines", () => {
 
   it("does not reorder across a code fence", () => {
     expect(apply("[c\na\n```\nz\nb\n```]", sortLines)).toBe(
-      "a\nc\n```\nb\nz\n```",
+      "a\nc\n```\nz\nb\n```",
     );
   });
 });
@@ -399,7 +414,7 @@ describe("reverseLines", () => {
 
   it("does not reorder across a code fence", () => {
     expect(apply("[a\nb\n```\nc\nd\n```]", reverseLines)).toBe(
-      "b\na\n```\nd\nc\n```",
+      "b\na\n```\nc\nd\n```",
     );
   });
 });
@@ -564,6 +579,12 @@ describe("mergeLines", () => {
   it("joins CJK without inserting a space", () => {
     expect(apply("[中文\n中文]", mergeLines)).toBe("中文中文");
   });
+
+  it("does not join the lines a code fence holds", () => {
+    expect(apply("[a\nb\n```\nc\nd\n```]", mergeLines)).toBe(
+      "a b\n```\nc\nd\n```",
+    );
+  });
 });
 
 describe("splitLines", () => {
@@ -577,6 +598,12 @@ describe("splitLines", () => {
 
   it("does nothing where there is no separator", () => {
     expect(apply("[a\nb]", splitLines)).toBe("a\nb");
+  });
+
+  it("does not split the lines a code fence holds", () => {
+    expect(apply("[a、b\n```\nc、d\n```]", splitLines)).toBe(
+      "a\nb\n```\nc、d\n```",
+    );
   });
 });
 
@@ -785,6 +812,13 @@ describe("setAllImageSizes", () => {
   it("escapes the pipe of a picture inside a table", () => {
     expect(all("|![[a.png]]|b|\n|-|-|", "300")).toBe(
       "|![[a.png\\|300]]|b|\n|-|-|",
+    );
+  });
+
+  it("skips the pictures a code fence holds", () => {
+    const doc = "![[a.png]]\n\n```\n![[b.png]]\n![c](d.png)\n```\n";
+    expect(all(doc, "300")).toBe(
+      "![[a.png|300]]\n\n```\n![[b.png]]\n![c](d.png)\n```\n",
     );
   });
 });

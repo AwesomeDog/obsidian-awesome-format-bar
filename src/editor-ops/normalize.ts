@@ -10,6 +10,21 @@ import {
 const CJK =
   "\\p{Script=Han}\\p{Script=Hiragana}\\p{Script=Katakana}\\p{Script=Hangul}";
 
+/** A URL is copied verbatim: an em dash where `--` was stops it resolving. */
+const ADDRESS = /[a-z][a-z0-9+.-]*:\/\/[^\s<>()"']+/giu;
+
+/** Runs `edit` over everything but the URLs, which pass through untouched. */
+function outsideUrls(text: string, edit: (chunk: string) => string): string {
+  let out = "";
+  let at = 0;
+  for (const match of text.matchAll(ADDRESS)) {
+    const start = match.index ?? 0;
+    out += edit(text.slice(at, start)) + match[0];
+    at = start + match[0].length;
+  }
+  return out + edit(text.slice(at));
+}
+
 /**
  * The one walk over fenced code. `editable` is false for fence markers and
  * everything inside them; returning `null` drops the line.
@@ -68,19 +83,22 @@ function scope(doc: string, ranges: readonly Range[]): Range[] {
 export function smartPunctuation(doc: string, ranges: readonly Range[]): Plan {
   return planRanges(doc, scope(doc, ranges), (text) =>
     mapEditable(text, (part) => {
+      // Outside the URL walk, so a URL never resets which quote is opening.
       let opening = true;
-      // Three or more hyphens are a rule, frontmatter or a table delimiter;
-      // only a bare pair is an em dash.
-      return part
-        .replace(/\.\.\./g, "…")
-        .replace(/-{2,}/g, (run) => (run.length === 2 ? "—" : run))
-        .replace(/"/g, () => {
-          const quote = opening ? "“" : "”";
-          opening = !opening;
-          return quote;
-        })
-        .replace(/(^|[\s([{])'/g, "$1‘")
-        .replace(/'/g, "’");
+      const edit = (chunk: string): string =>
+        // Three or more hyphens are a rule, frontmatter or a table delimiter;
+        // only a bare pair is an em dash.
+        chunk
+          .replace(/\.\.\./g, "…")
+          .replace(/-{2,}/g, (run) => (run.length === 2 ? "—" : run))
+          .replace(/"/g, () => {
+            const quote = opening ? "“" : "”";
+            opening = !opening;
+            return quote;
+          })
+          .replace(/(^|[\s([{])'/g, "$1‘")
+          .replace(/'/g, "’");
+      return outsideUrls(part, edit);
     }),
   );
 }

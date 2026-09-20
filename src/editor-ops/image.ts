@@ -1,5 +1,5 @@
 import { NO_CHANGE, order, type Change, type Plan, type Range } from "./plan";
-import { Lines } from "./lines";
+import { FENCE, Lines } from "./lines";
 
 /** `![[a.png]]`, `![[a.png|300]]`; the pipe segment is a size or an alias. */
 const WIKI_EMBED = /!\[\[([^\]]*)\]\]/g;
@@ -227,12 +227,19 @@ export function setImageSize(
 /**
  * The same width on every picture in the note. Unlike the single-picture
  * commands it ignores the caret, so it runs from anywhere in the note.
+ * Fenced code is skipped: a note about Markdown may well show an embed.
  */
 export function setAllImageSizes(doc: string, width: string | null): Plan {
   const lines = new Lines(doc);
   const changes: Change[] = [];
+  let fenced = false;
   for (let line = 0; line < lines.count; line++) {
     const text = lines.at(line);
+    if (FENCE.test(text)) {
+      fenced = !fenced;
+      continue;
+    }
+    if (fenced) continue;
     for (const embed of embedsIn(text)) {
       const source = text.slice(embed.from, embed.to);
       const next = sizedEmbed(text, embed, width);

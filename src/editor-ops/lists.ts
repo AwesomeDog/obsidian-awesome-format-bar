@@ -11,6 +11,7 @@ import {
   blocksFor,
   compareText,
   FENCE,
+  fenceMask,
   Lines,
   replaceBlock,
   type Block,
@@ -143,13 +144,14 @@ export function renumberList(doc: string, ranges: readonly Range[]): Plan {
   return { changes: order(changes) };
 }
 
-/** Reorders each run of lines; blank lines and fences stay put as dividers. */
+/** Reorders each run of lines; blank lines and fenced code stay put. */
 function reorderRuns(
   lines: Lines,
   ranges: readonly Range[],
   reorder: (run: readonly string[]) => string[],
 ): Plan {
   const changes: Change[] = [];
+  const fenced = fenceMask(lines);
 
   for (const [a, b] of blocksFor(lines, ranges, "collapsed-paragraph")) {
     const source: string[] = [];
@@ -161,8 +163,9 @@ function reorderRuns(
       if (run.length > 0) result.push(...reorder(run));
       run = [];
     };
-    for (const text of source) {
-      if (text.trim() === "" || FENCE.test(text)) {
+    for (const [index, text] of source.entries()) {
+      // A fence and everything it holds is copied, never reordered.
+      if ((fenced[a + index] ?? false) || text.trim() === "") {
         flush();
         result.push(text);
         continue;
@@ -455,6 +458,7 @@ function pickSeparator(text: string): string | null {
 /** A line without the separator is left alone, so nothing trims in passing. */
 export function splitLines(doc: string, ranges: readonly Range[]): Plan {
   const lines = new Lines(doc);
+  const fenced = fenceMask(lines);
   const blocks = blocksFor(lines, ranges);
   const separator = pickSeparator(
     blocks.map(([a, b]) => lines.slice(a, b)).join("\n"),
@@ -466,7 +470,9 @@ export function splitLines(doc: string, ranges: readonly Range[]): Plan {
     const source = lines.slice(a, b);
     const result = source
       .split("\n")
-      .flatMap((text) => {
+      .flatMap((text, index) => {
+        // A fence and everything it holds is copied, never split.
+        if (fenced[a + index] ?? false) return [text];
         const parts = text.split(separator);
         return parts.length > 1 ? parts.map((part) => part.trim()) : [text];
       })
@@ -526,9 +532,10 @@ export function duplicate(doc: string, ranges: readonly Range[]): Plan {
   return { changes, select: { from: caret, to: caret } };
 }
 
-/** Blank lines and fences stay put, so a paragraph stays a paragraph. */
+/** Blank lines and fenced code stay put, so a paragraph stays a paragraph. */
 export function mergeLines(doc: string, ranges: readonly Range[]): Plan {
   const lines = new Lines(doc);
+  const fenced = fenceMask(lines);
   const changes: Change[] = [];
 
   for (const [a, b] of blocksFor(lines, ranges, "collapsed-paragraph")) {
@@ -544,8 +551,9 @@ export function mergeLines(doc: string, ranges: readonly Range[]): Plan {
       else result.push(...run);
       run = [];
     };
-    for (const text of source) {
-      if (text.trim() === "" || FENCE.test(text)) {
+    for (const [index, text] of source.entries()) {
+      // A fence and everything it holds is copied, never joined.
+      if ((fenced[a + index] ?? false) || text.trim() === "") {
         flush();
         result.push(text);
         continue;
