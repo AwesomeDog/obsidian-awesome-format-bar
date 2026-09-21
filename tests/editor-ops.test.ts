@@ -2,8 +2,10 @@ import { describe, expect, it } from "vitest";
 import {
   insertBlockReference,
   insertCallout,
+  numberHeadings,
   sortHeadings,
   toggleParagraphAlignment,
+  type HeadingNumbering,
 } from "../src/editor-ops/blocks";
 import { changeCase, convertCase } from "../src/editor-ops/case";
 import {
@@ -81,6 +83,11 @@ function apply(
 /** `sortHeadings` works on the note as a whole, so it takes no range. */
 function sortNote(doc: string): string {
   return run(doc, sortHeadings(doc));
+}
+
+/** `numberHeadings` works on the note as a whole, so it takes no range. */
+function numberNote(doc: string, scheme: HeadingNumbering): string {
+  return run(doc, numberHeadings(doc, scheme));
 }
 
 describe("ranges", () => {
@@ -560,6 +567,91 @@ describe("sortHeadings", () => {
 
   it("does nothing in a note without headings", () => {
     expect(sortNote("b\na")).toBe("b\na");
+  });
+});
+
+describe("numberHeadings", () => {
+  it("numbers every level of the outline", () => {
+    expect(numberNote("# A\n## B\n## C\n# D", "outline")).toBe(
+      "# 1. A\n## 1.1. B\n## 1.2. C\n# 2. D",
+    );
+  });
+
+  it("counts a skipped level as the first of each step", () => {
+    expect(numberNote("# A\n### B", "outline")).toBe("# 1. A\n### 1.1.1. B");
+  });
+
+  it("numbers each level in its own style, as Word's list library does", () => {
+    expect(numberNote("# A\n## B\n### C\n## D\n# E", "multilevel")).toBe(
+      "# 1) A\n## a) B\n### i) C\n## b) D\n# 2) E",
+    );
+  });
+
+  it("romanises the top level", () => {
+    expect(numberNote("# A\n## B\n### C\n# D", "roman")).toBe(
+      "# I. A\n## A. B\n### 1. C\n# II. D",
+    );
+  });
+
+  it("romanises past IV", () => {
+    expect(numberNote("# a\n# b\n# c\n# d\n# e", "roman").split("\n")[3]).toBe(
+      "# IV. d",
+    );
+  });
+
+  it("carries on past z the way Word does", () => {
+    const doc = `# A\n${Array.from({ length: 27 }, () => "## x").join("\n")}`;
+    const lines = numberNote(doc, "multilevel").split("\n");
+    expect(lines[lines.length - 1]).toBe("## aa) x");
+  });
+
+  it("replaces a scheme instead of stacking one on top of it", () => {
+    expect(numberNote("# 1. A\n## 1.1. B", "multilevel")).toBe(
+      "# 1) A\n## a) B",
+    );
+  });
+
+  it("does nothing when the numbering is already right", () => {
+    const once = numberNote("# A\n## B", "outline");
+    expect(numberHeadings(once, "outline").changes).toEqual([]);
+  });
+
+  it("takes the numbers back off", () => {
+    expect(numberNote("# 1. A\n## 1.1. B", null)).toBe("# A\n## B");
+  });
+
+  it("leaves a heading that only starts with a number alone", () => {
+    expect(numberNote("## 2024 in review\n## 1. Real one", null)).toBe(
+      "## 2024 in review\n## Real one",
+    );
+  });
+
+  it("does not number a heading inside a code fence", () => {
+    expect(numberNote("# A\n```\n# z\n```\n# B", "outline")).toBe(
+      "# 1. A\n```\n# z\n```\n# 2. B",
+    );
+  });
+
+  it("does not number a heading quoted in a callout", () => {
+    expect(numberNote("# A\n> [!note]\n> ## z\n# B", "outline")).toBe(
+      "# 1. A\n> [!note]\n> ## z\n# 2. B",
+    );
+  });
+
+  it("does not number a YAML comment in front matter", () => {
+    expect(
+      numberNote("---\ntitle: x\n# comment\n---\n# A\n# B", "outline"),
+    ).toBe("---\ntitle: x\n# comment\n---\n# 1. A\n# 2. B");
+  });
+
+  it("reads a `---` rule at the top as content, not as front matter", () => {
+    expect(numberNote("---\n\n# A\n# B", "outline")).toBe(
+      "---\n\n# 1. A\n# 2. B",
+    );
+  });
+
+  it("does nothing in a note without headings", () => {
+    expect(numberNote("b\na", "outline")).toBe("b\na");
   });
 });
 

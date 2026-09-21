@@ -45,6 +45,7 @@ export const BUILT_IN_COMMAND_TABS = [
         commands: [
           "bullet-list",
           "numbered-list",
+          "number-headings",
           "task-list",
           "quote",
           "decrease-indent",

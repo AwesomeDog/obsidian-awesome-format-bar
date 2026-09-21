@@ -167,6 +167,160 @@ export function sortHeadings(doc: string): Plan {
     : { changes: [replaceBlock(lines, start, end, result)] };
 }
 
+/** How to number the note's headings; `null` takes the numbers back off. */
+export type HeadingNumbering = "outline" | "multilevel" | "roman" | null;
+
+type NumberStyle = "1" | "a" | "i" | "A" | "I";
+
+interface NumberingScheme {
+  /** One style per level; a level past the end starts over from the first. */
+  readonly styles: readonly NumberStyle[];
+  /** Show the ancestors' numbers too: `1.1.` rather than a bare `a)`. */
+  readonly path: boolean;
+  /** Written right after the number, which is what makes a prefix findable. */
+  readonly separator: string;
+}
+
+const NUMBERING_SCHEMES: Readonly<
+  Record<Exclude<HeadingNumbering, null>, NumberingScheme>
+> = {
+  outline: { styles: ["1"], path: true, separator: "." },
+  multilevel: { styles: ["1", "a", "i"], path: false, separator: ")" },
+  roman: { styles: ["I", "A", "1"], path: false, separator: "." },
+};
+
+const ROMAN_STEPS: readonly (readonly [number, string])[] = [
+  [1000, "M"],
+  [900, "CM"],
+  [500, "D"],
+  [400, "CD"],
+  [100, "C"],
+  [90, "XC"],
+  [50, "L"],
+  [40, "XL"],
+  [10, "X"],
+  [9, "IX"],
+  [5, "V"],
+  [4, "IV"],
+  [1, "I"],
+];
+
+function romanLetters(value: number): string {
+  let out = "";
+  let left = value;
+  for (const [step, letters] of ROMAN_STEPS)
+    while (left >= step) {
+      out += letters;
+      left -= step;
+    }
+  return out;
+}
+
+/** `1` is `a` and `27` is `aa`: Word carries on past `z` instead of stopping. */
+function alphabetLetters(value: number, upper: boolean): string {
+  let out = "";
+  let left = value;
+  while (left > 0) {
+    out = String.fromCharCode((upper ? 65 : 97) + ((left - 1) % 26)) + out;
+    left = Math.floor((left - 1) / 26);
+  }
+  return out;
+}
+
+function numberToken(style: NumberStyle, value: number): string {
+  switch (style) {
+    case "1":
+      return String(value);
+    case "a":
+      return alphabetLetters(value, false);
+    case "A":
+      return alphabetLetters(value, true);
+    case "i":
+      return romanLetters(value).toLowerCase();
+    case "I":
+      return romanLetters(value);
+  }
+}
+
+/**
+ * A number this plugin wrote. Every scheme ends in `.` or `)`, so a heading
+ * that only starts with a number — `## 2024 in review` — is left alone, and a
+ * scheme can be swapped for another without stacking one on top of the first.
+ */
+const NUMBERED_HEADING =
+  /^(#{1,6})[ \t]+(?:[0-9]+(?:\.[0-9]+)*\.|[IVXLCDM]+\.|[A-Z]\.|[0-9]+\)|[ivxlcdm]+\)|[a-z]\))[ \t]+/;
+
+function numberingText(
+  scheme: NumberingScheme,
+  counters: readonly number[],
+): string {
+  const style = (index: number) =>
+    scheme.styles[index % scheme.styles.length] ?? "1";
+  const tokens = scheme.path
+    ? counters.map((value, index) => numberToken(style(index), value))
+    : [
+        numberToken(
+          style(counters.length - 1),
+          counters[counters.length - 1] ?? 1,
+        ),
+      ];
+  return `${tokens.join(".")}${scheme.separator} `;
+}
+
+/** Front matter comes first: a YAML comment `# note` is not a heading. */
+function firstContentLine(lines: Lines): number {
+  if (lines.count === 0 || lines.at(0).trim() !== "---") return 0;
+  for (let line = 1; line < lines.count; line++) {
+    const text = lines.at(line).trim();
+    if (text === "---") return line + 1;
+    // A `---` rule followed by a blank line starts the note; it holds no YAML.
+    if (text === "") return 0;
+  }
+  return 0;
+}
+
+/**
+ * Writes outline numbering on every heading of the note, or takes it off with
+ * `null`. The whole note is the scope: numbering that stops at a selection
+ * would carry on from the wrong number below it.
+ */
+export function numberHeadings(doc: string, scheme: HeadingNumbering): Plan {
+  const lines = new Lines(doc);
+  const changes: Change[] = [];
+  const counters: number[] = [];
+  let inFence = false;
+
+  for (let line = firstContentLine(lines); line < lines.count; line++) {
+    const text = lines.at(line);
+    if (FENCE.test(text)) inFence = !inFence;
+    const marker = inFence ? null : HEADING.exec(text);
+    if (!marker) continue;
+
+    const level = (marker[1] ?? "").length;
+    while (counters.length > level) counters.pop();
+    if (counters.length < level) {
+      // A level skipped on the way down counts as `1` at every step, so `##`
+      // then `####` is `1.1.1.` rather than `1.0.1.`
+      while (counters.length < level) counters.push(1);
+    } else {
+      counters[level - 1] = (counters[level - 1] ?? 0) + 1;
+    }
+
+    const body = text.replace(NUMBERED_HEADING, "").replace(HEADING, "");
+    const number =
+      scheme === null ? "" : numberingText(NUMBERING_SCHEMES[scheme], counters);
+    const next = `${marker[1]} ${number}${body.trim()}`;
+    if (next !== text)
+      changes.push({
+        from: lines.start(line),
+        to: lines.end(line),
+        text: next,
+      });
+  }
+
+  return changes.length === 0 ? NO_CHANGE : { changes: order(changes) };
+}
+
 /** One `- [[#Heading|Heading]]` per heading, indented two spaces per level. */
 function outlineEntries(sections: readonly Section[], depth: number): string[] {
   return sections.flatMap((section) => {

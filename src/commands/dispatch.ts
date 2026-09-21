@@ -9,9 +9,11 @@ import { t } from "../i18n/i18n";
 import {
   insertBlockReference,
   insertCallout,
+  numberHeadings,
   sortHeadings,
   tableOfContents,
   toggleParagraphAlignment,
+  type HeadingNumbering,
   type ParagraphAlignment,
 } from "../editor-ops/blocks";
 import { changeCase, type CaseMode } from "../editor-ops/case";
@@ -338,6 +340,14 @@ const ALL_IMAGE_WIDTHS: Readonly<Record<string, string | null>> = {
   "image-size-all-original": null,
 };
 
+/** Word's own multilevel schemes; `null` takes the numbers back off. */
+const HEADING_NUMBERINGS: Readonly<Record<string, HeadingNumbering>> = {
+  "number-headings-outline": "outline",
+  "number-headings-multilevel": "multilevel",
+  "number-headings-roman": "roman",
+  "no-heading-numbering": null,
+};
+
 /** The local half of the command table; registered commands forward instead. */
 export function planFor(context: CommandContext, id: string): Plan | null {
   const { editor, format, optionValue } = context;
@@ -360,6 +370,9 @@ export function planFor(context: CommandContext, id: string): Plan | null {
 
   const allWidth = ALL_IMAGE_WIDTHS[id];
   if (allWidth !== undefined) return setAllImageSizes(doc, allWidth);
+
+  const numbering = HEADING_NUMBERINGS[id];
+  if (numbering !== undefined) return numberHeadings(doc, numbering);
 
   switch (id) {
     case "renumber-list":

@@ -165,6 +165,7 @@ export function popoverSectionsFor(
         },
       ];
     case "callout":
+    case "number-headings":
     case "image-size":
     case "image-size-all":
     case "table-delete":

@@ -189,6 +189,43 @@ export const COMMANDS = [
     kind: "registered",
     registeredCommandId: "editor:toggle-numbered-list",
   },
+  // The numbers go into the heading text itself, so each scheme ends in `.` or
+  // `)`: that is what the next run recognizes, and what keeps a heading that
+  // merely starts with a number (`## 2024 in review`) out of it.
+  {
+    id: "number-headings",
+    name: "Number Headings",
+    icon: "heading",
+    kind: "editor",
+    popup: "number-headings",
+    commandPalette: false,
+  },
+  {
+    id: "number-headings-outline",
+    name: "Number Headings 1. 1.1. 1.1.1.",
+    icon: "heading",
+    kind: "editor",
+  },
+  {
+    id: "number-headings-multilevel",
+    name: "Number Headings 1) a) i)",
+    icon: "heading",
+    kind: "editor",
+  },
+  {
+    id: "number-headings-roman",
+    name: "Number Headings I. A. 1.",
+    icon: "heading",
+    kind: "editor",
+  },
+  // Word's multilevel gallery has a None; here it doubles as the only way back
+  // out, since numbering lives in the text and cannot be switched off by view.
+  {
+    id: "no-heading-numbering",
+    name: "No Numbering",
+    icon: "heading-off",
+    kind: "editor",
+  },
   {
     id: "task-list",
     name: "Task List",
@@ -1078,6 +1115,12 @@ export const DROPDOWN_ITEMS: Readonly<Record<string, readonly CommandId[]>> = {
     "image-size-all-400",
     "image-size-all-600",
     "image-size-all-original",
+  ],
+  "number-headings": [
+    "number-headings-outline",
+    "number-headings-multilevel",
+    "number-headings-roman",
+    "no-heading-numbering",
   ],
   "table-delete": [
     "table-delete-rows",
