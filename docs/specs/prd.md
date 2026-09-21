@@ -66,7 +66,7 @@ A fixed built-in subset of commands, grouped by dividers. Buttons that don't fit
 
 ## 5. Commands
 
-**153 built-in commands** across 5 tabs and 25 groups, plus the Pinned tab. Drop-down items stay under their parent buttons, while the other commands are registered in the command palette, so users can assign their own shortcuts. That leaves **139** palette entries: the 14 left out are the 13 drop-down parents and the emoji panel, which only open a menu instead of acting.
+**154 built-in commands** across 5 tabs and 25 groups, plus the Pinned tab. Drop-down items stay under their parent buttons, while the other commands are registered in the command palette, so users can assign their own shortcuts. That leaves **140** palette entries: the 14 left out are the 13 drop-down parents and the emoji panel, which only open a menu instead of acting.
 
 ### Tab 1 · Home
 
@@ -103,13 +103,15 @@ Group order follows Word's own View tab.
 
 Button placement follows the parts of Word's **Table Layout** tab that apply to Markdown tables.
 
-- **Rows & Columns** — Delete Rows or Columns ▼ (Delete Rows, Delete Columns), Insert Rows Above, Insert Rows Below, Insert Columns to the Left, Insert Columns to the Right, Move Row Up, Move Row Down, Move Column Left, Move Column Right
+- **Rows & Columns** — Delete ▼ (Delete Rows, Delete Columns, Delete Table), Insert Rows Above, Insert Rows Below, Insert Columns to the Left, Insert Columns to the Right, Move Row Up, Move Row Down, Move Column Left, Move Column Right
 - **Format** — Format Tables ▼ (Format Table, Format All Tables)
 - **Alignment** — Align Column Left, Align Column Center, Align Column Right
 - **Data** — Sort Rows ▼ (Sort Rows A to Z, Sort Rows Z to A), Remove Duplicate Rows, Transpose Table, Convert Table to Text
 - **Clipboard** — Paste as Table: converts tab- or comma-separated clipboard text into an aligned Markdown table at the cursor. Explicit command only; regular Paste is untouched. Copy as ▼ (TSV, CSV, JSON, Markdown): puts the table the caret is in on the clipboard in the chosen format, leaving the note alone.
 
 **Convert Table to Text** writes the table out as one tab-separated line per row, header included; **Convert Text to Table** (Insert · Blocks) is its exact inverse, and **Paste as Table** is the same conversion fed from the clipboard instead of the selection. Tab is the delimiter because it is what a spreadsheet puts on the clipboard: the three commands round-trip without a setting. **Copy as ▼** is the same write in four formats: **TSV** (tab-separated, what a spreadsheet itself puts on the clipboard), **CSV** (comma-separated), **JSON** — one object per body row, keyed by the header, every value left a string, since a `007` or `1.50` turned into a number is data loss — and **Markdown** (the table re-rendered, ready to paste into another note). A blank or repeated header cell cannot be a key, so those become `column-3` and `name-2`, the way Excel's Power Query names them. Each format quotes a cell that holds the delimiter, a quote or a line break, and pads a short row out to the widest one. All four go to the clipboard rather than into the note, because a table dumped into a note as text is just noise. **Remove Duplicate Rows** is Excel's Remove Duplicates: of a set of identical rows the first stays and the rest go, and a row counts as identical only when every cell matches — one cell apart and both survive. The header is never compared and never dropped, and a table with nothing to remove is left alone rather than rewritten.
+
+**Delete ▼** is Word's three ways out: **Delete Rows** and **Delete Columns** drop the row or column the caret is in, and **Delete Table** drops the whole block, taking the newline above it when the table ends the file. Deleting the last row deletes the table too, since a header alone is not a table; deleting the last column empties the cells instead, because the header is worth keeping.
 
 Column-level names (*Align Column…*, *Sort Rows…*) distinguish these from the paragraph-level Align and Sort Lines on Home. Every command here except **Paste as Table** greys out when the caret is not inside a table; Paste as Table stays available wherever the editor is.
 
@@ -122,7 +124,7 @@ Column-level names (*Align Column…*, *Sort Rows…*) distinguish these from th
 
 ### Tab 6 · Pinned
 
-Pin **any command from the command palette** — core commands, other plugins' commands, or this plugin's own 95 — to the toolbar with an icon of your choice. The built-in set is the intersection of what most people use often; the one or two commands a given user can't live without usually fall outside it.
+Pin **any command from the command palette** — core commands, other plugins' commands, or this plugin's own 96 — to the toolbar with an icon of your choice. The built-in set is the intersection of what most people use often; the one or two commands a given user can't live without usually fall outside it.
 
 | Item | Convention |
 |---|---|
@@ -196,7 +198,7 @@ The Table options govern editing behavior and text output, not toolbar layout, s
 - User-created commands — Pinned surfaces existing commands, it doesn't create new ones.
 - Emoji shortcodes: no `:smile:` expansion, no autocomplete while typing; the panel inserts raw characters.
 - Custom emoji sets, user-editable character lists.
-- Reordering, hiding or showing the 153 built-in commands.
+- Reordering, hiding or showing the 154 built-in commands.
 - Toolbar appearance customization: background or icon color pickers, theme variants.
 
 ---
@@ -208,7 +210,7 @@ The Table options govern editing behavior and text output, not toolbar layout, s
 | **Position** | Where a toolbar renders: **Top**, **Following**, **Fixed**. Three independent toggles. |
 | **Layout** | How a position renders: **Ribbon** (Top) or **Compact** (Following / Fixed). |
 | **Tab · Group · Button** | Ribbon structure. A **drop-down** button holds several commands; a Compact **overflow menu** (`⋯`) holds the buttons that don't fit. |
-| **Command** | An action the toolbar runs. **153 built-in commands** plus any **pinned command**. |
+| **Command** | An action the toolbar runs. **154 built-in commands** plus any **pinned command**. |
 | **Source · Group · Entry** | Emoji & Symbols panel structure: three sources (Emoji, Kaomoji, Symbols) → groups → entries. Picking an entry inserts a character. |
 | **Word terminology** | Display names follow Microsoft Word (*Bold*, *Clear Formatting*), initial capitals, no `Toggle` prefix. |
 | **Plugin icon** | The plugin's icon in Obsidian's left sidebar. "Ribbon" on its own always means the toolbar layout. |

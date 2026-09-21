@@ -40,6 +40,7 @@ import {
   alignColumn,
   deleteColumn,
   deleteRow,
+  deleteTable,
   formatAllTables,
   formatTable,
   insertColumnLeft,
@@ -430,6 +431,8 @@ export function planFor(context: CommandContext, id: string): Plan | null {
       return deleteRow(doc, caret, format);
     case "table-delete-columns":
       return deleteColumn(doc, caret, format);
+    case "table-delete-table":
+      return deleteTable(doc, caret);
     case "table-move-row-up":
       return moveRow(doc, caret, format, -1);
     case "table-move-row-down":

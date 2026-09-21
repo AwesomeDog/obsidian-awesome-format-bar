@@ -56,7 +56,7 @@ Obsidian ist schnell — **wenn** Sie bereits Markdown beherrschen. Für alle an
 - **Für immer reiner Text.** Kein proprietäres Format, keine Datenbank, keine Bindung — Ihre Notizen bleiben schlicht `.md`-Dateien.
 - **Offline und privat.** Keine Netzwerkaufrufe, keine Konten, keine Telemetrie. Die rund 2.150 Einträge der Emoji-Bibliothek werden mit dem Plugin ausgeliefert.
 - **Ihr eigener Starter, wenn Sie einen wollen.** Die Registerkarte **Angeheftet** nimmt jeden Befehl auf, den Sie auswählen — einen aus dem Kern, aus diesem Plugin oder aus einem anderen —, damit sich die Leiste nach Ihnen richtet, ohne zu einem Konfigurationsprojekt zu werden.
-- **Auch tastaturfreundlich.** Schalten Sie alle drei Leistenpositionen aus und die Oberfläche verschwindet vollständig — alle 139 in der Befehlspalette registrierten Befehle bleiben verfügbar und lassen sich an eigene Tastenkürzel binden. Und wenn die Leiste **eingeschaltet** ist, zeigt der Tooltip beim Überfahren eines Buttons das aktuell gebundene Tastenkürzel —— Ihr eigenes oder das von Obsidian. Ändern Sie die Belegung unter **Einstellungen → Tastenkürzel**, folgt der Tooltip sofort, ohne Neustart.
+- **Auch tastaturfreundlich.** Schalten Sie alle drei Leistenpositionen aus und die Oberfläche verschwindet vollständig — alle 140 in der Befehlspalette registrierten Befehle bleiben verfügbar und lassen sich an eigene Tastenkürzel binden. Und wenn die Leiste **eingeschaltet** ist, zeigt der Tooltip beim Überfahren eines Buttons das aktuell gebundene Tastenkürzel —— Ihr eigenes oder das von Obsidian. Ändern Sie die Belegung unter **Einstellungen → Tastenkürzel**, folgt der Tooltip sofort, ohne Neustart.
 
 ---
 
@@ -65,7 +65,7 @@ Obsidian ist schnell — **wenn** Sie bereits Markdown beherrschen. Für alle an
 |                     |                                                                                                    |
 | ------------------- | -------------------------------------------------------------------------------------------------- |
 | **Leistenpositionen** | Menüband oben, mitlaufende Leiste über der Auswahl, feste Leiste unten — frei kombinierbar        |
-| **Befehle**         | **153** integrierte, davon **139** in der Befehlspalette für eigene Tastenkürzel                   |
+| **Befehle**         | **154** integrierte, davon **140** in der Befehlspalette für eigene Tastenkürzel                   |
 | **Registerkarten**  | Start · Einfügen · Ansicht · Tabelle · Hilfsprogramme · **Angeheftet**                              |
 | **Callouts**        | Alle 12 Obsidian-Callout-Typen in einem Aufklappmenü                                               |
 | **Emoji und Symbole** | Rund 2.150 Emoji, Kaomoji und Symbole, vollständig offline                                       |
@@ -87,7 +87,7 @@ Obsidian ist schnell — **wenn** Sie bereits Markdown beherrschen. Für alle an
 
 Jede Position wird unabhängig ein- und ausgeschaltet, Sie können also nur die mitlaufende Leiste, nur das Menüband oder alle drei nutzen.
 
-### 🅰️ 153 Formatierungsbefehle in vertrauter Anordnung
+### 🅰️ 154 Formatierungsbefehle in vertrauter Anordnung
 
 Fett, Kursiv, Unterstreichen, Durchstreichen, Inline-Code, Inline-Formel, Text hervorheben (mit Farbe), Schriftfarbe, **Schriftart**, **Schriftgröße**, Formatierung löschen, Groß-/Kleinschreibung ändern, Überschriften 1–6, Aufzählung / Nummerierung / Aufgabenliste, Zitat, Einzüge, horizontale Linien, Rückgängig / Wiederholen, Suchen und Ersetzen, Absatzausrichtung — gruppiert genau dort, wo ein Word-Nutzer sie erwartet.
 
@@ -137,7 +137,7 @@ Das ist eine bewusste Entscheidung, kein fehlendes Feature. Eine Leiste, die Ihn
 
 ## Vollständige Befehlsübersicht
 
-139 der 153 Befehle sind in der **Befehlspalette** registriert, sodass Sie ihnen eigene Tastenkürzel zuweisen können. (Aufklapp-Container und das Emoji- und Symbolpanel gibt es nur in der Leiste.)
+140 der 154 Befehle sind in der **Befehlspalette** registriert, sodass Sie ihnen eigene Tastenkürzel zuweisen können. (Aufklapp-Container und das Emoji- und Symbolpanel gibt es nur in der Leiste.)
 
 ### Start
 
@@ -210,7 +210,7 @@ Einstellungen → **Community-Plugins** → **Durchsuchen** → nach **„Awesom
 2. Das **Menüband (Oben)** hat sechs Registerkarten; die letzte, **Angeheftet**, enthält die Befehle, die Sie selbst anheften. Solange sie leer ist, zeigt sie einen Hinweis zum Hinzufügen; nutzen Sie die Bearbeiten-Schaltfläche, um Befehle und Gruppen zu verwalten.
 3. Die **kompakten Leisten** (Mitlaufend / Unten) tragen eine feste Auswahl an Befehlen; Schaltflächen, die nicht in die verfügbare Breite passen, wandern in das Überlaufmenü `⋯`, das außerdem jeden weiteren nach Registerkarte gruppierten Befehl sowie Ihre angehefteten auflistet.
 4. Öffnen Sie die Bearbeiten-Schaltfläche von **Angeheftet**, um Befehle hinzuzufügen, Symbole zu wählen, neue Gruppen zu erstellen oder Gruppen umzubenennen, per Ziehen umzuordnen, Befehle in andere Gruppen zu verschieben oder sie zu löschen. Die Einstellungen halten zusätzlich einen Eintrag bereit, der denselben Manager öffnet. Angeheftete Befehle verhalten sich genau wie ihre Gegenstücke in der Befehlspalette.
-5. Lieber Tastatur? Schalten Sie **alle drei Positionsschalter aus** und die Leiste verschwindet vollständig aus der Oberfläche — das Plugin fügt Ihrem Bildschirm nichts hinzu, während alle **139 in der Palette registrierten Befehle** weiter funktionieren und unter **Einstellungen → Tastenkürzel** an eigene Hotkeys gebunden werden können. Anders gesagt: Sie können es als reines Befehls- und Hotkey-Paket nutzen und nie eine Schaltfläche anklicken.
+5. Lieber Tastatur? Schalten Sie **alle drei Positionsschalter aus** und die Leiste verschwindet vollständig aus der Oberfläche — das Plugin fügt Ihrem Bildschirm nichts hinzu, während alle **140 in der Palette registrierten Befehle** weiter funktionieren und unter **Einstellungen → Tastenkürzel** an eigene Hotkeys gebunden werden können. Anders gesagt: Sie können es als reines Befehls- und Hotkey-Paket nutzen und nie eine Schaltfläche anklicken.
 
 ---
 
@@ -245,10 +245,10 @@ Nein. Fett, Überschriften, Listen, Links, Tabellen, Callouts, Codeblöcke und F
 Standard-Markdown und Obsidian-Markdown. Nur dort, wo Markdown keine Syntax hat — Unterstreichen, Hochstellen, Tiefstellen, Absatzausrichtung, Text- und Hervorhebungsfarbe, Schriftart und Schriftgröße — schreibt das Plugin wenige, standardkonforme Inline-HTML-Tags, die Obsidian nativ darstellt.
 
 **Kann ich meine Tastenkürzel weiter verwenden?**  
-Ja. 139 der 153 Befehle erscheinen in der Befehlspalette und lassen sich an ein beliebiges Tastenkürzel binden.
+Ja. 140 der 154 Befehle erscheinen in der Befehlspalette und lassen sich an ein beliebiges Tastenkürzel binden.
 
 **Ich arbeite lieber mit der Tastatur — kann ich die Leiste komplett ausblenden?**  
-Ja, und Sie verlieren dabei nichts. Schalten Sie in **Einstellungen → Awesome Format Bar** alle drei Positionen (**Oben / Mitlaufend / Unten**) aus und das Plugin hinterlässt auf dem Bildschirm keine Spur: kein Menüband, keine schwebende Leiste, keine Leiste unten. Alle **139 in der Palette registrierten Befehle** funktionieren weiterhin — über die Befehlspalette oder über ein Tastenkürzel, das Sie unter **Einstellungen → Tastenkürzel** festlegen — darunter auch Befehle, für die Obsidian kein eingebautes Kürzel hat, etwa Schriftfarbe, Hervorhebungsfarbe, Groß-/Kleinschreibung ändern, Callouts, Tabellensortierung und die Zeilenwerkzeuge. Betrachten Sie es als eine optionale Nur-Tastatur-Ebene, die Sie zuschalten können, wann immer die Maus sich zu langsam anfühlt.
+Ja, und Sie verlieren dabei nichts. Schalten Sie in **Einstellungen → Awesome Format Bar** alle drei Positionen (**Oben / Mitlaufend / Unten**) aus und das Plugin hinterlässt auf dem Bildschirm keine Spur: kein Menüband, keine schwebende Leiste, keine Leiste unten. Alle **140 in der Palette registrierten Befehle** funktionieren weiterhin — über die Befehlspalette oder über ein Tastenkürzel, das Sie unter **Einstellungen → Tastenkürzel** festlegen — darunter auch Befehle, für die Obsidian kein eingebautes Kürzel hat, etwa Schriftfarbe, Hervorhebungsfarbe, Groß-/Kleinschreibung ändern, Callouts, Tabellensortierung und die Zeilenwerkzeuge. Betrachten Sie es als eine optionale Nur-Tastatur-Ebene, die Sie zuschalten können, wann immer die Maus sich zu langsam anfühlt.
 
 **Kann ich Schaltflächen für Befehle anderer Plugins hinzufügen?**  
 Ja — dafür ist die Registerkarte **Angeheftet** da. Heften Sie einen beliebigen Befehl aus der Palette an und wählen Sie ein Symbol. Ist das bereitstellende Plugin deaktiviert, wird die Schaltfläche ausgegraut und die Anheftung bleibt erhalten.

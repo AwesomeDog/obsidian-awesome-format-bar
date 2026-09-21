@@ -416,6 +416,12 @@ export function deleteColumn(
   );
 }
 
+/** Word's Delete Table: the whole block goes, newlines and all. */
+export function deleteTable(doc: string, offset: number): Plan {
+  const found = tableAt(doc, offset);
+  return found ? dropBlock(found) : NO_CHANGE;
+}
+
 export function moveRow(
   doc: string,
   offset: number,

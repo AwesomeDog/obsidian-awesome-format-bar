@@ -820,7 +820,7 @@ export const COMMANDS = [
   // Table · Rows & Columns
   {
     id: "table-delete",
-    name: "Delete Rows or Columns",
+    name: "Delete",
     icon: "trash-2",
     kind: "editor",
     requiresTable: true,
@@ -838,6 +838,13 @@ export const COMMANDS = [
     id: "table-delete-columns",
     name: "Delete Columns",
     icon: "table-column-delete",
+    kind: "editor",
+    requiresTable: true,
+  },
+  {
+    id: "table-delete-table",
+    name: "Delete Table",
+    icon: "table",
     kind: "editor",
     requiresTable: true,
   },
@@ -1072,7 +1079,11 @@ export const DROPDOWN_ITEMS: Readonly<Record<string, readonly CommandId[]>> = {
     "image-size-all-600",
     "image-size-all-original",
   ],
-  "table-delete": ["table-delete-rows", "table-delete-columns"],
+  "table-delete": [
+    "table-delete-rows",
+    "table-delete-columns",
+    "table-delete-table",
+  ],
   "table-format": ["table-format-table", "table-format-all-tables"],
   "table-sort": ["table-sort-az", "table-sort-za"],
   "table-copy-as": [

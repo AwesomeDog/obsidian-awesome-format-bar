@@ -4,6 +4,7 @@ import {
   alignColumn,
   deleteColumn,
   deleteRow,
+  deleteTable,
   formatAllTables,
   formatTable,
   insertCellBreak,
@@ -329,6 +330,28 @@ describe("deleteColumn", () => {
         deleteColumn(doc, at, PADDED),
       ),
     ).toBe(["before", "|     |", "| --- |", "|     |", "after"].join("\n"));
+  });
+});
+
+describe("deleteTable", () => {
+  it("removes the whole table", () => {
+    expect(
+      run("before\n|a|b|\n|-|-|\n|c^|d|\nafter", (doc, at) =>
+        deleteTable(doc, at),
+      ),
+    ).toBe("before\nafter");
+  });
+
+  it("takes the newline above when the table ends the file", () => {
+    expect(run("before\n|a|\n|^-|", (doc, at) => deleteTable(doc, at))).toBe(
+      "before",
+    );
+  });
+
+  it("leaves a note with no table alone", () => {
+    expect(run("just text^", (doc, at) => deleteTable(doc, at))).toBe(
+      "just text",
+    );
   });
 });
 
