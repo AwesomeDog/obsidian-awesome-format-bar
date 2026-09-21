@@ -11,6 +11,7 @@ import {
 import {
   missingForwardedCommands,
   registeredCommandName,
+  registeredHotkey,
 } from "./commands/registered";
 import {
   insertCellBreak,
@@ -270,6 +271,16 @@ export default class AwesomeFormatBarPlugin extends Plugin {
         usage[char] = (usage[char] ?? 0) + 1;
         // No refresh: this runs on every character the panel inserts.
         void this.saveData(this.settings);
+      },
+      hotkeyFor: (spec: CommandSpec): string => {
+        // Touch devices have no keys to press.
+        if (!Platform.isDesktopApp) return "";
+        // Forwarded buttons run the core command, so that is the key to show.
+        if (spec.registeredCommandId)
+          return registeredHotkey(this.app, spec.registeredCommandId);
+        // A drop-down container is not a palette command: it cannot be bound.
+        if (spec.commandPalette === false) return "";
+        return registeredHotkey(this.app, `${this.manifest.id}:${spec.id}`);
       },
       get positions(): readonly ToolbarPosition[] {
         return enabledToolbarPositions(settings(), Platform.isMobile);

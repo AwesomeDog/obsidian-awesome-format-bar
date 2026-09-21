@@ -56,7 +56,7 @@ Obsidian es rápido **si** ya hablas Markdown. Para todos los demás ——estud
 - **Texto plano para siempre.** Nada de formato propietario, ni base de datos, ni cautividad: tus notas siguen siendo simples archivos `.md`.
 - **Sin conexión y privado.** Sin llamadas de red, sin cuentas, sin telemetría. La biblioteca de unos 2.150 emoji viaja dentro del plugin.
 - **Tu propio lanzador, si lo quieres.** La pestaña **Anclado** guarda cualquier comando que elijas ——del núcleo, de este plugin o de otro——, así que la barra se adapta a ti sin convertirse en un proyecto de configuración.
-- **También para el teclado.** Desactiva las tres posiciones de la barra y la interfaz desaparece por completo: los 139 comandos registrados en la paleta siguen disponibles y puedes asignarles tus propios atajos.
+- **También para el teclado.** Desactiva las tres posiciones de la barra y la interfaz desaparece por completo: los 139 comandos registrados en la paleta siguen disponibles y puedes asignarles tus propios atajos. Y cuando la barra **está activa**, al pasar el cursor por un botón su tooltip muestra el atajo asignado ahora mismo a ese comando ——el tuyo o el predeterminado de Obsidian. Si lo cambias en **Configuración → Atajos de teclado**, el tooltip lo sigue al instante, sin reiniciar.
 
 ---
 

@@ -9,6 +9,23 @@ interface CommandRegistry {
 
 type AppWithCommandRegistry = App & { commands: CommandRegistry };
 
+interface HotkeyManager {
+  printHotkeyForCommand(id: string): string;
+}
+
+type AppWithHotkeyManager = App & { hotkeyManager?: HotkeyManager };
+
+/**
+ * The key a command is bound to right now: the user's binding wins, the
+ * factory default backs it up. Obsidian resolves that fallback itself, so
+ * hand-rolling it would drop one of the two.
+ */
+export function registeredHotkey(app: App, id: string): string {
+  return (
+    (app as AppWithHotkeyManager).hotkeyManager?.printHotkeyForCommand(id) ?? ""
+  );
+}
+
 function commandRegistry(app: App): CommandRegistry | null {
   const registry = (app as AppWithCommandRegistry).commands;
   return typeof registry?.executeCommandById === "function" ? registry : null;

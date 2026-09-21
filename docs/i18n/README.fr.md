@@ -56,7 +56,7 @@ Obsidian est rapide **à condition** de déjà parler Markdown. Pour tous les au
 - **Du texte brut pour toujours.** Pas de format propriétaire, pas de base de données, pas d'enfermement —— vos notes restent de simples fichiers `.md`.
 - **Hors ligne et privé.** Aucun appel réseau, aucun compte, aucune télémétrie. La bibliothèque d'environ 2 150 emoji est livrée dans le plugin.
 - **Votre propre lanceur, si vous en voulez un.** L'onglet **Épinglé** accueille n'importe quelle commande de votre choix —— du cœur d'Obsidian, de ce plugin ou d'un autre —— pour que la barre se plie à vous au lieu de devenir un projet de configuration.
-- **Aussi pensé pour le clavier.** Désactivez les trois positions de la barre et l'interface disparaît complètement —— les 139 commandes enregistrées dans la palette restent disponibles et peuvent être associées à vos propres raccourcis.
+- **Aussi pensé pour le clavier.** Désactivez les trois positions de la barre et l'interface disparaît complètement —— les 139 commandes enregistrées dans la palette restent disponibles et peuvent être associées à vos propres raccourcis. Et quand la barre **est affichée**, passer la souris sur un bouton affiche dans son infobulle le raccourci actuellement associé à cette commande —— le vôtre ou celui d'Obsidian. Modifiez-le dans **Paramètres → Raccourcis** et l'infobulle suit immédiatement, sans redémarrage.
 
 ---
 

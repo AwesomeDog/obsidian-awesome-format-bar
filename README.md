@@ -54,7 +54,7 @@ Obsidian is fast **if** you already speak Markdown. For everyone else — studen
 - **Plain text forever.** No proprietary format, no database, no lock-in — your notes are still just `.md` files.
 - **Offline & private.** No network calls, no accounts, no telemetry. The ~2,150-entry emoji library ships inside the plugin.
 - **Your own launcher, if you want one.** The **Pinned** tab holds any command you pick — core, this plugin's, or another plugin's — so the toolbar bends to you without turning into a settings project.
-- **Keyboard-friendly too.** Switch every toolbar position off and the interface disappears completely — all 139 palette-registered commands stay available and can be bound to your own hotkeys.
+- **Keyboard-friendly too.** Switch every toolbar position off and the interface disappears completely — all 139 palette-registered commands stay available and can be bound to your own hotkeys. And while the toolbar *is* on screen, hovering a button shows the shortcut currently bound to that command in its tooltip — the one you assigned, or Obsidian's own default. Rebind it in **Settings → Hotkeys** and the tooltip follows, with no restart.
 
 ---
 

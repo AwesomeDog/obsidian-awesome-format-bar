@@ -5,6 +5,11 @@ import { resolveIcon } from "./icons";
 import { openCharPanel } from "./char-panel";
 import { openPopover, popoverSectionsFor } from "./popover";
 
+/** Matches how Obsidian labels its own commands: `Bold (⌘ B)`. */
+function withHotkey(name: string, hotkey: string): string {
+  return hotkey ? `${name} (${hotkey})` : name;
+}
+
 /** The single button renderer shared by both layouts. */
 export function createButton(
   parent: HTMLElement,
@@ -18,6 +23,14 @@ export function createButton(
   resolveIcon(button, spec.icon);
   if (spec.popup) button.addClass("has-menu");
   setTooltip(button, spec.name, { placement: "top" });
+  // Tooltips read `aria-label` on every pointerover, and this listener runs
+  // before the delegated one, so a key rebound in Settings shows up at once.
+  button.addEventListener("pointerover", () => {
+    button.setAttribute(
+      "aria-label",
+      withHotkey(spec.name, host.hotkeyFor(spec)),
+    );
+  });
 
   // Keep the editor selection: never let the button take focus.
   button.addEventListener("pointerdown", (event) => event.preventDefault());

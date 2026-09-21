@@ -22,6 +22,8 @@ export interface ToolbarHost {
   editPinned(): void;
   state(): ToolbarState;
   execute(spec: CommandSpec, optionValue?: string): void;
+  /** The key the button's command is bound to, or `""` when it has none. */
+  hotkeyFor(spec: CommandSpec): string;
   /** Hands the caret back after a menu closes without running anything. */
   focusEditor(): void;
   /** The live settings map: the panel prunes it in place. */
