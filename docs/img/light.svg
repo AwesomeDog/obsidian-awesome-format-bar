@@ -1,0 +1,208 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1576 867" width="1576" height="867" role="img" aria-label="Awesome Format Bar in Obsidian, light theme">
+<defs>
+<filter id="barShadow" x="-15%" y="-40%" width="130%" height="180%"><feDropShadow dx="0" dy="3" stdDeviation="10" flood-color="#000" flood-opacity="0.18"/></filter>
+<filter id="tipShadow" x="-60%" y="-80%" width="220%" height="260%"><feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#000" flood-opacity="0.14"/></filter>
+<radialGradient id="bg0" gradientUnits="userSpaceOnUse" cx="0" cy="0" r="620"><stop offset="0" stop-color="#5F5047"/><stop offset="0.35" stop-color="#5F5047"/><stop offset="1" stop-color="#5F5047" stop-opacity="0"/></radialGradient>
+<radialGradient id="bg1" gradientUnits="userSpaceOnUse" cx="1576" cy="0" r="620"><stop offset="0" stop-color="#7098C9"/><stop offset="0.35" stop-color="#7098C9"/><stop offset="1" stop-color="#7098C9" stop-opacity="0"/></radialGradient>
+<radialGradient id="bg2" gradientUnits="userSpaceOnUse" cx="0" cy="867" r="620"><stop offset="0" stop-color="#544F67"/><stop offset="0.35" stop-color="#544F67"/><stop offset="1" stop-color="#544F67" stop-opacity="0"/></radialGradient>
+<radialGradient id="bg3" gradientUnits="userSpaceOnUse" cx="1576" cy="867" r="620"><stop offset="0" stop-color="#4E4B57"/><stop offset="0.35" stop-color="#4E4B57"/><stop offset="1" stop-color="#4E4B57" stop-opacity="0"/></radialGradient>
+<clipPath id="win"><rect width="1576" height="867" rx="11"/></clipPath>
+<linearGradient id="barShade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E6E6E6"/><stop offset="0.028" stop-color="#E9E9E9"/><stop offset="0.056" stop-color="#ECECEC"/><stop offset="0.111" stop-color="#F0F0F0"/><stop offset="0.167" stop-color="#F3F3F3"/><stop offset="0.222" stop-color="#F5F5F5"/><stop offset="0.278" stop-color="#F6F6F6"/><stop offset="0.333" stop-color="#F7F7F7"/><stop offset="0.444" stop-color="#F9F9F9"/><stop offset="0.556" stop-color="#FBFBFB"/><stop offset="0.667" stop-color="#FDFDFD"/><stop offset="0.778" stop-color="#FEFEFE"/><stop offset="0.889" stop-color="#FFFFFF"/></linearGradient>
+</defs>
+<rect x="0.0" y="0.0" width="1576.0" height="867.0" fill="url(#bg0)"/>
+<rect x="0.0" y="0.0" width="1576.0" height="867.0" fill="url(#bg1)"/>
+<rect x="0.0" y="0.0" width="1576.0" height="867.0" fill="url(#bg2)"/>
+<rect x="0.0" y="0.0" width="1576.0" height="867.0" fill="url(#bg3)"/>
+<g clip-path="url(#win)">
+<rect x="0.0" y="0.0" width="1576.0" height="867.0" fill="#FCFCFC" rx="11.0"/>
+<rect x="0.0" y="0.0" width="1576.0" height="57.0" fill="#FCFCFC"/>
+<line x1="0.0" y1="57.5" x2="1576.0" y2="57.5" stroke="#E4E4E4" stroke-width="1.0"/>
+<rect x="21.2" y="17.2" width="23.6" height="21.6" rx="6" fill="none" stroke="#747474" stroke-width="2.4"/>
+<line x1="25.2" y1="18.5" x2="25.2" y2="37.5" stroke="#747474" stroke-width="2.2"/>
+<path d="M91.5 58 V16 Q91.5 8 99.5 8 H385.5 Q393.5 8 393.5 16 V58" fill="#FFFFFF"/>
+<path d="M91.5 58 V16 Q91.5 8 99.5 8 H385.5 Q393.5 8 393.5 16 V58" fill="none" stroke="#E4E4E4" stroke-width="1"/>
+<text x="109.0" y="37.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="20" fill="#222222" text-anchor="start">sample</text>
+<g transform="translate(357.46,20.46) scale(0.9200)" fill="none" stroke="#5C5C5C" stroke-width="2.20" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></g>
+<line x1="412.0" y1="29.5" x2="430.0" y2="29.5" stroke="#747474" stroke-width="2.0"/>
+<line x1="421.0" y1="20.0" x2="421.0" y2="39.0" stroke="#747474" stroke-width="2.0"/>
+<g transform="translate(1292.90,16.80) scale(1.0500)" fill="none" stroke="#747474" stroke-width="2.40" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></g>
+<rect x="1341.5" y="16.5" width="23.0" height="23.0" rx="5" fill="none" stroke="#747474" stroke-width="2.20"/>
+<line x1="1361.0" y1="16.5" x2="1361.0" y2="39.5" stroke="#747474" stroke-width="2.00"/>
+<rect x="1404.0" y="27.0" width="16.0" height="2.0" fill="#222222"/>
+<rect x="1470.5" y="19.5" width="14.0" height="14.0" fill="none" stroke="#222222" stroke-width="2.0"/>
+<g transform="translate(1529.70,12.70) scale(1.1500)" fill="none" stroke="#222222" stroke-width="1.90" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></g>
+<rect x="65.0" y="58.0" width="1511.0" height="56.0" fill="#FFFFFF"/>
+<g transform="translate(96.50,76.50) scale(0.6667)" fill="none" stroke="#B0B0B0" stroke-width="2.20" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></g>
+<g transform="translate(138.50,76.50) scale(0.6667)" fill="none" stroke="#B0B0B0" stroke-width="2.20" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></g>
+<text x="821.5" y="95.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="19" fill="#5C5C5C" text-anchor="middle">sample</text>
+<g transform="translate(1485.50,74.50) scale(0.8333)" fill="none" stroke="#B0B0B0" stroke-width="2.20" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></g>
+<g transform="translate(1528.50,75.50) scale(0.7500)" fill="none" stroke="#B0B0B0" stroke-width="2.20" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"/><circle cx="12" cy="5" r="1"/><circle cx="12" cy="19" r="1"/></g>
+<rect x="0.0" y="58.0" width="65.0" height="809.0" fill="#FFFFFF"/>
+<g transform="translate(18.78,75.78) scale(1.1020)" fill="none" stroke="#747474" stroke-width="2.00" stroke-linecap="round" stroke-linejoin="round"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"/><path d="M14 2v5a1 1 0 0 0 1 1h5"/><circle cx="11.5" cy="14.5" r="2.5"/><path d="M13.3 16.3 15 18"/></g>
+<g transform="translate(18.78,123.78) scale(1.1020)" fill="none" stroke="#747474" stroke-width="2.00" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><circle cx="18" cy="6" r="3"/><path d="M18 9v2c0 .6-.4 1-1 1H7c-.6 0-1-.4-1-1V9"/><path d="M12 12v3"/></g>
+<g transform="translate(18.78,171.78) scale(1.1020)" fill="none" stroke="#747474" stroke-width="2.00" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></g>
+<g transform="translate(18.78,219.78) scale(1.1020)" fill="none" stroke="#747474" stroke-width="2.00" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M3 10h18"/></g>
+<g transform="translate(18.78,267.78) scale(1.1020)" fill="none" stroke="#747474" stroke-width="2.00" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2h-4a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V8"/><path d="M16.706 2.706A2.4 2.4 0 0 0 15 2v5a1 1 0 0 0 1 1h5a2.4 2.4 0 0 0-.706-1.706z"/><path d="M5 7a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h8a2 2 0 0 0 1.732-1"/></g>
+<g transform="translate(18.78,315.78) scale(1.1020)" fill="none" stroke="#747474" stroke-width="2.00" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19h8"/><path d="m4 17 6-6-6-6"/></g>
+<g transform="translate(18.78,363.78) scale(1.1020)" fill="none" stroke="#747474" stroke-width="2.00" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 4h7"/><path d="M14 9h7"/><path d="M14 15h7"/><path d="M14 20h7"/></g>
+<rect x="65.0" y="114.0" width="1511.0" height="51.0" fill="#F6F6F6"/>
+<line x1="65.0" y1="114.5" x2="1576.0" y2="114.5" stroke="#E4E4E4" stroke-width="1.0"/>
+<path d="M78 165 L78 128 Q78 120 86 120 L147 120 Q155 120 155 128 L155 165 Z" fill="#FFFFFF"/>
+<text x="117.0" y="148.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="19" fill="#222222" text-anchor="middle">Home</text>
+<text x="196.5" y="148.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="19" fill="#5C5C5C" text-anchor="middle">Insert</text>
+<text x="269.5" y="148.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="19" fill="#5C5C5C" text-anchor="middle">View</text>
+<text x="343.0" y="148.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="19" fill="#5C5C5C" text-anchor="middle">Table</text>
+<text x="429.5" y="148.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="19" fill="#5C5C5C" text-anchor="middle">Utilities</text>
+<text x="521.0" y="148.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="19" fill="#5C5C5C" text-anchor="middle">Pinned</text>
+<rect x="65.0" y="165.0" width="1511.0" height="115.0" fill="#FFFFFF"/>
+<line x1="232.5" y1="171.0" x2="232.5" y2="277.0" stroke="#E4E4E4" stroke-width="1.0"/>
+<text x="154.5" y="270.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="18" fill="#ABABAB" text-anchor="middle">Clipboard</text>
+<line x1="680.5" y1="171.0" x2="680.5" y2="277.0" stroke="#E4E4E4" stroke-width="1.0"/>
+<text x="456.0" y="270.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="18" fill="#ABABAB" text-anchor="middle">Font</text>
+<line x1="1190.5" y1="171.0" x2="1190.5" y2="277.0" stroke="#E4E4E4" stroke-width="1.0"/>
+<text x="935.0" y="270.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="18" fill="#ABABAB" text-anchor="middle">Paragraph</text>
+<line x1="1443.5" y1="171.0" x2="1443.5" y2="277.0" stroke="#E4E4E4" stroke-width="1.0"/>
+<text x="1316.5" y="270.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="18" fill="#ABABAB" text-anchor="middle">Styles</text>
+<text x="1504.0" y="270.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="18" fill="#ABABAB" text-anchor="middle">Editing</text>
+<g transform="translate(95.25,175.75) scale(1.1875)" fill="none" stroke="#5C5C5C" stroke-width="2.00" stroke-linecap="round" stroke-linejoin="round"><path d="M11 14h10"/><path d="M16 4h2a2 2 0 0 1 2 2v1.344"/><path d="m17 18 4-4-4-4"/><path d="M8 4H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 1.793-1.113"/><rect x="8" y="2" width="8" height="4" rx="1"/></g>
+<g transform="translate(135.25,175.75) scale(1.1875)" fill="none" stroke="#5C5C5C" stroke-width="2.00" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"/><path d="M8.12 8.12 12 12"/><path d="M20 4 8.12 15.88"/><circle cx="6" cy="18" r="3"/><path d="M14.8 14.8 20 20"/></g>
+<g transform="translate(175.75,175.75) scale(1.1875)" fill="none" stroke="#5C5C5C" stroke-width="2.00" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="14" height="14" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></g>
+<g transform="translate(250.25,175.75) scale(1.1875)" fill="none" stroke="#5C5C5C" stroke-width="2.00" stroke-linecap="round" stroke-linejoin="round"><path d="M6 12h9a4 4 0 0 1 0 8H7a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h7a4 4 0 0 1 0 8"/></g>
+<g transform="translate(289.75,175.75) scale(1.1875)" fill="none" stroke="#5C5C5C" stroke-width="2.00" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="4" x2="10" y2="4"/><line x1="14" y1="20" x2="5" y2="20"/><line x1="15" y1="4" x2="9" y2="20"/></g>
+<g transform="translate(330.75,175.75) scale(1.1875)" fill="none" stroke="#5C5C5C" stroke-width="2.00" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4v6a6 6 0 0 0 12 0V4"/><line x1="4" y1="20" x2="20" y2="20"/></g>
+<g transform="translate(370.75,175.75) scale(1.1875)" fill="none" stroke="#5C5C5C" stroke-width="2.00" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4H9a3 3 0 0 0-2.83 4"/><path d="M14 12a4 4 0 0 1 0 8H6"/><line x1="4" y1="12" x2="20" y2="12"/></g>
+<g transform="translate(411.75,175.75) scale(1.1875)" fill="none" stroke="#5C5C5C" stroke-width="2.00" stroke-linecap="round" stroke-linejoin="round"><path d="m4 5 8 8"/><path d="m12 5-8 8"/><path d="M20 19h-4c0-1.5.44-2 1.5-2.5S20 15.33 20 14c0-.47-.17-.93-.48-1.29a2.11 2.11 0 0 0-2.62-.44c-.42.24-.74.62-.9 1.07"/></g>
+<g transform="translate(451.75,175.75) scale(1.1875)" fill="none" stroke="#5C5C5C" stroke-width="2.00" stroke-linecap="round" stroke-linejoin="round"><path d="m4 19 8-8"/><path d="m12 19-8-8"/><path d="M20 12h-4c0-1.5.442-2 1.5-2.5S20 8.334 20 7.002c0-.472-.17-.93-.484-1.29a2.105 2.105 0 0 0-2.617-.436c-.42.239-.738.614-.899 1.06"/></g>
+<g transform="translate(492.75,175.75) scale(1.1875)" fill="none" stroke="#5C5C5C" stroke-width="2.00" stroke-linecap="round" stroke-linejoin="round"><path d="m16 18 6-6-6-6"/><path d="m8 6-6 6 6 6"/></g>
+<g transform="translate(532.75,175.75) scale(1.1875)" fill="none" stroke="#5C5C5C" stroke-width="2.00" stroke-linecap="round" stroke-linejoin="round"><path d="M18 7V5a1 1 0 0 0-1-1H6.5a.5.5 0 0 0-.4.8l4.5 6a2 2 0 0 1 0 2.4l-4.5 6a.5.5 0 0 0 .4.8H17a1 1 0 0 0 1-1v-2"/></g>
+<g transform="translate(574.25,175.75) scale(1.1875)" fill="none" stroke="#5C5C5C" stroke-width="2.00" stroke-linecap="round" stroke-linejoin="round"><path d="m9 11-6 6v3h9l3-3"/><path d="m22 12-4.6 4.6a2 2 0 0 1-2.8 0l-5.2-5.2a2 2 0 0 1 0-2.8L14 4"/></g>
+<g transform="translate(615.75,175.75) scale(1.1875)" fill="none" stroke="#5C5C5C" stroke-width="2.00" stroke-linecap="round" stroke-linejoin="round"><path d="M11 7 6 2"/><path d="M18.992 12H2.041"/><path d="M21.145 18.38A3.34 3.34 0 0 1 20 16.5a3.3 3.3 0 0 1-1.145 1.88c-.575.46-.855 1.02-.855 1.595A2 2 0 0 0 20 22a2 2 0 0 0 2-2.025c0-.58-.285-1.13-.855-1.595"/><path d="m8.5 4.5 2.148-2.148a1.205 1.205 0 0 1 1.704 0l7.296 7.296a1.205 1.205 0 0 1 0 1.704l-7.592 7.592a3.615 3.615 0 0 1-5.112 0l-3.888-3.888a3.615 3.615 0 0 1 0-5.112L5.67 7.33"/></g>
+<g transform="translate(697.75,175.75) scale(1.1875)" fill="none" stroke="#5C5C5C" stroke-width="2.00" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5h.01"/><path d="M3 12h.01"/><path d="M3 19h.01"/><path d="M8 5h13"/><path d="M8 12h13"/><path d="M8 19h13"/></g>
+<g transform="translate(738.75,175.75) scale(1.1875)" fill="none" stroke="#5C5C5C" stroke-width="2.00" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5h10"/><path d="M11 12h10"/><path d="M11 19h10"/><path d="M4 4h1v5"/><path d="M4 9h2"/><path d="M6.5 20H3.4c0-1 2.6-1.925 2.6-3.5a1.5 1.5 0 0 0-2.6-1.02"/></g>
+<g transform="translate(778.75,175.75) scale(1.1875)" fill="none" stroke="#5C5C5C" stroke-width="2.00" stroke-linecap="round" stroke-linejoin="round"><path d="M13 5h8"/><path d="M13 12h8"/><path d="M13 19h8"/><path d="m3 17 2 2 4-4"/><path d="m3 7 2 2 4-4"/></g>
+<g transform="translate(819.75,175.75) scale(1.1875)" fill="none" stroke="#5C5C5C" stroke-width="2.00" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z"/><path d="M5 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z"/></g>
+<g transform="translate(859.75,175.75) scale(1.1875)" fill="none" stroke="#5C5C5C" stroke-width="2.00" stroke-linecap="round" stroke-linejoin="round"><path d="M21 5H11"/><path d="M21 12H11"/><path d="M21 19H11"/><path d="m7 8-4 4 4 4"/></g>
+<g transform="translate(900.75,175.75) scale(1.1875)" fill="none" stroke="#5C5C5C" stroke-width="2.00" stroke-linecap="round" stroke-linejoin="round"><path d="M21 5H11"/><path d="M21 12H11"/><path d="M21 19H11"/><path d="m3 8 4 4-4 4"/></g>
+<g transform="translate(940.75,175.75) scale(1.1875)" fill="none" stroke="#5C5C5C" stroke-width="2.00" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5h6"/><path d="M3 12h13"/><path d="M3 19h13"/><path d="m16 8-3-3 3-3"/><path d="M21 19V7a2 2 0 0 0-2-2h-6"/></g>
+<g transform="translate(981.75,175.75) scale(1.1875)" fill="none" stroke="#5C5C5C" stroke-width="2.00" stroke-linecap="round" stroke-linejoin="round"><path d="m3 16 4 4 4-4"/><path d="M7 20V4"/><path d="M11 4h10"/><path d="M11 8h7"/><path d="M11 12h4"/></g>
+<g transform="translate(1021.75,175.75) scale(1.1875)" fill="none" stroke="#5C5C5C" stroke-width="2.00" stroke-linecap="round" stroke-linejoin="round"><path d="m10 9 5-5 5 5"/><path d="M4 20h7a4 4 0 0 0 4-4V4"/></g>
+<g transform="translate(1062.75,175.75) scale(1.1875)" fill="none" stroke="#5C5C5C" stroke-width="2.00" stroke-linecap="round" stroke-linejoin="round"><path d="m10 15 5 5 5-5"/><path d="M4 4h7a4 4 0 0 1 4 4v12"/></g>
+<g transform="translate(1102.75,175.75) scale(1.1875)" fill="none" stroke="#5C5C5C" stroke-width="2.00" stroke-linecap="round" stroke-linejoin="round"><path d="M21 5H3"/><path d="M15 12H3"/><path d="M17 19H3"/></g>
+<g transform="translate(1143.75,175.75) scale(1.1875)" fill="none" stroke="#5C5C5C" stroke-width="2.00" stroke-linecap="round" stroke-linejoin="round"><path d="M21 5H3"/><path d="M17 12H7"/><path d="M19 19H5"/></g>
+<g transform="translate(1207.75,175.75) scale(1.1875)" fill="none" stroke="#5C5C5C" stroke-width="2.00" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h8"/><path d="M4 18V6"/><path d="M12 18V6"/><path d="m17 12 3-2v8"/></g>
+<g transform="translate(1249.25,175.75) scale(1.1875)" fill="none" stroke="#5C5C5C" stroke-width="2.00" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h8"/><path d="M4 18V6"/><path d="M12 18V6"/><path d="M21 18h-4c0-4 4-3 4-6 0-1.5-2-2.5-4-1"/></g>
+<g transform="translate(1289.25,175.75) scale(1.1875)" fill="none" stroke="#5C5C5C" stroke-width="2.00" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h8"/><path d="M4 18V6"/><path d="M12 18V6"/><path d="M17.5 10.5c1.7-1 3.5 0 3.5 1.5a2 2 0 0 1-2 2"/><path d="M17 17.5c2 1.5 4 .3 4-1.5a2 2 0 0 0-2-2"/></g>
+<g transform="translate(1330.25,175.75) scale(1.1875)" fill="none" stroke="#5C5C5C" stroke-width="2.00" stroke-linecap="round" stroke-linejoin="round"><path d="M12 18V6"/><path d="M17 10v3a1 1 0 0 0 1 1h3"/><path d="M21 10v8"/><path d="M4 12h8"/><path d="M4 18V6"/></g>
+<g transform="translate(1370.25,175.75) scale(1.1875)" fill="none" stroke="#5C5C5C" stroke-width="2.00" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h8"/><path d="M4 18V6"/><path d="M12 18V6"/><path d="M17 13v-3h4"/><path d="M17 17.7c.4.2.8.3 1.3.3 1.5 0 2.7-1.1 2.7-2.5S19.8 13 18.3 13H17"/></g>
+<g transform="translate(1460.75,175.75) scale(1.1875)" fill="none" stroke="#5C5C5C" stroke-width="2.00" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7v6h6"/><path d="M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13"/></g>
+<g transform="translate(1501.75,175.75) scale(1.1875)" fill="none" stroke="#5C5C5C" stroke-width="2.00" stroke-linecap="round" stroke-linejoin="round"><path d="M21 7v6h-6"/><path d="M3 17a9 9 0 0 1 9-9 9 9 0 0 1 6 2.3l3 2.7"/></g>
+<g transform="translate(94.75,215.75) scale(1.1875)" fill="none" stroke="#5C5C5C" stroke-width="2.00" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M9 12v-1h6v1"/><path d="M11 17h2"/><path d="M12 11v6"/></g>
+<g transform="translate(250.25,215.75) scale(1.1875)" fill="none" stroke="#5C5C5C" stroke-width="2.00" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22a1 1 0 0 1 0-20 10 9 0 0 1 10 9 5 5 0 0 1-5 5h-2.25a1.75 1.75 0 0 0-1.4 2.8l.3.4a1.75 1.75 0 0 1-1.4 2.8z"/><circle cx="13.5" cy="6.5" r="0.5" fill="currentColor"/><circle cx="17.5" cy="10.5" r="0.5" fill="currentColor"/><circle cx="6.5" cy="12.5" r="0.5" fill="currentColor"/><circle cx="8.5" cy="7.5" r="0.5" fill="currentColor"/></g>
+<g transform="translate(289.75,215.75) scale(1.1875)" fill="none" stroke="#5C5C5C" stroke-width="2.00" stroke-linecap="round" stroke-linejoin="round"><path d="M21 21H8a2 2 0 0 1-1.42-.587l-3.994-3.999a2 2 0 0 1 0-2.828l10-10a2 2 0 0 1 2.829 0l5.999 6a2 2 0 0 1 0 2.828L12.834 21"/><path d="m5.082 11.09 8.828 8.828"/></g>
+<g transform="translate(332.75,215.75) scale(1.1875)" fill="none" stroke="#5C5C5C" stroke-width="2.00" stroke-linecap="round" stroke-linejoin="round"><path d="M15 11h4.5a1 1 0 0 1 0 5h-4a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h3a1 1 0 0 1 0 5"/><path d="m2 16 4.039-9.69a.5.5 0 0 1 .923 0L11 16"/><path d="M3.304 13h6.392"/></g>
+<g transform="translate(697.75,215.75) scale(1.1875)" fill="none" stroke="#5C5C5C" stroke-width="2.00" stroke-linecap="round" stroke-linejoin="round"><path d="M21 5H3"/><path d="M21 12H9"/><path d="M21 19H7"/></g>
+<g transform="translate(738.75,215.75) scale(1.1875)" fill="none" stroke="#5C5C5C" stroke-width="2.00" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5h18"/><path d="M3 12h18"/><path d="M3 19h18"/></g>
+<g transform="translate(778.75,215.75) scale(1.1875)" fill="none" stroke="#5C5C5C" stroke-width="2.00" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/></g>
+<g transform="translate(1207.75,215.75) scale(1.1875)" fill="none" stroke="#5C5C5C" stroke-width="2.00" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h8"/><path d="M4 18V6"/><path d="M12 18V6"/><circle cx="19" cy="16" r="2"/><path d="M20 10c-2 2-3 3.5-3 6"/></g>
+<g transform="translate(1248.75,215.75) scale(1.1875)" fill="none" stroke="#5C5C5C" stroke-width="2.00" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7V4h16v3"/><path d="M5 20h6"/><path d="M13 4 8 20"/><path d="m15 15 5 5"/><path d="m20 15-5 5"/></g>
+<g transform="translate(1460.75,215.75) scale(1.1875)" fill="none" stroke="#5C5C5C" stroke-width="2.00" stroke-linecap="round" stroke-linejoin="round"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></g>
+<line x1="65.0" y1="280.5" x2="1576.0" y2="280.5" stroke="#E4E4E4" stroke-width="1.0"/>
+<rect x="65.0" y="281.0" width="1511.0" height="586.0" fill="#FFFFFF"/>
+<rect x="66.0" y="428.0" width="624.0" height="72.0" fill="url(#barShade)"/>
+<line x1="65.5" y1="58.0" x2="65.5" y2="867.0" stroke="#E4E4E4" stroke-width="1.0"/>
+<rect x="1562.0" y="507.0" width="11.0" height="59.0" rx="5.5" fill="#E5E5E5"/>
+<text x="288.0" y="330.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="31" fill="#ABABAB" text-anchor="start">###</text>
+<text x="354.0" y="330.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="31" fill="#222222" font-weight="500" letter-spacing="1.27" text-anchor="start">Alignment</text>
+<line x1="293.5" y1="442.0" x2="293.5" y2="463.0" stroke="#ABABAB" stroke-width="2.25"/>
+<line x1="490.5" y1="442.0" x2="490.5" y2="463.0" stroke="#ABABAB" stroke-width="2.25"/>
+<line x1="650.5" y1="442.0" x2="650.5" y2="463.0" stroke="#ABABAB" stroke-width="2.25"/>
+<line x1="1019.5" y1="442.0" x2="1019.5" y2="463.0" stroke="#ABABAB" stroke-width="2.25"/>
+<line x1="293.5" y1="473.0" x2="293.5" y2="494.0" stroke="#ABABAB" stroke-width="2.25"/>
+<line x1="490.5" y1="473.0" x2="490.5" y2="494.0" stroke="#ABABAB" stroke-width="2.25"/>
+<line x1="650.5" y1="473.0" x2="650.5" y2="494.0" stroke="#ABABAB" stroke-width="2.25"/>
+<line x1="1019.5" y1="473.0" x2="1019.5" y2="494.0" stroke="#ABABAB" stroke-width="2.25"/>
+<line x1="293.5" y1="505.0" x2="293.5" y2="526.0" stroke="#ABABAB" stroke-width="2.25"/>
+<line x1="490.5" y1="505.0" x2="490.5" y2="526.0" stroke="#ABABAB" stroke-width="2.25"/>
+<line x1="650.5" y1="505.0" x2="650.5" y2="526.0" stroke="#ABABAB" stroke-width="2.25"/>
+<line x1="1019.5" y1="505.0" x2="1019.5" y2="526.0" stroke="#ABABAB" stroke-width="2.25"/>
+<rect x="310.0" y="443.0" width="88.0" height="24.0" fill="#E1DAF3" rx="3.0"/>
+<text x="311.0" y="460.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="22" fill="#222222" text-anchor="start">Content</text>
+<text x="506.0" y="460.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="22" fill="#222222" text-anchor="start">Content</text>
+<text x="669.0" y="460.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="22" fill="#222222" text-anchor="start">Content</text>
+<text x="311.0" y="490.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="22" fill="#222222" text-anchor="start">**Bold**</text>
+<text x="508.0" y="490.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="22" fill="#222222" text-anchor="start">*Italic*</text>
+<text x="669.0" y="490.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="21" fill="#222222" text-anchor="start">`Code`</text>
+<rect x="312.0" y="504.0" width="160.0" height="24.0" fill="#FFEC99" rx="2.0"/>
+<text x="313.0" y="523.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="22" fill="#222222" letter-spacing="1.83" text-anchor="start">==Highlight==</text>
+<text x="509.0" y="523.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="22" fill="#222222" text-anchor="start">Strikethrough</text>
+<line x1="509.0" y1="516.0" x2="632.0" y2="516.0" stroke="#222222" stroke-width="1.6"/>
+<text x="668.60" y="523.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="22" fill="#ABABAB" letter-spacing="-0.86" text-anchor="start">[</text>
+<text x="680.94" y="523.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="22" fill="#8A5CF5" letter-spacing="-0.86" text-anchor="start">Link</text>
+<text x="730.30" y="523.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="22" fill="#ABABAB" letter-spacing="-0.86" text-anchor="start">]</text>
+<text x="742.64" y="523.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="22" fill="#ABABAB" letter-spacing="-0.86" text-anchor="start">(</text>
+<text x="754.98" y="523.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="22" fill="#8A5CF5" letter-spacing="-0.86" text-anchor="start">https://obsidian.md</text>
+<text x="989.44" y="523.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="22" fill="#ABABAB" text-anchor="start">)</text>
+<rect x="743.0" y="525.0" width="12.0" height="2.0" fill="#ABABAB"/>
+<rect x="755.0" y="525.0" width="37.0" height="2.0" fill="#8A5CF5"/>
+<rect x="798.0" y="525.0" width="191.0" height="2.0" fill="#8A5CF5"/>
+<rect x="989.0" y="525.0" width="13.0" height="2.0" fill="#ABABAB"/>
+<text x="288.0" y="605.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="31" fill="#ABABAB" text-anchor="start">###</text>
+<text x="354.0" y="602.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="31" fill="#222222" font-weight="500" letter-spacing="1.56" text-anchor="start">Escaped pipes and a wide table</text>
+<text x="287.0" y="673.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="22" fill="#222222" letter-spacing="1.85" text-anchor="start">A pipe inside a cell needs escaping:</text>
+<rect x="696.0" y="651.0" width="49.0" height="31.0" fill="#FAFAFA" rx="3.0"/>
+<text x="696.0" y="673.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="20" fill="#222222" text-anchor="start">`\|`</text>
+<text x="286.8" y="742.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="20" fill="#ABABAB" text-anchor="start">|</text>
+<text x="299.1" y="742.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="20" fill="#222222" xml:space="preserve" text-anchor="start"> Escaping </text>
+<text x="422.4" y="742.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="20" fill="#ABABAB" text-anchor="start">|</text>
+<text x="434.7" y="742.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="20" fill="#222222" xml:space="preserve" text-anchor="start"> What it is for </text>
+<text x="632.0" y="742.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="20" fill="#ABABAB" text-anchor="start">|</text>
+<text x="286.8" y="772.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="20" fill="#ABABAB" text-anchor="start">| --- | --- |</text>
+<rect x="90.0" y="382.5" width="598.0" height="46.0" fill="#F6F6F6" rx="12.0" stroke="#E4E4E4" stroke-width="1.0"/>
+<rect x="178.0" y="389.0" width="39.0" height="33.0" fill="#E6E6E6" rx="5.0"/>
+<g transform="translate(103.85,392.35) scale(1.0542)" fill="none" stroke="#5C5C5C" stroke-width="2.00" stroke-linecap="round" stroke-linejoin="round"><path d="M6 12h9a4 4 0 0 1 0 8H7a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h7a4 4 0 0 1 0 8"/></g>
+<g transform="translate(144.35,392.35) scale(1.0542)" fill="none" stroke="#5C5C5C" stroke-width="2.00" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="4" x2="10" y2="4"/><line x1="14" y1="20" x2="5" y2="20"/><line x1="15" y1="4" x2="9" y2="20"/></g>
+<g transform="translate(184.85,392.85) scale(1.0542)" fill="none" stroke="#222222" stroke-width="2.00" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4v6a6 6 0 0 0 12 0V4"/><line x1="4" y1="20" x2="20" y2="20"/></g>
+<g transform="translate(225.35,392.35) scale(1.0542)" fill="none" stroke="#5C5C5C" stroke-width="2.00" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4H9a3 3 0 0 0-2.83 4"/><path d="M14 12a4 4 0 0 1 0 8H6"/><line x1="4" y1="12" x2="20" y2="12"/></g>
+<g transform="translate(265.85,392.35) scale(1.0542)" fill="none" stroke="#5C5C5C" stroke-width="2.00" stroke-linecap="round" stroke-linejoin="round"><path d="m9 11-6 6v3h9l3-3"/><path d="m22 12-4.6 4.6a2 2 0 0 1-2.8 0l-5.2-5.2a2 2 0 0 1 0-2.8L14 4"/></g>
+<line x1="303.0" y1="391.5" x2="303.0" y2="418.5" stroke="#E4E4E4" stroke-width="1.0"/>
+<g transform="translate(315.35,392.35) scale(1.0542)" fill="none" stroke="#5C5C5C" stroke-width="2.00" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5h.01"/><path d="M3 12h.01"/><path d="M3 19h.01"/><path d="M8 5h13"/><path d="M8 12h13"/><path d="M8 19h13"/></g>
+<g transform="translate(355.85,392.35) scale(1.0542)" fill="none" stroke="#5C5C5C" stroke-width="2.00" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5h10"/><path d="M11 12h10"/><path d="M11 19h10"/><path d="M4 4h1v5"/><path d="M4 9h2"/><path d="M6.5 20H3.4c0-1 2.6-1.925 2.6-3.5a1.5 1.5 0 0 0-2.6-1.02"/></g>
+<g transform="translate(396.35,392.35) scale(1.0542)" fill="none" stroke="#5C5C5C" stroke-width="2.00" stroke-linecap="round" stroke-linejoin="round"><path d="M13 5h8"/><path d="M13 12h8"/><path d="M13 19h8"/><path d="m3 17 2 2 4-4"/><path d="m3 7 2 2 4-4"/></g>
+<g transform="translate(436.85,392.35) scale(1.0542)" fill="none" stroke="#5C5C5C" stroke-width="2.00" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z"/><path d="M5 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z"/></g>
+<g transform="translate(477.35,392.35) scale(1.0542)" fill="none" stroke="#5C5C5C" stroke-width="2.00" stroke-linecap="round" stroke-linejoin="round"><path d="M21 5H11"/><path d="M21 12H11"/><path d="M21 19H11"/><path d="m7 8-4 4 4 4"/></g>
+<g transform="translate(517.85,392.35) scale(1.0542)" fill="none" stroke="#5C5C5C" stroke-width="2.00" stroke-linecap="round" stroke-linejoin="round"><path d="M21 5H11"/><path d="M21 12H11"/><path d="M21 19H11"/><path d="m3 8 4 4-4 4"/></g>
+<line x1="555.0" y1="391.5" x2="555.0" y2="418.5" stroke="#E4E4E4" stroke-width="1.0"/>
+<g transform="translate(567.35,392.35) scale(1.0542)" fill="none" stroke="#5C5C5C" stroke-width="2.00" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7v6h6"/><path d="M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13"/></g>
+<g transform="translate(607.85,392.35) scale(1.0542)" fill="none" stroke="#5C5C5C" stroke-width="2.00" stroke-linecap="round" stroke-linejoin="round"><path d="M21 7v6h-6"/><path d="M3 17a9 9 0 0 1 9-9 9 9 0 0 1 6 2.3l3 2.7"/></g>
+<g transform="translate(648.35,392.35) scale(1.0542)" fill="none" stroke="#5C5C5C" stroke-width="2.00" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></g>
+<path d="M191 365 L203 365 L197 372 Z" fill="#191919"/>
+<g filter="url(#tipShadow)"><rect x="146.0" y="331.0" width="104.0" height="34.0" fill="#191919" rx="4.0"/></g>
+<text x="198.0" y="354.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="17" fill="#FFFFFF" font-weight="600" text-anchor="middle">Underline</text>
+<rect x="498.0" y="832.0" width="624.0" height="72.0" fill="url(#barShade)"/>
+<rect x="522.0" y="785.5" width="598.0" height="45.0" fill="#F6F6F6" rx="12.0" stroke="#E4E4E4" stroke-width="1.0"/>
+<g transform="translate(535.85,795.35) scale(1.0542)" fill="none" stroke="#5C5C5C" stroke-width="2.00" stroke-linecap="round" stroke-linejoin="round"><path d="M6 12h9a4 4 0 0 1 0 8H7a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h7a4 4 0 0 1 0 8"/></g>
+<g transform="translate(576.35,795.35) scale(1.0542)" fill="none" stroke="#5C5C5C" stroke-width="2.00" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="4" x2="10" y2="4"/><line x1="14" y1="20" x2="5" y2="20"/><line x1="15" y1="4" x2="9" y2="20"/></g>
+<g transform="translate(616.85,795.35) scale(1.0542)" fill="none" stroke="#5C5C5C" stroke-width="2.00" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4v6a6 6 0 0 0 12 0V4"/><line x1="4" y1="20" x2="20" y2="20"/></g>
+<g transform="translate(657.35,795.35) scale(1.0542)" fill="none" stroke="#5C5C5C" stroke-width="2.00" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4H9a3 3 0 0 0-2.83 4"/><path d="M14 12a4 4 0 0 1 0 8H6"/><line x1="4" y1="12" x2="20" y2="12"/></g>
+<g transform="translate(697.85,795.35) scale(1.0542)" fill="none" stroke="#5C5C5C" stroke-width="2.00" stroke-linecap="round" stroke-linejoin="round"><path d="m9 11-6 6v3h9l3-3"/><path d="m22 12-4.6 4.6a2 2 0 0 1-2.8 0l-5.2-5.2a2 2 0 0 1 0-2.8L14 4"/></g>
+<line x1="735.0" y1="794.5" x2="735.0" y2="821.5" stroke="#E4E4E4" stroke-width="1.0"/>
+<g transform="translate(747.35,795.35) scale(1.0542)" fill="none" stroke="#5C5C5C" stroke-width="2.00" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5h.01"/><path d="M3 12h.01"/><path d="M3 19h.01"/><path d="M8 5h13"/><path d="M8 12h13"/><path d="M8 19h13"/></g>
+<g transform="translate(787.85,795.35) scale(1.0542)" fill="none" stroke="#5C5C5C" stroke-width="2.00" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5h10"/><path d="M11 12h10"/><path d="M11 19h10"/><path d="M4 4h1v5"/><path d="M4 9h2"/><path d="M6.5 20H3.4c0-1 2.6-1.925 2.6-3.5a1.5 1.5 0 0 0-2.6-1.02"/></g>
+<g transform="translate(828.35,795.35) scale(1.0542)" fill="none" stroke="#5C5C5C" stroke-width="2.00" stroke-linecap="round" stroke-linejoin="round"><path d="M13 5h8"/><path d="M13 12h8"/><path d="M13 19h8"/><path d="m3 17 2 2 4-4"/><path d="m3 7 2 2 4-4"/></g>
+<g transform="translate(868.85,795.35) scale(1.0542)" fill="none" stroke="#5C5C5C" stroke-width="2.00" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z"/><path d="M5 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z"/></g>
+<g transform="translate(909.35,795.35) scale(1.0542)" fill="none" stroke="#5C5C5C" stroke-width="2.00" stroke-linecap="round" stroke-linejoin="round"><path d="M21 5H11"/><path d="M21 12H11"/><path d="M21 19H11"/><path d="m7 8-4 4 4 4"/></g>
+<g transform="translate(949.85,795.35) scale(1.0542)" fill="none" stroke="#5C5C5C" stroke-width="2.00" stroke-linecap="round" stroke-linejoin="round"><path d="M21 5H11"/><path d="M21 12H11"/><path d="M21 19H11"/><path d="m3 8 4 4-4 4"/></g>
+<line x1="987.0" y1="794.5" x2="987.0" y2="821.5" stroke="#E4E4E4" stroke-width="1.0"/>
+<g transform="translate(999.35,795.35) scale(1.0542)" fill="none" stroke="#5C5C5C" stroke-width="2.00" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7v6h6"/><path d="M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13"/></g>
+<g transform="translate(1039.85,795.35) scale(1.0542)" fill="none" stroke="#5C5C5C" stroke-width="2.00" stroke-linecap="round" stroke-linejoin="round"><path d="M21 7v6h-6"/><path d="M3 17a9 9 0 0 1 9-9 9 9 0 0 1 6 2.3l3 2.7"/></g>
+<g transform="translate(1080.35,795.35) scale(1.0542)" fill="none" stroke="#5C5C5C" stroke-width="2.00" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></g>
+<path d="M1059.0 867 V840.0 Q1059.0 828.0 1071.0 828.0 H1576 V867 Z" fill="#F5F5F5"/>
+<path d="M1059.5 867 V840.5 Q1059.5 828.5 1071.0 828.5 H1576" fill="none" stroke="#E4E4E4" stroke-width="1"/>
+<text x="1073.0" y="855.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="18" fill="#5C5C5C" text-anchor="start">0 backlinks</text>
+<text x="1186.0" y="855.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="18" fill="#5C5C5C" text-anchor="start">5 properties</text>
+<g transform="translate(1303.50,836.50) scale(1.0000)" fill="none" stroke="#5C5C5C" stroke-width="1.90" stroke-linecap="round" stroke-linejoin="round"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></g>
+<text x="1347.0" y="855.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="18" fill="#5C5C5C" text-anchor="start">1 word</text>
+<text x="1414.0" y="855.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="18" fill="#5C5C5C" text-anchor="start">7 characters</text>
+<g transform="translate(1534.50,836.50) scale(1.0000)" fill="none" stroke="#E93147" stroke-width="1.90" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8L18.74 5.74A9.75 9.75 0 0 0 12 3C11 3 10.03 3.16 9.13 3.47"/><path d="M8 16H3v5"/><path d="M3 12C3 9.51 4 7.26 5.64 5.64"/><path d="m3 16 2.26 2.26A9.75 9.75 0 0 0 12 21c2.49 0 4.74-1 6.36-2.64"/><path d="M21 12c0 1-.16 1.97-.47 2.87"/><path d="M21 3v5h-5"/><path d="M22 22 2 2"/></g>
+</g>
+</svg>

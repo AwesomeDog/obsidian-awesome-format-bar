@@ -23,7 +23,7 @@
 *Obsidian の**ツールバープラグイン**、**書式バー**、**エディターツールバー**、**リッチテキスト / WYSIWYG 風の編集バー**、**Markdown 書式ボタン**、**絵文字ピッカー**、**テーブルエディター**、あるいは **Obsidian 用の Word ライクなリボン**をお探しなら、それがこのプラグインです。*
 
 <p align="center">
-  <img src="../img/light.png" alt="Awesome Format Bar for Obsidian —— Word ライクな Markdown 書式バー（太字・斜体・下線・蛍光ペン・フォントの色・見出し・リスト・テーブル／ライトテーマ）">
+  <img src="../img/light.svg" alt="Awesome Format Bar for Obsidian —— Word ライクな Markdown 書式バー（太字・斜体・下線・蛍光ペン・フォントの色・見出し・リスト・テーブル／ライトテーマ）">
 </p>
 
 ---

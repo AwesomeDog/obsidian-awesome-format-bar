@@ -21,7 +21,7 @@ Everything the toolbar writes is **standard Markdown**, **Obsidian-flavoured Mar
 *Looking for an Obsidian **toolbar plugin**, **format bar**, **editor toolbar**, **rich-text / WYSIWYG-style editing bar**, **Markdown formatting buttons**, **emoji picker**, **table editor**, or a **Microsoft Word-like ribbon for Obsidian**? That's this plugin.*
 
 <p align="center">
-  <img src="docs/img/light.png" alt="Awesome Format Bar for Obsidian — Word-style Markdown formatting toolbar with Bold, Italic, Underline, Highlight, Font Color, Headings, Lists and Tables (light theme)">
+  <img src="docs/img/light.svg" alt="Awesome Format Bar for Obsidian — Word-style Markdown formatting toolbar with Bold, Italic, Underline, Highlight, Font Color, Headings, Lists and Tables (light theme)">
 </p>
 
 ---

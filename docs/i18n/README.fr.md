@@ -23,7 +23,7 @@ Tout ce que la barre écrit est du **Markdown standard**, du **Markdown saveur O
 *Vous cherchez un **plugin de barre d'outils pour Obsidian**, une **barre de format**, une **barre d'outils d'éditeur**, une **barre d'édition façon texte enrichi / WYSIWYG**, des **boutons de mise en forme Markdown**, un **sélecteur d'emoji**, un **éditeur de tableaux**, ou un **ruban façon Microsoft Word pour Obsidian** ? C'est ce plugin.*
 
 <p align="center">
-  <img src="../img/light.png" alt="Awesome Format Bar for Obsidian —— barre de mise en forme Markdown façon Word, avec Gras, Italique, Souligné, Surligner, Couleur de police, Titres, Listes et Tableaux（thème clair）">
+  <img src="../img/light.svg" alt="Awesome Format Bar for Obsidian —— barre de mise en forme Markdown façon Word, avec Gras, Italique, Souligné, Surligner, Couleur de police, Titres, Listes et Tableaux（thème clair）">
 </p>
 
 ---

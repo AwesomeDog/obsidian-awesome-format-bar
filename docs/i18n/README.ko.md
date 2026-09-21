@@ -23,7 +23,7 @@
 *Obsidian **도구 모음 플러그인**, **서식 바**, **편집기 도구 모음**, **서식 있는 텍스트 / WYSIWYG 방식 편집 바**, **Markdown 서식 버튼**, **이모지 선택기**, **표 편집기**, 혹은 **Obsidian용 Word식 리본**을 찾고 계신가요? 바로 이 플러그인입니다.*
 
 <p align="center">
-  <img src="../img/light.png" alt="Obsidian용 Awesome Format Bar —— 굵게, 기울임꼴, 밑줄, 강조 표시, 글꼴 색, 제목, 목록, 표를 갖춘 Word 스타일 Markdown 서식 바（밝은 테마）">
+  <img src="../img/light.svg" alt="Obsidian용 Awesome Format Bar —— 굵게, 기울임꼴, 밑줄, 강조 표시, 글꼴 색, 제목, 목록, 표를 갖춘 Word 스타일 Markdown 서식 바（밝은 테마）">
 </p>
 
 ---

@@ -23,7 +23,7 @@
 *在找 Obsidian **工具栏插件**、**格式栏**、**编辑器工具条**、**类富文本 / 所见即所得编辑栏**、**Markdown 排版按钮**、**表情选择器**、**表格编辑器**，或者**给 Obsidian 用的 Word 式功能区**？就是这个插件。*
 
 <p align="center">  
-  <img src="../img/light.png" alt="Awesome Format Bar for Obsidian —— Word 式 Markdown 格式栏，含加粗、斜体、下划线、高亮、字体颜色、标题、列表与表格（浅色主题）">  
+  <img src="../img/light.svg" alt="Awesome Format Bar for Obsidian —— Word 式 Markdown 格式栏，含加粗、斜体、下划线、高亮、字体颜色、标题、列表与表格（浅色主题）">  
 </p>
 
 ---

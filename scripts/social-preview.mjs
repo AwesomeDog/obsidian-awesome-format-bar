@@ -16,7 +16,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
-const SHOT_PATH = join(ROOT, "docs/img/light.png");
+const SHOT_PATH = join(ROOT, "docs/img/light.svg");
 const SVG_OUT = join(ROOT, "docs/img/social-preview.svg");
 const PNG_OUT = join(ROOT, "docs/img/social-preview.png");
 
@@ -48,7 +48,11 @@ const badge = { y: 44, h: 30, w: 300, size: 13 };
 const title = { y: 156, size: 56 };
 const lines = { y: 198, lh: 26, size: 20 };
 
-const shotData = readFileSync(SHOT_PATH).toString("base64");
+// The screenshot is a hand-written SVG, so it is nested as-is rather than
+// rasterized into a data URL — the card stays vector end to end.
+const shotBody = readFileSync(SHOT_PATH, "utf8")
+  .replace(/^[\s\S]*?<svg[^>]*>/, "")
+  .replace(/<\/svg>\s*$/, "");
 
 const svg = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
   <defs>
@@ -97,8 +101,7 @@ const svg = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.
         filter="url(#shotShadow)"/>
   <g clip-path="url(#shotClip)">
     <svg x="${box.x}" y="${box.y}" width="${box.w}" height="${box.h}" viewBox="0 0 ${shot.w} ${shot.crop}">
-      <image xlink:href="data:image/png;base64,${shotData}" href="data:image/png;base64,${shotData}"
-             x="0" y="0" width="${shot.w}" height="${shot.h}"/>
+${shotBody}
     </svg>
   </g>
   <rect x="${box.x}" y="${box.y}" width="${box.w}" height="${box.h}" rx="14" fill="none"

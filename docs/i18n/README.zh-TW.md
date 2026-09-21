@@ -23,7 +23,7 @@
 *在找 Obsidian **工具列外掛**、**格式列**、**編輯器工具列**、**類富文字 / 所見即所得編輯列**、**Markdown 排版按鈕**、**表情符號選擇器**、**表格編輯器**，或者**給 Obsidian 用的 Word 式功能區**？就是這個外掛。*
 
 <p align="center">
-  <img src="../img/light.png" alt="Awesome Format Bar for Obsidian —— Word 式 Markdown 格式列，含粗體、斜體、底線、醒目提示、字型色彩、標題、清單與表格（淺色主題）">
+  <img src="../img/light.svg" alt="Awesome Format Bar for Obsidian —— Word 式 Markdown 格式列，含粗體、斜體、底線、醒目提示、字型色彩、標題、清單與表格（淺色主題）">
 </p>
 
 ---

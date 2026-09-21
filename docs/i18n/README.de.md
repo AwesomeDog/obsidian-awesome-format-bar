@@ -23,7 +23,7 @@ Alles, was die Leiste schreibt, ist **Standard-Markdown**, **Obsidian-Markdown**
 *Sie suchen ein Obsidian-**Symbolleisten-Plugin**, eine **Formatleiste**, eine **Editor-Symbolleiste**, eine **Rich-Text- beziehungsweise WYSIWYG-artige Bearbeitungsleiste**, **Markdown-Formatierungsschaltflächen**, eine **Emoji-Auswahl**, einen **Tabelleneditor** oder ein **Word-ähnliches Menüband für Obsidian**? Dann sind Sie hier richtig.*
 
 <p align="center">
-  <img src="../img/light.png" alt="Awesome Format Bar für Obsidian —— Word-ähnliche Markdown-Formatleiste mit Fett, Kursiv, Unterstreichen, Hervorhebung, Schriftfarbe, Überschriften, Listen und Tabellen（helles Theme）">
+  <img src="../img/light.svg" alt="Awesome Format Bar für Obsidian —— Word-ähnliche Markdown-Formatleiste mit Fett, Kursiv, Unterstreichen, Hervorhebung, Schriftfarbe, Überschriften, Listen und Tabellen（helles Theme）">
 </p>
 
 ---
