@@ -84,7 +84,7 @@ describe("normalizeSettings", () => {
       enableOnMobile: 1,
     });
     expect(result.desktop.top).toBe(true);
-    expect(result.enableOnMobile).toBe(false);
+    expect(result.enableOnMobile).toBe(true);
   });
 });
 
@@ -218,7 +218,7 @@ describe("enabledToolbarPositions", () => {
     const settings = full();
     settings.enableOnMobile = false;
     enabledToolbarPositions(settings, true);
-    expect(settings.mobile.fixed).toBe(true);
+    expect(settings.mobile.top).toBe(true);
   });
 
   it("reports every enabled position in a fixed order", () => {

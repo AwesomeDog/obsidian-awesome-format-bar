@@ -12,8 +12,8 @@ export const CURRENT_SETTINGS_VERSION = 1;
 export const DEFAULT_SETTINGS = {
   version: CURRENT_SETTINGS_VERSION,
   desktop: { top: true, following: false, fixed: false },
-  mobile: { top: false, following: false, fixed: true },
-  enableOnMobile: false,
+  mobile: { top: true, following: false, fixed: false },
+  enableOnMobile: true,
   tableKeyNavigation: true,
   padCellWidthWithSpaces: true,
   sortTableOnHeaderClick: true,
