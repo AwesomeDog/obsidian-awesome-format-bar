@@ -111,29 +111,33 @@ export class ToolbarSurface {
 
   /** Word's caret: folds the command panel away and leaves the tab row. */
   private renderCollapseToggle(tabs: HTMLElement): void {
-    const body = this.el.ownerDocument.body;
-    const label = (): string =>
-      body.hasClass(RIBBON_COLLAPSED) ? t("Show commands") : t("Hide commands");
     const caret = tabs.createEl("button", {
-      attr: {
-        "aria-expanded": String(!body.hasClass(RIBBON_COLLAPSED)),
-        type: "button",
-      },
+      attr: { type: "button" },
       cls: "clickable-icon ribbon-collapse",
     });
     resolveIcon(caret, "chevron-up");
-    const syncLabel = (): void => {
-      caret.setAttribute("aria-label", label());
-      setTooltip(caret, label());
-    };
-    syncLabel();
     caret.addEventListener("pointerdown", (event) => event.preventDefault());
-    caret.addEventListener("click", () => {
-      const collapsed = !body.hasClass(RIBBON_COLLAPSED);
-      body.toggleClass(RIBBON_COLLAPSED, collapsed);
-      caret.setAttribute("aria-expanded", String(!collapsed));
-      syncLabel();
-    });
+    caret.addEventListener("click", () => this.setCollapsed(!this.collapsed));
+    this.syncCaret();
+  }
+
+  /** Folded state rides on `<body>`: every Ribbon shares it, and it is not a setting. */
+  private get collapsed(): boolean {
+    return this.el.ownerDocument.body.hasClass(RIBBON_COLLAPSED);
+  }
+
+  private setCollapsed(collapsed: boolean): void {
+    this.el.ownerDocument.body.toggleClass(RIBBON_COLLAPSED, collapsed);
+    this.syncCaret();
+  }
+
+  private syncCaret(): void {
+    const caret = this.el.querySelector<HTMLElement>(".ribbon-collapse");
+    if (!caret) return;
+    const label = this.collapsed ? t("Show commands") : t("Hide commands");
+    caret.setAttribute("aria-expanded", String(!this.collapsed));
+    caret.setAttribute("aria-label", label);
+    setTooltip(caret, label);
   }
 
   private renderGroups(panel: HTMLElement): void {
@@ -214,6 +218,8 @@ export class ToolbarSurface {
 
   /** A tab the user picked: the Table tab stops following the caret. */
   private pickTab(id: TabId): void {
+    // Word unfolds the Ribbon when a tab is picked while it is folded away.
+    if (this.collapsed) this.setCollapsed(false);
     this.autoSwitched = false;
     this.selectTab(id);
   }
