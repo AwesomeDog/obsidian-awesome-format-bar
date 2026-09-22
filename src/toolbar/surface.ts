@@ -27,6 +27,8 @@ const FOLLOWING_GAP = 8;
 /** Mirrors the `--size-4-4` inline margin both Compact bars get in styles.css. */
 const SIDE_MARGIN = 16;
 const PINNED_EMPTY = "No pinned commands yet.";
+/** Collapse lives on `<body>` so every Ribbon shares it, and dies with the app. */
+const RIBBON_COLLAPSED = "awesome-format-bar-ribbon-collapsed";
 
 export class ToolbarSurface {
   readonly el: HTMLElement;
@@ -103,7 +105,35 @@ export class ToolbarSurface {
         text: tab.name,
       });
     }
+    this.renderCollapseToggle(tabs);
     this.renderGroups(panel);
+  }
+
+  /** Word's caret: folds the command panel away and leaves the tab row. */
+  private renderCollapseToggle(tabs: HTMLElement): void {
+    const body = this.el.ownerDocument.body;
+    const label = (): string =>
+      body.hasClass(RIBBON_COLLAPSED) ? t("Show commands") : t("Hide commands");
+    const caret = tabs.createEl("button", {
+      attr: {
+        "aria-expanded": String(!body.hasClass(RIBBON_COLLAPSED)),
+        type: "button",
+      },
+      cls: "clickable-icon ribbon-collapse",
+    });
+    resolveIcon(caret, "chevron-up");
+    const syncLabel = (): void => {
+      caret.setAttribute("aria-label", label());
+      setTooltip(caret, label());
+    };
+    syncLabel();
+    caret.addEventListener("pointerdown", (event) => event.preventDefault());
+    caret.addEventListener("click", () => {
+      const collapsed = !body.hasClass(RIBBON_COLLAPSED);
+      body.toggleClass(RIBBON_COLLAPSED, collapsed);
+      caret.setAttribute("aria-expanded", String(!collapsed));
+      syncLabel();
+    });
   }
 
   private renderGroups(panel: HTMLElement): void {

@@ -231,6 +231,8 @@ export default {
   // Toolbar, panels and pickers
   "More commands": "추가 명령",
   "Hidden by width": "너비 부족으로 숨김",
+  "Hide commands": "명령 숨기기",
+  "Show commands": "명령 표시",
   "Search…": "검색…",
   "Search characters": "문자 검색",
   "No matches": "일치하는 항목 없음",

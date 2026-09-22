@@ -233,6 +233,8 @@ export default {
   // Toolbar, panels and pickers
   "More commands": "Plus de commandes",
   "Hidden by width": "Masqué par manque de largeur",
+  "Hide commands": "Masquer les commandes",
+  "Show commands": "Afficher les commandes",
   "Search…": "Rechercher…",
   "Search characters": "Rechercher des caractères",
   "No matches": "Aucun résultat",

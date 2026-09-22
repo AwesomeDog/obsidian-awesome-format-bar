@@ -230,6 +230,8 @@ export default {
   // Toolbar, panels and pickers
   "More commands": "更多命令",
   "Hidden by width": "因寬度不足而隱藏",
+  "Hide commands": "隱藏命令",
+  "Show commands": "顯示命令",
   "Search…": "搜尋…",
   "Search characters": "搜尋字元",
   "No matches": "無相符項目",

@@ -102,6 +102,14 @@
       border-radius: var(--radius-s) var(--radius-s) 0 0;
       padding: var(--size-2-1) var(--size-4-2);
     }
+    & .ribbon-collapse {
+      block-size: var(--formatbar-hit);
+      inline-size: var(--formatbar-hit);
+      margin-inline-start: auto;
+      & .svg-icon {
+        transition: transform 100ms ease;
+      }
+    }
     & .tab-panel {
       background: var(--background-primary);
       display: flex;
@@ -501,6 +509,20 @@
         background: var(--interactive-hover);
       }
     }
+  }
+}
+
+/* ----------------------------- Collapsed Ribbon --------------------------- */
+/* The state is memory-only, so it rides on <body> instead of a setting. */
+body.awesome-format-bar-ribbon-collapsed {
+  & .awesome-format-bar--ribbon .tab-panel {
+    display: none;
+  }
+  & .awesome-format-bar--ribbon .tab-row {
+    padding-block-end: var(--size-2-2);
+  }
+  & .awesome-format-bar--ribbon .ribbon-collapse .svg-icon {
+    transform: rotate(180deg);
   }
 }
 

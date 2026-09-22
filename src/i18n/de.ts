@@ -233,6 +233,8 @@ export default {
   // Toolbar, panels and pickers
   "More commands": "Weitere Befehle",
   "Hidden by width": "Wegen der Breite ausgeblendet",
+  "Hide commands": "Befehle ausblenden",
+  "Show commands": "Befehle einblenden",
   "Search…": "Suchen…",
   "Search characters": "Zeichen suchen",
   "No matches": "Keine Übereinstimmungen",

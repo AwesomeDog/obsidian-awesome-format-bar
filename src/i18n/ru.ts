@@ -232,6 +232,8 @@ export default {
   // Toolbar, panels and pickers
   "More commands": "Другие команды",
   "Hidden by width": "Скрыто из-за нехватки ширины",
+  "Hide commands": "Скрыть команды",
+  "Show commands": "Показать команды",
   "Search…": "Поиск…",
   "Search characters": "Поиск символов",
   "No matches": "Ничего не найдено",

@@ -232,6 +232,8 @@ export default {
   // Toolbar, panels and pickers
   "More commands": "その他のコマンド",
   "Hidden by width": "幅が不足しているため非表示",
+  "Hide commands": "コマンドを隠す",
+  "Show commands": "コマンドを表示",
   "Search…": "検索…",
   "Search characters": "文字を検索",
   "No matches": "該当する項目はありません",
