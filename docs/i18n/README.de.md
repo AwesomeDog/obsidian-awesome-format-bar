@@ -279,6 +279,9 @@ Bewusst minimal — und genau das ist der Punkt. Das integrierte Layout ist fest
 npm install        # Abhängigkeiten installieren
 npm run build      # Typprüfung + Tests + Produktions-Build
 npm run deploy -- /path/to/vault   # main.js, manifest.json und styles.css in einen Tresor kopieren
+
+npm run mobile -- /path/to/vault --size=phone
+npm run mobile -- /path/to/vault --size=tablet
 ```
 
 Das Release besteht aus genau drei Dateien: `main.js`, `manifest.json` und `styles.css`.

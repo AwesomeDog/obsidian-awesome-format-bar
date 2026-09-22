@@ -59,10 +59,7 @@ export class FormatBarSettingTab extends PluginSettingTab {
     return [
       {
         heading: t("Toolbar"),
-        items: [
-          this.platformRow("desktop"),
-          // this.platformRow("mobile"),
-        ],
+        items: [this.platformRow("desktop"), this.platformRow("mobile")],
         type: "group",
       },
       {
@@ -103,17 +100,17 @@ export class FormatBarSettingTab extends PluginSettingTab {
         ],
         type: "group",
       },
-      // {
-      //   heading: t("General"),
-      //   items: [
-      //     toggle(
-      //       "enableOnMobile",
-      //       "Enable on Mobile",
-      //       "Hides every bar on mobile without clearing its positions.",
-      //     ),
-      //   ],
-      //   type: "group",
-      // },
+      {
+        heading: t("General"),
+        items: [
+          toggle(
+            "enableOnMobile",
+            "Enable on Mobile",
+            "Hides every bar on mobile without clearing its positions.",
+          ),
+        ],
+        type: "group",
+      },
     ];
   }
 

@@ -279,6 +279,9 @@
 npm install        # 安裝相依套件
 npm run build      # 型別檢查 + 測試 + 生產建置
 npm run deploy -- /path/to/vault   # 把 main.js、manifest.json、styles.css 複製進保存庫
+
+npm run mobile -- /path/to/vault --size=phone
+npm run mobile -- /path/to/vault --size=tablet
 ```
 
 發布物只有三個檔案：`main.js`、`manifest.json`、`styles.css`。

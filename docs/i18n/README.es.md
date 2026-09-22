@@ -279,6 +279,9 @@ Deliberadamente mínimo ——y ahí está la gracia——. La distribución int
 npm install        # instala las dependencias
 npm run build      # comprobación de tipos + pruebas + compilación de producción
 npm run deploy -- /path/to/vault   # copia main.js, manifest.json y styles.css en una biblioteca
+
+npm run mobile -- /path/to/vault --size=phone
+npm run mobile -- /path/to/vault --size=tablet
 ```
 
 La versión publicada son exactamente tres archivos: `main.js`, `manifest.json` y `styles.css`.

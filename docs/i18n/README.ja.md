@@ -279,6 +279,9 @@
 npm install        # 依存関係をインストール
 npm run build      # 型チェック + テスト + 本番ビルド
 npm run deploy -- /path/to/vault   # main.js、manifest.json、styles.css を Vault にコピー
+
+npm run mobile -- /path/to/vault --size=phone
+npm run mobile -- /path/to/vault --size=tablet
 ```
 
 リリース物はちょうど 3 ファイルです：`main.js`、`manifest.json`、`styles.css`。

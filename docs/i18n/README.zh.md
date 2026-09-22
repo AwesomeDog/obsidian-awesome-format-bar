@@ -279,6 +279,9 @@
 npm install        # 安装依赖
 npm run build      # 类型检查 + 测试 + 生产构建
 npm run deploy -- /path/to/vault   # 把 main.js、manifest.json、styles.css 复制进笔记库
+
+npm run mobile -- /path/to/vault --size=phone
+npm run mobile -- /path/to/vault --size=tablet
 ```
 
 发布物只有三个文件：`main.js`、`manifest.json`、`styles.css`。

@@ -279,6 +279,9 @@
 npm install        # 의존성 설치
 npm run build      # 타입 검사 + 테스트 + 프로덕션 빌드
 npm run deploy -- /path/to/vault   # main.js, manifest.json, styles.css를 볼트로 복사
+
+npm run mobile -- /path/to/vault --size=phone
+npm run mobile -- /path/to/vault --size=tablet
 ```
 
 릴리스 파일은 정확히 세 개입니다: `main.js`, `manifest.json`, `styles.css`.

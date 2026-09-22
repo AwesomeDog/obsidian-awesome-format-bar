@@ -279,6 +279,9 @@ Obsidian быстр, **если** вы уже владеете Markdown. Для 
 npm install        # установить зависимости
 npm run build      # проверка типов + тесты + сборка для выпуска
 npm run deploy -- /path/to/vault   # скопировать main.js, manifest.json, styles.css в хранилище
+
+npm run mobile -- /path/to/vault --size=phone
+npm run mobile -- /path/to/vault --size=tablet
 ```
 
 Выпуск состоит ровно из трех файлов: `main.js`、`manifest.json` и `styles.css`.

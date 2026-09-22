@@ -279,6 +279,9 @@ Délibérément minimal —— et c'est justement le but. La disposition intégr
 npm install        # installer les dépendances
 npm run build      # vérification des types + tests + build de production
 npm run deploy -- /path/to/vault   # copier main.js, manifest.json, styles.css dans un coffre
+
+npm run mobile -- /path/to/vault --size=phone
+npm run mobile -- /path/to/vault --size=tablet
 ```
 
 La version publiée ne contient que trois fichiers : `main.js`、`manifest.json` et `styles.css`.
