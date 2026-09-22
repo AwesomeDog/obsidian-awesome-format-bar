@@ -190,7 +190,10 @@
     align-self: center;
     flex: 0 0 auto;
     margin: var(--size-2-2) var(--formatbar-side-margin)
-      calc(var(--formatbar-lift) + env(safe-area-inset-bottom));
+      calc(
+        var(--formatbar-lift) + env(safe-area-inset-bottom) +
+          var(--formatbar-navbar-lift, 0px)
+      );
     max-inline-size: calc(100% - 2 * var(--formatbar-side-margin));
   }
 
@@ -648,12 +651,56 @@
 }
 
 /*
- * On current Android builds the pane header is a floating layer. Keep the
- * ribbon in normal flow, but start it below that layer using Obsidian's own
- * measured header height (rather than a device-specific pixel value).
+ * On current mobile builds the pane header (upper-left / upper-right raised
+ * buttons) and the bottom navbar float above the content, so the plugin bars
+ * must clear them. Obsidian's own measured offsets are used rather than
+ * device-specific pixel values; when the soft keyboard opens, Obsidian
+ * reserves the toolbar area itself and --keyboard-height reduces the lift.
  */
-.is-mobile .awesome-format-bar-host--has-ribbon {
-  padding-block-start: var(--view-header-height, 0px);
+.is-phone:is(.is-floating-nav, .auto-full-screen) {
+  --formatbar-navbar-lift: max(
+    0px,
+    var(--navbar-height, 0px) + var(--navbar-bottom-offset, 0px) -
+      var(--keyboard-height, 0px)
+  );
+
+  /* Scrolling down makes Obsidian slide the navbar off-screen. */
+  &.is-hidden-nav {
+    --formatbar-navbar-lift: 0px;
+  }
+
+  .awesome-format-bar-host--has-ribbon .awesome-format-bar--ribbon {
+    margin-block-start: calc(
+      var(--view-header-top-offset, 0px) + var(--view-header-height, 0px)
+    );
+  }
+
+  /* The ribbon covers the header area, so the editor's own clearance below
+     the floating header would just be a blank band. */
+  .mod-root
+    .workspace-leaf-content
+    .awesome-format-bar-host--has-ribbon
+    .markdown-reading-view
+    > .markdown-preview-view,
+  .mod-root
+    .workspace-leaf-content
+    .awesome-format-bar-host--has-ribbon
+    .markdown-source-view
+    > .cm-editor
+    > .cm-scroller {
+    padding-top: var(--size-4-2);
+  }
+}
+
+/*
+ * Obsidian pads every non-icon button on tablets (`.is-tablet
+ * button:not(.clickable-icon)`), which eats the whole content box of a bar
+ * button and squeezes its icon down to zero width.
+ */
+.is-tablet
+  .awesome-format-bar
+  button:not(.clickable-icon, .tab, .char-source-tab) {
+  padding: 0;
 }
 
 /* ----------------------- Sort by Clicking a Header ------------------------ */

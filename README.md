@@ -277,6 +277,9 @@ Deliberately minimal — and that's the point. The built-in layout is fixed and 
 npm install        # install dependencies
 npm run build      # typecheck + test + production build
 npm run deploy -- /path/to/vault   # copy main.js, manifest.json, styles.css into a vault
+
+npm run mobile -- /path/to/vault --size=phone
+npm run mobile -- /path/to/vault --size=tablet
 ```
 
 The release consists of exactly three files: `main.js`, `manifest.json` and `styles.css`.
