@@ -134,8 +134,8 @@
 <text x="311.0" y="460.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="22" fill="#222222" text-anchor="start">Content</text>
 <text x="506.0" y="460.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="22" fill="#222222" text-anchor="start">Content</text>
 <text x="669.0" y="460.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="22" fill="#222222" text-anchor="start">Content</text>
-<text x="311.0" y="490.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="22" fill="#222222" text-anchor="start">**Bold**</text>
-<text x="508.0" y="490.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="22" fill="#222222" text-anchor="start">*Italic*</text>
+<text x="311.0" y="490.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="22" fill="#222222" text-anchor="start"><tspan>**</tspan><tspan font-weight="700">Bold</tspan><tspan>**</tspan></text>
+<text x="508.0" y="490.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="22" fill="#222222" text-anchor="start"><tspan>*</tspan><tspan font-style="italic">Italic</tspan><tspan>*</tspan></text>
 <text x="669.0" y="490.0" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="21" fill="#222222" text-anchor="start">`Code`</text>
 <rect x="312.0" y="504.0" width="160.0" height="24.0" fill="#FFEC99" rx="2.0"/>
 <text x="313.0" y="523.0" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif" font-size="22" fill="#222222" letter-spacing="1.83" text-anchor="start">==Highlight==</text>
