@@ -73,7 +73,8 @@ import { commit, selectionRanges } from "./apply";
 /** Context for local commands; registered commands forward to Obsidian. */
 export interface CommandContext {
   readonly app: App;
-  readonly view: MarkdownView;
+  /** Absent for an embedded editor: a Canvas card has no view of its own. */
+  readonly view?: MarkdownView;
   readonly editor: Editor;
   readonly format: TableFormat;
   /** The popup choice: a color, a case mode, or an Emoji & Symbols entry. */
@@ -109,7 +110,10 @@ let fullscreenEl: HTMLElement | null = null;
 
 /** Zen fullscreens the view itself, so Obsidian's layout survives untouched. */
 function toggleFullscreen(context: CommandContext): void {
-  const { containerEl } = context.view;
+  const view = context.view;
+  // Zen fullscreens a view; an embedded editor has none to fullscreen.
+  if (!view) return;
+  const { containerEl } = view;
   const doc = containerEl.ownerDocument;
   if (doc.fullscreenElement) {
     void doc.exitFullscreen();

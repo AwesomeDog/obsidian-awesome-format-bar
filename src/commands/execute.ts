@@ -122,15 +122,29 @@ export async function executeSpec(
   }
 }
 
-/** Context for the view being edited right now, or `null` if there is none. */
+/** Context for the editor being edited right now, or `null` if there is none. */
 export function resolveContext(
   app: App,
   format: TableFormat,
   optionValue?: string,
 ): CommandContext | null {
-  const view = app.workspace.getActiveViewOfType(MarkdownView);
-  if (!view || view.getMode() !== "source") return null;
+  const editor = focusedEditor(app);
+  if (!editor) return null;
   return optionValue === undefined
-    ? { app, editor: view.editor, format, view }
-    : { app, editor: view.editor, format, optionValue, view };
+    ? { app, editor, format }
+    : { app, editor, format, optionValue };
+}
+
+/** The editor that has focus, or `null` when nothing editable does.
+ *
+ * `getActiveViewOfType` only ever sees notes, so it misses the embedded
+ * editors inside Canvas cards and hover editors. `activeEditor` covers both,
+ * and it is a MarkdownView exactly when a note itself has focus — which is
+ * what keeps Reading view out: there the view is a MarkdownView whose mode is
+ * not source. */
+function focusedEditor(app: App): Editor | null {
+  const owner = app.workspace.activeEditor;
+  if (owner && !(owner instanceof MarkdownView)) return owner.editor ?? null;
+  const view = app.workspace.getActiveViewOfType(MarkdownView);
+  return view?.getMode() === "source" ? view.editor : null;
 }
