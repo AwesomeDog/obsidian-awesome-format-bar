@@ -21,6 +21,7 @@ import {
   renderTable,
   sortRows,
   transposeTable,
+  type ColumnAlignment,
   type TableFormat,
 } from "../src/editor-ops/table";
 import {
@@ -415,6 +416,22 @@ describe("moveColumn", () => {
 describe("alignColumn", () => {
   const table = "|a|b|\n|-|-|\n|c^|d|";
 
+  /** `[`…`]` marks the selection, `^` the caret. */
+  function alignSelection(input: string, value: ColumnAlignment): string {
+    let doc = "";
+    let from = 0;
+    let to = 0;
+    let at = 0;
+    for (const char of input) {
+      if (char === "^") at = doc.length;
+      else if (char === "[") from = doc.length;
+      else if (char === "]") to = doc.length;
+      else doc += char;
+    }
+    const plan = alignColumn(doc, at, PADDED, value, [{ from, to }]);
+    return applyChanges(doc, plan.changes);
+  }
+
   it("writes each of the three alignments", () => {
     expect(run(table, (doc, at) => alignColumn(doc, at, PADDED, "left"))).toBe(
       ["| a   | b   |", "| :-- | --- |", "| c   | d   |"].join("\n"),
@@ -424,6 +441,58 @@ describe("alignColumn", () => {
     ).toBe(["| a   | b   |", "| :-: | --- |", "| c   | d   |"].join("\n"));
     expect(run(table, (doc, at) => alignColumn(doc, at, PADDED, "right"))).toBe(
       ["| a   | b   |", "| --: | --- |", "| c   | d   |"].join("\n"),
+    );
+  });
+
+  it("aligns one column when the selection stays inside a cell", () => {
+    expect(alignSelection("|a|b|c|\n|-|-|-|\n|^[1]|2|3|", "left")).toBe(
+      ["| a   | b   | c   |", "| :-- | --- | --- |", "| 1   | 2   | 3   |"].join(
+        "\n",
+      ),
+    );
+  });
+
+  it("aligns every column the selection spans", () => {
+    expect(alignSelection("|a|b|c|\n|-|-|-|\n|^[1|2]|3|", "left")).toBe(
+      ["| a   | b   | c   |", "| :-- | :-- | --- |", "| 1   | 2   | 3   |"].join(
+        "\n",
+      ),
+    );
+  });
+
+  // A selection is linear, so dragging over two columns of two rows also
+  // covers what lies between them on the first row.
+  it("aligns every column the selection touches on any of its rows", () => {
+    expect(
+      alignSelection("|a|b|c|\n|-|-|-|\n|^[1|2|3|\n|4|5]|6|", "left"),
+    ).toBe(
+      [
+        "| a   | b   | c   |",
+        "| :-- | :-- | :-- |",
+        "| 1   | 2   | 3   |",
+        "| 4   | 5   | 6   |",
+      ].join("\n"),
+    );
+  });
+
+  it("stops at the row a whole-row selection ends on", () => {
+    expect(alignSelection("|a|b|\n|-|-|\n|^[1|2|\n]|3|4|", "left")).toBe(
+      ["| a   | b   |", "| :-- | :-- |", "| 1   | 2   |", "| 3   | 4   |"].join(
+        "\n",
+      ),
+    );
+  });
+
+  it("aligns the columns of every selection", () => {
+    const doc = "|a|b|c|\n|-|-|-|\n|1|2|3|";
+    const plan = alignColumn(doc, 17, PADDED, "left", [
+      { from: 17, to: 18 },
+      { from: 22, to: 23 },
+    ]);
+    expect(applyChanges(doc, plan.changes)).toBe(
+      ["| a   | b   | c   |", "| :-- | --- | :-- |", "| 1   | 2   | 3   |"].join(
+        "\n",
+      ),
     );
   });
 });

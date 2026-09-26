@@ -358,6 +358,7 @@ export function planFor(context: CommandContext, id: string): Plan | null {
   const doc = editor.getValue();
   const ranges = selectionRanges(editor);
   // Table ops read the caret: a selection spanning cells has no single meaning.
+  // Aligning is the one that still wants the selection — see `alignColumn`.
   const caret = editor.posToOffset(editor.getCursor());
 
   const pair = INLINE_PAIRS[id];
@@ -459,11 +460,11 @@ export function planFor(context: CommandContext, id: string): Plan | null {
     case "table-move-column-right":
       return moveColumn(doc, caret, format, 1);
     case "table-align-column-left":
-      return alignColumn(doc, caret, format, "left");
+      return alignColumn(doc, caret, format, "left", ranges);
     case "table-align-column-center":
-      return alignColumn(doc, caret, format, "center");
+      return alignColumn(doc, caret, format, "center", ranges);
     case "table-align-column-right":
-      return alignColumn(doc, caret, format, "right");
+      return alignColumn(doc, caret, format, "right", ranges);
     case "table-format-table":
       return formatTable(doc, caret, format);
     case "table-format-all-tables":

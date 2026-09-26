@@ -455,22 +455,45 @@ export function moveColumn(
   );
 }
 
+/** The columns a selection touches: aligning a span of cells aligns them all,
+ * the way Word does. A selection inside one cell still yields one column. */
+function columnsInRange(table: MarkdownTable, range: Range): number[] {
+  const { lines } = table;
+  const last = table.start + table.rows.length;
+  const columns = new Set<number>();
+  for (
+    let line = Math.max(table.start, lines.lineOf(range.from));
+    line <= Math.min(last, lines.lineOf(range.to));
+    line++
+  ) {
+    const from = Math.max(range.from, lines.start(line));
+    // `end` is the line terminator, so a range reaching it stops at the cell.
+    const to = Math.min(range.to, lines.end(line));
+    if (to <= from) continue;
+    columns.add(cellAt(table, from).column);
+    columns.add(cellAt(table, to - 1).column);
+  }
+  return [...columns];
+}
+
 export function alignColumn(
   doc: string,
   offset: number,
   format: TableFormat,
   align: ColumnAlignment,
+  selection?: readonly Range[],
 ): Plan {
   const hit = findTableEditContext(doc, offset);
   if (!hit) return NO_CHANGE;
   const { cell, table } = hit;
+  const columns = new Set([cell.column]);
+  for (const range of selection ?? [])
+    for (const column of columnsInRange(table, range)) columns.add(column);
   return edit(
     table,
     format,
     table.rows,
-    table.align.map((value, column) =>
-      column === cell.column ? align : value,
-    ),
+    table.align.map((value, column) => (columns.has(column) ? align : value)),
   );
 }
 
