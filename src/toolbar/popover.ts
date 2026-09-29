@@ -6,6 +6,8 @@ import {
   CASE_OPTIONS,
   FONT_FAMILIES,
   FONT_SIZES,
+  HIGHLIGHT_COLORS,
+  NATIVE_COUNT,
   STANDARD_COLORS,
 } from "../model/palettes";
 import type { CommandSpec } from "../model/types";
@@ -104,6 +106,32 @@ function openColorPicker(
   layer.place();
 }
 
+/** No Color and the picker: the same two entries under either palette. */
+function colorExtras(
+  spec: CommandSpec,
+  host: ToolbarHost,
+  anchor: HTMLElement,
+  property: string,
+): PopoverSection {
+  return {
+    items: [
+      {
+        icon: "ban",
+        label: t("No Color"),
+        onChoose: () => host.execute(spec, `${property}:none`),
+      },
+      {
+        icon: "pipette",
+        label: t("More colors…"),
+        onChoose: () =>
+          openColorPicker(anchor, host, (hex) =>
+            host.execute(spec, `${property}:${hex}`),
+          ),
+      },
+    ],
+  };
+}
+
 /** The Emoji & Symbols panel is not here: it needs a search box. */
 export function popoverSectionsFor(
   spec: CommandSpec,
@@ -112,34 +140,31 @@ export function popoverSectionsFor(
 ): readonly PopoverSection[] {
   switch (spec.popup) {
     case "color":
-    case "highlight-color": {
-      const property = spec.popup === "color" ? "color" : "background";
       return [
         {
           grid: 10,
           items: STANDARD_COLORS.map((hex) => ({
             label: hex,
             swatch: hex,
-            onChoose: () => host.execute(spec, `${property}:${hex}`),
+            onChoose: () => host.execute(spec, `color:${hex}`),
           })),
         },
+        colorExtras(spec, host, anchor, "color"),
+      ];
+    case "highlight-color": {
+      const swatch = (hex: string): PopoverItem => ({
+        label: hex,
+        swatch: hex,
+        onChoose: () => host.execute(spec, `background:${hex}`),
+      });
+      return [
+        // The leading six first: they become native `==🟡…==` on 1.14.
         {
-          items: [
-            {
-              icon: "ban",
-              label: t("No Color"),
-              onChoose: () => host.execute(spec, `${property}:none`),
-            },
-            {
-              icon: "pipette",
-              label: t("More colors…"),
-              onChoose: () =>
-                openColorPicker(anchor, host, (hex) =>
-                  host.execute(spec, `${property}:${hex}`),
-                ),
-            },
-          ],
+          grid: NATIVE_COUNT,
+          items: HIGHLIGHT_COLORS.slice(0, NATIVE_COUNT).map(swatch),
         },
+        { grid: 5, items: HIGHLIGHT_COLORS.slice(NATIVE_COUNT).map(swatch) },
+        colorExtras(spec, host, anchor, "background"),
       ];
     }
     case "font-size":

@@ -144,7 +144,7 @@ Pinned's manager opens from the Pinned tab's edit button and shows command names
 
 ### Font Color and Highlight Color
 
-Both are drop-down palettes of the 10 standard colors, matching Word's Font Color button:
+Font Color is a drop-down palette of the 10 standard colors, matching Word's Font Color button. Highlight Color is a palette of 16 — Word's 15 highlighter colors plus Orange — laid out as the six Obsidian-native colors (Yellow, Red, Orange, Green, Blue, Violet) followed by Word's other ten; **all sixteen are currently written as inline HTML `<span style="background:…">`**, and the leading six switch to Obsidian's native colored-highlight syntax (`==🟡text==`) once 1.14 is public, which is why they are grouped first today. Both share the same behavior otherwise:
 
 - **No Color** clears an existing color; **More Colors…** opens a hue/saturation panel with a hex field, an **Ok** and a **Cancel**. The color is applied only on **Ok**.
 - No last-used color is remembered; the palette always opens in the same state.

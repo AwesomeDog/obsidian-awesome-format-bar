@@ -446,17 +446,21 @@ describe("alignColumn", () => {
 
   it("aligns one column when the selection stays inside a cell", () => {
     expect(alignSelection("|a|b|c|\n|-|-|-|\n|^[1]|2|3|", "left")).toBe(
-      ["| a   | b   | c   |", "| :-- | --- | --- |", "| 1   | 2   | 3   |"].join(
-        "\n",
-      ),
+      [
+        "| a   | b   | c   |",
+        "| :-- | --- | --- |",
+        "| 1   | 2   | 3   |",
+      ].join("\n"),
     );
   });
 
   it("aligns every column the selection spans", () => {
     expect(alignSelection("|a|b|c|\n|-|-|-|\n|^[1|2]|3|", "left")).toBe(
-      ["| a   | b   | c   |", "| :-- | :-- | --- |", "| 1   | 2   | 3   |"].join(
-        "\n",
-      ),
+      [
+        "| a   | b   | c   |",
+        "| :-- | :-- | --- |",
+        "| 1   | 2   | 3   |",
+      ].join("\n"),
     );
   });
 
@@ -490,9 +494,11 @@ describe("alignColumn", () => {
       { from: 22, to: 23 },
     ]);
     expect(applyChanges(doc, plan.changes)).toBe(
-      ["| a   | b   | c   |", "| :-- | --- | :-- |", "| 1   | 2   | 3   |"].join(
-        "\n",
-      ),
+      [
+        "| a   | b   | c   |",
+        "| :-- | --- | :-- |",
+        "| 1   | 2   | 3   |",
+      ].join("\n"),
     );
   });
 });

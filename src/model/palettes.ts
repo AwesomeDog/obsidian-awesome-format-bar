@@ -15,6 +15,34 @@ export const STANDARD_COLORS = [
 ] as const;
 
 /**
+ * Word's highlighter palette (15) plus Orange, which Word's font palette has
+ * and its highlighter does not. The first six are the ones Obsidian 1.14 can
+ * render natively — until 1.14 ships, all sixteen go out as spans.
+ */
+export const HIGHLIGHT_COLORS: readonly string[] = [
+  "#ffff00", // Yellow   → ==🟡…== (1.14)
+  "#ff0000", // Red      → ==🔴…==
+  "#ffc000", // Orange   → ==🟠…==
+  "#008000", // Green    → ==🟢…==
+  "#0000ff", // Blue     → ==🔵…==
+  "#800080", // Violet   → ==🟣…==
+  // Word's other ten, in Word's own relative order.
+  "#00ff00",
+  "#00ffff",
+  "#ff00ff",
+  "#000080",
+  "#008080",
+  "#800000",
+  "#808000",
+  "#c0c0c0",
+  "#808080",
+  "#000000",
+];
+
+/** How many of `HIGHLIGHT_COLORS` 1.14 renders natively: the leading slice. */
+export const NATIVE_COUNT = 6;
+
+/**
  * Relative sizes, in `em` — they scale with the surrounding text, so a span
  * survives a theme or zoom change. `none` clears the property, like the colors.
  */
