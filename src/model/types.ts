@@ -67,6 +67,8 @@ export interface CommandSpec {
   readonly requiresTable?: boolean;
   /** Greyed out unless the caret is on a line holding a picture. */
   readonly requiresImage?: boolean;
+  /** Greyed out off the desktop app: the interaction needs a mouse. */
+  readonly desktopOnly?: boolean;
   readonly popup?: CommandPopup;
   /** Drop-down buttons stay off the command palette: alone they do nothing. */
   readonly commandPalette?: false;

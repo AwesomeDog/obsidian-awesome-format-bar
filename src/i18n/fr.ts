@@ -4,6 +4,7 @@ export default {
   Copy: "Copier",
   Cut: "Couper",
   "Paste as Plain Text": "Coller en texte brut",
+  "Format Painter": "Reproduire la mise en forme",
   "Font Family": "Police",
   "Font Size": "Taille de police",
   Bold: "Gras",
@@ -270,4 +271,8 @@ export default {
   "Put the cursor inside a table first.":
     "Place d’abord le curseur dans un tableau.",
   "Table copied as {format}.": "Tableau copié en {format}.",
+  "Select the text whose formatting you want to copy.":
+    "Sélectionne d’abord le texte dont tu veux copier la mise en forme.",
+  "Format painter stays on. Press Esc when you are done.":
+    "La reproduction de la mise en forme reste active. Appuie sur Échap quand tu as terminé.",
 } satisfies Record<string, string>;

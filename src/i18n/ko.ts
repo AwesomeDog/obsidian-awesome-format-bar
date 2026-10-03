@@ -4,6 +4,7 @@ export default {
   Copy: "복사",
   Cut: "잘라내기",
   "Paste as Plain Text": "텍스트로 붙여넣기",
+  "Format Painter": "서식 복사",
   "Font Family": "글꼴",
   "Font Size": "글꼴 크기",
   Bold: "굵게",
@@ -265,4 +266,8 @@ export default {
   "Removed duplicate rows: {count}": "중복 행 제거됨: {count}",
   "Put the cursor inside a table first.": "먼저 커서를 표 안에 두세요.",
   "Table copied as {format}.": "{format} 형식으로 표를 복사했습니다.",
+  "Select the text whose formatting you want to copy.":
+    "서식을 복사할 텍스트를 먼저 선택하세요.",
+  "Format painter stays on. Press Esc when you are done.":
+    "서식 복사가 계속 켜져 있습니다. 끝나면 Esc를 누르세요.",
 } satisfies Record<string, string>;

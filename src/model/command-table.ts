@@ -24,6 +24,13 @@ export const COMMANDS = [
     icon: "clipboard-type",
     kind: "clipboard",
   },
+  {
+    id: "format-painter",
+    name: "Format Painter",
+    icon: "paintbrush",
+    kind: "editor",
+    desktopOnly: true,
+  },
 
   // Home · Font
   {

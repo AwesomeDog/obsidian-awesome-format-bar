@@ -66,15 +66,17 @@ A fixed built-in subset of commands, grouped by dividers. Buttons that don't fit
 
 ## 5. Commands
 
-**159 built-in commands** across 5 tabs and 25 groups, plus the Pinned tab. Drop-down items stay under their parent buttons, while the other commands are registered in the command palette, so users can assign their own shortcuts. That leaves **144** palette entries: the 15 left out are the 14 drop-down parents and the emoji panel, which only open a menu instead of acting.
+**160 built-in commands** across 5 tabs and 25 groups, plus the Pinned tab. Drop-down items stay under their parent buttons, while the other commands are registered in the command palette, so users can assign their own shortcuts. That leaves **145** palette entries: the 15 left out are the 14 drop-down parents and the emoji panel, which only open a menu instead of acting.
 
 ### Tab 1 · Home
 
-- **Clipboard** — Paste, Cut, Copy, Paste as Plain Text
+- **Clipboard** — Paste, Cut, Copy, Format Painter, Paste as Plain Text
 - **Font** — Font Family, Font Size, Bold, Italic, Underline, Strikethrough, Subscript, Superscript, Inline Code, Inline Math, Highlight, Highlight Color, Font Color, Clear Formatting, Change Case
 - **Paragraph** — Bullet List, Numbered List, Number Headings ▼ (Number Headings 1. 1.1. 1.1.1., Number Headings 1) a) i), Number Headings I. A. 1., No Numbering), Task List, Quote, Decrease Indent, Increase Indent, Renumber List, Sort Lines, Move List Item Up / Down, Swap Line Up / Down, Align Left / Center / Right / Justify, Horizontal Rule
 - **Styles** — Heading 1–6, Remove Heading
 - **Editing** — Undo, Redo, Find and Replace
+
+**Format Painter** copies the character formatting of a selection and assigns it to the next one: what the source lacks is stripped from the target, so painting from plain text clears formatting. One click paints once and puts the brush down; double-clicking the button keeps it on until Esc. It carries bold, italic, strikethrough, highlight, highlight color, underline, subscript, superscript, font color, font size and font family — and nothing else: inline code, inline math, links and block-level marks are left alone in both directions. The interaction needs a mouse, so the button is greyed out on mobile.
 
 **Move List Item Up / Down** moves the list item at a single collapsed caret together with its continuation lines and every nested item. It swaps with the adjacent sibling; at a sibling boundary, the first child can move to the end of the previous parent and the last child can move to the start of the next parent. It never crosses a blank line, code fence or heading, and does nothing for a heading, non-list text, selection or multiple carets. Ordered lists are renumbered after a move, and the caret follows the moved item.
 
@@ -200,7 +202,7 @@ The Table options govern editing behavior and text output, not toolbar layout, s
 - User-created commands — Pinned surfaces existing commands, it doesn't create new ones.
 - Emoji shortcodes: no `:smile:` expansion, no autocomplete while typing; the panel inserts raw characters.
 - Custom emoji sets, user-editable character lists.
-- Reordering, hiding or showing the 159 built-in commands.
+- Reordering, hiding or showing the 160 built-in commands.
 - Toolbar appearance customization: background or icon color pickers, theme variants.
 
 ---
@@ -212,7 +214,7 @@ The Table options govern editing behavior and text output, not toolbar layout, s
 | **Position** | Where a toolbar renders: **Top**, **Following**, **Fixed**. Three independent toggles. |
 | **Layout** | How a position renders: **Ribbon** (Top) or **Compact** (Following / Fixed). |
 | **Tab · Group · Button** | Ribbon structure. A **drop-down** button holds several commands; a Compact **overflow menu** (`⋯`) holds the buttons that don't fit. |
-| **Command** | An action the toolbar runs. **159 built-in commands** plus any **pinned command**. |
+| **Command** | An action the toolbar runs. **160 built-in commands** plus any **pinned command**. |
 | **Source · Group · Entry** | Emoji & Symbols panel structure: three sources (Emoji, Kaomoji, Symbols) → groups → entries. Picking an entry inserts a character. |
 | **Word terminology** | Display names follow Microsoft Word (*Bold*, *Clear Formatting*), initial capitals, no `Toggle` prefix. |
 | **Plugin icon** | The plugin's icon in Obsidian's left sidebar. "Ribbon" on its own always means the toolbar layout. |

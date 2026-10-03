@@ -4,6 +4,7 @@ export default {
   Copy: "复制",
   Cut: "剪切",
   "Paste as Plain Text": "粘贴为纯文本",
+  "Format Painter": "格式刷",
   "Font Family": "字体",
   "Font Size": "字号",
   Bold: "加粗",
@@ -263,4 +264,8 @@ export default {
   "Removed duplicate rows: {count}": "已删除重复行：{count}",
   "Put the cursor inside a table first.": "请先将光标放在表格内。",
   "Table copied as {format}.": "已复制表格为 {format}。",
+  "Select the text whose formatting you want to copy.":
+    "请先选中要复制格式的文字。",
+  "Format painter stays on. Press Esc when you are done.":
+    "格式刷已连续开启，按 Esc 结束。",
 } satisfies Record<string, string>;

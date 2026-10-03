@@ -418,6 +418,7 @@ export class ToolbarSurface {
       const enabled = state.isEnabled(spec);
       button.disabled = !enabled;
       button.setAttribute("aria-disabled", String(!enabled));
+      button.toggleClass("is-active", state.isLatched(spec));
     }
     if (this.position !== "top") this.layoutCompact();
     if (this.position === "following") this.positionFollowing();

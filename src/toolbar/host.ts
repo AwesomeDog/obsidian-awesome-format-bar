@@ -9,6 +9,8 @@ import type {
 /** The toolbar never inspects the editor itself. */
 export interface ToolbarState {
   readonly isEnabled: (spec: CommandSpec) => boolean;
+  /** A mode this command has switched on: its button stays lit until it ends. */
+  readonly isLatched: (spec: CommandSpec) => boolean;
   /** The Ribbon switches to its Table tab on the edge where this flips. */
   readonly inTable: boolean;
 }

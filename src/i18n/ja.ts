@@ -4,6 +4,7 @@ export default {
   Copy: "コピー",
   Cut: "切り取り",
   "Paste as Plain Text": "テキストとして貼り付け",
+  "Format Painter": "書式のコピー",
   "Font Family": "フォント",
   "Font Size": "文字サイズ",
   Bold: "太字",
@@ -268,4 +269,8 @@ export default {
   "Put the cursor inside a table first.":
     "先にカーソルをテーブル内に置いてください。",
   "Table copied as {format}.": "{format} としてテーブルをコピーしました。",
+  "Select the text whose formatting you want to copy.":
+    "コピーする書式のテキストを先に選択してください。",
+  "Format painter stays on. Press Esc when you are done.":
+    "書式のコピーは継続します。終わったら Esc を押してください。",
 } satisfies Record<string, string>;

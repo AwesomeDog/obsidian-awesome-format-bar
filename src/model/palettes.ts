@@ -42,6 +42,16 @@ export const HIGHLIGHT_COLORS: readonly string[] = [
 /** How many of `HIGHLIGHT_COLORS` 1.14 renders natively: the leading slice. */
 export const NATIVE_COUNT = 6;
 
+/** The emoji 1.14 writes for those six, in the same order. */
+export const NATIVE_HIGHLIGHT_EMOJI = [
+  "\u{1F7E1}",
+  "\u{1F534}",
+  "\u{1F7E0}",
+  "\u{1F7E2}",
+  "\u{1F535}",
+  "\u{1F7E3}",
+] as const;
+
 /**
  * Relative sizes, in `em` — they scale with the surrounding text, so a span
  * survives a theme or zoom change. `none` clears the property, like the colors.

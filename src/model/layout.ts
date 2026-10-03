@@ -18,7 +18,13 @@ export const BUILT_IN_COMMAND_TABS = [
     groups: [
       {
         name: "Clipboard",
-        commands: ["paste", "cut", "copy", "paste-plain-text"],
+        commands: [
+          "paste",
+          "cut",
+          "copy",
+          "format-painter",
+          "paste-plain-text",
+        ],
       },
       {
         name: "Font",

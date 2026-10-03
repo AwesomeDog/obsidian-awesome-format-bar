@@ -1,4 +1,10 @@
-import { MarkdownView, Notice, type App, type Editor } from "obsidian";
+import {
+  MarkdownView,
+  Notice,
+  Platform,
+  type App,
+  type Editor,
+} from "obsidian";
 import { t } from "../i18n/i18n";
 import type { CommandSpec } from "../model/types";
 import { isImageLine } from "../editor-ops/image";
@@ -48,6 +54,7 @@ export function canRun(spec: CommandSpec, conditions: RunConditions): boolean {
     return false;
   if (spec.kind === "view") return true;
   if (!conditions.hasEditor) return false;
+  if (spec.desktopOnly && !Platform.isDesktopApp) return false;
   if (spec.requiresSelection && !conditions.hasSelection) return false;
   if (spec.requiresTable && !conditions.inTable) return false;
   if (spec.requiresImage && !conditions.inImage) return false;

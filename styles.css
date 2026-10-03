@@ -69,6 +69,12 @@
     position: relative;
   }
 
+  /* A mode that is on until the user ends it: the Format Painter's brush. */
+  & .format-button.is-active {
+    background: var(--background-modifier-active-hover);
+    color: var(--text-accent);
+  }
+
   & .svg-icon {
     block-size: var(--formatbar-icon-size);
     inline-size: var(--formatbar-icon-size);
@@ -806,6 +812,13 @@ body.awesome-format-bar-ribbon-collapsed {
 .awesome-format-bar-typewriter .cm-line.awesome-format-bar-current-line {
   opacity: 1;
   background-color: var(--background-modifier-active-hover);
+}
+
+/* ---------------------------- Format Painter ----------------------------- */
+/* Word turns the pointer into a brush while the painter is armed. No
+   `!important`: the body class carries it on specificity alone. */
+.awesome-format-bar-painter .cm-editor .cm-content {
+  cursor: crosshair;
 }
 
 /* ------------------------------- Zen Mode ------------------------------- */

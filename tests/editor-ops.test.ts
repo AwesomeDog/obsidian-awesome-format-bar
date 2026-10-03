@@ -35,6 +35,11 @@ import {
   splitLines,
 } from "../src/editor-ops/lists";
 import {
+  captureFormat,
+  paintFormat,
+  type InlineFormat,
+} from "../src/editor-ops/painter";
+import {
   applyChanges,
   normalizeRanges,
   type Plan,
@@ -711,14 +716,16 @@ describe("duplicate", () => {
   });
 
   it("copies the selection right after itself", () => {
-    expect(apply("买 [咖啡] 和茶", duplicate)).toBe("买 咖啡咖啡 和茶");
+    expect(apply("buy [coffee] and tea", duplicate)).toBe(
+      "buy coffeecoffee and tea",
+    );
   });
 
   /** VS Code joins a selection spanning lines the same way; no line break. */
   it("selects the copy of a selection", () => {
     const { doc, ranges } = parse("[ab]cd");
     expect(duplicate(doc, ranges).select).toEqual({ from: 2, to: 4 });
-    expect(apply("[- 甲\n- 乙]", duplicate)).toBe("- 甲\n- 乙- 甲\n- 乙");
+    expect(apply("[- a\n- b]", duplicate)).toBe("- a\n- b- a\n- b");
   });
 
   it("duplicates an empty line", () => {
@@ -858,13 +865,13 @@ describe("setImageSize", () => {
   });
 
   it("keeps an alias and writes the size after it", () => {
-    expect(size("![[a.png|图 1]]", 0, "300")).toBe("![[a.png|图 1|300]]");
-    expect(size("![[a.png|图 1|300]]", 0, "400")).toBe("![[a.png|图 1|400]]");
-    expect(size("![[a.png|图 1|300]]", 0, null)).toBe("![[a.png|图 1]]");
+    expect(size("![[a.png|fig 1]]", 0, "300")).toBe("![[a.png|fig 1|300]]");
+    expect(size("![[a.png|fig 1|300]]", 0, "400")).toBe("![[a.png|fig 1|400]]");
+    expect(size("![[a.png|fig 1|300]]", 0, null)).toBe("![[a.png|fig 1]]");
     // Obsidian only reads the last segment, so a size that is not last is
     // alias text: the width goes after it rather than replacing it.
-    expect(size("![[a.png|300|图 1]]", 0, "400")).toBe(
-      "![[a.png|300|图 1|400]]",
+    expect(size("![[a.png|300|fig 1]]", 0, "400")).toBe(
+      "![[a.png|300|fig 1|400]]",
     );
   });
 
@@ -950,9 +957,9 @@ describe("insertImageAlt", () => {
   });
 
   it("selects an alt text that is already there", () => {
-    expect(alt("![[a.png|图 1]]", 0)).toEqual({
-      text: "![[a.png|图 1]]",
-      select: { from: 9, to: 12 },
+    expect(alt("![[a.png|fig 1]]", 0)).toEqual({
+      text: "![[a.png|fig 1]]",
+      select: { from: 9, to: 14 },
     });
   });
 
@@ -970,7 +977,7 @@ describe("resetImage", () => {
   }
 
   it("drops the width and the alt text of a wiki embed", () => {
-    expect(reset("![[a.png|图 1|300]]", 0)).toBe("![[a.png]]");
+    expect(reset("![[a.png|fig 1|300]]", 0)).toBe("![[a.png]]");
   });
 
   it("drops the width and the alt text of a Markdown image", () => {
@@ -999,8 +1006,8 @@ describe("convertImageSyntax", () => {
   });
 
   it("carries the alt text and the width across", () => {
-    expect(convert("![[a.png|图 1|300]]", 0)).toBe("![图 1|300](a.png)");
-    expect(convert("![图 1|300](a.png)", 0)).toBe("![[a.png|图 1|300]]");
+    expect(convert("![[a.png|fig 1|300]]", 0)).toBe("![fig 1|300](a.png)");
+    expect(convert("![fig 1|300](a.png)", 0)).toBe("![[a.png|fig 1|300]]");
   });
 
   it("swaps a space for %20 so the link stays valid", () => {
@@ -1059,5 +1066,152 @@ describe("insertImageCaption", () => {
 
   it("does nothing off a picture", () => {
     expect(caption("text", 0)).toEqual({ text: "text", select: undefined });
+  });
+});
+
+describe("format painter", () => {
+  /** `captureFormat` on the first [selection] of `input`. */
+  function brush(input: string): InlineFormat {
+    const { doc, ranges } = parse(input);
+    const range = ranges[0];
+    if (!range) throw new Error(`no selection in ${input}`);
+    return captureFormat(doc, range);
+  }
+
+  /** Paints onto every [selection] of `input`. */
+  function paint(input: string, format: InlineFormat): string {
+    const { doc, ranges } = parse(input);
+    return run(doc, paintFormat(doc, ranges, format));
+  }
+
+  /** Nothing selected is nothing worn: the brush that clears formatting. */
+  const plain = brush("[plain]");
+
+  it("captures the layer a double-clicked word sits in", () => {
+    expect(brush("**[bold]**").bold).toBe(true);
+    expect(paint("[word]", brush("**[bold]**"))).toBe("**word**");
+  });
+
+  it("captures nothing between two marked spans", () => {
+    expect(brush("**a**[ and ]**b**")).toEqual(plain);
+  });
+
+  it("assigns, so what the source lacks comes off the target", () => {
+    expect(paint("~~[struck]~~", brush("**[bold]**"))).toBe("**struck**");
+  });
+
+  it("clears formatting when the source is plain", () => {
+    expect(paint("~~[struck]~~", plain)).toBe("struck");
+  });
+
+  it("never touches inline code", () => {
+    expect(paint("`[code]`", plain)).toBe("`code`");
+  });
+
+  it("paints a link without taking it apart", () => {
+    const doc = "[text](url)";
+    const whole = [{ from: 0, to: doc.length }];
+    expect(run(doc, paintFormat(doc, whole, brush("**[b]**")))).toBe(
+      "**[text](url)**",
+    );
+  });
+
+  it("rewrites a whole span in place instead of nesting one", () => {
+    const red = brush('[<span style="color:red">red</span>]');
+    const blue = '[<span style="color:blue">blue</span>]';
+    expect(paint(blue, red)).toBe('<span style="color:red">blue</span>');
+  });
+
+  it("wraps a selection that is only part of a span", () => {
+    const red = brush('[<span style="color:red">red</span>]');
+    const inside = '<span style="color:blue">b[lue]</span>';
+    expect(paint(inside, red)).toBe(
+      '<span style="color:blue">b<span style="color:red">lue</span></span>',
+    );
+  });
+
+  it("reads the 1.14 highlight emoji as a background color", () => {
+    expect(brush("==🔴[todo]==").background).toBe("#ff0000");
+    expect(paint("[word]", brush("==🔴[todo]=="))).toBe(
+      '<span style="background:#ff0000">word</span>',
+    );
+  });
+
+  it("takes the emoji off with the marker, leaving none bare", () => {
+    expect(paint("==🔴[todo]==", plain)).toBe("todo");
+  });
+
+  it("captures only the layer the selection starts in", () => {
+    const nested = brush("**[b] <u>u</u>**");
+    expect(nested.underline).toBe(false);
+    expect(paint("[word]", nested)).toBe("**word**");
+  });
+
+  it("captures a marker the selection opens on", () => {
+    expect(brush("[**bold** plain]").bold).toBe(true);
+    expect(brush("[plain **bold**]").bold).toBe(false);
+  });
+
+  it("clears the formatting a selection carries inside itself", () => {
+    expect(paint("[plain **bold** tail]", plain)).toBe("plain bold tail");
+    expect(paint("[**bold** plain]", plain)).toBe("bold plain");
+    expect(
+      paint('[plain <span style="color:red">red</span> tail]', plain),
+    ).toBe("plain red tail");
+  });
+
+  it("makes a mixed selection uniform instead of nesting markers", () => {
+    const bold = brush("**[b]**");
+    expect(paint("[plain **bold** tail]", bold)).toBe("**plain bold tail**");
+    expect(paint("[**bold** plain]", bold)).toBe("**bold plain**");
+  });
+
+  it("splits a run the selection cuts in half", () => {
+    // Only the selected characters change; the run carries on around them.
+    expect(paint("x **[bol]d** y", plain)).toBe("x bol**d** y");
+    expect(paint("[x **bol]d** y", plain)).toBe("x bol**d** y");
+    // The run ends on the far edge, or inside the selection: same result.
+    expect(paint("x **bo[ld]** y", plain)).toBe("x **bo**ld y");
+    expect(paint("x **bo[ld**] y", plain)).toBe("x **bo**ld y");
+  });
+
+  it("splits a span the selection cuts in half", () => {
+    const size = '<span style="font-size:3em">';
+    expect(paint(`x [${size}bi]g</span> y`, plain)).toBe(
+      `x bi${size}g</span> y`,
+    );
+    expect(paint(`x ${size}b[ig</span>] y`, plain)).toBe(
+      `x ${size}b</span>ig y`,
+    );
+    // A strict sub-range: the size comes off the middle only.
+    expect(paint(`x ${size}b[ig]g</span> y`, plain)).toBe(
+      `x ${size}b</span>ig${size}g</span> y`,
+    );
+  });
+
+  it("clears a font size the selection only reaches into", () => {
+    const size = '<span style="font-size:3em">';
+    expect(paint(`lead [up${size}to]rest</span>tail`, plain)).toBe(
+      `lead upto${size}rest</span>tail`,
+    );
+  });
+
+  it("paints every cursor in one plan", () => {
+    const { doc, ranges } = parse("a [b] c [d] e [f]");
+    expect(run(doc, paintFormat(doc, ranges, brush("**[b]**")))).toBe(
+      "a **b** c **d** e **f**",
+    );
+  });
+
+  // `|` is the caret marker in `parse`, so this one spells its range out.
+  it("stays inside a table cell", () => {
+    const row = "| a | b |";
+    expect(
+      run(row, paintFormat(row, [{ from: 6, to: 7 }], brush("**[b]**"))),
+    ).toBe("| a | **b** |");
+  });
+
+  it("leaves a target that already wears the format alone", () => {
+    expect(paint("**[bold]**", brush("**[b]**"))).toBe("**bold**");
   });
 });

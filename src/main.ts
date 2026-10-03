@@ -1,5 +1,13 @@
 import type { Extension } from "@codemirror/state";
-import { MarkdownView, Platform, Plugin, addIcon, getLanguage } from "obsidian";
+import {
+  MarkdownView,
+  Notice,
+  Platform,
+  Plugin,
+  addIcon,
+  getLanguage,
+  type Editor,
+} from "obsidian";
 import { commit, hasSelection, selectionRanges } from "./commands/apply";
 import { exitFullscreen } from "./commands/dispatch";
 import {
@@ -13,13 +21,19 @@ import {
   registeredCommandName,
   registeredHotkey,
 } from "./commands/registered";
+import type { Range } from "./editor-ops/plan";
+import {
+  captureFormat,
+  paintFormat,
+  type InlineFormat,
+} from "./editor-ops/painter";
 import {
   insertCellBreak,
   planTableEnter,
   planTableTab,
   type TableFormat,
 } from "./editor-ops/table";
-import { setLanguage } from "./i18n/i18n";
+import { setLanguage, t } from "./i18n/i18n";
 import { COMMANDS, commandById } from "./model/command-table";
 import {
   DEFAULT_SETTINGS,
@@ -61,6 +75,40 @@ const PLACEHOLDER_SVG =
 /** On <body>: the Reading view sort arrow is drawn by CSS. */
 const SORTABLE_CLASS = "awesome-format-bar-sortable";
 
+/** On <body>: the Format Painter is armed, so the editor shows a crosshair. */
+const PAINTER_CLASS = "awesome-format-bar-painter";
+
+/** Word latches its painter on a double click; this is that window. */
+const DOUBLE_CLICK_MS = 400;
+
+/** A keyboard selection ends on a keyup, so navigation keys paint too. */
+const NAVIGATION_KEYS = new Set([
+  "ArrowDown",
+  "ArrowLeft",
+  "ArrowRight",
+  "ArrowUp",
+  "End",
+  "Home",
+  "PageDown",
+  "PageUp",
+]);
+
+/** Format Painter: the brush outlives the click that picked it up. */
+interface Painter {
+  /** Pure data, so it paints into another pane's note just as well. */
+  readonly format: InlineFormat;
+  /** Where it came from: painting the source again is a no-op. */
+  source: string;
+  /** Double click: the brush stays on until Esc. */
+  continuous: boolean;
+  readonly armedAt: number;
+}
+
+/** Identifies a set of selections, so a stray mouseup on them paints nothing. */
+function keyOf(ranges: readonly Range[]): string {
+  return ranges.map((range) => `${range.from}:${range.to}`).join(",");
+}
+
 const STROKE = 'fill="none" stroke="currentColor" stroke-width="8"';
 const TABLE_BOX = `<rect ${STROKE} x="13" y="13" width="74" height="74" rx="8"/>`;
 
@@ -87,6 +135,12 @@ export default class AwesomeFormatBarPlugin extends Plugin {
   /** Mutable on purpose: Obsidian re-reads this array on `updateOptions()`. */
   private readonly editorExtensions: Extension[] = [];
 
+  /** The armed Format Painter, or `null` when the brush is down. */
+  private painter: Painter | null = null;
+
+  /** Tear-down for the document listeners the brush paints through. */
+  private painterOff: Array<() => void> = [];
+
   override async onload(): Promise<void> {
     this.settings = normalizeSettings(await this.loadData());
     // Normalized on load, so nothing downstream ever sees raw data.
@@ -111,6 +165,10 @@ export default class AwesomeFormatBarPlugin extends Plugin {
     this.registerEvent(
       this.app.workspace.on("editor-change", () => this.queueRefresh()),
     );
+    // Another note is another job: the brush does not follow you there.
+    this.registerEvent(
+      this.app.workspace.on("file-open", () => this.disarmPainter()),
+    );
     this.registerEvent(
       this.app.workspace.on("window-close", (_leaf, win) =>
         this.boundDocuments.delete(win.document),
@@ -127,6 +185,8 @@ export default class AwesomeFormatBarPlugin extends Plugin {
   }
 
   override onunload(): void {
+    // Before the toolbars go: `disarmPainter` refreshes them.
+    this.disarmPainter();
     for (const toolbar of this.toolbars.values()) toolbar.destroy();
     this.toolbars.clear();
   }
@@ -211,6 +271,9 @@ export default class AwesomeFormatBarPlugin extends Plugin {
     };
     this.registerDomEvent(doc, "click", onClick);
     this.markSortable(doc);
+    // A window opened mid-stroke: the brush has to paint there too.
+    this.markPainter();
+    if (this.painter) this.listenForPaint();
 
     const win = doc.defaultView;
     if (win) this.registerDomEvent(win, "resize", refresh);
@@ -298,6 +361,9 @@ export default class AwesomeFormatBarPlugin extends Plugin {
         return {
           inTable: conditions.inTable,
           isEnabled: (spec: CommandSpec): boolean => canRun(spec, conditions),
+          // Plugin-wide, like typewriter mode: every bar shows the brush lit.
+          isLatched: (spec: CommandSpec): boolean =>
+            spec.id === "format-painter" && this.painter !== null,
         };
       },
     };
@@ -433,6 +499,11 @@ export default class AwesomeFormatBarPlugin extends Plugin {
       this.queueRefresh();
       return;
     }
+    // Word's painter is one button with two roles, so it carries its own state.
+    if (spec.id === "format-painter") {
+      this.runPainter(view);
+      return;
+    }
     // View commands must run in Reading view without focusing the editor.
     if (spec.kind === "view") {
       const target =
@@ -463,6 +534,133 @@ export default class AwesomeFormatBarPlugin extends Plugin {
     context.editor.focus();
     await executeSpec(spec, context);
     this.queueRefresh();
+  }
+
+  // ---- Format Painter ---------------------------------------------------
+
+  /** One command, two roles: it picks the format up, then puts it down. */
+  private runPainter(view?: MarkdownView): void {
+    // Needs a mouse to paint with: the button is greyed out off the desktop.
+    if (!Platform.isDesktopApp) return;
+    const target = view ?? this.app.workspace.getActiveViewOfType(MarkdownView);
+    const editor = target?.getMode() === "source" ? target.editor : null;
+    const ranges = editor ? selectionRanges(editor) : [];
+    const key = keyOf(ranges);
+    const selected = ranges.some((range) => range.from !== range.to);
+    const painter = this.painter;
+
+    if (!painter) {
+      if (!editor || !selected) {
+        new Notice(t("Select the text whose formatting you want to copy."));
+        return;
+      }
+      this.armPainter(editor, ranges);
+      return;
+    }
+
+    // A second press on the source inside the double-click window: keep on.
+    if (
+      selected &&
+      key === painter.source &&
+      !painter.continuous &&
+      Date.now() - painter.armedAt <= DOUBLE_CLICK_MS
+    ) {
+      painter.continuous = true;
+      new Notice(t("Format painter stays on. Press Esc when you are done."));
+      this.queueRefresh();
+      return;
+    }
+
+    if (editor && selected && key !== painter.source)
+      this.paint(editor, ranges, painter);
+    if (painter.continuous && selected) return;
+    this.disarmPainter();
+  }
+
+  /** Arms the brush with whatever the selection at `range.from` is wearing. */
+  private armPainter(editor: Editor, ranges: readonly Range[]): void {
+    const source = ranges.find((range) => range.from !== range.to);
+    if (!source) return;
+    this.painter = {
+      format: captureFormat(editor.getValue(), source),
+      source: keyOf(ranges),
+      continuous: false,
+      armedAt: Date.now(),
+    };
+    this.listenForPaint();
+    this.markPainter();
+    // The next selection is the target, and it has to be made in the editor.
+    editor.focus();
+    this.queueRefresh();
+  }
+
+  private disarmPainter(): void {
+    if (!this.painter) return;
+    this.painter = null;
+    this.stopListeningForPaint();
+    this.markPainter();
+    this.queueRefresh();
+  }
+
+  /** The crosshair is CSS, so the flag has to reach every window's body. */
+  private markPainter(): void {
+    const armed = this.painter !== null;
+    for (const doc of this.boundDocuments)
+      doc.body.toggleClass(PAINTER_CLASS, armed);
+  }
+
+  /** One transaction: a multi-cursor paint is still a single undo. */
+  private paint(
+    editor: Editor,
+    ranges: readonly Range[],
+    painter: Painter,
+  ): void {
+    commit(editor, paintFormat(editor.getValue(), ranges, painter.format));
+    // Selections survive the write; remembering them keeps a stray mouseup idle.
+    painter.source = keyOf(selectionRanges(editor));
+  }
+
+  /** Word paints when the drag ends; a keyboard selection ends on a keyup. */
+  private paintSelection(): void {
+    const painter = this.painter;
+    if (!painter) return;
+    const view = this.app.workspace.getActiveViewOfType(MarkdownView);
+    if (!view || view.getMode() !== "source") return;
+    const editor = view.editor;
+    const ranges = selectionRanges(editor);
+    // The mouseup ending the source drag lands on the source selection.
+    if (keyOf(ranges) === painter.source) return;
+    if (!ranges.some((range) => range.from !== range.to)) return;
+    this.paint(editor, ranges, painter);
+    if (!painter.continuous) this.disarmPainter();
+  }
+
+  /** Bound per document: the mouseup that paints may come from any window. */
+  private listenForPaint(): void {
+    this.stopListeningForPaint();
+    const onMouseUp = (): void => this.paintSelection();
+    const onKeyUp = (evt: KeyboardEvent): void => {
+      if (NAVIGATION_KEYS.has(evt.key)) this.paintSelection();
+    };
+    const onKeyDown = (evt: KeyboardEvent): void => {
+      if (evt.key === "Escape") this.disarmPainter();
+    };
+    for (const doc of this.boundDocuments) {
+      doc.addEventListener("mouseup", onMouseUp);
+      doc.addEventListener("keyup", onKeyUp);
+      // Capture: Esc is ours before the editor gets a look at it.
+      doc.addEventListener("keydown", onKeyDown, true);
+      this.painterOff.push(() => {
+        doc.removeEventListener("mouseup", onMouseUp);
+        doc.removeEventListener("keyup", onKeyUp);
+        doc.removeEventListener("keydown", onKeyDown, true);
+      });
+    }
+  }
+
+  private stopListeningForPaint(): void {
+    for (const off of this.painterOff) off();
+    this.painterOff = [];
   }
 
   /** One-shot diagnostics for bad icons or missing forwarded commands. */

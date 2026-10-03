@@ -4,6 +4,7 @@ export default {
   Copy: "Копировать",
   Cut: "Вырезать",
   "Paste as Plain Text": "Вставить как простой текст",
+  "Format Painter": "Формат по образцу",
   "Font Family": "Шрифт",
   "Font Size": "Размер шрифта",
   Bold: "Полужирный",
@@ -267,4 +268,8 @@ export default {
   "Put the cursor inside a table first.":
     "Сначала поместите курсор внутрь таблицы.",
   "Table copied as {format}.": "Таблица скопирована как {format}.",
+  "Select the text whose formatting you want to copy.":
+    "Сначала выделите текст, формат которого нужно скопировать.",
+  "Format painter stays on. Press Esc when you are done.":
+    "Формат по образцу остаётся включённым. Нажмите Esc, когда закончите.",
 } satisfies Record<string, string>;
