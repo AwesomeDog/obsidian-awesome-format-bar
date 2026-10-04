@@ -253,6 +253,8 @@ export default {
   "Icon for {name}": "{name} のアイコン",
   "{tab} · {group}": "{tab} · {group}",
 
+  "{columns} × {rows} Table": "{columns} × {rows} の表",
+
   // Notices
   "{name} failed. See the developer console for details.":
     "{name} に失敗しました。詳細は開発者コンソールで確認してください。",

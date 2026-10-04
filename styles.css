@@ -7,6 +7,7 @@
   /* Design Tokens: Sizing, Hit Targets & Dimensions */
   --formatbar-hit: 26px;
   --formatbar-swatch: 20px;
+  --formatbar-grid-cell: 20px;
   --formatbar-icon-size: var(--icon-size);
   --formatbar-separator-size: 18px;
   --formatbar-control-h: 26px;
@@ -249,6 +250,28 @@
       &:hover {
         outline: 2px solid var(--background-modifier-border-focus);
       }
+    }
+    & .table-grid-size {
+      color: var(--text-normal);
+      padding: var(--size-2-1) var(--size-2-2);
+    }
+    & .table-grid {
+      display: grid;
+      gap: 2px;
+      grid-template-columns: repeat(var(--formatbar-grid-columns, 10), 1fr);
+      padding: var(--size-2-1) var(--size-2-2) var(--size-2-2);
+    }
+    & .table-grid-cell {
+      background: var(--background-primary);
+      block-size: var(--formatbar-grid-cell);
+      border: var(--formatbar-border);
+      border-radius: 0;
+      inline-size: var(--formatbar-grid-cell);
+      padding: 0;
+    }
+    & .table-grid-cell.is-picked {
+      background: var(--interactive-accent);
+      border-color: var(--interactive-accent-hover);
     }
   }
 

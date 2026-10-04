@@ -254,6 +254,8 @@ export default {
   "Icon for {name}": "Symbol für {name}",
   "{tab} · {group}": "{tab} · {group}",
 
+  "{columns} × {rows} Table": "{columns} × {rows} Tabelle",
+
   // Notices
   "{name} failed. See the developer console for details.":
     "{name} ist fehlgeschlagen. Details finden Sie in der Entwicklerkonsole.",

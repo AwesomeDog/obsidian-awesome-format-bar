@@ -5,15 +5,18 @@ import {
   deleteColumn,
   deleteRow,
   deleteTable,
+  emptyTable,
   formatAllTables,
   formatTable,
   insertCellBreak,
   insertColumnLeft,
+  insertTableBlock,
   isTableLine,
   insertColumnRight,
   insertRowAbove,
   insertRowBelow,
   moveColumn,
+  parseTableSize,
   planTableEnter,
   planTableTab,
   moveRow,
@@ -974,5 +977,91 @@ describe("isTableLine", () => {
     expect(isTableLine("| a | b |")).toBe(true);
     expect(isTableLine("a | b")).toBe(true);
     expect(isTableLine("|-|-|")).toBe(true);
+  });
+});
+
+describe("parseTableSize", () => {
+  it("reads columns first, the way Word labels the grid", () => {
+    expect(parseTableSize("3x4")).toEqual({ columns: 3, rows: 4 });
+    expect(parseTableSize("10x8")).toEqual({ columns: 10, rows: 8 });
+  });
+
+  it("rejects a header alone: a Markdown table needs a body row", () => {
+    expect(parseTableSize("3x1")).toBeNull();
+    expect(parseTableSize("3x0")).toBeNull();
+  });
+
+  it("rejects anything that is not two positive numbers", () => {
+    expect(parseTableSize("0x4")).toBeNull();
+    expect(parseTableSize("3 x 4")).toBeNull();
+    expect(parseTableSize("3*4")).toBeNull();
+    expect(parseTableSize("3x")).toBeNull();
+    expect(parseTableSize("3")).toBeNull();
+    expect(parseTableSize("")).toBeNull();
+  });
+});
+
+describe("emptyTable", () => {
+  it("writes a header, a rule, and the body rows the grid asked for", () => {
+    expect(emptyTable(3, 4, TIGHT)).toBe(
+      [
+        "|  |  |  |",
+        "| --- | --- | --- |",
+        "|  |  |  |",
+        "|  |  |  |",
+        "|  |  |  |",
+      ].join("\n"),
+    );
+  });
+
+  it("counts the header in `rows`, so 2x2 is the smallest", () => {
+    expect(emptyTable(2, 2, TIGHT).split("\n")).toHaveLength(3);
+  });
+
+  it("pads cells when the setting asks for it", () => {
+    expect(emptyTable(2, 2, PADDED)).toBe(
+      ["|     |     |", "| --- | --- |", "|     |     |"].join("\n"),
+    );
+  });
+});
+
+/** `^` marks a collapsed caret; the table goes in as a block of its own. */
+function block(input: string, table: string): { text: string; caret: number } {
+  const { doc, offset } = caret(input);
+  const plan = insertTableBlock(doc, [{ from: offset, to: offset }], table);
+  return {
+    caret: plan.select?.from ?? -1,
+    text: applyChanges(doc, plan.changes),
+  };
+}
+
+describe("insertTableBlock", () => {
+  const T = "| a | b |\n| --- | --- |\n| a | b |";
+
+  it("adds nothing around a table that opens a file", () => {
+    expect(block("^", T).text).toBe(T);
+  });
+
+  it("breaks out of a paragraph: a table cannot interrupt one", () => {
+    expect(block("hello^", T).text).toBe(`hello\n\n${T}`);
+  });
+
+  it("adds one blank line when the caret starts a line", () => {
+    expect(block("hello\n^", T).text).toBe(`hello\n\n${T}`);
+  });
+
+  it("adds nothing when a blank line is already there", () => {
+    expect(block("hello\n\n^", T).text).toBe(`hello\n\n${T}`);
+  });
+
+  it("breaks out of the text that follows", () => {
+    expect(block("^world", T).text).toBe(`${T}\n\nworld`);
+    expect(block("^\nworld", T).text).toBe(`${T}\n\nworld`);
+    expect(block("^\n\nworld", T).text).toBe(`${T}\n\nworld`);
+  });
+
+  it("leaves the caret in the first cell, the way Word does", () => {
+    const { text, caret: at } = block("hello^", T);
+    expect(text.slice(at, at + 1)).toBe("a");
   });
 });

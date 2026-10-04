@@ -251,6 +251,8 @@ export default {
   "Icon for {name}": "{name}的圖示",
   "{tab} · {group}": "{tab} · {group}",
 
+  "{columns} × {rows} Table": "{columns} × {rows} 表格",
+
   // Notices
   "{name} failed. See the developer console for details.":
     "{name} 執行失敗。詳細資料請參閱開發人員主控台。",

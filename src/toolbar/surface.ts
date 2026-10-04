@@ -21,6 +21,7 @@ import {
   type PopoverItem,
   type PopoverSection,
 } from "./popover";
+import { openTableGrid } from "./table-grid";
 
 /** One Position's bar; the Position decides the Layout. */
 const FOLLOWING_GAP = 8;
@@ -350,6 +351,8 @@ export class ToolbarSurface {
     const choose = (spec: CommandSpec): void => {
       if (spec.popup === "character-panel")
         void openCharPanel(anchor, spec, this.host);
+      else if (spec.popup === "table-grid")
+        openTableGrid(anchor, spec, this.host);
       else if (spec.popup)
         openPopover(anchor, popoverSectionsFor(spec, this.host, anchor), () =>
           this.host.focusEditor(),

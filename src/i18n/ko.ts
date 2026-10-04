@@ -252,6 +252,8 @@ export default {
   "Icon for {name}": "{name}의 아이콘",
   "{tab} · {group}": "{tab} · {group}",
 
+  "{columns} × {rows} Table": "{columns} × {rows} 표",
+
   // Notices
   "{name} failed. See the developer console for details.":
     "{name}이(가) 실패했습니다. 자세한 내용은 개발자 콘솔을 확인하세요.",

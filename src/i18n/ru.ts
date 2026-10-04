@@ -253,6 +253,8 @@ export default {
   "Icon for {name}": "Значок для {name}",
   "{tab} · {group}": "{tab} · {group}",
 
+  "{columns} × {rows} Table": "Таблица {columns} × {rows}",
+
   // Notices
   "{name} failed. See the developer console for details.":
     "Не удалось выполнить {name}. Подробности см. в консоли разработчика.",

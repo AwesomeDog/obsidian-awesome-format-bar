@@ -4,6 +4,7 @@ import type { ToolbarHost } from "./host";
 import { resolveIcon } from "./icons";
 import { openCharPanel } from "./char-panel";
 import { openPopover, popoverSectionsFor } from "./popover";
+import { openTableGrid } from "./table-grid";
 
 /** Matches how Obsidian labels its own commands: `Bold (⌘ B)`. */
 function withHotkey(name: string, hotkey: string): string {
@@ -37,6 +38,7 @@ export function createButton(
   button.addEventListener("click", () => {
     if (spec.popup === "character-panel")
       void openCharPanel(button, spec, host);
+    else if (spec.popup === "table-grid") openTableGrid(button, spec, host);
     else if (spec.popup)
       openPopover(button, popoverSectionsFor(spec, host, button), () =>
         host.focusEditor(),

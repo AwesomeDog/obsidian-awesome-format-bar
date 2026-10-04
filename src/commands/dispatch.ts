@@ -43,14 +43,17 @@ import {
   deleteColumn,
   deleteRow,
   deleteTable,
+  emptyTable,
   formatAllTables,
   formatTable,
   insertColumnLeft,
   insertColumnRight,
   insertRowAbove,
   insertRowBelow,
+  insertTableBlock,
   moveColumn,
   moveRow,
+  parseTableSize,
   removeDuplicateRows,
   renderTable,
   sortRows,
@@ -437,6 +440,16 @@ export function planFor(context: CommandContext, id: string): Plan | null {
       return plan;
     }
 
+    case "table": {
+      const size = optionValue ? parseTableSize(optionValue) : null;
+      return size
+        ? insertTableBlock(
+            doc,
+            ranges,
+            emptyTable(size.columns, size.rows, format),
+          )
+        : NO_CHANGE;
+    }
     case "table-insert-rows-above":
       return insertRowAbove(doc, caret, format);
     case "table-insert-rows-below":
@@ -499,7 +512,7 @@ export function planFor(context: CommandContext, id: string): Plan | null {
         );
         return NO_CHANGE;
       }
-      return insertText(doc, [range], table);
+      return insertTableBlock(doc, [range], table);
     }
     case "emoji":
       return optionValue ? insertText(doc, ranges, optionValue) : NO_CHANGE;

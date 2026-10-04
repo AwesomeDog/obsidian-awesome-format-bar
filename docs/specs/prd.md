@@ -29,7 +29,7 @@ Markdown also has no syntax for the characters people actually want — an emoji
 
 1. **Word terminology** — reuse existing muscle memory.
 2. **Only what the Markdown ecosystem can express** — standard Markdown first, then Obsidian syntax, then inline HTML (Underline, Superscript, Subscript, alignment, Font Color, Highlight Color, Font Size, Font Family). No Word concepts Markdown lacks.
-3. **Forward, don't rebuild** — where Obsidian already provides a command (Insert Table, Internal Link, Clear Formatting), the toolbar forwards to it.
+3. **Forward, don't rebuild** — where Obsidian already provides a command (Internal Link, Clear Formatting), the toolbar forwards to it. Insert Table is the one exception: Obsidian's command always writes a 2 × 2 table, and a size cannot be forwarded, so the toolbar builds it.
 4. **Minimal UI** — follow the active theme; icons from Obsidian's built-in Lucide set (§7).
 5. **Fixed layout, zero configuration** — except the **Pinned** tab, because only the user knows which commands deserve a toolbar spot.
 6. **Self-contained** — the character data ships inside the plugin. No network calls, no accounts, nothing to sync; the output is plain Unicode that any Markdown reader renders.
@@ -66,7 +66,7 @@ A fixed built-in subset of commands, grouped by dividers. Buttons that don't fit
 
 ## 5. Commands
 
-**160 built-in commands** across 5 tabs and 25 groups, plus the Pinned tab. Drop-down items stay under their parent buttons, while the other commands are registered in the command palette, so users can assign their own shortcuts. That leaves **145** palette entries: the 15 left out are the 14 drop-down parents and the emoji panel, which only open a menu instead of acting.
+**160 built-in commands** across 5 tabs and 25 groups, plus the Pinned tab. Drop-down items stay under their parent buttons, while the other commands are registered in the command palette, so users can assign their own shortcuts. That leaves **144** palette entries: the 16 left out are the 15 drop-down parents and the emoji panel, which only open a menu instead of acting.
 
 ### Tab 1 · Home
 
@@ -85,12 +85,14 @@ A fixed built-in subset of commands, grouped by dividers. Buttons that don't fit
 ### Tab 2 · Insert
 
 - **Links** — Internal Link, External Link, Embed, Tag, Block Reference
-- **Blocks** — Callout ▼ (Note Callout, Abstract Callout, Info Callout, Tip Callout, Success Callout, Question Callout, Warning Callout, Failure Callout, Danger Callout, Bug Callout, Example Callout, Quote Callout), Code Block, Math Block, Table, Convert Text to Table, Comment
+- **Blocks** — Callout ▼ (Note Callout, Abstract Callout, Info Callout, Tip Callout, Success Callout, Question Callout, Warning Callout, Failure Callout, Danger Callout, Bug Callout, Example Callout, Quote Callout), Code Block, Math Block, Table ▼, Convert Text to Table, Comment
 - **Picture** — Image Size ▼ (100 px, 200 px, 300 px, 400 px, 600 px, Original Size), All Images ▼ (All Images 100 px, All Images 200 px, All Images 300 px, All Images 400 px, All Images 600 px, All Images Original Size), Alt Text, Caption, Reset Picture, Convert Syntax
 - **Media & Symbols** — Attach File, Emoji & Symbols, Date and Time
 - **Reference** — **Table of Contents** writes a snapshot after the paragraph at the caret: a bold title followed by one nested `- [[#Heading|Heading]]` link per heading; headings inside code fences or quoted into callouts are ignored. **Footnote** forwards to Obsidian's footnote command.
 
 Every Picture command except **All Images ▼** acts on the picture the caret is on and greys out when the line holds none: `![alt](url)` always counts as one, and `![[file]]` counts when its extension is an image one, so an embedded note, PDF or audio leaves them dark. **Image Size ▼** writes or replaces Obsidian's own width (`![[a.png|300]]`), and **Original Size** drops it; the width is whichever pipe segment looks like a size, so an alias written by hand is kept and the size goes after it (`![[a.png|pic 1|300]]`), and inside a table cell the pipe is escaped as `\|`. **All Images ▼** writes the same width on every picture in the note, so it ignores the caret and never greys out. **Alt Text** writes the alt text of one picture and selects it — the first pipe segment of a wiki embed, the brackets of a Markdown image — or selects the one already there; the width is kept either way, and **Reset Picture** drops both again. **Convert Syntax** swaps one picture between `![[a.png]]` and `![](a.png)`, carrying the alt text and the width across and trading a space for `%20` so the link stays valid; an external URL cannot become a wiki embed, so those are left alone. **Caption** writes `*Caption*` on the line below the picture and selects it, or selects the caption already there instead of writing a second one; written at the picture's own line end, it lands inside the `<div>` a centred picture is wrapped in. Centring a picture needs no command of its own: a picture alone on a line *is* a paragraph, so **Align Center** (Home · Paragraph) does it.
+
+**Table ▼** opens Word's size grid: ten columns by eight rows, swept with the pointer, with the size spelled out above it as `3 × 4 Table` — columns first, the way Word labels them. The size counts the header, so the origin cell is 2 × 2, the same table Obsidian's own Insert table writes, and one row — a header alone — is never on offer. The grid is a single tab stop: arrows move the size, Enter or a click inserts it, Esc closes. The table is written as a block of its own, with blank lines added on either side when the neighbours are not already blank, and the caret is left in the first header cell. Nothing is remembered between uses: the grid always opens at 2 × 2.
 
 ### Tab 3 · View
 

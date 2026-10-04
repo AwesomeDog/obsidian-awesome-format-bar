@@ -458,8 +458,9 @@ export const COMMANDS = [
     id: "table",
     name: "Table",
     icon: "table",
-    kind: "registered",
-    registeredCommandId: "editor:insert-table",
+    kind: "editor",
+    popup: "table-grid",
+    commandPalette: false,
   },
   {
     id: "convert-text-to-table",

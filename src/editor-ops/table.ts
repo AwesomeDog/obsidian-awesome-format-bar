@@ -1,5 +1,12 @@
 import { asNumbers, compareText, Lines, replaceBlock } from "./lines";
-import { NO_CHANGE, order, type Change, type Plan, type Range } from "./plan";
+import {
+  NO_CHANGE,
+  normalizeRanges,
+  order,
+  type Change,
+  type Plan,
+  type Range,
+} from "./plan";
 import { insertText } from "./text";
 import { displayWidth, padToWidth } from "./width";
 
@@ -210,6 +217,65 @@ export function renderTable(
   );
   for (const row of cells.slice(1)) out.push(draw(row));
   return out.join("\n");
+}
+
+/** A grid pick arrives as `3x4`: columns first, the way Word labels them. */
+export function parseTableSize(
+  optionValue: string,
+): { columns: number; rows: number } | null {
+  const match = /^(\d+)x(\d+)$/.exec(optionValue);
+  if (!match) return null;
+  const columns = Number(match[1]);
+  const rows = Number(match[2]);
+  // The grid counts the header, and a header alone is not a table.
+  return columns >= 1 && rows >= 2 ? { columns, rows } : null;
+}
+
+/** `rows` counts the header, so a Markdown table is never shorter than two. */
+export function emptyTable(
+  columns: number,
+  rows: number,
+  format: TableFormat,
+): string {
+  const blank = Array.from({ length: rows }, () =>
+    Array.from({ length: columns }, () => ""),
+  );
+  return renderTable(blank, [], format);
+}
+
+/** A table only renders as its own block: beside a paragraph it is plain text. */
+function breakBefore(text: string): string {
+  if (text === "") return "";
+  if (text.endsWith("\n\n")) return "";
+  return text.endsWith("\n") ? "\n" : "\n\n";
+}
+
+function breakAfter(text: string): string {
+  if (text === "") return "";
+  if (text.startsWith("\n\n")) return "";
+  return text.startsWith("\n") ? "\n" : "\n\n";
+}
+
+/** Insert `table` as a block of its own, replacing `ranges`. */
+export function insertTableBlock(
+  doc: string,
+  ranges: readonly Range[],
+  table: string,
+): Plan {
+  const list = normalizeRanges(ranges);
+  const changes = list.map((range) => ({
+    from: range.from,
+    to: range.to,
+    text:
+      breakBefore(doc.slice(0, range.from)) +
+      table +
+      breakAfter(doc.slice(range.to)),
+  }));
+  const first = list[0];
+  if (list.length !== 1 || !first) return { changes: order(changes) };
+  // Word leaves the caret in the first cell, which starts after `| `.
+  const caret = first.from + breakBefore(doc.slice(0, first.from)).length + 2;
+  return { changes, select: { from: caret, to: caret } };
 }
 
 /** Word's Convert to Text: one tab-separated line per row, header included. */
