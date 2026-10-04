@@ -88,6 +88,19 @@ export const BUILT_IN_COMMAND_TABS = [
     id: "insert",
     name: "Insert",
     groups: [
+      { name: "Tables", commands: ["table", "convert-text-to-table"] },
+      {
+        name: "Illustrations",
+        commands: [
+          "attach-file",
+          "image-size",
+          "image-size-all",
+          "image-alt",
+          "image-caption",
+          "image-reset",
+          "image-convert-syntax",
+        ],
+      },
       {
         name: "Links",
         commands: [
@@ -98,32 +111,9 @@ export const BUILT_IN_COMMAND_TABS = [
           "block-reference",
         ],
       },
-      {
-        name: "Blocks",
-        commands: [
-          "callout",
-          "code-block",
-          "math-block",
-          "table",
-          "convert-text-to-table",
-          "comment",
-        ],
-      },
-      {
-        name: "Picture",
-        commands: [
-          "image-size",
-          "image-size-all",
-          "image-alt",
-          "image-caption",
-          "image-reset",
-          "image-convert-syntax",
-        ],
-      },
-      {
-        name: "Media & Symbols",
-        commands: ["attach-file", "emoji", "date-time"],
-      },
+      { name: "Comments", commands: ["comment"] },
+      { name: "Text", commands: ["callout", "code-block", "date-time"] },
+      { name: "Symbols", commands: ["math-block", "emoji"] },
       { name: "Reference", commands: ["toc", "footnote"] },
     ],
   },

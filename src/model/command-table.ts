@@ -335,6 +335,163 @@ export const COMMANDS = [
     registeredCommandId: "editor:open-search-replace",
   },
 
+  // Insert · Tables
+  {
+    id: "table",
+    name: "Table",
+    icon: "table",
+    kind: "editor",
+    popup: "table-grid",
+    commandPalette: false,
+  },
+  {
+    id: "convert-text-to-table",
+    name: "Convert Text to Table",
+    icon: "table-2",
+    kind: "editor",
+    requiresSelection: true,
+  },
+
+  // Insert · Illustrations
+  {
+    id: "attach-file",
+    name: "Attach File",
+    icon: "paperclip",
+    kind: "registered",
+    registeredCommandId: "editor:attach-file",
+  },
+  {
+    id: "image-size",
+    name: "Image Size",
+    icon: "a-large-small",
+    kind: "editor",
+    popup: "image-size",
+    requiresImage: true,
+    commandPalette: false,
+  },
+  // Drop-down items: the widths Word offers, plus a way back to the file's own
+  // size. Obsidian scales on width alone, so no `WxH` variants.
+  {
+    id: "image-size-100",
+    name: "100 px",
+    icon: "a-large-small",
+    kind: "editor",
+    requiresImage: true,
+  },
+  {
+    id: "image-size-200",
+    name: "200 px",
+    icon: "a-large-small",
+    kind: "editor",
+    requiresImage: true,
+  },
+  {
+    id: "image-size-300",
+    name: "300 px",
+    icon: "a-large-small",
+    kind: "editor",
+    requiresImage: true,
+  },
+  {
+    id: "image-size-400",
+    name: "400 px",
+    icon: "a-large-small",
+    kind: "editor",
+    requiresImage: true,
+  },
+  {
+    id: "image-size-600",
+    name: "600 px",
+    icon: "a-large-small",
+    kind: "editor",
+    requiresImage: true,
+  },
+  {
+    id: "image-size-original",
+    name: "Original Size",
+    icon: "a-large-small",
+    kind: "editor",
+    requiresImage: true,
+  },
+  // The same widths again, for every picture in the note at once. It ignores
+  // the caret, so it stays live wherever the editor is.
+  {
+    id: "image-size-all",
+    name: "All Images",
+    icon: "a-large-small",
+    kind: "editor",
+    popup: "image-size-all",
+    commandPalette: false,
+  },
+  {
+    id: "image-size-all-100",
+    name: "All Images 100 px",
+    icon: "a-large-small",
+    kind: "editor",
+  },
+  {
+    id: "image-size-all-200",
+    name: "All Images 200 px",
+    icon: "a-large-small",
+    kind: "editor",
+  },
+  {
+    id: "image-size-all-300",
+    name: "All Images 300 px",
+    icon: "a-large-small",
+    kind: "editor",
+  },
+  {
+    id: "image-size-all-400",
+    name: "All Images 400 px",
+    icon: "a-large-small",
+    kind: "editor",
+  },
+  {
+    id: "image-size-all-600",
+    name: "All Images 600 px",
+    icon: "a-large-small",
+    kind: "editor",
+  },
+  {
+    id: "image-size-all-original",
+    name: "All Images Original Size",
+    icon: "a-large-small",
+    kind: "editor",
+  },
+  // Word writes this into a panel; here it is written in place and selected,
+  // the way Caption is, because both are text a note carries itself.
+  {
+    id: "image-alt",
+    name: "Alt Text",
+    icon: "text-cursor-input",
+    kind: "editor",
+    requiresImage: true,
+  },
+  // The caption goes on the line below the picture; centring the picture is
+  // `align-center`, which already wraps the block it sits on.
+  {
+    id: "image-caption",
+    name: "Caption",
+    icon: "type",
+    kind: "editor",
+    requiresImage: true,
+  },
+  {
+    id: "image-reset",
+    name: "Reset Picture",
+    icon: "rotate-ccw",
+    kind: "editor",
+    requiresImage: true,
+  },
+  {
+    id: "image-convert-syntax",
+    name: "Convert Syntax",
+    icon: "arrow-left-right",
+    kind: "editor",
+    requiresImage: true,
+  },
+
   // Insert · Links
   {
     id: "internal-link",
@@ -371,7 +528,16 @@ export const COMMANDS = [
     kind: "editor",
   },
 
-  // Insert · Blocks
+  // Insert · Comments
+  {
+    id: "comment",
+    name: "Comment",
+    icon: "message-square",
+    kind: "registered",
+    registeredCommandId: "editor:toggle-comments",
+  },
+
+  // Insert · Text
   {
     id: "callout",
     name: "Callout",
@@ -448,175 +614,19 @@ export const COMMANDS = [
     registeredCommandId: "editor:insert-codeblock",
   },
   {
+    id: "date-time",
+    name: "Date and Time",
+    icon: "calendar-clock",
+    kind: "editor",
+  },
+
+  // Insert · Symbols
+  {
     id: "math-block",
     name: "Math Block",
     icon: "sigma-square",
     kind: "registered",
     registeredCommandId: "editor:insert-mathblock",
-  },
-  {
-    id: "table",
-    name: "Table",
-    icon: "table",
-    kind: "editor",
-    popup: "table-grid",
-    commandPalette: false,
-  },
-  {
-    id: "convert-text-to-table",
-    name: "Convert Text to Table",
-    icon: "table-2",
-    kind: "editor",
-    requiresSelection: true,
-  },
-  {
-    id: "comment",
-    name: "Comment",
-    icon: "message-square",
-    kind: "registered",
-    registeredCommandId: "editor:toggle-comments",
-  },
-
-  // Insert · Picture
-  {
-    id: "image-size",
-    name: "Image Size",
-    icon: "a-large-small",
-    kind: "editor",
-    popup: "image-size",
-    requiresImage: true,
-    commandPalette: false,
-  },
-  // Drop-down items: the widths Word offers, plus a way back to the file's own
-  // size. Obsidian scales on width alone, so no `WxH` variants.
-  {
-    id: "image-size-100",
-    name: "100 px",
-    icon: "a-large-small",
-    kind: "editor",
-    requiresImage: true,
-  },
-  {
-    id: "image-size-200",
-    name: "200 px",
-    icon: "a-large-small",
-    kind: "editor",
-    requiresImage: true,
-  },
-  {
-    id: "image-size-300",
-    name: "300 px",
-    icon: "a-large-small",
-    kind: "editor",
-    requiresImage: true,
-  },
-  {
-    id: "image-size-400",
-    name: "400 px",
-    icon: "a-large-small",
-    kind: "editor",
-    requiresImage: true,
-  },
-  {
-    id: "image-size-600",
-    name: "600 px",
-    icon: "a-large-small",
-    kind: "editor",
-    requiresImage: true,
-  },
-  {
-    id: "image-size-original",
-    name: "Original Size",
-    icon: "a-large-small",
-    kind: "editor",
-    requiresImage: true,
-  },
-  // The caption goes on the line below the picture; centring the picture is
-  // `align-center`, which already wraps the block it sits on.
-  {
-    id: "image-caption",
-    name: "Caption",
-    icon: "type",
-    kind: "editor",
-    requiresImage: true,
-  },
-  // The same widths again, for every picture in the note at once. It ignores
-  // the caret, so it stays live wherever the editor is.
-  {
-    id: "image-size-all",
-    name: "All Images",
-    icon: "a-large-small",
-    kind: "editor",
-    popup: "image-size-all",
-    commandPalette: false,
-  },
-  {
-    id: "image-size-all-100",
-    name: "All Images 100 px",
-    icon: "a-large-small",
-    kind: "editor",
-  },
-  {
-    id: "image-size-all-200",
-    name: "All Images 200 px",
-    icon: "a-large-small",
-    kind: "editor",
-  },
-  {
-    id: "image-size-all-300",
-    name: "All Images 300 px",
-    icon: "a-large-small",
-    kind: "editor",
-  },
-  {
-    id: "image-size-all-400",
-    name: "All Images 400 px",
-    icon: "a-large-small",
-    kind: "editor",
-  },
-  {
-    id: "image-size-all-600",
-    name: "All Images 600 px",
-    icon: "a-large-small",
-    kind: "editor",
-  },
-  {
-    id: "image-size-all-original",
-    name: "All Images Original Size",
-    icon: "a-large-small",
-    kind: "editor",
-  },
-  // Word writes this into a panel; here it is written in place and selected,
-  // the way Caption is, because both are text a note carries itself.
-  {
-    id: "image-alt",
-    name: "Alt Text",
-    icon: "text-cursor-input",
-    kind: "editor",
-    requiresImage: true,
-  },
-  {
-    id: "image-reset",
-    name: "Reset Picture",
-    icon: "rotate-ccw",
-    kind: "editor",
-    requiresImage: true,
-  },
-  {
-    id: "image-convert-syntax",
-    name: "Convert Syntax",
-    icon: "arrow-left-right",
-    kind: "editor",
-    requiresImage: true,
-  },
-
-  // Insert · Media & Symbols
-  {
-    id: "attach-file",
-    name: "Attach File",
-    icon: "paperclip",
-    kind: "registered",
-    registeredCommandId: "editor:attach-file",
   },
   {
     id: "emoji",
@@ -626,13 +636,6 @@ export const COMMANDS = [
     popup: "character-panel",
     commandPalette: false,
   },
-  {
-    id: "date-time",
-    name: "Date and Time",
-    icon: "calendar-clock",
-    kind: "editor",
-  },
-
   // Insert · Reference
   {
     id: "toc",

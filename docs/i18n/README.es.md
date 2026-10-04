@@ -91,7 +91,7 @@ Cada posición se activa de forma independiente, así que puedes usar solo la ba
 
 Negrita, cursiva, subrayado, tachado, código en línea, fórmula en línea, resaltar（con color）, color de fuente, **fuente**, **tamaño de fuente**, borrar formato, cambiar mayúsculas y minúsculas, títulos 1–6, viñetas / numeración / lista de tareas, cita, sangría, línea horizontal, deshacer / rehacer, buscar y reemplazar, alineación de párrafo —— agrupados exactamente donde un usuario de Word los espera.
 
-Las imágenes tienen su propio grupo en **Insertar**: **Tamaño de imagen ▼** fija un ancho de 100–600 px ——o devuelve el tamaño propio del archivo——, **Todas las imágenes ▼** aplica el mismo ancho a todas las imágenes de la nota a la vez, **Texto alternativo** escribe el texto alternativo y lo selecciona, y **Título** escribe una línea de título debajo de la imagen y la selecciona, lista para escribir encima. **Restablecer imagen** descarta el ancho y el texto alternativo, y **Convertir sintaxis** cambia la imagen entre `![[a.png]]` y `![](a.png)`.
+Las imágenes tienen su propio grupo en **Insertar · Ilustraciones**: **Tamaño de imagen ▼** fija un ancho de 100–600 px ——o devuelve el tamaño propio del archivo——, **Todas las imágenes ▼** aplica el mismo ancho a todas las imágenes de la nota a la vez, **Texto alternativo** escribe el texto alternativo y lo selecciona, y **Título** escribe una línea de título debajo de la imagen y la selecciona, lista para escribir encima. **Restablecer imagen** descarta el ancho y el texto alternativo, y **Convertir sintaxis** cambia la imagen entre `![[a.png]]` y `![](a.png)`.
 
 ### 💬 Selector de recuadros —— los 12 tipos de Obsidian
 
@@ -149,10 +149,12 @@ Es una compensación deliberada, no una función que falta. Una barra que te dej
 
 ### Insertar
 
+- **Tablas** —— Tabla, Convertir texto en tabla
+- **Ilustraciones** —— Adjuntar archivo, Tamaño de imagen ▼（100 px, 200 px, 300 px, 400 px, 600 px, Tamaño original）, Todas las imágenes ▼（Todas las imágenes 100 px, Todas las imágenes 200 px, Todas las imágenes 300 px, Todas las imágenes 400 px, Todas las imágenes 600 px, Todas las imágenes Tamaño original）, Texto alternativo, Título, Restablecer imagen, Convertir sintaxis
 - **Vínculos** —— Vínculo interno, Vínculo externo, Incrustar, Etiqueta, Referencia de bloque
-- **Bloques** —— Recuadro ▼（Nota, Resumen, Información, Sugerencia, Éxito, Pregunta, Advertencia, Fallo, Peligro, Error, Ejemplo, Cita）, Bloque de código, Bloque de fórmula, Tabla, Convertir texto en tabla, Comentario
-- **Imagen** —— Tamaño de imagen ▼（100 px, 200 px, 300 px, 400 px, 600 px, Tamaño original）, Todas las imágenes ▼（Todas las imágenes 100 px, Todas las imágenes 200 px, Todas las imágenes 300 px, Todas las imágenes 400 px, Todas las imágenes 600 px, Todas las imágenes Tamaño original）, Texto alternativo, Título, Restablecer imagen, Convertir sintaxis
-- **Multimedia y símbolos** —— Adjuntar archivo, Emoji y símbolos, Fecha y hora
+- **Comentarios** —— Comentario
+- **Texto** —— Recuadro ▼（Nota, Resumen, Información, Sugerencia, Éxito, Pregunta, Advertencia, Fallo, Peligro, Error, Ejemplo, Cita）, Bloque de código, Fecha y hora
+- **Símbolos** —— Bloque de fórmula, Emoji y símbolos
 - **Referencia** —— Índice, Nota al pie
 
 ### Vista
@@ -263,7 +265,7 @@ No. No hay ninguna función de IA, ni clave de API, ni petición de red, ni anal
 No. Ordenar al hacer clic en el encabezado en el modo de lectura es solo visual y nunca modifica la nota.
 
 **¿Cómo centro una imagen o cambio su tamaño?**  
-Coloca el cursor en la propia línea de la imagen. **Centrar**（Inicio · Párrafo）la centra ——una imagen sola en una línea *es* un párrafo, así que no hace falta ningún comando aparte——, y **Tamaño de imagen ▼**（Insertar · Imagen）fija su ancho en 100–600 px, o **Tamaño original** para devolverle el tamaño propio del archivo; un ancho se escribe después de un alias en lugar de reemplazarlo, así que `![[logo.png|Logotipo de la empresa]]` se convierte en `![[logo.png|Logotipo de la empresa|300]]`. **Todas las imágenes ▼** aplica el mismo ancho a todas las imágenes de la nota a la vez, desde cualquier punto de la nota. **Texto alternativo** escribe el texto alternativo y lo selecciona, **Título** escribe una línea de título debajo y la selecciona, y **Restablecer imagen** descarta ambos. **Convertir sintaxis** cambia la imagen entre `![[a.png]]` y `![](a.png)`. Todo se escribe con sintaxis de Obsidian sin más, así que la nota se lee igual sin el plugin.
+Coloca el cursor en la propia línea de la imagen. **Centrar**（Inicio · Párrafo）la centra ——una imagen sola en una línea *es* un párrafo, así que no hace falta ningún comando aparte——, y **Tamaño de imagen ▼**（Insertar · Ilustraciones）fija su ancho en 100–600 px, o **Tamaño original** para devolverle el tamaño propio del archivo; un ancho se escribe después de un alias en lugar de reemplazarlo, así que `![[logo.png|Logotipo de la empresa]]` se convierte en `![[logo.png|Logotipo de la empresa|300]]`. **Todas las imágenes ▼** aplica el mismo ancho a todas las imágenes de la nota a la vez, desde cualquier punto de la nota. **Texto alternativo** escribe el texto alternativo y lo selecciona, **Título** escribe una línea de título debajo y la selecciona, y **Restablecer imagen** descarta ambos. **Convertir sintaxis** cambia la imagen entre `![[a.png]]` y `![](a.png)`. Todo se escribe con sintaxis de Obsidian sin más, así que la nota se lee igual sin el plugin.
 
 **¿Puedo ocultar la barra cuando quiera una pantalla limpia?**  
 Sí: desactiva cualquier posición en los ajustes, o las tres para ocultarla del todo（mira la pregunta del teclado para ver qué sigue funcionando）.

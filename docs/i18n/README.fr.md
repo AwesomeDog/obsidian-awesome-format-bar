@@ -91,7 +91,7 @@ Chaque position s'active indépendamment : vous pouvez n'utiliser que la barre f
 
 Gras, Italique, Souligné, Barré, Code en ligne, Formule en ligne, Surligner（avec couleur）, Couleur de police, **Police**, **Taille de police**, Effacer la mise en forme, Modifier la casse, Titre 1 à 6, listes à puces / numérotées / de tâches, Citation, retraits, Ligne horizontale, Annuler / Rétablir, Rechercher et remplacer, alignement des paragraphes —— regroupés exactement là où un utilisateur de Word les attend.
 
-Les images ont leur propre groupe sur **Insertion** : **Taille de l’image ▼** définit une largeur de 100 à 600 px —— ou rétablit la taille propre du fichier ——, **Toutes les images ▼** applique la même largeur à toutes les images de la note d’un coup, **Texte alternatif** écrit le texte alternatif et le sélectionne, et **Légende** écrit une ligne de légende sous l'image et la sélectionne, prête à accueillir votre texte. **Réinitialiser l’image** retire la largeur et le texte alternatif, et **Convertir la syntaxe** fait passer l’image de `![[a.png]]` à `![](a.png)` et inversement.
+Les images ont leur propre groupe sur **Insertion · Illustrations** : **Taille de l’image ▼** définit une largeur de 100 à 600 px —— ou rétablit la taille propre du fichier ——, **Toutes les images ▼** applique la même largeur à toutes les images de la note d’un coup, **Texte alternatif** écrit le texte alternatif et le sélectionne, et **Légende** écrit une ligne de légende sous l'image et la sélectionne, prête à accueillir votre texte. **Réinitialiser l’image** retire la largeur et le texte alternatif, et **Convertir la syntaxe** fait passer l’image de `![[a.png]]` à `![](a.png)` et inversement.
 
 ### 💬 Sélecteur d'encadrés —— les 12 types d'encadrés Obsidian
 
@@ -149,10 +149,12 @@ C'est un compromis délibéré, pas une fonction manquante. Une barre qui vous l
 
 ### Insertion
 
+- **Tableaux** —— Tableau, Convertir le texte en tableau
+- **Illustrations** —— Joindre un fichier, Taille de l’image ▼（100 px, 200 px, 300 px, 400 px, 600 px, Taille d’origine）, Toutes les images ▼（Toutes les images 100 px, Toutes les images 200 px, Toutes les images 300 px, Toutes les images 400 px, Toutes les images 600 px, Toutes les images Taille d’origine）, Texte alternatif, Légende, Réinitialiser l’image, Convertir la syntaxe
 - **Liens** —— Lien interne, Lien externe, Incorporer, Étiquette, Référence de bloc
-- **Blocs** —— Encadré ▼（Note, Résumé, Info, Astuce, Succès, Question, Avertissement, Échec, Danger, Bogue, Exemple, Citation）, Bloc de code, Bloc de formule, Tableau, Convertir le texte en tableau, Commentaire
-- **Image** —— Taille de l’image ▼（100 px, 200 px, 300 px, 400 px, 600 px, Taille d’origine）, Toutes les images ▼（Toutes les images 100 px, Toutes les images 200 px, Toutes les images 300 px, Toutes les images 400 px, Toutes les images 600 px, Toutes les images Taille d’origine）, Texte alternatif, Légende, Réinitialiser l’image, Convertir la syntaxe
-- **Médias et symboles** —— Joindre un fichier, Emoji et symboles, Date et heure
+- **Commentaires** —— Commentaire
+- **Texte** —— Encadré ▼（Note, Résumé, Info, Astuce, Succès, Question, Avertissement, Échec, Danger, Bogue, Exemple, Citation）, Bloc de code, Date et heure
+- **Symboles** —— Bloc de formule, Emoji et symboles
 - **Référence** —— Table des matières, Note de bas de page
 
 ### Affichage
@@ -263,7 +265,7 @@ Non. Aucune fonction d'IA, aucune clé d'API, aucune requête réseau, aucune an
 Non. Le tri au clic sur l'en-tête en mode lecture est purement visuel et ne modifie jamais la note.
 
 **Comment centrer une image, ou modifier sa taille ?**  
-Placez le curseur sur la ligne de l'image elle-même. **Centrer** (Accueil · Paragraphe) s'en charge —— une image seule sur une ligne *est* un paragraphe, aucune commande distincte n'est donc nécessaire —— et **Taille de l’image ▼** (Insertion · Image) définit sa largeur de 100 à 600 px, ou **Taille d’origine** pour lui rendre la taille propre du fichier ; une largeur s'écrit après un alias plutôt qu'à sa place, donc `![[logo.png|Logo de l’entreprise]]` devient `![[logo.png|Logo de l’entreprise|300]]`. **Toutes les images ▼** applique la même largeur à toutes les images de la note d’un coup, depuis n’importe où dans la note. **Texte alternatif** écrit le texte alternatif et le sélectionne, **Légende** écrit une ligne de légende en dessous et la sélectionne, et **Réinitialiser l’image** retire les deux. **Convertir la syntaxe** fait passer l’image de `![[a.png]]` à `![](a.png)` et inversement. Tout est écrit en syntaxe Obsidian ordinaire : la note se lit donc de la même façon sans le plugin.
+Placez le curseur sur la ligne de l'image elle-même. **Centrer** (Accueil · Paragraphe) s'en charge —— une image seule sur une ligne *est* un paragraphe, aucune commande distincte n'est donc nécessaire —— et **Taille de l’image ▼** (Insertion · Illustrations) définit sa largeur de 100 à 600 px, ou **Taille d’origine** pour lui rendre la taille propre du fichier ; une largeur s'écrit après un alias plutôt qu'à sa place, donc `![[logo.png|Logo de l’entreprise]]` devient `![[logo.png|Logo de l’entreprise|300]]`. **Toutes les images ▼** applique la même largeur à toutes les images de la note d’un coup, depuis n’importe où dans la note. **Texte alternatif** écrit le texte alternatif et le sélectionne, **Légende** écrit une ligne de légende en dessous et la sélectionne, et **Réinitialiser l’image** retire les deux. **Convertir la syntaxe** fait passer l’image de `![[a.png]]` à `![](a.png)` et inversement. Tout est écrit en syntaxe Obsidian ordinaire : la note se lit donc de la même façon sans le plugin.
 
 **Puis-je masquer la barre d'outils quand je veux un écran épuré ?**  
 Oui —— désactivez n'importe quelle position dans les paramètres, ou les trois pour la masquer entièrement（voir la question sur le clavier ci-dessus pour ce qui reste utilisable）.

@@ -89,7 +89,7 @@ Each position is toggled independently, so you can run just the floating bar, ju
 
 Bold, italic, underline, strikethrough, inline code, inline math, highlight (with color), font color, **font family**, **font size**, clear formatting, change case, headings 1–6, bullet / numbered / task lists, quotes, indentation, horizontal rules, undo/redo, find & replace, paragraph alignment — grouped exactly where a Word user expects them.
 
-Pictures get their own group on **Insert**: **Image Size ▼** sets a width of 100–600 px — or restores the file's own size — **All Images ▼** applies the same width to every picture in the note at once, **Alt Text** writes the alt text and selects it, and **Caption** writes a caption line under the picture and selects it, ready to type over. **Reset Picture** drops the width and the alt text again, and **Convert Syntax** swaps a picture between `![[a.png]]` and `![](a.png)`.
+Pictures get their own group on **Insert · Illustrations**: **Image Size ▼** sets a width of 100–600 px — or restores the file's own size — **All Images ▼** applies the same width to every picture in the note at once, **Alt Text** writes the alt text and selects it, and **Caption** writes a caption line under the picture and selects it, ready to type over. **Reset Picture** drops the width and the alt text again, and **Convert Syntax** swaps a picture between `![[a.png]]` and `![](a.png)`.
 
 ### 💬 Callout picker — all 12 Obsidian callout types
 
@@ -147,10 +147,12 @@ That is a deliberate trade-off, not a missing feature. A toolbar that lets you r
 
 ### Insert
 
+- **Tables** — Table, Convert Text to Table
+- **Illustrations** — Attach File, Image Size ▼ (100 px, 200 px, 300 px, 400 px, 600 px, Original Size), All Images ▼ (All Images 100 px, All Images 200 px, All Images 300 px, All Images 400 px, All Images 600 px, All Images Original Size), Alt Text, Caption, Reset Picture, Convert Syntax
 - **Links** — Internal Link, External Link, Embed, Tag, Block Reference
-- **Blocks** — Callout ▼ (Note, Abstract, Info, Tip, Success, Question, Warning, Failure, Danger, Bug, Example, Quote), Code Block, Math Block, Table, Convert Text to Table, Comment
-- **Picture** — Image Size ▼ (100 px, 200 px, 300 px, 400 px, 600 px, Original Size), All Images ▼ (All Images 100 px, All Images 200 px, All Images 300 px, All Images 400 px, All Images 600 px, All Images Original Size), Alt Text, Caption, Reset Picture, Convert Syntax
-- **Media & Symbols** — Attach File, Emoji & Symbols, Date and Time
+- **Comments** — Comment
+- **Text** — Callout ▼ (Note, Abstract, Info, Tip, Success, Question, Warning, Failure, Danger, Bug, Example, Quote), Code Block, Date and Time
+- **Symbols** — Math Block, Emoji & Symbols
 - **Reference** — Table of Contents, Footnote
 
 ### View
@@ -261,7 +263,7 @@ No. There is no AI feature, no API key, no network request, no analytics and no 
 No. Reading-view header-click sorting is display-only and never modifies the note.
 
 **How do I center a picture, or change its size?**  
-Put the caret on the picture's own line. **Align Center** (Home · Paragraph) centres it — a picture alone on a line *is* a paragraph, so no separate command is needed — and **Image Size ▼** (Insert · Picture) sets its width to 100–600 px, or **Original Size** to give the file's own size back; a width is written after an alias rather than over it, so `![[logo.png|Company logo]]` becomes `![[logo.png|Company logo|300]]`. **All Images ▼** applies the same width to every picture in the note at once, from anywhere in the note. **Alt Text** writes the alt text and selects it, **Caption** writes a caption line underneath and selects it, and **Reset Picture** drops both again. **Convert Syntax** swaps the picture between `![[a.png]]` and `![](a.png)`. Everything is written as plain Obsidian syntax, so the note reads the same without the plugin.
+Put the caret on the picture's own line. **Align Center** (Home · Paragraph) centres it — a picture alone on a line *is* a paragraph, so no separate command is needed — and **Image Size ▼** (Insert · Illustrations) sets its width to 100–600 px, or **Original Size** to give the file's own size back; a width is written after an alias rather than over it, so `![[logo.png|Company logo]]` becomes `![[logo.png|Company logo|300]]`. **All Images ▼** applies the same width to every picture in the note at once, from anywhere in the note. **Alt Text** writes the alt text and selects it, **Caption** writes a caption line underneath and selects it, and **Reset Picture** drops both again. **Convert Syntax** swaps the picture between `![[a.png]]` and `![](a.png)`. Everything is written as plain Obsidian syntax, so the note reads the same without the plugin.
 
 **Can I hide the toolbar when I want a clean screen?**  
 Yes — toggle any position off in settings, or all three to hide it entirely (see the keyboard question above for what still works).

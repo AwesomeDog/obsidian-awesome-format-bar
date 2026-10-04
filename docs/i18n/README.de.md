@@ -91,7 +91,7 @@ Jede Position wird unabhängig ein- und ausgeschaltet, Sie können also nur die 
 
 Fett, Kursiv, Unterstreichen, Durchstreichen, Inline-Code, Inline-Formel, Text hervorheben (mit Farbe), Schriftfarbe, **Schriftart**, **Schriftgröße**, Formatierung löschen, Groß-/Kleinschreibung ändern, Überschriften 1–6, Aufzählung / Nummerierung / Aufgabenliste, Zitat, Einzüge, horizontale Linien, Rückgängig / Wiederholen, Suchen und Ersetzen, Absatzausrichtung — gruppiert genau dort, wo ein Word-Nutzer sie erwartet.
 
-Bilder bekommen auf **Einfügen** ihre eigene Gruppe: **Bildgröße ▼** legt eine Breite von 100–600 px fest — oder stellt die eigene Größe der Datei wieder her —, **Alle Bilder ▼** wendet dieselbe Breite auf einmal auf jedes Bild der Notiz an, **Alternativtext** schreibt den Alternativtext und markiert ihn, und **Beschriftung** schreibt eine Beschriftungszeile unter das Bild und markiert sie, bereit zum Überschreiben. **Bild zurücksetzen** verwirft Breite und Alternativtext wieder, und **Syntax umwandeln** wechselt zwischen `![[a.png]]` und `![](a.png)`.
+Bilder bekommen auf **Einfügen · Illustrationen** ihre eigene Gruppe: **Bildgröße ▼** legt eine Breite von 100–600 px fest — oder stellt die eigene Größe der Datei wieder her —, **Alle Bilder ▼** wendet dieselbe Breite auf einmal auf jedes Bild der Notiz an, **Alternativtext** schreibt den Alternativtext und markiert ihn, und **Beschriftung** schreibt eine Beschriftungszeile unter das Bild und markiert sie, bereit zum Überschreiben. **Bild zurücksetzen** verwirft Breite und Alternativtext wieder, und **Syntax umwandeln** wechselt zwischen `![[a.png]]` und `![](a.png)`.
 
 ### 💬 Callout-Auswahl mit allen 12 Obsidian-Typen
 
@@ -149,10 +149,12 @@ Das ist eine bewusste Entscheidung, kein fehlendes Feature. Eine Leiste, die Ihn
 
 ### Einfügen
 
+- **Tabellen** — Tabelle, Text in Tabelle umwandeln
+- **Illustrationen** — Datei anfügen, Bildgröße ▼ (100 px, 200 px, 300 px, 400 px, 600 px, Ursprüngliche Größe), Alle Bilder ▼ (Alle Bilder 100 px, Alle Bilder 200 px, Alle Bilder 300 px, Alle Bilder 400 px, Alle Bilder 600 px, Alle Bilder Ursprüngliche Größe), Alternativtext, Beschriftung, Bild zurücksetzen, Syntax umwandeln
 - **Links** — Interner Link, Externer Link, Einbetten, Tag, Blockverweis
-- **Blöcke** — Hinweis ▼ (Notiz-Callout, Zusammenfassung-Callout, Info-Callout, Tipp-Callout, Erfolg-Callout, Frage-Callout, Warnung-Callout, Fehlschlag-Callout, Gefahr-Callout, Fehler-Callout, Beispiel-Callout, Zitat-Callout), Codeblock, Formelblock, Tabelle, Text in Tabelle umwandeln, Kommentar
-- **Bild** — Bildgröße ▼ (100 px, 200 px, 300 px, 400 px, 600 px, Ursprüngliche Größe), Alle Bilder ▼ (Alle Bilder 100 px, Alle Bilder 200 px, Alle Bilder 300 px, Alle Bilder 400 px, Alle Bilder 600 px, Alle Bilder Ursprüngliche Größe), Alternativtext, Beschriftung, Bild zurücksetzen, Syntax umwandeln
-- **Medien und Symbole** — Datei anfügen, Emoji und Symbole, Datum und Uhrzeit
+- **Kommentare** — Kommentar
+- **Text** — Hinweis ▼ (Notiz-Callout, Zusammenfassung-Callout, Info-Callout, Tipp-Callout, Erfolg-Callout, Frage-Callout, Warnung-Callout, Fehlschlag-Callout, Gefahr-Callout, Fehler-Callout, Beispiel-Callout, Zitat-Callout), Codeblock, Datum und Uhrzeit
+- **Symbole** — Formelblock, Emoji und Symbole
 - **Referenz** — Inhaltsverzeichnis, Fußnote
 
 ### Ansicht
@@ -263,7 +265,7 @@ Nein. Im gesamten Code gibt es keine KI-Funktion, keinen API-Schlüssel, keine N
 Nein. Die Sortierung per Klick auf die Kopfzeile in der Leseansicht betrifft nur die Anzeige und ändert die Notiz niemals.
 
 **Wie zentriere ich ein Bild oder ändere seine Größe?**  
-Setzen Sie den Cursor in die Zeile des Bildes. **Zentriert** (Start · Absatz) zentriert es — ein Bild, das allein in einer Zeile steht, *ist* ein Absatz, also ist kein eigener Befehl nötig — und **Bildgröße ▼** (Einfügen · Bild) legt seine Breite auf 100–600 px fest, **Ursprüngliche Größe** gibt der Datei ihre eigene Größe zurück; eine Breite wird hinter einen Alias geschrieben statt ihn zu überschreiben, also wird aus `![[logo.png|Firmenlogo]]` die Form `![[logo.png|Firmenlogo|300]]`. **Alle Bilder ▼** wendet dieselbe Breite von überall in der Notiz auf jedes Bild an. **Alternativtext** schreibt den Alternativtext und markiert ihn, **Beschriftung** schreibt darunter eine Beschriftungszeile und markiert sie, und **Bild zurücksetzen** verwirft beides wieder. **Syntax umwandeln** wechselt zwischen `![[a.png]]` und `![](a.png)`. Alles wird als einfache Obsidian-Syntax geschrieben, die Notiz liest sich also auch ohne Plugin genauso.
+Setzen Sie den Cursor in die Zeile des Bildes. **Zentriert** (Start · Absatz) zentriert es — ein Bild, das allein in einer Zeile steht, *ist* ein Absatz, also ist kein eigener Befehl nötig — und **Bildgröße ▼** (Einfügen · Illustrationen) legt seine Breite auf 100–600 px fest, **Ursprüngliche Größe** gibt der Datei ihre eigene Größe zurück; eine Breite wird hinter einen Alias geschrieben statt ihn zu überschreiben, also wird aus `![[logo.png|Firmenlogo]]` die Form `![[logo.png|Firmenlogo|300]]`. **Alle Bilder ▼** wendet dieselbe Breite von überall in der Notiz auf jedes Bild an. **Alternativtext** schreibt den Alternativtext und markiert ihn, **Beschriftung** schreibt darunter eine Beschriftungszeile und markiert sie, und **Bild zurücksetzen** verwirft beides wieder. **Syntax umwandeln** wechselt zwischen `![[a.png]]` und `![](a.png)`. Alles wird als einfache Obsidian-Syntax geschrieben, die Notiz liest sich also auch ohne Plugin genauso.
 
 **Kann ich die Leiste ausblenden, wenn ich einen aufgeräumten Bildschirm möchte?**  
 Ja — schalten Sie eine beliebige Position in den Einstellungen aus oder alle drei, um sie ganz zu verbergen (was dann noch funktioniert, steht in der Frage zur Tastatur weiter oben).
