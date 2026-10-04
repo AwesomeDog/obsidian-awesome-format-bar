@@ -159,6 +159,7 @@ export default {
   "Convert Bare URLs": "转换裸 URL",
   "Normalize Emphasis & Strong": "统一强调和加粗",
   "Normalize Bullet Style": "统一项目符号样式",
+  "Remove Invisible Characters": "删除不可见字符",
 
   // Tabs and groups
   Home: "开始",

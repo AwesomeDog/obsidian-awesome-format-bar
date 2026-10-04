@@ -123,7 +123,7 @@ The five built-in tabs cover what most people use often. The one or two commands
 
 **Merge Lines**, **Split Lines** (at the punctuation the selection uses most), **Reverse Lines** — none of which cross a blank line or a code fence — and **Duplicate** (a copy of the caret's line below it, or of the selection right after it — VS Code's *Duplicate Selection*). Plus **Sort List** (level by level, children and bodies preserved, ordered items renumbered) and **Sort Headings** (reorders the outline and carries every section's body along).
 
-**Clean Up** gathers the tidy-ups people otherwise do by hand into one menu: **Remove Trailing Spaces**, **Collapse Blank Lines**, **Convert Bare URLs**, **Normalize Emphasis & Strong** and **Normalize Bullet Style**.
+**Clean Up** gathers the tidy-ups people otherwise do by hand into one menu: **Remove Trailing Spaces**, **Collapse Blank Lines**, **Convert Bare URLs**, **Normalize Emphasis & Strong**, **Normalize Bullet Style** and **Remove Invisible Characters**.
 
 ### 🎨 Zero configuration, theme-aware
 
@@ -177,7 +177,7 @@ Available whenever the cursor is inside a table:
 
 - **Lines** — Merge Lines, Split Lines, Reverse Lines, Duplicate. Merge Lines joins a run of lines into one; Split Lines breaks them at the punctuation the selection uses most; Reverse Lines flips the order of each run; Duplicate copies the caret's line below it, or the selection right after it. None of the four crosses a blank line or a code fence.
 - **Sort** — Sort List, Sort Headings. Sort List sorts a list level by level — an item keeps its own body and its own children, and ordered items come out renumbered. Sort Headings reorders each level of the note's outline and carries every section's body along with it.
-- **Normalize** — Smart Punctuation, CJK Spacing, Clean Up ▼ (Remove Trailing Spaces, Collapse Blank Lines, Convert Bare URLs, Normalize Emphasis & Strong, Normalize Bullet Style).
+- **Normalize** — Smart Punctuation, CJK Spacing, Clean Up ▼ (Remove Trailing Spaces, Collapse Blank Lines, Convert Bare URLs, Normalize Emphasis & Strong, Normalize Bullet Style, Remove Invisible Characters).
 
 ### Pinned
 

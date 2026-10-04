@@ -159,6 +159,7 @@ export default {
   "Convert Bare URLs": "Convertir URL desnudas",
   "Normalize Emphasis & Strong": "Normalizar énfasis y negrita",
   "Normalize Bullet Style": "Normalizar estilo de viñetas",
+  "Remove Invisible Characters": "Eliminar caracteres invisibles",
 
   // Tabs and groups
   Home: "Inicio",

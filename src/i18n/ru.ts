@@ -159,6 +159,7 @@ export default {
   "Convert Bare URLs": "Преобразовать обычные URL",
   "Normalize Emphasis & Strong": "Нормализовать курсив и жирный",
   "Normalize Bullet Style": "Нормализовать маркеры списка",
+  "Remove Invisible Characters": "Удалить невидимые символы",
 
   // Tabs and groups
   Home: "Главная",

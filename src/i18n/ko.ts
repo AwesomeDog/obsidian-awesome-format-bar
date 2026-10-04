@@ -159,6 +159,7 @@ export default {
   "Convert Bare URLs": "일반 URL 변환",
   "Normalize Emphasis & Strong": "강조 및 굵게 표준화",
   "Normalize Bullet Style": "글머리 기호 스타일 표준화",
+  "Remove Invisible Characters": "보이지 않는 문자 제거",
 
   // Tabs and groups
   Home: "홈",

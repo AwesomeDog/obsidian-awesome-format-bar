@@ -125,7 +125,7 @@ Les cinq onglets intégrés couvrent ce dont la plupart des gens se servent souv
 
 **Fusionner les lignes**、**Diviser les lignes**（au signe de ponctuation le plus fréquent dans la sélection）、**Inverser les lignes** —— aucun des trois ne franchit une ligne vide ou un bloc de code —— et **Dupliquer**（une copie de la ligne du curseur en dessous, ou de la sélection juste après —— le *Duplicate Selection* de VS Code）. Plus **Trier la liste**（niveau par niveau, enfants et corps conservés, éléments numérotés renumérotés）et **Trier les titres**（réordonne le plan et emporte le corps de chaque section avec lui）。
 
-**Nettoyer** rassemble dans un même menu les petits rangements que l'on fait sinon à la main : **Supprimer les espaces de fin**、**Réduire les lignes vides**、**Convertir les URL nues**、**Normaliser les emphases et le gras** et **Normaliser le style des puces**。
+**Nettoyer** rassemble dans un même menu les petits rangements que l'on fait sinon à la main : **Supprimer les espaces de fin**、**Réduire les lignes vides**、**Convertir les URL nues**、**Normaliser les emphases et le gras**, **Normaliser le style des puces** et **Supprimer les caractères invisibles**.
 
 ### 🎨 Zéro configuration, sensible au thème
 
@@ -179,7 +179,7 @@ Disponible dès que le curseur se trouve dans un tableau :
 
 - **Lignes** —— Fusionner les lignes, Diviser les lignes, Inverser les lignes, Dupliquer. Fusionner les lignes rassemble une série de lignes en une seule ; Diviser les lignes les coupe au signe de ponctuation le plus fréquent dans la sélection ; Inverser les lignes inverse l'ordre de chaque série ; Dupliquer copie la ligne du curseur en dessous, ou la sélection juste après. Aucun des quatre ne franchit une ligne vide ou un bloc de code.
 - **Trier** —— Trier la liste, Trier les titres. Trier la liste trie une liste niveau par niveau —— chaque élément conserve son propre corps et ses propres enfants, et les éléments numérotés ressortent renumérotés. Trier les titres réordonne chaque niveau du plan de la note et emporte le corps de chaque section avec lui.
-- **Normaliser** —— Ponctuation intelligente, Espacement CJK, Nettoyer ▼（Supprimer les espaces de fin, Réduire les lignes vides, Convertir les URL nues, Normaliser les emphases et le gras, Normaliser le style des puces）.
+- **Normaliser** —— Ponctuation intelligente, Espacement CJK, Nettoyer ▼（Supprimer les espaces de fin, Réduire les lignes vides, Convertir les URL nues, Normaliser les emphases et le gras, Normaliser le style des puces, Supprimer les caractères invisibles）.
 
 ### Épinglé
 

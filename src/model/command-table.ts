@@ -1096,6 +1096,12 @@ export const COMMANDS = [
     icon: "list",
     kind: "editor",
   },
+  {
+    id: "clean-up-invisible-characters",
+    name: "Remove Invisible Characters",
+    icon: "eye-off",
+    kind: "editor",
+  },
 ] as const satisfies readonly CommandSpec[];
 
 export type CommandId = (typeof COMMANDS)[number]["id"];
@@ -1157,6 +1163,7 @@ export const DROPDOWN_ITEMS: Readonly<Record<string, readonly CommandId[]>> = {
     "clean-up-bare-urls",
     "clean-up-emphasis-strong",
     "clean-up-bullet-style",
+    "clean-up-invisible-characters",
   ],
 };
 

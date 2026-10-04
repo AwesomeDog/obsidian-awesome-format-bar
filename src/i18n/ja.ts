@@ -159,6 +159,7 @@ export default {
   "Convert Bare URLs": "裸の URL を変換",
   "Normalize Emphasis & Strong": "強調と太字を統一",
   "Normalize Bullet Style": "箇条書きスタイルを統一",
+  "Remove Invisible Characters": "不可視文字を削除",
 
   // Tabs and groups
   Home: "ホーム",

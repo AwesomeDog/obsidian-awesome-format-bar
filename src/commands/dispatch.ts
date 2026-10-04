@@ -417,6 +417,8 @@ export function planFor(context: CommandContext, id: string): Plan | null {
       return cleanUp(doc, ranges, "emphasis-strong");
     case "clean-up-bullet-style":
       return cleanUp(doc, ranges, "bullet-style");
+    case "clean-up-invisible-characters":
+      return cleanUp(doc, ranges, "invisible-characters");
     case "block-reference":
       return insertBlockReference(
         doc,

@@ -160,12 +160,27 @@ function normalizeBullets(text: string): string {
   );
 }
 
+/**
+ * ZWSP, word joiner, BOM and soft hyphen: nothing in a note can want them.
+ * ZWJ and ZWNJ are left alone — ZWJ is what holds an emoji family together,
+ * ZWNJ carries meaning in Persian and Arabic — and so are the direction marks.
+ */
+const INVISIBLE = /[\u00ad\u200b\u2060\ufeff]/gu;
+
+/** NBSP turns into a plain space; every other odd space is someone's layout. */
+function dropInvisible(text: string): string {
+  return mapEditable(text, (part) =>
+    part.replace(INVISIBLE, "").replace(/\u00a0/gu, " "),
+  );
+}
+
 export type CleanupKind =
   | "trailing-spaces"
   | "blank-lines"
   | "bare-urls"
   | "emphasis-strong"
-  | "bullet-style";
+  | "bullet-style"
+  | "invisible-characters";
 
 export function cleanUp(
   doc: string,
@@ -178,6 +193,7 @@ export function cleanUp(
     "bare-urls": bareUrls,
     "emphasis-strong": normalizeMarkup,
     "bullet-style": normalizeBullets,
+    "invisible-characters": dropInvisible,
   };
   return planRanges(doc, scope(doc, ranges), transforms[kind]);
 }

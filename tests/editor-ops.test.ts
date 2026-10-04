@@ -250,6 +250,24 @@ describe("normalization", () => {
       ),
     ).toBe("**bold** and *italic*");
   });
+
+  it("drops invisible characters and turns NBSP into a plain space", () => {
+    const doc = "a\u200bb\u00a0c\ufeffd\u00ade";
+    expect(run(doc, cleanUp(doc, [], "invisible-characters"))).toBe("ab cde");
+  });
+
+  it("keeps the invisible characters that carry meaning", () => {
+    // ZWJ holds an emoji family together, ZWNJ and LRM read as text.
+    const doc = "a\u200db\u200cc\u200ed";
+    expect(run(doc, cleanUp(doc, [], "invisible-characters"))).toBe(doc);
+  });
+
+  it("leaves invisible characters inside a code fence alone", () => {
+    const doc = "a\u200bb\n```\nc\u200bd\n```";
+    expect(run(doc, cleanUp(doc, [], "invisible-characters"))).toBe(
+      "ab\n```\nc\u200bd\n```",
+    );
+  });
 });
 
 describe("applySpanStyle", () => {

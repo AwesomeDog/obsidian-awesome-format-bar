@@ -125,7 +125,7 @@ Las cinco pestañas integradas cubren lo que la mayoría de la gente usa a menud
 
 **Combinar líneas**, **Dividir líneas**（por el signo de puntuación más frecuente en la selección）, **Invertir líneas** ——ninguna de las tres cruza una línea en blanco ni un bloque de código——, y **Duplicar**（una copia de la línea del cursor debajo de ella, o de la selección justo después ——el *Duplicate Selection* de VS Code——）. Más **Ordenar lista**（nivel por nivel, conservando hijos y cuerpo, y renumerando los elementos ordenados）y **Ordenar títulos**（reordena el esquema y se lleva consigo el cuerpo de cada sección）.
 
-**Limpiar** reúne en un menú los arreglos que, si no, se hacen a mano: **Eliminar espacios finales**, **Contraer líneas en blanco**, **Convertir URL desnudas**, **Normalizar énfasis y negrita** y **Normalizar estilo de viñetas**.
+**Limpiar** reúne en un menú los arreglos que, si no, se hacen a mano: **Eliminar espacios finales**, **Contraer líneas en blanco**, **Convertir URL desnudas**, **Normalizar énfasis y negrita**, **Normalizar estilo de viñetas** y **Eliminar caracteres invisibles**.
 
 ### 🎨 Configuración cero, se adapta al tema
 
@@ -179,7 +179,7 @@ Disponible siempre que el cursor esté dentro de una tabla:
 
 - **Líneas** —— Combinar líneas, Dividir líneas, Invertir líneas, Duplicar. Combinar líneas une una serie de líneas en una sola; Dividir líneas las parte por el signo de puntuación más frecuente en la selección; Invertir líneas da la vuelta al orden de cada serie; Duplicar copia la línea del cursor debajo de ella, o la selección justo después. Ninguna de las cuatro cruza una línea en blanco ni un bloque de código.
 - **Ordenar** —— Ordenar lista, Ordenar títulos. Ordenar lista ordena una lista nivel por nivel ——cada elemento conserva su cuerpo y sus hijos, y los elementos ordenados salen renumerados——. Ordenar títulos reordena cada nivel del esquema de la nota y se lleva consigo el cuerpo de cada sección.
-- **Normalizar** —— Puntuación inteligente, Espaciado CJK, Limpiar ▼（Eliminar espacios finales, Contraer líneas en blanco, Convertir URL desnudas, Normalizar énfasis y negrita, Normalizar estilo de viñetas）.
+- **Normalizar** —— Puntuación inteligente, Espaciado CJK, Limpiar ▼（Eliminar espacios finales, Contraer líneas en blanco, Convertir URL desnudas, Normalizar énfasis y negrita, Normalizar estilo de viñetas, Eliminar caracteres invisibles）.
 
 ### Anclado
 

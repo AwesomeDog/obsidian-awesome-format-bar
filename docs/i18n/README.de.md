@@ -125,7 +125,7 @@ Die fünf integrierten Registerkarten decken ab, was die meisten häufig brauche
 
 **Zeilen zusammenführen**, **Zeilen teilen** (am Satzzeichen, das in der Auswahl am häufigsten vorkommt) und **Zeilen umkehren** — keiner der drei überschreitet eine Leerzeile oder einen Codeblock — sowie **Duplizieren** (eine Kopie der Zeile unter dem Cursor bzw. direkt hinter der Auswahl — VS Codes *Auswahl duplizieren*). Dazu **Liste sortieren** (Ebene für Ebene, Unterpunkte und Textkörper bleiben erhalten, nummerierte Einträge werden neu nummeriert) und **Überschriften sortieren** (ordnet die Gliederung neu und nimmt den Textkörper jedes Abschnitts mit).
 
-**Bereinigen** fasst die Aufräumarbeiten, die man sonst von Hand erledigt, in einem Menü zusammen: **Nachgestellte Leerzeichen entfernen**, **Leere Zeilen zusammenfassen**, **Nackte URLs umwandeln**, **Hervorhebung und Fettdruck normieren** und **Aufzählungszeichen normieren**.
+**Bereinigen** fasst die Aufräumarbeiten, die man sonst von Hand erledigt, in einem Menü zusammen: **Nachgestellte Leerzeichen entfernen**, **Leere Zeilen zusammenfassen**, **Nackte URLs umwandeln**, **Hervorhebung und Fettdruck normieren**, **Aufzählungszeichen normieren** und **Unsichtbare Zeichen entfernen**.
 
 ### 🎨 Keine Konfiguration, themenangepasst
 
@@ -179,7 +179,7 @@ Verfügbar, sobald sich der Cursor in einer Tabelle befindet:
 
 - **Zeilen** — Zeilen zusammenführen, Zeilen teilen, Zeilen umkehren, Duplizieren. Zeilen zusammenführen fasst eine Folge von Zeilen zu einer zusammen; Zeilen teilen bricht sie am Satzzeichen um, das in der Auswahl am häufigsten vorkommt; Zeilen umkehren dreht die Reihenfolge jeder Folge um; Duplizieren kopiert die Zeile des Cursors darunter bzw. die Auswahl direkt dahinter. Keiner der vier überschreitet eine Leerzeile oder einen Codeblock.
 - **Sortieren** — Liste sortieren, Überschriften sortieren. Liste sortieren sortiert eine Liste Ebene für Ebene — ein Eintrag behält seinen eigenen Textkörper und seine eigenen Unterpunkte, und nummerierte Einträge kommen neu nummeriert heraus. Überschriften sortieren ordnet jede Ebene der Notizgliederung neu und nimmt den Textkörper jedes Abschnitts dabei mit.
-- **Normalisieren** — Intelligente Zeichensetzung, CJK-Abstände, Bereinigen ▼ (Nachgestellte Leerzeichen entfernen, Leere Zeilen zusammenfassen, Nackte URLs umwandeln, Hervorhebung und Fettdruck normieren, Aufzählungszeichen normieren).
+- **Normalisieren** — Intelligente Zeichensetzung, CJK-Abstände, Bereinigen ▼ (Nachgestellte Leerzeichen entfernen, Leere Zeilen zusammenfassen, Nackte URLs umwandeln, Hervorhebung und Fettdruck normieren, Aufzählungszeichen normieren, Unsichtbare Zeichen entfernen).
 
 ### Angeheftet
 
