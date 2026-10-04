@@ -699,7 +699,7 @@ export const COMMANDS = [
   {
     id: "show-whitespace",
     name: "Show Whitespace",
-    icon: "space",
+    icon: "pilcrow",
     kind: "view",
   },
   {

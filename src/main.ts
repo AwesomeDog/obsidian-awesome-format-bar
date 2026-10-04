@@ -361,9 +361,11 @@ export default class AwesomeFormatBarPlugin extends Plugin {
         return {
           inTable: conditions.inTable,
           isEnabled: (spec: CommandSpec): boolean => canRun(spec, conditions),
-          // Plugin-wide, like typewriter mode: every bar shows the brush lit.
+          // Plugin-wide: every bar shows a lit brush, and a lit pilcrow while
+          // whitespace is on. Neither is a state of the view it belongs to.
           isLatched: (spec: CommandSpec): boolean =>
-            spec.id === "format-painter" && this.painter !== null,
+            (spec.id === "format-painter" && this.painter !== null) ||
+            (spec.id === "show-whitespace" && this.settings.showWhitespace),
         };
       },
     };
@@ -390,6 +392,8 @@ export default class AwesomeFormatBarPlugin extends Plugin {
     this.applyEditorExtensions();
     await this.saveData(this.settings);
     this.app.workspace.updateOptions();
+    // The button latches, so every bar has to hear about it.
+    this.queueRefresh();
   }
 
   /** Rebuilt per render, so a label follows the registry. */

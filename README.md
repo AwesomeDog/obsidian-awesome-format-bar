@@ -113,7 +113,7 @@ The five built-in tabs cover what most people use often. The one or two commands
 
 ### 👁️ Reading, focus and outlining tools
 
-**Live Preview/Source** (flip the pane between rendered and raw Markdown), **Show Whitespace** (dots for spaces, arrows for tabs, orange markers for NBSP / ideographic / EN & EM spaces), **Show Line Numbers**, **Readable Line Length**, **Navigation Pane** (Obsidian's Outline), **Zoom In / Out / 100%**, **Split Right / Down**, **Collapse / Expand (All)**, **Focus Mode** (collapse both sidebars), **Zen Mode** (true fullscreen) and **Typewriter Mode** (caret line parked mid-editor, highlighted, with the rest dimmed).
+**Live Preview/Source** (flip the pane between rendered and raw Markdown), **Show Whitespace** (dots for spaces, arrows for tabs, orange markers for NBSP / ideographic / EN & EM spaces, and a marker standing in for zero-width and control characters — ZWSP, soft hyphen, word joiner, BOM — that would otherwise be invisible), **Show Line Numbers**, **Readable Line Length**, **Navigation Pane** (Obsidian's Outline), **Zoom In / Out / 100%**, **Split Right / Down**, **Collapse / Expand (All)**, **Focus Mode** (collapse both sidebars), **Zen Mode** (true fullscreen) and **Typewriter Mode** (caret line parked mid-editor, highlighted, with the rest dimmed).
 
 ### 📑 Table of contents in one click
 

@@ -115,7 +115,7 @@ Las cinco pestañas integradas cubren lo que la mayoría de la gente usa a menud
 
 ### 👁️ Herramientas de lectura, enfoque y esquema
 
-**Live Preview/Origen**（alterna el panel entre Markdown renderizado y sin formato）, **Mostrar espacios**（puntos para los espacios, flechas para las tabulaciones, marcas naranjas para los espacios duros / ideográficos / EN y EM）, **Mostrar números de línea**, **Ancho de línea legible**, **Panel de navegación**（el esquema de Obsidian）, **Acercar / Alejar / 100 %**, **Dividir a la derecha / Dividir hacia abajo**, **Contraer / Expandir（todo）**, **Modo de enfoque**（contrae ambas barras laterales）, **Modo zen**（pantalla completa real）y **Modo máquina de escribir**（la línea del cursor se fija en el centro, resaltada y el resto atenuado）.
+**Live Preview/Origen**（alterna el panel entre Markdown renderizado y sin formato）, **Mostrar espacios**（puntos para los espacios, flechas para las tabulaciones, marcas naranjas para los espacios duros / ideográficos / EN y EM, y un marcador en lugar de los caracteres de ancho cero y de control que de otro modo serían invisibles: ZWSP, guion suave, word joiner, BOM）, **Mostrar números de línea**, **Ancho de línea legible**, **Panel de navegación**（el esquema de Obsidian）, **Acercar / Alejar / 100 %**, **Dividir a la derecha / Dividir hacia abajo**, **Contraer / Expandir（todo）**, **Modo de enfoque**（contrae ambas barras laterales）, **Modo zen**（pantalla completa real）y **Modo máquina de escribir**（la línea del cursor se fija en el centro, resaltada y el resto atenuado）.
 
 ### 📑 Índice en un clic
 

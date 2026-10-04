@@ -115,7 +115,7 @@ Les cinq onglets intégrés couvrent ce dont la plupart des gens se servent souv
 
 ### 👁️ Outils de lecture, de concentration et de plan
 
-**Aperçu en direct/Source**（bascule le volet entre le rendu et le Markdown brut）、**Afficher les espaces**（des points pour les espaces、 des flèches pour les tabulations, des marqueurs orange pour les espaces insécables / idéographiques / demi-cadratin et cadratin）、**Afficher les numéros de ligne**、**Largeur de ligne lisible**、**Volet de navigation**（le plan d'Obsidian）、**Zoom avant / arrière**、**Fractionner vers la droite / vers le bas**、**Réduire / Développer（tout）**、**Mode focus**（replier les deux barres latérales）, **Mode zen**（plein écran véritable）et **Mode machine à écrire**（la ligne du curseur reste au milieu, mise en évidence, le reste estompé）.
+**Aperçu en direct/Source**（bascule le volet entre le rendu et le Markdown brut）、**Afficher les espaces**（des points pour les espaces、 des flèches pour les tabulations, des marqueurs orange pour les espaces insécables / idéographiques / demi-cadratin et cadratin, et un marqueur remplaçant les caractères de largeur nulle et de contrôle, autrement invisibles : ZWSP (espace sans chasse), trait d'union conditionnel, liant de mot, BOM）、**Afficher les numéros de ligne**、**Largeur de ligne lisible**、**Volet de navigation**（le plan d'Obsidian）、**Zoom avant / arrière**、**Fractionner vers la droite / vers le bas**、**Réduire / Développer（tout）**、**Mode focus**（replier les deux barres latérales）, **Mode zen**（plein écran véritable）et **Mode machine à écrire**（la ligne du curseur reste au milieu, mise en évidence, le reste estompé）.
 
 ### 📑 Une table des matières en un clic
 

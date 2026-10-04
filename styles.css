@@ -817,11 +817,24 @@ body.awesome-format-bar-ribbon-collapsed {
       );
       background-position: center;
     }
+    /* A zero-width character has been replaced by this, so it needs a body. */
+    & .cm-highlightInvisible {
+      background-color: var(--text-warning);
+      border-radius: 2px;
+      display: inline-block;
+      width: 0.35em;
+      height: 1em;
+      vertical-align: text-bottom;
+    }
   }
 
   &.is-live-preview
     :is(.cm-highlightSpace, .cm-highlightTab, .cm-highlightOddSpace) {
     background-image: none;
+  }
+  /* Replacements would race Live Preview's own, so they are Source-only too. */
+  &.is-live-preview .cm-highlightInvisible {
+    display: none;
   }
 }
 

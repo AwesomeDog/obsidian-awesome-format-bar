@@ -115,7 +115,7 @@ Die fünf integrierten Registerkarten decken ab, was die meisten häufig brauche
 
 ### 👁️ Lese-, Fokus- und Gliederungswerkzeuge
 
-**Live Preview/Quellmodus** (schaltet das Fenster zwischen gerenderter Ansicht und rohem Markdown um), **Leerzeichen anzeigen** (Punkte für Leerzeichen, Pfeile für Tabulatoren, orange Markierungen für geschütztes Leerzeichen, ideografisches Leerzeichen sowie EN- und EM-Leerzeichen), **Zeilennummern anzeigen**, **Lesbare Zeilenbreite**, **Navigationsbereich** (die Gliederung von Obsidian), **Vergrößern / Verkleinern / 100 %**, **Nach rechts teilen / Nach unten teilen**, **Reduzieren / Erweitern (Alle)**, **Fokusmodus** (beide Seitenleisten einklappen), **Zen-Modus** (echter Vollbildmodus) und **Schreibmaschinen-Modus** (Cursorzeile in der Mitte fixiert, hervorgehoben, der Rest gedimmt).
+**Live Preview/Quellmodus** (schaltet das Fenster zwischen gerenderter Ansicht und rohem Markdown um), **Leerzeichen anzeigen** (Punkte für Leerzeichen, Pfeile für Tabulatoren, orange Markierungen für geschütztes Leerzeichen, ideografisches Leerzeichen sowie EN- und EM-Leerzeichen, und ein Marker für die sonst unsichtbaren Zeichen ohne eigene Breite: ZWSP, weiches Trennzeichen, Wortverbinder, BOM), **Zeilennummern anzeigen**, **Lesbare Zeilenbreite**, **Navigationsbereich** (die Gliederung von Obsidian), **Vergrößern / Verkleinern / 100 %**, **Nach rechts teilen / Nach unten teilen**, **Reduzieren / Erweitern (Alle)**, **Fokusmodus** (beide Seitenleisten einklappen), **Zen-Modus** (echter Vollbildmodus) und **Schreibmaschinen-Modus** (Cursorzeile in der Mitte fixiert, hervorgehoben, der Rest gedimmt).
 
 ### 📑 Inhaltsverzeichnis mit einem Klick
 

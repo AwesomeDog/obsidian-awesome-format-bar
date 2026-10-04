@@ -17,7 +17,8 @@ export interface Settings {
   padCellWidthWithSpaces: boolean;
   /** Reading view: click a table header to sort its rows. */
   sortTableOnHeaderClick: boolean;
-  /** Source mode: mark every space and tab, and every odd space in orange. */
+  /** Source mode: spaces and tabs marked, odd spaces in orange, zero-width
+   * characters replaced by a marker standing in for them. */
   showWhitespace: boolean;
   /** Inserted character -> how many times it was picked. Drives Frequently used. */
   charUsage: Record<string, number>;
