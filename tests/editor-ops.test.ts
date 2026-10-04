@@ -4,6 +4,7 @@ import {
   insertCallout,
   numberHeadings,
   sortHeadings,
+  toggleDropCap,
   toggleParagraphAlignment,
   type HeadingNumbering,
 } from "../src/editor-ops/blocks";
@@ -365,6 +366,13 @@ describe("clearOwnedInlineHtml", () => {
     expect(
       clearOwnedInlineHtml("<u>text</u>", [{ from: 3, to: 3 }]).changes,
     ).toEqual([]);
+  });
+
+  it("takes a drop cap off", () => {
+    // What Clear Formatting relies on to reach the plugin's own HTML.
+    expect(apply(`[${cap("3.4em")}O</span>nce]`, clearOwnedInlineHtml)).toBe(
+      "Once",
+    );
   });
 });
 
@@ -793,6 +801,90 @@ describe("toggleParagraphAlignment", () => {
   });
 });
 
+/** The wrapper a drop cap writes, latin and full-width. */
+function cap(size: string): string {
+  return `<span style="float:left;font-size:${size};line-height:.85;padding-right:.06em">`;
+}
+
+describe("toggleDropCap", () => {
+  it("drops the first letter of the paragraph under the caret", () => {
+    expect(apply("|Once upon a time", (d, r) => toggleDropCap(d, r))).toBe(
+      `${cap("3.4em")}O</span>nce upon a time`,
+    );
+  });
+
+  it("takes it off again", () => {
+    const doc = `${cap("3.4em")}O</span>nce upon a time`;
+    expect(apply(`|${doc}`, (d, r) => toggleDropCap(d, r))).toBe(
+      "Once upon a time",
+    );
+  });
+
+  it("uses a smaller size for a full-width character", () => {
+    // The character is what is under test: a full-width glyph reads far
+    // larger than a latin one at the same `em`.
+    expect(apply("|中文 and the rest", (d, r) => toggleDropCap(d, r))).toBe(
+      `${cap("2.2em")}中</span>文 and the rest`,
+    );
+  });
+
+  it("leaves a heading, a list item and a quote alone", () => {
+    expect(apply("|# Heading", (d, r) => toggleDropCap(d, r))).toBe(
+      "# Heading",
+    );
+    expect(apply("|- item", (d, r) => toggleDropCap(d, r))).toBe("- item");
+    expect(apply("|> quoted", (d, r) => toggleDropCap(d, r))).toBe("> quoted");
+  });
+
+  it("leaves a fenced block alone", () => {
+    expect(apply("```\n|code\n```", (d, r) => toggleDropCap(d, r))).toBe(
+      "```\ncode\n```",
+    );
+  });
+
+  it("leaves front matter alone", () => {
+    const doc = "---\ntitle: Note\n---\n\nBody text here";
+    expect(run(doc, toggleDropCap(doc, [{ from: 5, to: 5 }]))).toBe(doc);
+  });
+
+  it("will not start on punctuation", () => {
+    expect(apply('|"Quoted"', (d, r) => toggleDropCap(d, r))).toBe('"Quoted"');
+  });
+
+  it("does nothing inside a table row", () => {
+    const doc = "| a | b |";
+    expect(run(doc, toggleDropCap(doc, [{ from: 2, to: 3 }]))).toBe(doc);
+  });
+
+  it("takes one off after the paragraph became a heading", () => {
+    // Taking off must not depend on the line still being running text, or a
+    // cap written before the heading marker would be stuck there for good.
+    const doc = `# ${cap("3.4em")}O</span>nce`;
+    expect(apply(`|${doc}`, (d, r) => toggleDropCap(d, r))).toBe("# Once");
+  });
+
+  it("drops inside a paragraph that alignment wrapped", () => {
+    const doc = '<div style="text-align: center">\n|Once more\n</div>';
+    expect(apply(doc, (d, r) => toggleDropCap(d, r))).toBe(
+      `<div style="text-align: center">\n${cap("3.4em")}O</span>nce more\n</div>`,
+    );
+  });
+
+  it("adds to every paragraph of a multi-cursor selection", () => {
+    const { doc, ranges } = parse("[Alpha]\n\n[Beta]");
+    expect(run(doc, toggleDropCap(doc, ranges))).toBe(
+      `${cap("3.4em")}A</span>lpha\n\n${cap("3.4em")}B</span>eta`,
+    );
+  });
+
+  it("moves a whole selection one way", () => {
+    // Half added and half removed is not a thing anyone asked for: the first
+    // paragraph decides.
+    const { doc, ranges } = parse(`[${cap("3.4em")}A</span>lpha]\n\n[Beta]`);
+    expect(run(doc, toggleDropCap(doc, ranges))).toBe("Alpha\n\nBeta");
+  });
+});
+
 describe("insertions", () => {
   it("quotes a selection into a callout", () => {
     expect(apply("[a\nb]", (d, r) => insertCallout(d, r, "note"))).toBe(
@@ -1153,6 +1245,19 @@ describe("format painter", () => {
     expect(paint("[word]", brush("==🔴[todo]=="))).toBe(
       '<span style="background:#ff0000">word</span>',
     );
+  });
+
+  it("does not carry a drop cap's size away as a font size", () => {
+    // A drop cap decorates the paragraph, not the character: its 3.4em is
+    // not a font size to pass on to the next one.
+    const capped = `${cap("3.4em")}O</span>nce`;
+    expect(brush(`[${capped}]`).fontSize).toBeNull();
+    expect(paint("[word]", brush(`[${capped}]`))).toBe("word");
+  });
+
+  it("paints over a drop cap without taking it apart", () => {
+    const capped = `${cap("3.4em")}O</span>nce`;
+    expect(paint(`[${capped}]`, brush("**[b]**"))).toBe(`**${capped}**`);
   });
 
   it("takes the emoji off with the marker, leaving none bare", () => {

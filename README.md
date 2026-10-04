@@ -16,7 +16,7 @@
 
 **Awesome Format Bar** is a **formatting toolbar (ribbon) plugin for [Obsidian](https://obsidian.md)**. It overlays a familiar, Word-like **editor toolbar** on top of your notes, so everyday formatting is one click away — while your vault stays 100% plain text.
 
-Everything the toolbar writes is **standard Markdown**, **Obsidian-flavoured Markdown**, or — where Markdown simply has no syntax (underline, superscript, subscript, text alignment, text color, font family, font size) — a small amount of **inline HTML** that Obsidian renders natively.
+Everything the toolbar writes is **standard Markdown**, **Obsidian-flavoured Markdown**, or — where Markdown simply has no syntax (underline, superscript, subscript, text alignment, text color, font family, font size, drop cap) — a small amount of **inline HTML** that Obsidian renders natively.
 
 *Looking for an Obsidian **toolbar plugin**, **format bar**, **editor toolbar**, **rich-text / WYSIWYG-style editing bar**, **Markdown formatting buttons**, **emoji picker**, **table editor**, or a **Microsoft Word-like ribbon for Obsidian**? That's this plugin.*
 
@@ -54,7 +54,7 @@ Obsidian is fast **if** you already speak Markdown. For everyone else — studen
 - **Plain text forever.** No proprietary format, no database, no lock-in — your notes are still just `.md` files.
 - **Offline & private.** No network calls, no accounts, no telemetry. The ~2,150-entry emoji library ships inside the plugin.
 - **Your own launcher, if you want one.** The **Pinned** tab holds any command you pick — core, this plugin's, or another plugin's — so the toolbar bends to you without turning into a settings project.
-- **Keyboard-friendly too.** Switch every toolbar position off and the interface disappears completely — all 144 palette-registered commands stay available and can be bound to your own hotkeys. And while the toolbar *is* on screen, hovering a button shows the shortcut currently bound to that command in its tooltip — the one you assigned, or Obsidian's own default. Rebind it in **Settings → Hotkeys** and the tooltip follows, with no restart.
+- **Keyboard-friendly too.** Switch every toolbar position off and the interface disappears completely — all 146 palette-registered commands stay available and can be bound to your own hotkeys. And while the toolbar *is* on screen, hovering a button shows the shortcut currently bound to that command in its tooltip — the one you assigned, or Obsidian's own default. Rebind it in **Settings → Hotkeys** and the tooltip follows, with no restart.
 
 ---
 
@@ -63,7 +63,7 @@ Obsidian is fast **if** you already speak Markdown. For everyone else — studen
 | | |
 | --- | --- |
 | **Toolbar positions** | Top ribbon, floating bar above the selection, fixed bottom bar — combine freely |
-| **Commands** | **160** built-in, **144** available in the command palette for custom hotkeys |
+| **Commands** | **162** built-in, **146** available in the command palette for custom hotkeys |
 | **Tabs** | Home · Insert · View · Table · Utilities · **Pinned** |
 | **Callouts** | All 12 Obsidian callout types in one drop-down |
 | **Emoji & symbols** | ~2,150 emoji, kaomoji and symbols, fully offline |
@@ -85,7 +85,7 @@ Obsidian is fast **if** you already speak Markdown. For everyone else — studen
 
 Each position is toggled independently, so you can run just the floating bar, just the ribbon, or all three.
 
-### 🅰️ 160 formatting commands in a familiar layout
+### 🅰️ 162 formatting commands in a familiar layout
 
 Bold, italic, underline, strikethrough, inline code, inline math, highlight (with color), font color, **font family**, **font size**, clear formatting, change case, headings 1–6, bullet / numbered / task lists, quotes, indentation, horizontal rules, undo/redo, find & replace, paragraph alignment — grouped exactly where a Word user expects them.
 
@@ -135,7 +135,7 @@ That is a deliberate trade-off, not a missing feature. A toolbar that lets you r
 
 ## Full command reference
 
-144 of the 160 commands are registered in the **command palette**, so you can assign your own keyboard shortcuts. (Drop-down containers and the Emoji & Symbols panel are toolbar-only.)
+146 of the 162 commands are registered in the **command palette**, so you can assign your own keyboard shortcuts. (Drop-down containers and the Emoji & Symbols panel are toolbar-only.)
 
 ### Home
 
@@ -151,7 +151,7 @@ That is a deliberate trade-off, not a missing feature. A toolbar that lets you r
 - **Illustrations** — Attach File, Image Size ▼ (100 px, 200 px, 300 px, 400 px, 600 px, Original Size), All Images ▼ (All Images 100 px, All Images 200 px, All Images 300 px, All Images 400 px, All Images 600 px, All Images Original Size), Alt Text, Caption, Reset Picture, Convert Syntax
 - **Links** — Internal Link, External Link, Embed, Tag, Block Reference
 - **Comments** — Comment
-- **Text** — Callout ▼ (Note, Abstract, Info, Tip, Success, Question, Warning, Failure, Danger, Bug, Example, Quote), Code Block, Date and Time
+- **Text** — Callout ▼ (Note, Abstract, Info, Tip, Success, Question, Warning, Failure, Danger, Bug, Example, Quote), Code Block, Date and Time, Drop Cap
 - **Symbols** — Math Block, Emoji & Symbols
 - **Reference** — Table of Contents, Footnote
 
@@ -208,7 +208,7 @@ Settings → **Community plugins** → **Browse** → search for **"Awesome Form
 2. The **Ribbon (Top)** has six tabs; the last one, **Pinned**, holds the commands you pin yourself. While it is empty it shows an add hint; use the edit button to manage commands and groups.
 3. The **compact bars** (Following / Fixed) carry a fixed subset of commands; buttons that don't fit the available width collapse into the `⋯` overflow menu, which also lists every other command grouped by tab, and your pinned ones.
 4. Open the **Pinned** edit button to add commands, choose icons, create or rename groups, drag to reorder, move commands, or delete them. Settings keeps a fallback entry for the same manager. Pinned commands behave exactly like their command-palette counterparts.
-5. Prefer the keyboard? Turn **all three position toggles off** and the toolbar disappears from the interface entirely — the plugin then adds nothing to your screen, while all **144 palette-registered commands** keep working and can be bound to your own hotkeys in **Settings → Hotkeys**. In other words: you can use it as a pure command/hotkey pack and never click a button.
+5. Prefer the keyboard? Turn **all three position toggles off** and the toolbar disappears from the interface entirely — the plugin then adds nothing to your screen, while all **146 palette-registered commands** keep working and can be bound to your own hotkeys in **Settings → Hotkeys**. In other words: you can use it as a pure command/hotkey pack and never click a button.
 
 ---
 
@@ -240,13 +240,13 @@ No — and that's the point. It's a **toolbar** on top of Obsidian's own editor.
 No. Bold, headings, lists, links, tables, callouts, code blocks and math are all buttons.
 
 **What exactly gets written into my notes?**  
-Standard Markdown and Obsidian-flavoured Markdown. Only where Markdown has no syntax — underline, superscript, subscript, paragraph alignment, text and highlight colors, font family and font size — does the plugin emit small, standard inline HTML tags, which Obsidian renders natively.
+Standard Markdown and Obsidian-flavoured Markdown. Only where Markdown has no syntax — underline, superscript, subscript, paragraph alignment, text and highlight colors, font family and font size, drop cap — does the plugin emit small, standard inline HTML tags, which Obsidian renders natively.
 
 **Can I keep using my keyboard shortcuts?**  
-Yes. 144 of the 160 commands appear in the command palette and can be bound to any hotkey.
+Yes. 146 of the 162 commands appear in the command palette and can be bound to any hotkey.
 
 **I'm a keyboard person — can I hide the toolbar completely?**  
-Yes, and nothing is lost by doing it. Switch off all three positions (**Top / Following / Fixed**) in **Settings → Awesome Format Bar** and the plugin leaves zero footprint on the screen: no ribbon, no floating bar, no bottom bar. Every one of the **144 palette-registered commands** still runs, from the command palette or from a hotkey you assign in **Settings → Hotkeys** — including commands Obsidian has no built-in shortcut for, such as font color, highlight color, change case, callouts, table sorting and the line utilities. Think of it as an optional keyboard-only layer you can switch on whenever the mouse starts feeling slow.
+Yes, and nothing is lost by doing it. Switch off all three positions (**Top / Following / Fixed**) in **Settings → Awesome Format Bar** and the plugin leaves zero footprint on the screen: no ribbon, no floating bar, no bottom bar. Every one of the **146 palette-registered commands** still runs, from the command palette or from a hotkey you assign in **Settings → Hotkeys** — including commands Obsidian has no built-in shortcut for, such as font color, highlight color, change case, callouts, table sorting and the line utilities. Think of it as an optional keyboard-only layer you can switch on whenever the mouse starts feeling slow.
 
 **Can I add buttons for commands from other plugins?**  
 Yes — that's the **Pinned** tab. Pin any command from the palette and choose an icon. If the owning plugin is disabled, the button greys out and the pin is preserved.

@@ -116,7 +116,10 @@ export const BUILT_IN_COMMAND_TABS = [
         ],
       },
       { name: "Comments", commands: ["comment"] },
-      { name: "Text", commands: ["callout", "code-block", "date-time"] },
+      {
+        name: "Text",
+        commands: ["callout", "code-block", "date-time", "drop-cap"],
+      },
       { name: "Symbols", commands: ["math-block", "emoji"] },
       { name: "Reference", commands: ["toc", "footnote"] },
     ],

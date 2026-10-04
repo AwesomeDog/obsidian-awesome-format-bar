@@ -12,6 +12,7 @@ import {
   numberHeadings,
   sortHeadings,
   tableOfContents,
+  toggleDropCap,
   toggleParagraphAlignment,
   type HeadingNumbering,
   type ParagraphAlignment,
@@ -383,6 +384,8 @@ export function planFor(context: CommandContext, id: string): Plan | null {
   if (numbering !== undefined) return numberHeadings(doc, numbering);
 
   switch (id) {
+    case "drop-cap":
+      return toggleDropCap(doc, ranges);
     case "renumber-list":
       return renumberList(doc, ranges);
     case "sort-lines":

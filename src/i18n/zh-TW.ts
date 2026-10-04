@@ -97,6 +97,7 @@ export default {
   "Attach File": "附加檔案",
   "Emoji & Symbols": "表情符號與符號",
   "Date and Time": "日期與時間",
+  "Drop Cap": "首字下沉",
   "Table of Contents": "目錄",
   "Show Whitespace": "顯示空格",
   "Live Preview/Source": "即時預覽/原始碼",

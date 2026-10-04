@@ -97,6 +97,7 @@ export default {
   "Attach File": "Joindre un fichier",
   "Emoji & Symbols": "Emoji et symboles",
   "Date and Time": "Date et heure",
+  "Drop Cap": "Lettrine",
   "Table of Contents": "Table des matières",
   "Show Whitespace": "Afficher les espaces",
   "Live Preview/Source": "Aperçu en direct/Source",

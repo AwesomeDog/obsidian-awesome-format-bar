@@ -97,6 +97,7 @@ export default {
   "Attach File": "Вложить файл",
   "Emoji & Symbols": "Эмодзи и символы",
   "Date and Time": "Дата и время",
+  "Drop Cap": "Буквица",
   "Table of Contents": "Оглавление",
   "Show Whitespace": "Показывать пробелы",
   "Live Preview/Source": "Live Preview/исходный текст",

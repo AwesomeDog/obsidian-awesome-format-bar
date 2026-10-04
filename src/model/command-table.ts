@@ -637,6 +637,9 @@ export const COMMANDS = [
     icon: "calendar-clock",
     kind: "editor",
   },
+  // Word puts Drop Cap here too. It reads the paragraph under the cursor, so
+  // it needs no selection: the caret alone is enough to drop a cap.
+  { id: "drop-cap", name: "Drop Cap", icon: "text-initial", kind: "editor" },
 
   // Insert · Symbols
   {

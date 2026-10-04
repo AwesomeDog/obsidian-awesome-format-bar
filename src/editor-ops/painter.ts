@@ -1,3 +1,4 @@
+import { isDropCapStyle } from "./blocks";
 import { HIGHLIGHT_COLORS, NATIVE_HIGHLIGHT_EMOJI } from "../model/palettes";
 import {
   normalizeRanges,
@@ -72,6 +73,12 @@ interface ScanState {
   on: Record<PairKey, boolean>;
   openAt: Partial<Record<PairKey, { at: number; length: number }>>;
   spans: SpanOpen[];
+  /**
+   * Drop caps seen and not yet closed. Their tags still have to be walked
+   * past, but they are not character formatting, so they never reach `spans`
+   * — which is what keeps a drop cap's `3.4em` from leaving as a font size.
+   */
+  dropDepth: number;
   /** The color an `==` carries as an emoji, if any. */
   emoji: string | null;
 }
@@ -80,6 +87,7 @@ function freshState(): ScanState {
   return {
     code: false,
     math: false,
+    dropDepth: 0,
     on: {
       bold: false,
       italic: false,
@@ -183,13 +191,20 @@ function apply(state: ScanState, marker: Marker): void {
       state.math = !state.math;
       return;
     case "span":
-      if (marker.closing) state.spans.pop();
-      else
-        state.spans.push({
-          at: marker.at,
-          end: marker.at + marker.length,
-          style: marker.style ?? "",
-        });
+      if (marker.closing) {
+        if (state.dropDepth > 0) state.dropDepth--;
+        else state.spans.pop();
+        return;
+      }
+      if (isDropCapStyle(marker.style ?? "")) {
+        state.dropDepth++;
+        return;
+      }
+      state.spans.push({
+        at: marker.at,
+        end: marker.at + marker.length,
+        style: marker.style ?? "",
+      });
       return;
     default: {
       const on = !state.on[marker.kind];
@@ -243,7 +258,7 @@ function peelLayers(doc: string, range: Range, state: ScanState): Range {
       continue;
     }
     const span = SPAN_WHOLE.exec(doc.slice(inner.from, inner.to));
-    if (span) {
+    if (span && !isDropCapStyle(span[1] ?? "")) {
       // Whole match less the body and the close tag: just the open tag.
       const openLength =
         span[0].length - SPAN_CLOSE.length - (span[2] ?? "").length;
@@ -341,6 +356,9 @@ function enclosedMarkers(
   };
   const pending = new Map<PairKey, Marker[]>();
   const openSpans: Marker[] = [];
+  /** Drop caps opened in this walk: their close tags pair with these, not
+   *  with `openSpans`, and neither is reported as a marker to cut. */
+  let dropOpen = 0;
   const whole: Marker[] = [];
   const opened: Marker[] = [];
   const closed: Marker[] = [];
@@ -364,7 +382,12 @@ function enclosedMarkers(
       continue;
     if (marker.kind === "span") {
       if (!marker.closing) {
-        if (within) openSpans.push(marker);
+        if (isDropCapStyle(marker.style ?? "")) dropOpen++;
+        else if (within) openSpans.push(marker);
+        continue;
+      }
+      if (dropOpen > 0) {
+        dropOpen--;
         continue;
       }
       const open = openSpans.pop();

@@ -2,10 +2,12 @@ import { NO_CHANGE, order, type Change, type Plan, type Range } from "./plan";
 import {
   blocksFor,
   compareText,
+  fenceMask,
   FENCE,
   Lines,
   removeLine,
   replaceBlock,
+  type Block,
 } from "./lines";
 
 export type ParagraphAlignment = "left" | "center" | "right" | "justify";
@@ -374,4 +376,122 @@ export function insertBlockReference(
       { from: at, to: at, text: `${text.trim() === "" ? "" : " "}^${id}` },
     ],
   };
+}
+
+/**
+ * The three parts of a drop cap, in one string so the whole thing travels in
+ * the file: `float` is what makes the lines wrap around it, and the reduced
+ * `line-height` is what lets them come back up beside it. Without the float
+ * the first character is only large.
+ */
+function dropCapStyle(character: string): string {
+  // A full-width glyph reads far larger than a latin one at the same `em`.
+  const size = CJK.test(character) ? "2.2em" : "3.4em";
+  return `float:left;font-size:${size};line-height:.85;padding-right:.06em`;
+}
+
+const DROP_CAP_OPEN = /^<span style="float:left[^"]*">([^<]*)<\/span>/;
+
+const CJK =
+  /[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Hangul}]/u;
+
+/** Only a letter or a digit can be dropped: no punctuation, no markers. */
+const DROPPABLE = /[\p{L}\p{N}]/u;
+
+/**
+ * Markers that may sit in front of a paragraph's text. A drop cap written
+ * before one of them is still a drop cap and can still be taken off, which is
+ * why these come off before the search rather than ruling the line out.
+ */
+const BLOCK_PREFIX = /^(?:> ?(?:\[![\w-]+\]\s*)?|#{1,6}\s|[-*+]\s|\d+[.)]\s)+/;
+
+/** `true` for the style a drop cap writes, whatever else it carries. */
+export function isDropCapStyle(style: string): boolean {
+  return /float:\s*left/.test(style);
+}
+
+/** The last line of the YAML front matter, or -1 when there is none. */
+function frontmatterEnd(lines: Lines): number {
+  if (lines.at(0).trim() !== "---") return -1;
+  for (let line = 1; line < lines.count; line++)
+    if (lines.at(line).trim() === "---") return line;
+  return -1;
+}
+
+interface DropCapTarget {
+  readonly line: number;
+  /** Offset of the text's first character, markers stripped. */
+  readonly at: number;
+  readonly has: boolean;
+}
+
+function dropCapTargets(
+  lines: Lines,
+  fence: readonly boolean[],
+  blocks: readonly Block[],
+  frontmatter: number,
+): DropCapTarget[] {
+  const out: DropCapTarget[] = [];
+  for (const [a, b] of blocks) {
+    if (a <= frontmatter || fence[a]) continue;
+    // An aligned paragraph is wrapped in a div; its text starts below it.
+    let line = a;
+    if (PARAGRAPH_ALIGNMENT_OPEN.test(lines.at(line).trim()) && b > line)
+      line++;
+    const text = lines.at(line);
+    const marked = (BLOCK_PREFIX.exec(text)?.[0] ?? "").length;
+    const at = lines.start(line) + marked;
+    const rest = text.slice(marked);
+    if (DROP_CAP_OPEN.test(rest)) {
+      out.push({ line, at, has: true });
+      continue;
+    }
+    // Adding never starts on a heading, a list item or a quote: a drop cap
+    // belongs to running text. Taking one off still works there.
+    if (marked > 0) continue;
+    const character = Array.from(rest)[0];
+    if (character === undefined || !DROPPABLE.test(character)) continue;
+    out.push({ line, at, has: false });
+  }
+  return out;
+}
+
+/** Word's drop cap on the paragraph under the cursor, and off again. */
+export function toggleDropCap(doc: string, ranges: readonly Range[]): Plan {
+  const lines = new Lines(doc);
+  const targets = dropCapTargets(
+    lines,
+    fenceMask(lines),
+    blocksFor(lines, ranges, "paragraph"),
+    frontmatterEnd(lines),
+  );
+  const first = targets[0];
+  if (!first) return NO_CHANGE;
+
+  // One direction for the whole selection. Unlike the alignments, which each
+  // toggle on their own, a drop cap is a decoration on the paragraph: half
+  // added and half removed is not a thing anyone asked for.
+  const removing = first.has;
+  const changes: Change[] = [];
+  for (const target of targets) {
+    if (target.has !== removing) continue;
+    const rest = doc.slice(target.at, lines.end(target.line));
+    if (removing) {
+      const match = DROP_CAP_OPEN.exec(rest);
+      if (!match) continue;
+      changes.push({
+        from: target.at,
+        to: target.at + match[0].length,
+        text: match[1] ?? "",
+      });
+      continue;
+    }
+    const character = Array.from(rest)[0] ?? "";
+    changes.push({
+      from: target.at,
+      to: target.at + character.length,
+      text: `<span style="${dropCapStyle(character)}">${character}</span>`,
+    });
+  }
+  return { changes: order(changes) };
 }

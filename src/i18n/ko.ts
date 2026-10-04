@@ -97,6 +97,7 @@ export default {
   "Attach File": "파일 첨부",
   "Emoji & Symbols": "이모지 및 기호",
   "Date and Time": "날짜 및 시간",
+  "Drop Cap": "첫 글자 확대",
   "Table of Contents": "목차",
   "Show Whitespace": "공백 표시",
   "Live Preview/Source": "라이브 프리뷰/소스",

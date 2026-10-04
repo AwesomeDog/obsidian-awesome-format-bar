@@ -39,6 +39,7 @@ const ICON_FALLBACKS: Readonly<Record<string, readonly string[]>> = {
   "paint-bucket": ["paintbucket", "palette"],
   percent: ["percent-circle", "message-square"],
   "square-code": ["file-code", "code-2"],
+  "text-initial": ["baseline", "pilcrow"],
   "triangle-alert": ["alert-triangle"],
   "wand-sparkles": ["wand", "sparkles", "eraser"],
   "rows-3": ["rows", "list"],

@@ -97,6 +97,7 @@ export default {
   "Attach File": "ファイルの添付",
   "Emoji & Symbols": "絵文字と記号",
   "Date and Time": "日付と時刻",
+  "Drop Cap": "ドロップキャップ",
   "Table of Contents": "目次",
   "Show Whitespace": "空白を表示",
   "Live Preview/Source": "ライブプレビュー/ソース",
