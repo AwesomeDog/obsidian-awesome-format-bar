@@ -54,7 +54,7 @@ Obsidian is fast **if** you already speak Markdown. For everyone else — studen
 - **Plain text forever.** No proprietary format, no database, no lock-in — your notes are still just `.md` files.
 - **Offline & private.** No network calls, no accounts, no telemetry. The ~2,150-entry emoji library ships inside the plugin.
 - **Your own launcher, if you want one.** The **Pinned** tab holds any command you pick — core, this plugin's, or another plugin's — so the toolbar bends to you without turning into a settings project.
-- **Keyboard-friendly too.** Switch every toolbar position off and the interface disappears completely — all 145 palette-registered commands stay available and can be bound to your own hotkeys. And while the toolbar *is* on screen, hovering a button shows the shortcut currently bound to that command in its tooltip — the one you assigned, or Obsidian's own default. Rebind it in **Settings → Hotkeys** and the tooltip follows, with no restart.
+- **Keyboard-friendly too.** Switch every toolbar position off and the interface disappears completely — all 144 palette-registered commands stay available and can be bound to your own hotkeys. And while the toolbar *is* on screen, hovering a button shows the shortcut currently bound to that command in its tooltip — the one you assigned, or Obsidian's own default. Rebind it in **Settings → Hotkeys** and the tooltip follows, with no restart.
 
 ---
 
@@ -63,7 +63,7 @@ Obsidian is fast **if** you already speak Markdown. For everyone else — studen
 | | |
 | --- | --- |
 | **Toolbar positions** | Top ribbon, floating bar above the selection, fixed bottom bar — combine freely |
-| **Commands** | **160** built-in, **145** available in the command palette for custom hotkeys |
+| **Commands** | **160** built-in, **144** available in the command palette for custom hotkeys |
 | **Tabs** | Home · Insert · View · Table · Utilities · **Pinned** |
 | **Callouts** | All 12 Obsidian callout types in one drop-down |
 | **Emoji & symbols** | ~2,150 emoji, kaomoji and symbols, fully offline |
@@ -135,11 +135,11 @@ That is a deliberate trade-off, not a missing feature. A toolbar that lets you r
 
 ## Full command reference
 
-145 of the 160 commands are registered in the **command palette**, so you can assign your own keyboard shortcuts. (Drop-down containers and the Emoji & Symbols panel are toolbar-only.)
+144 of the 160 commands are registered in the **command palette**, so you can assign your own keyboard shortcuts. (Drop-down containers and the Emoji & Symbols panel are toolbar-only.)
 
 ### Home
 
-- **Clipboard** — Paste, Cut, Copy, Format Painter, Paste as Plain Text
+- **Clipboard** — Paste, Cut, Copy, Format Painter, Paste as Plain Text, Paste URI as Link
 - **Font** — Font Family, Font Size, Bold, Italic, Underline, Strikethrough, Subscript, Superscript, Inline Code, Inline Math, Highlight, Highlight Color, Font Color, Clear Formatting, Change Case
 - **Paragraph** — Bullet / Numbered / Task List, **Number Headings ▼** (1. 1.1. 1.1.1., 1) a) i), I. A. 1., No Numbering), Quote, Decrease / Increase Indent, Renumber List, Sort Lines, Move List Item Up / Down, Swap Line Up / Down, Align Left / Center / Right / Justify, Horizontal Rule
 - **Styles** — Heading 1–6, Remove Heading
@@ -147,7 +147,7 @@ That is a deliberate trade-off, not a missing feature. A toolbar that lets you r
 
 ### Insert
 
-- **Tables** — Table, Convert Text to Table
+- **Tables** — Table, Convert Text to Table, Paste as Table
 - **Illustrations** — Attach File, Image Size ▼ (100 px, 200 px, 300 px, 400 px, 600 px, Original Size), All Images ▼ (All Images 100 px, All Images 200 px, All Images 300 px, All Images 400 px, All Images 600 px, All Images Original Size), Alt Text, Caption, Reset Picture, Convert Syntax
 - **Links** — Internal Link, External Link, Embed, Tag, Block Reference
 - **Comments** — Comment
@@ -171,14 +171,12 @@ Available whenever the cursor is inside a table:
 - **Rows & Columns** — Delete ▼ (Delete Rows, Delete Columns, Delete Table), Insert Rows Above / Below, Insert Columns to the Left / Right, Move Row Up / Down, Move Column Left / Right
 - **Format** — Format Tables ▼ (Format Table, Format All Tables)
 - **Alignment** — Align Column Left / Center / Right
-- **Data** — Sort Rows ▼ (Sort Rows A to Z, Sort Rows Z to A), Remove Duplicate Rows, Transpose Table, Convert Table to Text
-- **Clipboard** — Paste as Table, Copy as ▼ (TSV, CSV, JSON, Markdown)
+- **Data** — Sort Rows ▼ (Sort Rows A to Z, Sort Rows Z to A), Remove Duplicate Rows, Transpose Table, Convert Table to Text, Copy as ▼ (TSV, CSV, JSON, Markdown)
 
 ### Utilities
 
 - **Lines** — Merge Lines, Split Lines, Reverse Lines, Duplicate. Merge Lines joins a run of lines into one; Split Lines breaks them at the punctuation the selection uses most; Reverse Lines flips the order of each run; Duplicate copies the caret's line below it, or the selection right after it. None of the four crosses a blank line or a code fence.
 - **Sort** — Sort List, Sort Headings. Sort List sorts a list level by level — an item keeps its own body and its own children, and ordered items come out renumbered. Sort Headings reorders each level of the note's outline and carries every section's body along with it.
-- **Links** — Paste URI as Link, which wraps selected text with the URI currently on the clipboard.
 - **Normalize** — Smart Punctuation, CJK Spacing, Clean Up ▼ (Remove Trailing Spaces, Collapse Blank Lines, Convert Bare URLs, Normalize Emphasis & Strong, Normalize Bullet Style).
 
 ### Pinned
@@ -210,7 +208,7 @@ Settings → **Community plugins** → **Browse** → search for **"Awesome Form
 2. The **Ribbon (Top)** has six tabs; the last one, **Pinned**, holds the commands you pin yourself. While it is empty it shows an add hint; use the edit button to manage commands and groups.
 3. The **compact bars** (Following / Fixed) carry a fixed subset of commands; buttons that don't fit the available width collapse into the `⋯` overflow menu, which also lists every other command grouped by tab, and your pinned ones.
 4. Open the **Pinned** edit button to add commands, choose icons, create or rename groups, drag to reorder, move commands, or delete them. Settings keeps a fallback entry for the same manager. Pinned commands behave exactly like their command-palette counterparts.
-5. Prefer the keyboard? Turn **all three position toggles off** and the toolbar disappears from the interface entirely — the plugin then adds nothing to your screen, while all **145 palette-registered commands** keep working and can be bound to your own hotkeys in **Settings → Hotkeys**. In other words: you can use it as a pure command/hotkey pack and never click a button.
+5. Prefer the keyboard? Turn **all three position toggles off** and the toolbar disappears from the interface entirely — the plugin then adds nothing to your screen, while all **144 palette-registered commands** keep working and can be bound to your own hotkeys in **Settings → Hotkeys**. In other words: you can use it as a pure command/hotkey pack and never click a button.
 
 ---
 
@@ -245,10 +243,10 @@ No. Bold, headings, lists, links, tables, callouts, code blocks and math are all
 Standard Markdown and Obsidian-flavoured Markdown. Only where Markdown has no syntax — underline, superscript, subscript, paragraph alignment, text and highlight colors, font family and font size — does the plugin emit small, standard inline HTML tags, which Obsidian renders natively.
 
 **Can I keep using my keyboard shortcuts?**  
-Yes. 145 of the 160 commands appear in the command palette and can be bound to any hotkey.
+Yes. 144 of the 160 commands appear in the command palette and can be bound to any hotkey.
 
 **I'm a keyboard person — can I hide the toolbar completely?**  
-Yes, and nothing is lost by doing it. Switch off all three positions (**Top / Following / Fixed**) in **Settings → Awesome Format Bar** and the plugin leaves zero footprint on the screen: no ribbon, no floating bar, no bottom bar. Every one of the **145 palette-registered commands** still runs, from the command palette or from a hotkey you assign in **Settings → Hotkeys** — including commands Obsidian has no built-in shortcut for, such as font color, highlight color, change case, callouts, table sorting and the line utilities. Think of it as an optional keyboard-only layer you can switch on whenever the mouse starts feeling slow.
+Yes, and nothing is lost by doing it. Switch off all three positions (**Top / Following / Fixed**) in **Settings → Awesome Format Bar** and the plugin leaves zero footprint on the screen: no ribbon, no floating bar, no bottom bar. Every one of the **144 palette-registered commands** still runs, from the command palette or from a hotkey you assign in **Settings → Hotkeys** — including commands Obsidian has no built-in shortcut for, such as font color, highlight color, change case, callouts, table sorting and the line utilities. Think of it as an optional keyboard-only layer you can switch on whenever the mouse starts feeling slow.
 
 **Can I add buttons for commands from other plugins?**  
 Yes — that's the **Pinned** tab. Pin any command from the palette and choose an icon. If the owning plugin is disabled, the button greys out and the pin is preserved.

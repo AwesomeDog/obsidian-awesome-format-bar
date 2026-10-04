@@ -66,15 +66,17 @@ A fixed built-in subset of commands, grouped by dividers. Buttons that don't fit
 
 ## 5. Commands
 
-**160 built-in commands** across 5 tabs and 27 groups, plus the Pinned tab. Drop-down items stay under their parent buttons, while the other commands are registered in the command palette, so users can assign their own shortcuts. That leaves **144** palette entries: the 16 left out are the 15 drop-down parents and the emoji panel, which only open a menu instead of acting.
+**160 built-in commands** across 5 tabs and 25 groups, plus the Pinned tab. Drop-down items stay under their parent buttons, while the other commands are registered in the command palette, so users can assign their own shortcuts. That leaves **144** palette entries: the 16 left out are the 15 drop-down parents and the emoji panel, which only open a menu instead of acting.
 
 ### Tab 1 · Home
 
-- **Clipboard** — Paste, Cut, Copy, Format Painter, Paste as Plain Text
+- **Clipboard** — Paste, Cut, Copy, Format Painter, Paste as Plain Text, Paste URI as Link
 - **Font** — Font Family, Font Size, Bold, Italic, Underline, Strikethrough, Subscript, Superscript, Inline Code, Inline Math, Highlight, Highlight Color, Font Color, Clear Formatting, Change Case
 - **Paragraph** — Bullet List, Numbered List, Number Headings ▼ (Number Headings 1. 1.1. 1.1.1., Number Headings 1) a) i), Number Headings I. A. 1., No Numbering), Task List, Quote, Decrease Indent, Increase Indent, Renumber List, Sort Lines, Move List Item Up / Down, Swap Line Up / Down, Align Left / Center / Right / Justify, Horizontal Rule
 - **Styles** — Heading 1–6, Remove Heading
 - **Editing** — Undo, Redo, Find and Replace
+
+**Paste URI as Link** reads one URI with a scheme from the clipboard and wraps each selected range as a Markdown link using an angle-bracket destination. It requires a selection and leaves regular Paste unchanged. Word keeps its paste variants in this group too, which is why it sits with Paste as Plain Text rather than with the links on Insert.
 
 **Format Painter** copies the character formatting of a selection and assigns it to the next one: what the source lacks is stripped from the target, so painting from plain text clears formatting. One click paints once and puts the brush down; double-clicking the button keeps it on until Esc. It carries bold, italic, strikethrough, highlight, highlight color, underline, subscript, superscript, font color, font size and font family — and nothing else: inline code, inline math, links and block-level marks are left alone in both directions. The interaction needs a mouse, so the button is greyed out on mobile.
 
@@ -84,7 +86,7 @@ A fixed built-in subset of commands, grouped by dividers. Buttons that don't fit
 
 ### Tab 2 · Insert
 
-- **Tables** — Table ▼, Convert Text to Table
+- **Tables** — Table ▼, Convert Text to Table, Paste as Table
 - **Illustrations** — Attach File, Image Size ▼ (100 px, 200 px, 300 px, 400 px, 600 px, Original Size), All Images ▼ (All Images 100 px, All Images 200 px, All Images 300 px, All Images 400 px, All Images 600 px, All Images Original Size), Alt Text, Caption, Reset Picture, Convert Syntax
 - **Links** — Internal Link, External Link, Embed, Tag, Block Reference
 - **Comments** — Comment
@@ -109,25 +111,25 @@ Group order follows Word's own View tab.
 
 ### Tab 4 · Table
 
-Button placement follows the parts of Word's **Table Layout** tab that apply to Markdown tables.
+Button placement follows the parts of Word's **Table Layout** tab that apply to Markdown tables: Rows & Columns, Alignment and Data are Word's own groups in Word's own order. **Format** has no counterpart there — Word sizes cells, Markdown pads them to line the pipes up — so it keeps the slot Word gives Cell Size, and its name is this plugin's own.
 
 - **Rows & Columns** — Delete ▼ (Delete Rows, Delete Columns, Delete Table), Insert Rows Above, Insert Rows Below, Insert Columns to the Left, Insert Columns to the Right, Move Row Up, Move Row Down, Move Column Left, Move Column Right
 - **Format** — Format Tables ▼ (Format Table, Format All Tables)
 - **Alignment** — Align Column Left, Align Column Center, Align Column Right
-- **Data** — Sort Rows ▼ (Sort Rows A to Z, Sort Rows Z to A), Remove Duplicate Rows, Transpose Table, Convert Table to Text
-- **Clipboard** — Paste as Table: converts tab- or comma-separated clipboard text into an aligned Markdown table at the cursor. Explicit command only; regular Paste is untouched. Copy as ▼ (TSV, CSV, JSON, Markdown): puts the table the caret is in on the clipboard in the chosen format, leaving the note alone.
+- **Data** — Sort Rows ▼ (Sort Rows A to Z, Sort Rows Z to A), Remove Duplicate Rows, Transpose Table, Convert Table to Text, Copy as ▼ (TSV, CSV, JSON, Markdown): puts the table the caret is in on the clipboard in the chosen format, leaving the note alone.
+
+**Paste as Table** converts tab- or comma-separated clipboard text into an aligned Markdown table at the cursor. Explicit command only; regular Paste is untouched. It sits on Insert · Tables next to the other two ways to get a table, because it is the only one of the three that stays live wherever the editor is.
 
 **Convert Table to Text** writes the table out as one tab-separated line per row, header included; **Convert Text to Table** (Insert · Tables) is its exact inverse, and **Paste as Table** is the same conversion fed from the clipboard instead of the selection. Tab is the delimiter because it is what a spreadsheet puts on the clipboard: the three commands round-trip without a setting. **Copy as ▼** is the same write in four formats: **TSV** (tab-separated, what a spreadsheet itself puts on the clipboard), **CSV** (comma-separated), **JSON** — one object per body row, keyed by the header, every value left a string, since a `007` or `1.50` turned into a number is data loss — and **Markdown** (the table re-rendered, ready to paste into another note). A blank or repeated header cell cannot be a key, so those become `column-3` and `name-2`, the way Excel's Power Query names them. Each format quotes a cell that holds the delimiter, a quote or a line break, and pads a short row out to the widest one. All four go to the clipboard rather than into the note, because a table dumped into a note as text is just noise. **Remove Duplicate Rows** is Excel's Remove Duplicates: of a set of identical rows the first stays and the rest go, and a row counts as identical only when every cell matches — one cell apart and both survive. The header is never compared and never dropped, and a table with nothing to remove is left alone rather than rewritten.
 
 **Delete ▼** is Word's three ways out: **Delete Rows** and **Delete Columns** drop the row or column the caret is in, and **Delete Table** drops the whole block, taking the newline above it when the table ends the file. Deleting the last row deletes the table too, since a header alone is not a table; deleting the last column empties the cells instead, because the header is worth keeping.
 
-Column-level names (*Align Column…*, *Sort Rows…*) distinguish these from the paragraph-level Align and Sort Lines on Home. Every command here except **Paste as Table** greys out when the caret is not inside a table; Paste as Table stays available wherever the editor is.
+Column-level names (*Align Column…*, *Sort Rows…*) distinguish these from the paragraph-level Align and Sort Lines on Home. Every command here greys out when the caret is not inside a table.
 
 ### Tab 5 · Utilities
 
 - **Lines** — **Merge Lines** joins a run of lines into one; **Split Lines** breaks them at the punctuation the selection uses most, out of `、 ， , ; ； | ·`; **Reverse Lines** flips the order of each run. None of the three crosses a blank line or a code fence, and a line with nothing to do is left alone. **Duplicate** copies the line at the caret, or the selection.
 - **Sort** — two sorts that read structure rather than lines. **Sort List** sorts a list level by level: an item keeps its own body and its own children, and ordered items come out renumbered. **Sort Headings** reorders each level of the note's outline and carries every section's body along with it; its scope is the whole note, and a heading quoted in a callout or written inside a code fence counts as body text, not as a heading.
-- **Links** — **Paste URI as Link** reads one URI with a scheme from the clipboard and wraps each selected range as a Markdown link using an angle-bracket destination. It requires a selection and leaves regular Paste unchanged.
 - **Normalize** — **Smart Punctuation** converts straight quotes, double hyphens and three periods in the selected text to typographic punctuation. **CJK Spacing** normalizes spaces between CJK and Latin letters or numbers. Both are explicit commands and skip inline code and fenced code. **Clean Up** contains five explicit whole-note or selected-range actions: Remove Trailing Spaces, Collapse Blank Lines, Convert Bare URLs, Normalize Emphasis & Strong, and Normalize Bullet Style.
 
 ### Tab 6 · Pinned

@@ -24,6 +24,7 @@ export const BUILT_IN_COMMAND_TABS = [
           "copy",
           "format-painter",
           "paste-plain-text",
+          "paste-uri-as-link",
         ],
       },
       {
@@ -88,7 +89,10 @@ export const BUILT_IN_COMMAND_TABS = [
     id: "insert",
     name: "Insert",
     groups: [
-      { name: "Tables", commands: ["table", "convert-text-to-table"] },
+      {
+        name: "Tables",
+        commands: ["table", "convert-text-to-table", "paste-as-table"],
+      },
       {
         name: "Illustrations",
         commands: [
@@ -177,11 +181,8 @@ export const BUILT_IN_COMMAND_TABS = [
           "table-remove-duplicate-rows",
           "table-transpose",
           "table-convert-to-text",
+          "table-copy-as",
         ],
-      },
-      {
-        name: "Clipboard",
-        commands: ["paste-as-table", "table-copy-as"],
       },
     ],
   },
@@ -194,7 +195,6 @@ export const BUILT_IN_COMMAND_TABS = [
         commands: ["merge-lines", "split-lines", "reverse-lines", "duplicate"],
       },
       { name: "Sort", commands: ["sort-list", "sort-headings"] },
-      { name: "Links", commands: ["paste-uri-as-link"] },
       {
         name: "Normalize",
         commands: ["smart-punctuation", "cjk-spacing", "clean-up"],

@@ -56,7 +56,7 @@ Obsidian est rapide **à condition** de déjà parler Markdown. Pour tous les au
 - **Du texte brut pour toujours.** Pas de format propriétaire, pas de base de données, pas d'enfermement —— vos notes restent de simples fichiers `.md`.
 - **Hors ligne et privé.** Aucun appel réseau, aucun compte, aucune télémétrie. La bibliothèque d'environ 2 150 emoji est livrée dans le plugin.
 - **Votre propre lanceur, si vous en voulez un.** L'onglet **Épinglé** accueille n'importe quelle commande de votre choix —— du cœur d'Obsidian, de ce plugin ou d'un autre —— pour que la barre se plie à vous au lieu de devenir un projet de configuration.
-- **Aussi pensé pour le clavier.** Désactivez les trois positions de la barre et l'interface disparaît complètement —— les 145 commandes enregistrées dans la palette restent disponibles et peuvent être associées à vos propres raccourcis. Et quand la barre **est affichée**, passer la souris sur un bouton affiche dans son infobulle le raccourci actuellement associé à cette commande —— le vôtre ou celui d'Obsidian. Modifiez-le dans **Paramètres → Raccourcis** et l'infobulle suit immédiatement, sans redémarrage.
+- **Aussi pensé pour le clavier.** Désactivez les trois positions de la barre et l'interface disparaît complètement —— les 144 commandes enregistrées dans la palette restent disponibles et peuvent être associées à vos propres raccourcis. Et quand la barre **est affichée**, passer la souris sur un bouton affiche dans son infobulle le raccourci actuellement associé à cette commande —— le vôtre ou celui d'Obsidian. Modifiez-le dans **Paramètres → Raccourcis** et l'infobulle suit immédiatement, sans redémarrage.
 
 ---
 
@@ -65,7 +65,7 @@ Obsidian est rapide **à condition** de déjà parler Markdown. Pour tous les au
 |                        |                                                                          |
 | ---------------------- | ------------------------------------------------------------------------ |
 | **Positions**          | Ruban en haut, barre flottante au-dessus de la sélection, barre en bas —— à combiner librement |
-| **Commandes**          | **160** intégrées, dont **145** dans la palette de commandes pour des raccourcis personnalisés |
+| **Commandes**          | **160** intégrées, dont **144** dans la palette de commandes pour des raccourcis personnalisés |
 | **Onglets**            | Accueil · Insertion · Affichage · Tableau · Utilitaires · **Épinglé**      |
 | **Encadrés**           | Les 12 types d'encadrés Obsidian dans une seule liste déroulante            |
 | **Emoji et symboles**  | Environ 2 150 emoji, kaomoji et symboles, entièrement hors ligne            |
@@ -137,11 +137,11 @@ C'est un compromis délibéré, pas une fonction manquante. Une barre qui vous l
 
 ## Liste complète des commandes
 
-145 des 160 commandes sont enregistrées dans la **palette de commandes**, vous pouvez donc leur attribuer vos propres raccourcis clavier.（Les conteneurs déroulants et le panneau Emoji et symboles n'existent que dans la barre d'outils.）
+144 des 160 commandes sont enregistrées dans la **palette de commandes**, vous pouvez donc leur attribuer vos propres raccourcis clavier.（Les conteneurs déroulants et le panneau Emoji et symboles n'existent que dans la barre d'outils.）
 
 ### Accueil
 
-- **Presse-papiers** —— Coller, Couper, Copier, Reproduire la mise en forme, Coller en texte brut
+- **Presse-papiers** —— Coller, Couper, Copier, Reproduire la mise en forme, Coller en texte brut, Coller l’URI comme lien
 - **Police** —— Police, Taille de police, Gras, Italique, Souligné, Barré, Indice, Exposant, Code en ligne, Formule en ligne, Surligner, Couleur de surlignage, Couleur de police, Effacer la mise en forme, Modifier la casse
 - **Paragraphe** —— Liste à puces / Liste numérotée / Liste de tâches, **Numéroter les titres ▼** (1. 1.1. 1.1.1., 1) a) i), I. A. 1., Sans numérotation), Citation, Diminuer / Augmenter le retrait, Renuméroter la liste, Trier les paragraphes, Monter / Descendre l’élément de liste, Monter / Descendre d'une ligne, Aligner à gauche / Centrer / Aligner à droite / Justifier, Ligne horizontale
 - **Styles** —— Titre 1 à 6, Supprimer le titre
@@ -149,7 +149,7 @@ C'est un compromis délibéré, pas une fonction manquante. Une barre qui vous l
 
 ### Insertion
 
-- **Tableaux** —— Tableau, Convertir le texte en tableau
+- **Tableaux** —— Tableau, Convertir le texte en tableau, Coller en tant que tableau
 - **Illustrations** —— Joindre un fichier, Taille de l’image ▼（100 px, 200 px, 300 px, 400 px, 600 px, Taille d’origine）, Toutes les images ▼（Toutes les images 100 px, Toutes les images 200 px, Toutes les images 300 px, Toutes les images 400 px, Toutes les images 600 px, Toutes les images Taille d’origine）, Texte alternatif, Légende, Réinitialiser l’image, Convertir la syntaxe
 - **Liens** —— Lien interne, Lien externe, Incorporer, Étiquette, Référence de bloc
 - **Commentaires** —— Commentaire
@@ -173,14 +173,12 @@ Disponible dès que le curseur se trouve dans un tableau :
 - **Lignes et colonnes** —— Supprimer des lignes ou des colonnes ▼（Supprimer les lignes, Supprimer les colonnes）, Insérer des lignes au-dessus / en dessous, Insérer des colonnes à gauche / à droite, Déplacer la ligne vers le haut / vers le bas, Déplacer la colonne vers la gauche / vers la droite
 - **Format** —— Mettre en forme les tableaux ▼（Mettre en forme ce tableau, Mettre en forme tous les tableaux）
 - **Alignement** —— Aligner la colonne à gauche / Centrer la colonne / Aligner la colonne à droite
-- **Données** —— Trier les lignes ▼（Trier de A à Z, Trier de Z à A）, Supprimer les lignes en double, Transposer le tableau, Convertir le tableau en texte
-- **Presse-papiers** —— Coller en tant que tableau, Copier comme ▼ (TSV, CSV, JSON, Markdown)
+- **Données** —— Trier les lignes ▼（Trier de A à Z, Trier de Z à A）, Supprimer les lignes en double, Transposer le tableau, Convertir le tableau en texte, Copier comme ▼ (TSV, CSV, JSON, Markdown)
 
 ### Utilitaires
 
 - **Lignes** —— Fusionner les lignes, Diviser les lignes, Inverser les lignes, Dupliquer. Fusionner les lignes rassemble une série de lignes en une seule ; Diviser les lignes les coupe au signe de ponctuation le plus fréquent dans la sélection ; Inverser les lignes inverse l'ordre de chaque série ; Dupliquer copie la ligne du curseur en dessous, ou la sélection juste après. Aucun des quatre ne franchit une ligne vide ou un bloc de code.
 - **Trier** —— Trier la liste, Trier les titres. Trier la liste trie une liste niveau par niveau —— chaque élément conserve son propre corps et ses propres enfants, et les éléments numérotés ressortent renumérotés. Trier les titres réordonne chaque niveau du plan de la note et emporte le corps de chaque section avec lui.
-- **Liens** —— Coller l’URI comme lien, qui entoure le texte sélectionné avec l’URI actuellement présente dans le presse-papiers.
 - **Normaliser** —— Ponctuation intelligente, Espacement CJK, Nettoyer ▼（Supprimer les espaces de fin, Réduire les lignes vides, Convertir les URL nues, Normaliser les emphases et le gras, Normaliser le style des puces）.
 
 ### Épinglé
@@ -212,7 +210,7 @@ Paramètres → **Plugins communautaires** → **Parcourir** → recherchez **«
 2. Le **ruban（Haut）** comporte six onglets ; le dernier, **Épinglé**, contient les commandes que vous épinglez vous-même. Tant qu'il est vide, il affiche une invite à ajouter une commande ; utilisez le bouton d'édition pour gérer les commandes et les groupes.
 3. Les **barres compactes**（Flottante / Bas）n'emportent qu'un sous-ensemble fixe de commandes ; les boutons qui ne tiennent pas dans la largeur disponible se replient dans le menu de débordement `⋯`, qui liste aussi toutes les autres commandes regroupées par onglet, ainsi que vos commandes épinglées.
 4. Ouvrez le bouton d'édition de l'onglet **Épinglé** pour ajouter des commandes, choisir des icônes, créer un nouveau groupe ou renommer un groupe, glisser pour réorganiser, déplacer une commande vers un autre groupe, ou les supprimer. Les paramètres conservent une entrée de repli —— « Gérer les commandes et groupes épinglés. » —— qui ouvre le même gestionnaire. Les commandes épinglées se comportent exactement comme leurs équivalents de la palette de commandes.
-5. Vous préférez le clavier ? Désactivez **les trois positions** et la barre disparaît entièrement de l'interface —— le plugin n'ajoute alors plus rien à votre écran, tandis que les **145 commandes enregistrées dans la palette** continuent de fonctionner et peuvent être associées à vos propres raccourcis dans **Paramètres → Raccourcis**. Autrement dit : vous pouvez l'utiliser comme un simple lot de commandes et de raccourcis, sans jamais cliquer sur un bouton.
+5. Vous préférez le clavier ? Désactivez **les trois positions** et la barre disparaît entièrement de l'interface —— le plugin n'ajoute alors plus rien à votre écran, tandis que les **144 commandes enregistrées dans la palette** continuent de fonctionner et peuvent être associées à vos propres raccourcis dans **Paramètres → Raccourcis**. Autrement dit : vous pouvez l'utiliser comme un simple lot de commandes et de raccourcis, sans jamais cliquer sur un bouton.
 
 ---
 
@@ -247,10 +245,10 @@ Non. Gras, titres, listes, liens, tableaux, encadrés, blocs de code et formules
 Du Markdown standard et du Markdown saveur Obsidian. Ce n'est que là où le Markdown n'a pas de syntaxe —— souligné, exposant, indice, alignement des paragraphes, couleurs du texte et du surlignage, police et taille de police —— que le plugin émet quelques balises HTML en ligne standard, qu'Obsidian affiche nativement.
 
 **Puis-je continuer à utiliser mes raccourcis clavier ?**  
-Oui. 145 des 160 commandes apparaissent dans la palette de commandes et peuvent être associées à n'importe quel raccourci.
+Oui. 144 des 160 commandes apparaissent dans la palette de commandes et peuvent être associées à n'importe quel raccourci.
 
 **Je suis un adepte du clavier —— puis-je masquer complètement la barre d'outils ?**  
-Oui, et vous ne perdez rien à le faire. Désactivez les trois positions（**Haut / Flottante / Bas**）dans **Paramètres → Awesome Format Bar** et le plugin ne laisse aucune trace à l'écran : ni ruban, ni barre flottante, ni barre en bas. Les **145 commandes enregistrées dans la palette** fonctionnent toutes encore, depuis la palette de commandes ou depuis un raccourci que vous attribuez dans **Paramètres → Raccourcis** —— y compris des commandes pour lesquelles Obsidian n'a aucun raccourci intégré, comme la Couleur de police, la Couleur de surlignage, Modifier la casse, les Encadrés, Trier les lignes et les utilitaires de lignes. Voyez-y une couche clavier facultative, à activer dès que la souris commence à sembler lente.
+Oui, et vous ne perdez rien à le faire. Désactivez les trois positions（**Haut / Flottante / Bas**）dans **Paramètres → Awesome Format Bar** et le plugin ne laisse aucune trace à l'écran : ni ruban, ni barre flottante, ni barre en bas. Les **144 commandes enregistrées dans la palette** fonctionnent toutes encore, depuis la palette de commandes ou depuis un raccourci que vous attribuez dans **Paramètres → Raccourcis** —— y compris des commandes pour lesquelles Obsidian n'a aucun raccourci intégré, comme la Couleur de police, la Couleur de surlignage, Modifier la casse, les Encadrés, Trier les lignes et les utilitaires de lignes. Voyez-y une couche clavier facultative, à activer dès que la souris commence à sembler lente.
 
 **Puis-je ajouter des boutons pour les commandes d'autres plugins ?**  
 Oui —— c'est l'onglet **Épinglé**. Épinglez n'importe quelle commande de la palette et choisissez une icône. Si le plugin propriétaire est désactivé, le bouton se grise et l'épingle est conservée.

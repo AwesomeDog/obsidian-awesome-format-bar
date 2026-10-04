@@ -285,11 +285,15 @@ describe("command table contract", () => {
 
   it("places every table command in the tab Word's Layout tab matches", () => {
     expect(BUILT_IN_COMMAND_TABS[3]?.groups.map((group) => group.name)).toEqual(
-      ["Rows & Columns", "Format", "Alignment", "Data", "Clipboard"],
+      ["Rows & Columns", "Format", "Alignment", "Data"],
+    );
+    // Paste as Table is the one table command that stays live anywhere, so it
+    // sits on Insert · Tables with the other two ways to get a table.
+    expect(BUILT_IN_COMMAND_TABS[1]?.groups[0]?.commands).toContain(
+      "paste-as-table",
     );
     for (const spec of COMMANDS as readonly CommandSpec[])
-      if (spec.id.startsWith("table-") || spec.id === "paste-as-table")
-        expect(spec.requiresTable ?? false).toBe(spec.id !== "paste-as-table");
+      if (spec.id.startsWith("table-")) expect(spec.requiresTable).toBe(true);
   });
 
   it("keeps the compact subset valid and duplicate-free", () => {

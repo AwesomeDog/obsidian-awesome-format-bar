@@ -24,6 +24,15 @@ export const COMMANDS = [
     icon: "clipboard-type",
     kind: "clipboard",
   },
+  // The other half of Paste: the URI comes from the clipboard, the text to
+  // wrap comes from the selection, so it needs both.
+  {
+    id: "paste-uri-as-link",
+    name: "Paste URI as Link",
+    icon: "link",
+    kind: "clipboard",
+    requiresSelection: true,
+  },
   {
     id: "format-painter",
     name: "Format Painter",
@@ -133,55 +142,6 @@ export const COMMANDS = [
   },
 
   // Home · Paragraph
-  {
-    id: "heading-1",
-    name: "Heading 1",
-    icon: "heading-1",
-    kind: "registered",
-    registeredCommandId: "editor:set-heading-1",
-  },
-  {
-    id: "heading-2",
-    name: "Heading 2",
-    icon: "heading-2",
-    kind: "registered",
-    registeredCommandId: "editor:set-heading-2",
-  },
-  {
-    id: "heading-3",
-    name: "Heading 3",
-    icon: "heading-3",
-    kind: "registered",
-    registeredCommandId: "editor:set-heading-3",
-  },
-  {
-    id: "heading-4",
-    name: "Heading 4",
-    icon: "heading-4",
-    kind: "registered",
-    registeredCommandId: "editor:set-heading-4",
-  },
-  {
-    id: "heading-5",
-    name: "Heading 5",
-    icon: "heading-5",
-    kind: "registered",
-    registeredCommandId: "editor:set-heading-5",
-  },
-  {
-    id: "heading-6",
-    name: "Heading 6",
-    icon: "heading-6",
-    kind: "registered",
-    registeredCommandId: "editor:set-heading-6",
-  },
-  {
-    id: "remove-heading",
-    name: "Remove Heading",
-    icon: "heading-off",
-    kind: "registered",
-    registeredCommandId: "editor:set-heading-0",
-  },
   {
     id: "bullet-list",
     name: "Bullet List",
@@ -324,6 +284,57 @@ export const COMMANDS = [
     registeredCommandId: "editor:insert-horizontal-rule",
   },
 
+  // Home · Styles
+  {
+    id: "heading-1",
+    name: "Heading 1",
+    icon: "heading-1",
+    kind: "registered",
+    registeredCommandId: "editor:set-heading-1",
+  },
+  {
+    id: "heading-2",
+    name: "Heading 2",
+    icon: "heading-2",
+    kind: "registered",
+    registeredCommandId: "editor:set-heading-2",
+  },
+  {
+    id: "heading-3",
+    name: "Heading 3",
+    icon: "heading-3",
+    kind: "registered",
+    registeredCommandId: "editor:set-heading-3",
+  },
+  {
+    id: "heading-4",
+    name: "Heading 4",
+    icon: "heading-4",
+    kind: "registered",
+    registeredCommandId: "editor:set-heading-4",
+  },
+  {
+    id: "heading-5",
+    name: "Heading 5",
+    icon: "heading-5",
+    kind: "registered",
+    registeredCommandId: "editor:set-heading-5",
+  },
+  {
+    id: "heading-6",
+    name: "Heading 6",
+    icon: "heading-6",
+    kind: "registered",
+    registeredCommandId: "editor:set-heading-6",
+  },
+  {
+    id: "remove-heading",
+    name: "Remove Heading",
+    icon: "heading-off",
+    kind: "registered",
+    registeredCommandId: "editor:set-heading-0",
+  },
+
   // Home · Editing
   { id: "undo", name: "Undo", icon: "undo", kind: "editor" },
   { id: "redo", name: "Redo", icon: "redo", kind: "editor" },
@@ -350,6 +361,13 @@ export const COMMANDS = [
     icon: "table-2",
     kind: "editor",
     requiresSelection: true,
+  },
+  // The same conversion again, fed from the clipboard instead of the selection.
+  {
+    id: "paste-as-table",
+    name: "Paste as Table",
+    icon: "clipboard-paste",
+    kind: "clipboard",
   },
 
   // Insert · Illustrations
@@ -651,6 +669,15 @@ export const COMMANDS = [
     registeredCommandId: "editor:insert-footnote",
   },
 
+  // View · Views
+  {
+    id: "toggle-live-preview-source",
+    name: "Live Preview/Source",
+    icon: "code-2",
+    kind: "registered",
+    registeredCommandId: "editor:toggle-source",
+  },
+
   // View · Immersive
   {
     id: "focus-mode",
@@ -668,14 +695,7 @@ export const COMMANDS = [
     kind: "view",
   },
 
-  // View · Views
-  {
-    id: "toggle-live-preview-source",
-    name: "Live Preview/Source",
-    icon: "code-2",
-    kind: "registered",
-    registeredCommandId: "editor:toggle-source",
-  },
+  // View · Show
   {
     id: "show-whitespace",
     name: "Show Whitespace",
@@ -775,94 +795,6 @@ export const COMMANDS = [
     icon: "maximize-2",
     kind: "registered",
     registeredCommandId: "editor:unfold-all",
-  },
-
-  // Utilities · Lines
-  { id: "merge-lines", name: "Merge Lines", icon: "merge", kind: "editor" },
-  { id: "split-lines", name: "Split Lines", icon: "split", kind: "editor" },
-  {
-    id: "reverse-lines",
-    name: "Reverse Lines",
-    icon: "arrow-up-down",
-    kind: "editor",
-  },
-  // VS Code's Duplicate Selection: a line below the caret, or a copy of the
-  // selection right after it.
-  { id: "duplicate", name: "Duplicate", icon: "copy-plus", kind: "editor" },
-
-  // Utilities · Sort
-  {
-    id: "sort-list",
-    name: "Sort List",
-    icon: "list-chevrons-up-down",
-    kind: "editor",
-  },
-  {
-    id: "sort-headings",
-    name: "Sort Headings",
-    icon: "heading",
-    kind: "editor",
-  },
-
-  // Utilities · Links
-  {
-    id: "paste-uri-as-link",
-    name: "Paste URI as Link",
-    icon: "link",
-    kind: "clipboard",
-    requiresSelection: true,
-  },
-
-  // Utilities · Normalize
-  {
-    id: "smart-punctuation",
-    name: "Smart Punctuation",
-    icon: "text-quote",
-    kind: "editor",
-  },
-  {
-    id: "cjk-spacing",
-    name: "CJK Spacing",
-    icon: "between-horizontal-start",
-    kind: "editor",
-  },
-  {
-    id: "clean-up",
-    name: "Clean Up",
-    icon: "wand-sparkles",
-    kind: "editor",
-    popup: "clean-up",
-    commandPalette: false,
-  },
-  {
-    id: "clean-up-trailing-spaces",
-    name: "Remove Trailing Spaces",
-    icon: "eraser",
-    kind: "editor",
-  },
-  {
-    id: "clean-up-blank-lines",
-    name: "Collapse Blank Lines",
-    icon: "rows-3",
-    kind: "editor",
-  },
-  {
-    id: "clean-up-bare-urls",
-    name: "Convert Bare URLs",
-    icon: "link-2",
-    kind: "editor",
-  },
-  {
-    id: "clean-up-emphasis-strong",
-    name: "Normalize Emphasis & Strong",
-    icon: "bold",
-    kind: "editor",
-  },
-  {
-    id: "clean-up-bullet-style",
-    name: "Normalize Bullet Style",
-    icon: "list",
-    kind: "editor",
   },
 
   // Table · Rows & Columns
@@ -1046,14 +978,8 @@ export const COMMANDS = [
     kind: "editor",
     requiresTable: true,
   },
-
-  // Table · Clipboard
-  {
-    id: "paste-as-table",
-    name: "Paste as Table",
-    icon: "clipboard-paste",
-    kind: "clipboard",
-  },
+  // The table out again in four formats, on the clipboard rather than in the
+  // note: a table dumped into a note as text is just noise.
   {
     id: "table-copy-as",
     name: "Copy as",
@@ -1090,6 +1016,85 @@ export const COMMANDS = [
     icon: "clipboard-copy",
     kind: "clipboard",
     requiresTable: true,
+  },
+
+  // Utilities · Lines
+  { id: "merge-lines", name: "Merge Lines", icon: "merge", kind: "editor" },
+  { id: "split-lines", name: "Split Lines", icon: "split", kind: "editor" },
+  {
+    id: "reverse-lines",
+    name: "Reverse Lines",
+    icon: "arrow-up-down",
+    kind: "editor",
+  },
+  // VS Code's Duplicate Selection: a line below the caret, or a copy of the
+  // selection right after it.
+  { id: "duplicate", name: "Duplicate", icon: "copy-plus", kind: "editor" },
+
+  // Utilities · Sort
+  {
+    id: "sort-list",
+    name: "Sort List",
+    icon: "list-chevrons-up-down",
+    kind: "editor",
+  },
+  {
+    id: "sort-headings",
+    name: "Sort Headings",
+    icon: "heading",
+    kind: "editor",
+  },
+
+  // Utilities · Normalize
+  {
+    id: "smart-punctuation",
+    name: "Smart Punctuation",
+    icon: "text-quote",
+    kind: "editor",
+  },
+  {
+    id: "cjk-spacing",
+    name: "CJK Spacing",
+    icon: "between-horizontal-start",
+    kind: "editor",
+  },
+  {
+    id: "clean-up",
+    name: "Clean Up",
+    icon: "wand-sparkles",
+    kind: "editor",
+    popup: "clean-up",
+    commandPalette: false,
+  },
+  {
+    id: "clean-up-trailing-spaces",
+    name: "Remove Trailing Spaces",
+    icon: "eraser",
+    kind: "editor",
+  },
+  {
+    id: "clean-up-blank-lines",
+    name: "Collapse Blank Lines",
+    icon: "rows-3",
+    kind: "editor",
+  },
+  {
+    id: "clean-up-bare-urls",
+    name: "Convert Bare URLs",
+    icon: "link-2",
+    kind: "editor",
+  },
+  {
+    id: "clean-up-emphasis-strong",
+    name: "Normalize Emphasis & Strong",
+    icon: "bold",
+    kind: "editor",
+  },
+  {
+    id: "clean-up-bullet-style",
+    name: "Normalize Bullet Style",
+    icon: "list",
+    kind: "editor",
   },
 ] as const satisfies readonly CommandSpec[];
 
