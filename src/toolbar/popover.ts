@@ -8,7 +8,9 @@ import {
   FONT_SIZES,
   HIGHLIGHT_COLORS,
   NATIVE_COUNT,
+  NATIVE_HIGHLIGHTS,
   STANDARD_COLORS,
+  type NativeHighlight,
 } from "../model/palettes";
 import type { CommandSpec } from "../model/types";
 import { openFloatingLayer } from "./floating";
@@ -157,12 +159,16 @@ export function popoverSectionsFor(
         swatch: hex,
         onChoose: () => host.execute(spec, `background:${hex}`),
       });
+      // The leading six are Obsidian's own, and what renders is the theme
+      // variable, not this hex: showing the hex would promise a color the
+      // editor never paints.
+      const native = (entry: NativeHighlight): PopoverItem => ({
+        label: entry.hex,
+        swatch: `var(${entry.variable})`,
+        onChoose: () => host.execute(spec, `background:${entry.hex}`),
+      });
       return [
-        // The leading six first: they become native `==🟡…==` on 1.14.
-        {
-          grid: NATIVE_COUNT,
-          items: HIGHLIGHT_COLORS.slice(0, NATIVE_COUNT).map(swatch),
-        },
+        { grid: NATIVE_COUNT, items: NATIVE_HIGHLIGHTS.map(native) },
         { grid: 5, items: HIGHLIGHT_COLORS.slice(NATIVE_COUNT).map(swatch) },
         colorExtras(spec, host, anchor, "background"),
       ];

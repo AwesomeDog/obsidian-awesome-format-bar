@@ -16,11 +16,12 @@ export const STANDARD_COLORS = [
 
 /**
  * Word's highlighter palette (15) plus Orange, which Word's font palette has
- * and its highlighter does not. The first six are the ones Obsidian 1.14 can
- * render natively — until 1.14 ships, all sixteen go out as spans.
+ * and its highlighter does not. The first six are the ones Obsidian renders
+ * natively, as `==` followed by an emoji; the other ten have no native syntax
+ * and go out as `<span style="background:…">`.
  */
 export const HIGHLIGHT_COLORS: readonly string[] = [
-  "#ffff00", // Yellow   → ==🟡…== (1.14)
+  "#ffff00", // Yellow   → ==🟡…==
   "#ff0000", // Red      → ==🔴…==
   "#ffc000", // Orange   → ==🟠…==
   "#008000", // Green    → ==🟢…==
@@ -39,18 +40,93 @@ export const HIGHLIGHT_COLORS: readonly string[] = [
   "#000000",
 ];
 
-/** How many of `HIGHLIGHT_COLORS` 1.14 renders natively: the leading slice. */
+/** How many of `HIGHLIGHT_COLORS` Obsidian renders natively: the leading slice. */
 export const NATIVE_COUNT = 6;
 
-/** The emoji 1.14 writes for those six, in the same order. */
-export const NATIVE_HIGHLIGHT_EMOJI = [
-  "\u{1F7E1}",
-  "\u{1F534}",
-  "\u{1F7E0}",
-  "\u{1F7E2}",
-  "\u{1F535}",
-  "\u{1F7E3}",
+/**
+ * Those six. `variable` is what decides the color on screen, so it is also
+ * what the palette swatch has to show: painting `hex` there would promise a
+ * color the editor never renders.
+ */
+export const NATIVE_HIGHLIGHTS = [
+  {
+    emoji: "\u{1F7E1}",
+    hex: "#ffff00",
+    name: "yellow",
+    variable: "--highlight-background-yellow",
+  },
+  {
+    emoji: "\u{1F534}",
+    hex: "#ff0000",
+    name: "red",
+    variable: "--highlight-background-red",
+  },
+  {
+    emoji: "\u{1F7E0}",
+    hex: "#ffc000",
+    name: "orange",
+    variable: "--highlight-background-orange",
+  },
+  {
+    emoji: "\u{1F7E2}",
+    hex: "#008000",
+    name: "green",
+    variable: "--highlight-background-green",
+  },
+  {
+    emoji: "\u{1F535}",
+    hex: "#0000ff",
+    name: "blue",
+    variable: "--highlight-background-blue",
+  },
+  {
+    emoji: "\u{1F7E3}",
+    hex: "#800080",
+    name: "purple",
+    variable: "--highlight-background-purple",
+  },
 ] as const;
+
+export type NativeHighlight = (typeof NATIVE_HIGHLIGHTS)[number];
+
+/**
+ * Every emoji Obsidian reads as a highlight color: the six circles it writes,
+ * and the six squares it accepts as well. Values index into
+ * `HIGHLIGHT_COLORS`.
+ */
+const HIGHLIGHT_EMOJI: Readonly<Record<string, number>> = {
+  "\u{1F7E1}": 0,
+  "\u{1F7E8}": 0,
+  "\u{1F534}": 1,
+  "\u{1F7E5}": 1,
+  "\u{1F7E0}": 2,
+  "\u{1F7E7}": 2,
+  "\u{1F7E2}": 3,
+  "\u{1F7E9}": 3,
+  "\u{1F535}": 4,
+  "\u{1F7E6}": 4,
+  "\u{1F7E3}": 5,
+  "\u{1F7EA}": 5,
+};
+
+/** The native highlight `hex` stands for, or `undefined` for the other ten. */
+export function nativeHighlightOf(hex: string): NativeHighlight | undefined {
+  return NATIVE_HIGHLIGHTS.find((entry) => entry.hex === hex);
+}
+
+/** The highlight emoji at `at`: the hex it stands for, and how wide it is. */
+export function highlightEmojiAt(
+  doc: string,
+  at: number,
+): { hex: string; length: number } | null {
+  const point = doc.codePointAt(at);
+  if (point === undefined) return null;
+  const emoji = String.fromCodePoint(point);
+  const index = HIGHLIGHT_EMOJI[emoji];
+  if (index === undefined) return null;
+  const hex = HIGHLIGHT_COLORS[index];
+  return hex === undefined ? null : { hex, length: emoji.length };
+}
 
 /**
  * Relative sizes, in `em` — they scale with the surrounding text, so a span

@@ -1,3 +1,4 @@
+import { highlightEmojiAt, nativeHighlightOf } from "../model/palettes";
 import {
   normalizeRanges,
   order,
@@ -102,6 +103,141 @@ export function applySpanStyle(
     });
     changes.push({ from: range.to, to: range.to, text: SPAN_CLOSE });
   }
+  return { changes: order(changes) };
+}
+
+/** Obsidian's own colored highlight: a `==` pair with an emoji after the open. */
+const HIGHLIGHT_OPEN = "==";
+const HIGHLIGHT_CLOSE = "==";
+
+/**
+ * The `==` opening a highlight whose text starts at `to`, with the emoji it
+ * carries. Every highlight emoji is one code point outside the BMP, so the
+ * marker sits two units further back when there is one.
+ */
+function highlightOpening(
+  doc: string,
+  to: number,
+): { from: number; emoji: string } | null {
+  const at = to - HIGHLIGHT_OPEN.length;
+  if (at >= 0 && doc.startsWith(HIGHLIGHT_OPEN, at))
+    return { from: at, emoji: "" };
+  const start = at - HIGHLIGHT_OPEN.length;
+  if (start < 0 || !doc.startsWith(HIGHLIGHT_OPEN, start)) return null;
+  return highlightEmojiAt(doc, at)
+    ? { from: start, emoji: doc.slice(at, to) }
+    : null;
+}
+
+/**
+ * Highlight Color. The six colors Obsidian renders natively go out as
+ * `==🟡…==`; the other ten and any picked color have no native syntax and
+ * stay a span. `null` is No Color, which takes the highlight away whole —
+ * markers and all, the way Word's does.
+ */
+export function applyHighlightColor(
+  doc: string,
+  ranges: readonly Range[],
+  hex: string | null,
+): Plan {
+  const native = hex === null ? undefined : nativeHighlightOf(hex);
+  const changes: Change[] = [];
+
+  for (const range of normalizeRanges(ranges)) {
+    if (range.from === range.to) continue;
+
+    // The selection swallows the whole highlight: rewrite it in place.
+    const inner = doc.slice(range.from, range.to);
+    if (
+      inner.startsWith(HIGHLIGHT_OPEN) &&
+      inner.endsWith(HIGHLIGHT_CLOSE) &&
+      inner.length >= HIGHLIGHT_OPEN.length + HIGHLIGHT_CLOSE.length
+    ) {
+      let from = range.from + HIGHLIGHT_OPEN.length;
+      const found = highlightEmojiAt(doc, from);
+      if (found) from += found.length;
+      const body = doc.slice(from, range.to - HIGHLIGHT_CLOSE.length);
+      if (hex === null)
+        changes.push({ from: range.from, to: range.to, text: body });
+      else if (native) {
+        const text = `${HIGHLIGHT_OPEN}${native.emoji}${body}${HIGHLIGHT_CLOSE}`;
+        if (text !== inner)
+          changes.push({ from: range.from, to: range.to, text });
+      } else
+        changes.push({
+          from: range.from,
+          to: range.to,
+          text: `<span style="background:${hex}">${body}</span>`,
+        });
+      continue;
+    }
+
+    // The selection sits exactly inside a highlight: rewrite its opening.
+    const opening = doc.startsWith(HIGHLIGHT_CLOSE, range.to)
+      ? highlightOpening(doc, range.from)
+      : null;
+    if (opening) {
+      if (hex === null) {
+        changes.push({ from: opening.from, to: range.from, text: "" });
+        changes.push({
+          from: range.to,
+          to: range.to + HIGHLIGHT_CLOSE.length,
+          text: "",
+        });
+      } else if (native) {
+        if (opening.emoji !== native.emoji)
+          changes.push({
+            from: opening.from,
+            to: range.from,
+            text: `${HIGHLIGHT_OPEN}${native.emoji}`,
+          });
+      } else {
+        // A span color and an emoji would both color the same text.
+        if (opening.emoji)
+          changes.push({
+            from: range.from - opening.emoji.length,
+            to: range.from,
+            text: "",
+          });
+        changes.push(
+          ...applySpanStyle(doc, [range], "background", hex).changes,
+        );
+      }
+      continue;
+    }
+
+    if (hex === null || !native) {
+      changes.push(...applySpanStyle(doc, [range], "background", hex).changes);
+      continue;
+    }
+
+    // The selection is exactly the body of its span: rewrite the tags in place,
+    // so a background span becomes a highlight instead of nesting one.
+    const before = SPAN_OPEN_BEFORE.exec(doc.slice(0, range.from));
+    if (before && doc.startsWith(SPAN_CLOSE, range.to)) {
+      const style = editStyle(before[1] ?? "", "background", null);
+      const open = style ? `<span style="${style}">` : "";
+      changes.push({
+        from: range.from - (before[0] ?? "").length,
+        to: range.from,
+        text: `${open}${HIGHLIGHT_OPEN}${native.emoji}`,
+      });
+      changes.push({
+        from: range.to,
+        to: range.to + SPAN_CLOSE.length,
+        text: HIGHLIGHT_CLOSE,
+      });
+      continue;
+    }
+
+    changes.push({
+      from: range.from,
+      to: range.from,
+      text: `${HIGHLIGHT_OPEN}${native.emoji}`,
+    });
+    changes.push({ from: range.to, to: range.to, text: HIGHLIGHT_CLOSE });
+  }
+
   return { changes: order(changes) };
 }
 

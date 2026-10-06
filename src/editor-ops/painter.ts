@@ -1,5 +1,5 @@
 import { isDropCapStyle } from "./blocks";
-import { HIGHLIGHT_COLORS, NATIVE_HIGHLIGHT_EMOJI } from "../model/palettes";
+import { highlightEmojiAt, nativeHighlightOf } from "../model/palettes";
 import {
   normalizeRanges,
   order,
@@ -48,8 +48,6 @@ const SPAN_WHOLE = /^<span style="([^"]*)">([\s\S]*)<\/span>$/;
 const TAG = /<(\/?)(span|u|sub|sup)\b[^>]*>/g;
 const TAG_STYLE = /style="([^"]*)"/;
 const WORD = /[0-9A-Za-z]/;
-
-const HIGHLIGHT_EMOJI = NATIVE_HIGHLIGHT_EMOJI as readonly string[];
 
 interface Marker {
   readonly kind: PairKey | "span" | "code" | "math" | "escape";
@@ -107,20 +105,6 @@ function isWord(ch: string | undefined): boolean {
   return ch !== undefined && WORD.test(ch);
 }
 
-/** The 1.14 highlight emoji at `at`: the color it stands for and its width. */
-function highlightEmoji(
-  doc: string,
-  at: number,
-): { color: string; length: number } | null {
-  const point = doc.codePointAt(at);
-  if (point === undefined) return null;
-  const emoji = String.fromCodePoint(point);
-  const index = HIGHLIGHT_EMOJI.indexOf(emoji);
-  if (index < 0) return null;
-  const color = HIGHLIGHT_COLORS[index];
-  return color === undefined ? null : { color, length: emoji.length };
-}
-
 function nextMarker(doc: string, at: number, state: ScanState): Marker | null {
   const ch = doc[at];
   if (ch === undefined) return null;
@@ -141,14 +125,14 @@ function nextMarker(doc: string, at: number, state: ScanState): Marker | null {
       : null;
   if (ch === "=") {
     if (!doc.startsWith("==", at)) return null;
-    const emoji = highlightEmoji(doc, at + 2);
+    const emoji = highlightEmojiAt(doc, at + 2);
     return emoji === null
       ? { kind: "highlight", at, length: 2 }
       : {
           kind: "highlight",
           at,
           length: 2 + emoji.length,
-          color: emoji.color,
+          color: emoji.hex,
         };
   }
   if (ch === "_") {
@@ -244,13 +228,13 @@ function peelLayers(doc: string, range: Range, state: ScanState): Range {
     );
     if (pair) {
       const emoji =
-        pair.key === "highlight" ? highlightEmoji(doc, inner.from + 2) : null;
+        pair.key === "highlight" ? highlightEmojiAt(doc, inner.from + 2) : null;
       state.on[pair.key] = true;
       state.openAt[pair.key] = {
         at: inner.from,
         length: pair.open.length + (emoji?.length ?? 0),
       };
-      if (pair.key === "highlight") state.emoji = emoji?.color ?? null;
+      if (pair.key === "highlight") state.emoji = emoji?.hex ?? null;
       inner = {
         from: inner.from + pair.open.length + (emoji?.length ?? 0),
         to: inner.to - pair.close.length,
@@ -508,7 +492,15 @@ export function paintFormat(
   format: InlineFormat,
 ): Plan {
   const changes: Change[] = [];
-  const wantedStyle = styleText(format);
+  // A color Obsidian renders natively rides on the `==` marker, so it never
+  // reaches the span: the two have to disagree for an existing background span
+  // to be rewritten as a highlight rather than kept alongside one.
+  const wantedStyle = styleText({
+    ...format,
+    background: nativeHighlightOf(format.background ?? "")
+      ? null
+      : format.background,
+  });
 
   for (const range of normalizeRanges(ranges)) {
     if (range.from === range.to) continue;
@@ -547,11 +539,15 @@ export function paintFormat(
       if (marker.kind === "span") spans.pop();
     }
 
+    // A highlight carrying one of the native six carries its color in the
+    // marker; any other color has no native syntax and goes out as a span,
+    // like Highlight Color.
+    const native = nativeHighlightOf(format.background ?? "");
+
     for (const pair of PAIRS) {
-      // A highlight with a color goes out as a span, like Highlight Color.
       const wanted =
         pair.key === "highlight"
-          ? format.highlight && !format.background
+          ? format.highlight && (!format.background || Boolean(native))
           : format[pair.key];
       // After the cuts above the selection wears `state.on[key]` uniformly,
       // unless a run ended inside it and was closed at the near edge instead.
@@ -560,7 +556,11 @@ export function paintFormat(
         !enclosed.closed.some((marker) => marker.kind === pair.key);
       if (wanted === carries) continue;
       if (wanted) {
-        open.push(pair.open);
+        open.push(
+          pair.key === "highlight" && native
+            ? `${pair.open}${native.emoji}`
+            : pair.open,
+        );
         close.unshift(pair.close);
         continue;
       }

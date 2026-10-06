@@ -50,7 +50,7 @@ Obsidian is fast **if** you already speak Markdown. For everyone else — studen
 - **No syntax to memorise.** Select text, click **Bold**. That's it.
 - **Word terminology you already know.** Home / Insert / View / Table tabs, "Clear Formatting", "Change Case", "Navigation Pane".
 - **Discover what Obsidian can do.** Callouts, block references, embeds, math blocks and tags all get a button — features many users never find in the syntax.
-- **Do what Markdown can't.** Underline, superscript, subscript, paragraph alignment, text/highlight colors and font family/size, written as clean inline HTML.
+- **Do what Markdown can't.** Underline, superscript, subscript, paragraph alignment, text color and font family/size, written as clean inline HTML — plus 16 highlight colors, six of which Obsidian renders natively, with no HTML at all.
 - **Plain text forever.** No proprietary format, no database, no lock-in — your notes are still just `.md` files.
 - **Offline & private.** No network calls, no accounts, no telemetry. The ~2,150-entry emoji library ships inside the plugin.
 - **Your own launcher, if you want one.** The **Pinned** tab holds any command you pick — core, this plugin's, or another plugin's — so the toolbar bends to you without turning into a settings project.
@@ -240,7 +240,7 @@ No — and that's the point. It's a **toolbar** on top of Obsidian's own editor.
 No. Bold, headings, lists, links, tables, callouts, code blocks and math are all buttons.
 
 **What exactly gets written into my notes?**  
-Standard Markdown and Obsidian-flavoured Markdown. Only where Markdown has no syntax — underline, superscript, subscript, paragraph alignment, text and highlight colors, font family and font size, drop cap — does the plugin emit small, standard inline HTML tags, which Obsidian renders natively.
+Standard Markdown and Obsidian-flavoured Markdown. Six of the 16 highlight colors use Obsidian's own colored-highlight syntax, so they stay plain Markdown. Only where Markdown has no syntax — underline, superscript, subscript, paragraph alignment, text color, the other ten highlight colors, font family and font size, drop cap — does the plugin emit small, standard inline HTML tags, which Obsidian renders natively.
 
 **Can I keep using my keyboard shortcuts?**  
 Yes. 146 of the 162 commands appear in the command palette and can be bound to any hotkey.

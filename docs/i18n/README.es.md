@@ -52,7 +52,7 @@ Obsidian es rápido **si** ya hablas Markdown. Para todos los demás ——estud
 - **Nada de sintaxis que memorizar.** Selecciona el texto, haz clic en **Negrita**. Y ya está.
 - **La terminología de Word que ya conoces.** Pestañas Inicio / Insertar / Vista / Tabla, «Borrar formato», «Cambiar mayúsculas y minúsculas», «Panel de navegación».
 - **Descubre lo que Obsidian sabe hacer.** Los recuadros, las referencias de bloque, los elementos incrustados, los bloques de fórmula y las etiquetas tienen botón; funciones que muchos usuarios nunca encuentran en la sintaxis.
-- **Haz lo que Markdown no puede.** Subrayado, superíndice, subíndice, alineación de párrafo, colores de texto y de resaltado, fuente y tamaño de fuente, escritos como HTML en línea limpio.
+- **Haz lo que Markdown no puede.** Subrayado, superíndice, subíndice, alineación de párrafo, color del texto, fuente y tamaño de fuente, escritos como HTML en línea limpio — más 16 colores de resaltado, seis de los cuales Obsidian renderiza de forma nativa, sin nada de HTML.
 - **Texto plano para siempre.** Nada de formato propietario, ni base de datos, ni cautividad: tus notas siguen siendo simples archivos `.md`.
 - **Sin conexión y privado.** Sin llamadas de red, sin cuentas, sin telemetría. La biblioteca de unos 2.150 emoji viaja dentro del plugin.
 - **Tu propio lanzador, si lo quieres.** La pestaña **Anclado** guarda cualquier comando que elijas ——del núcleo, de este plugin o de otro——, así que la barra se adapta a ti sin convertirse en un proyecto de configuración.
@@ -242,7 +242,7 @@ No ——y ahí está la gracia——. Es una **barra de herramientas** sobre el
 No. Negrita, títulos, listas, vínculos, tablas, recuadros, bloques de código y fórmulas son botones.
 
 **¿Qué se escribe exactamente en mis notas?**  
-Markdown estándar y Markdown con sabor a Obsidian. Solo donde Markdown no tiene sintaxis ——subrayado, superíndice, subíndice, alineación de párrafo, colores de texto y de resaltado, fuente y tamaño de fuente, letra capital—— el plugin emite pequeñas etiquetas HTML en línea estándar, que Obsidian renderiza de forma nativa.
+Markdown estándar y Markdown con sabor a Obsidian. Seis de los 16 colores de resaltado usan la sintaxis de resaltado con color propia de Obsidian, así que siguen siendo Markdown puro. Solo donde Markdown no tiene sintaxis ——subrayado, superíndice, subíndice, alineación de párrafo, color del texto, los otros diez colores de resaltado, fuente y tamaño de fuente, letra capital—— el plugin emite pequeñas etiquetas HTML en línea estándar, que Obsidian renderiza de forma nativa.
 
 **¿Puedo seguir usando mis atajos de teclado?**  
 Sí. 146 de los 162 comandos aparecen en la paleta de comandos y se pueden asociar a cualquier atajo.

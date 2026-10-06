@@ -38,7 +38,11 @@ import {
   splitLines,
 } from "../editor-ops/lists";
 import { NO_CHANGE, type Plan } from "../editor-ops/plan";
-import { applySpanStyle, type SpanProperty } from "../editor-ops/spans";
+import {
+  applyHighlightColor,
+  applySpanStyle,
+  type SpanProperty,
+} from "../editor-ops/spans";
 import {
   alignColumn,
   deleteColumn,
@@ -526,12 +530,18 @@ export function planFor(context: CommandContext, id: string): Plan | null {
       return mode ? changeCase(doc, ranges, mode) : NO_CHANGE;
     }
     case "font-color":
-    case "highlight-color":
     case "font-size":
     case "font-family": {
       const parsed = optionValue ? parseSpanOptionValue(optionValue) : null;
       return parsed
         ? applySpanStyle(doc, ranges, parsed.property, parsed.value)
+        : NO_CHANGE;
+    }
+    // Six of the sixteen Obsidian renders itself; the other ten stay a span.
+    case "highlight-color": {
+      const parsed = optionValue ? parseSpanOptionValue(optionValue) : null;
+      return parsed
+        ? applyHighlightColor(doc, ranges, parsed.value)
         : NO_CHANGE;
     }
     default:

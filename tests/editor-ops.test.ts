@@ -46,7 +46,11 @@ import {
   type Plan,
   type Range,
 } from "../src/editor-ops/plan";
-import { applySpanStyle, clearOwnedInlineHtml } from "../src/editor-ops/spans";
+import {
+  applyHighlightColor,
+  applySpanStyle,
+  clearOwnedInlineHtml,
+} from "../src/editor-ops/spans";
 import { formatDateTime } from "../src/editor-ops/text";
 
 /** Applies a plan the way the editor would, so tests assert on text. */
@@ -331,6 +335,96 @@ describe("applySpanStyle", () => {
         (d, r) => applySpanStyle(d, r, "font-size", null),
       ),
     ).toBe('<span style="font-family:serif">b</span>');
+  });
+});
+
+/** The emoji are the subject here, not filler: they are what 1.14 writes. */
+describe("applyHighlightColor", () => {
+  /** The palette's own first six, in its own order. */
+  const YELLOW = "#ffff00";
+  const RED = "#ff0000";
+  const GREEN = "#008000";
+  /** Word's other ten: no native syntax, so a span. */
+  const LIME = "#00ff00";
+
+  it("writes a native color as Obsidian's own marked highlight", () => {
+    expect(apply("[word]", (d, r) => applyHighlightColor(d, r, RED))).toBe(
+      "==\u{1F534}word==",
+    );
+  });
+
+  it("leaves a color Obsidian cannot render as a span", () => {
+    expect(apply("[word]", (d, r) => applyHighlightColor(d, r, LIME))).toBe(
+      '<span style="background:#00ff00">word</span>',
+    );
+  });
+
+  it("colors a highlight that has none", () => {
+    expect(apply("==[word]==", (d, r) => applyHighlightColor(d, r, RED))).toBe(
+      "==\u{1F534}word==",
+    );
+  });
+
+  it("recolors a highlight the selection sits inside", () => {
+    expect(
+      apply("==\u{1F7E1}[word]==", (d, r) => applyHighlightColor(d, r, RED)),
+    ).toBe("==\u{1F534}word==");
+  });
+
+  it("leaves a highlight already wearing the color alone", () => {
+    expect(
+      apply("==\u{1F534}[word]==", (d, r) => applyHighlightColor(d, r, RED)),
+    ).toBe("==\u{1F534}word==");
+  });
+
+  it("rewrites a highlight the selection swallows whole", () => {
+    expect(
+      apply("[==\u{1F7E1}word==]", (d, r) => applyHighlightColor(d, r, RED)),
+    ).toBe("==\u{1F534}word==");
+  });
+
+  it("takes the whole highlight away for No Color", () => {
+    expect(
+      apply("==\u{1F534}[word]==", (d, r) => applyHighlightColor(d, r, null)),
+    ).toBe("word");
+    expect(apply("==[word]==", (d, r) => applyHighlightColor(d, r, null))).toBe(
+      "word",
+    );
+  });
+
+  it("rewrites a background span in place instead of nesting one", () => {
+    expect(
+      apply('<span style="background:#ff0000">[word]</span>', (d, r) =>
+        applyHighlightColor(d, r, RED),
+      ),
+    ).toBe("==\u{1F534}word==");
+  });
+
+  it("keeps what else the span carries", () => {
+    expect(
+      apply(
+        '<span style="color:blue;background:#ff0000">[word]</span>',
+        (d, r) => applyHighlightColor(d, r, RED),
+      ),
+    ).toBe('<span style="color:blue">==\u{1F534}word==');
+  });
+
+  it("drops the emoji before falling back to a span", () => {
+    expect(
+      apply("==\u{1F534}[word]==", (d, r) => applyHighlightColor(d, r, LIME)),
+    ).toBe('==<span style="background:#00ff00">word</span>==');
+  });
+
+  it("paints every cursor in one plan", () => {
+    expect(
+      apply("[one] and [two]", (d, r) => applyHighlightColor(d, r, GREEN)),
+    ).toBe("==\u{1F7E2}one== and ==\u{1F7E2}two==");
+  });
+
+  it("does nothing without a selection", () => {
+    expect(apply("plain|", (d, r) => applyHighlightColor(d, r, YELLOW))).toBe(
+      "plain",
+    );
   });
 });
 
@@ -1240,10 +1334,32 @@ describe("format painter", () => {
     );
   });
 
-  it("reads the 1.14 highlight emoji as a background color", () => {
+  it("reads the highlight emoji as a background color", () => {
     expect(brush("==🔴[todo]==").background).toBe("#ff0000");
-    expect(paint("[word]", brush("==🔴[todo]=="))).toBe(
-      '<span style="background:#ff0000">word</span>',
+    expect(paint("[word]", brush("==🔴[todo]=="))).toBe("==🔴word==");
+  });
+
+  it("reads the square emoji too", () => {
+    expect(brush("==🟥[todo]==").background).toBe("#ff0000");
+    expect(paint("[word]", brush("==🟥[todo]=="))).toBe("==🔴word==");
+  });
+
+  it("paints a highlight that carries no color without giving it one", () => {
+    expect(brush("==[todo]==").background).toBeNull();
+    expect(paint("[word]", brush("==[todo]=="))).toBe("==word==");
+  });
+
+  it("leaves a color Obsidian cannot render as a span", () => {
+    const lime = brush('[<span style="background:#00ff00">lime</span>]');
+    expect(paint("[word]", lime)).toBe(
+      '<span style="background:#00ff00">word</span>',
+    );
+  });
+
+  it("turns a background span into a native highlight", () => {
+    const red = brush("==🔴[todo]==");
+    expect(paint('[<span style="background:#ff0000">word</span>]', red)).toBe(
+      "==🔴word==",
     );
   });
 

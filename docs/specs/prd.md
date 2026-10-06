@@ -152,9 +152,17 @@ Pinned's manager opens from the Pinned tab's edit button and shows command names
 
 ### Font Color and Highlight Color
 
-Font Color is a drop-down palette of the 10 standard colors, matching Word's Font Color button. Highlight Color is a palette of 16 — Word's 15 highlighter colors plus Orange — laid out as the six Obsidian-native colors (Yellow, Red, Orange, Green, Blue, Violet) followed by Word's other ten; **all sixteen are currently written as inline HTML `<span style="background:…">`**, and the leading six switch to Obsidian's native colored-highlight syntax (`==🟡text==`) once 1.14 is public, which is why they are grouped first today. Both share the same behavior otherwise:
+Font Color is a drop-down palette of the 10 standard colors, matching Word's Font Color button. Highlight Color is a palette of 16 — Word's 15 highlighter colors plus Orange — laid out as the six Obsidian renders natively (Yellow, Red, Orange, Green, Blue, Violet) followed by Word's other ten.
 
-- **No Color** clears an existing color; **More Colors…** opens a hue/saturation panel with a hex field, an **Ok** and a **Cancel**. The color is applied only on **Ok**.
+**The leading six go out as Obsidian's own colored highlight, `==🟡text==`**: an emoji right after the opening `==` names the color; Obsidian strips it in Reading view and draws a swatch in its place in Live Preview. **The other ten, and any color from More Colors…, are written as inline HTML `<span style="background:…">`** — Markdown has no syntax for them. A swatch for the six shows the theme variable that decides the color on screen rather than the hex, because the two are not the same color: Obsidian mixes each of the six into the background at 30%.
+
+**Highlight**, the button beside it, forwards to Obsidian, which writes `==text==` with no emoji. That color is the theme's `--text-highlight-bg`, which falls back to yellow but is not one of the six: the palette is the way to get a color the plugin can vouch for.
+
+Both share the same behavior otherwise:
+
+- **No Color** takes a highlight away whole, `==` markers and all; on a span it clears the background and drops the span once it carries nothing else.
+- **More Colors…** opens a hue/saturation panel with a hex field, an **Ok** and a **Cancel**. The color is applied only on **Ok**.
+- A color repeats rather than toggles: picking the color a highlight already wears leaves it as it is, and **No Color** is what takes it off.
 - No last-used color is remembered; the palette always opens in the same state.
 - Nothing happens without a selection.
 

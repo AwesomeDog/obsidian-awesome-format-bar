@@ -52,7 +52,7 @@ Obsidian est rapide **à condition** de déjà parler Markdown. Pour tous les au
 - **Aucune syntaxe à mémoriser.** Sélectionnez du texte, cliquez sur **Gras**. C'est tout.
 - **Les termes Word que vous connaissez déjà.** Onglets Accueil / Insertion / Affichage / Tableau, « Effacer la mise en forme », « Modifier la casse », « Volet de navigation ».
 - **Découvrez ce qu'Obsidian sait faire.** Encadrés, références de bloc, incorporations, blocs de formule et étiquettes ont tous un bouton —— des fonctions que bien des utilisateurs ne trouvent jamais dans la syntaxe.
-- **Faites ce que Markdown ne peut pas.** Souligné, exposant, indice, alignement des paragraphes, couleurs du texte et du surlignage, police et taille de police, écrits en HTML en ligne propre.
+- **Faites ce que Markdown ne peut pas.** Souligné, exposant, indice, alignement des paragraphes, couleur du texte, police et taille de police, écrits en HTML en ligne propre — plus 16 couleurs de surlignage, dont six sont rendues nativement par Obsidian, sans aucun HTML.
 - **Du texte brut pour toujours.** Pas de format propriétaire, pas de base de données, pas d'enfermement —— vos notes restent de simples fichiers `.md`.
 - **Hors ligne et privé.** Aucun appel réseau, aucun compte, aucune télémétrie. La bibliothèque d'environ 2 150 emoji est livrée dans le plugin.
 - **Votre propre lanceur, si vous en voulez un.** L'onglet **Épinglé** accueille n'importe quelle commande de votre choix —— du cœur d'Obsidian, de ce plugin ou d'un autre —— pour que la barre se plie à vous au lieu de devenir un projet de configuration.
@@ -242,7 +242,7 @@ Non —— et c'est justement le but. C'est une **barre d'outils** posée sur l'
 Non. Gras, titres, listes, liens, tableaux, encadrés, blocs de code et formules sont tous des boutons.
 
 **Qu'est-ce qui est exactement écrit dans mes notes ?**  
-Du Markdown standard et du Markdown saveur Obsidian. Ce n'est que là où le Markdown n'a pas de syntaxe —— souligné, exposant, indice, alignement des paragraphes, couleurs du texte et du surlignage, police et taille de police, lettrine —— que le plugin émet quelques balises HTML en ligne standard, qu'Obsidian affiche nativement.
+Du Markdown standard et du Markdown saveur Obsidian. Six des 16 couleurs de surlignage utilisent la syntaxe de surlignage coloré propre à Obsidian et restent donc du Markdown pur. Ce n'est que là où le Markdown n'a pas de syntaxe —— souligné, exposant, indice, alignement des paragraphes, couleur du texte, les dix autres couleurs de surlignage, police et taille de police, lettrine —— que le plugin émet quelques balises HTML en ligne standard, qu'Obsidian affiche nativement.
 
 **Puis-je continuer à utiliser mes raccourcis clavier ?**  
 Oui. 146 des 162 commandes apparaissent dans la palette de commandes et peuvent être associées à n'importe quel raccourci.

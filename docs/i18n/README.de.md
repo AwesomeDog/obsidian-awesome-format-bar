@@ -52,7 +52,7 @@ Obsidian ist schnell — **wenn** Sie bereits Markdown beherrschen. Für alle an
 - **Keine Syntax zum Auswendiglernen.** Text markieren, auf **Fett** klicken. Fertig.
 - **Word-Begriffe, die Sie schon kennen.** Registerkarten Start / Einfügen / Ansicht / Tabelle, „Formatierung löschen", „Groß-/Kleinschreibung ändern", „Navigationsbereich".
 - **Entdecken, was Obsidian kann.** Callouts, Blockverweise, Einbettungen, Formelblöcke und Tags bekommen je eine Schaltfläche — Funktionen, die viele Nutzer in der Syntax nie finden.
-- **Tun, was Markdown nicht kann.** Unterstreichen, Hochstellen, Tiefstellen, Absatzausrichtung, Text- und Hervorhebungsfarbe sowie Schriftart und Schriftgröße, geschrieben als sauberes Inline-HTML.
+- **Tun, was Markdown nicht kann.** Unterstreichen, Hochstellen, Tiefstellen, Absatzausrichtung, Schriftfarbe sowie Schriftart und Schriftgröße, geschrieben als sauberes Inline-HTML — dazu 16 Hervorhebungsfarben, von denen sechs Obsidian ganz ohne HTML nativ darstellt.
 - **Für immer reiner Text.** Kein proprietäres Format, keine Datenbank, keine Bindung — Ihre Notizen bleiben schlicht `.md`-Dateien.
 - **Offline und privat.** Keine Netzwerkaufrufe, keine Konten, keine Telemetrie. Die rund 2.150 Einträge der Emoji-Bibliothek werden mit dem Plugin ausgeliefert.
 - **Ihr eigener Starter, wenn Sie einen wollen.** Die Registerkarte **Angeheftet** nimmt jeden Befehl auf, den Sie auswählen — einen aus dem Kern, aus diesem Plugin oder aus einem anderen —, damit sich die Leiste nach Ihnen richtet, ohne zu einem Konfigurationsprojekt zu werden.
@@ -242,7 +242,7 @@ Nein — und genau das ist der Punkt. Es ist eine **Symbolleiste** über dem eig
 Nein. Fett, Überschriften, Listen, Links, Tabellen, Callouts, Codeblöcke und Formeln sind alles Schaltflächen.
 
 **Was genau wird in meine Notizen geschrieben?**  
-Standard-Markdown und Obsidian-Markdown. Nur dort, wo Markdown keine Syntax hat — Unterstreichen, Hochstellen, Tiefstellen, Absatzausrichtung, Text- und Hervorhebungsfarbe, Schriftart und Schriftgröße, Initial — schreibt das Plugin wenige, standardkonforme Inline-HTML-Tags, die Obsidian nativ darstellt.
+Standard-Markdown und Obsidian-Markdown. Sechs der 16 Hervorhebungsfarben nutzen Obsidians eigene Syntax für farbige Hervorhebungen und bleiben damit reines Markdown. Nur dort, wo Markdown keine Syntax hat — Unterstreichen, Hochstellen, Tiefstellen, Absatzausrichtung, Schriftfarbe, die übrigen zehn Hervorhebungsfarben, Schriftart und Schriftgröße, Initial — schreibt das Plugin wenige, standardkonforme Inline-HTML-Tags, die Obsidian nativ darstellt.
 
 **Kann ich meine Tastenkürzel weiter verwenden?**  
 Ja. 146 der 162 Befehle erscheinen in der Befehlspalette und lassen sich an ein beliebiges Tastenkürzel binden.
