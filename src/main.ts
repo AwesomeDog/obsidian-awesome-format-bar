@@ -196,6 +196,9 @@ export default class AwesomeFormatBarPlugin extends Plugin {
   override onunload(): void {
     // Before the toolbars go: `disarmPainter` refreshes them.
     this.disarmPainter();
+    // The sort arrow is CSS on <body>, and every window we bound may wear it.
+    for (const doc of this.boundDocuments) doc.body.removeClass(SORTABLE_CLASS);
+    this.boundDocuments.clear();
     for (const toolbar of this.toolbars.values()) toolbar.destroy();
     this.toolbars.clear();
   }
