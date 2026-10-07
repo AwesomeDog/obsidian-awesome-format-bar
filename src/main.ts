@@ -133,8 +133,8 @@ export default class AwesomeFormatBarPlugin extends Plugin {
 
   private readonly toolbars = new Map<MarkdownView, ViewToolbar>();
 
-  /** Pop-out windows bind their own; `window-close` drops theirs. */
-  private readonly boundDocuments = new Set<Document>();
+  /** Pop-out windows bind their own; `window-close` unbinds theirs. */
+  private readonly boundDocuments = new Map<Document, () => void>();
 
   /** Mutable on purpose: Obsidian re-reads this array on `updateOptions()`. */
   private readonly editorExtensions: Extension[] = [];
@@ -179,9 +179,11 @@ export default class AwesomeFormatBarPlugin extends Plugin {
       this.app.workspace.on("file-open", () => this.disarmPainter()),
     );
     this.registerEvent(
-      this.app.workspace.on("window-close", (_leaf, win) =>
-        this.boundDocuments.delete(win.document),
-      ),
+      this.app.workspace.on("window-close", (_workspaceWindow, win) => {
+        this.unbindDocument(win.document);
+        // Those listeners painted in the window that just went away.
+        if (this.painter) this.listenForPaint();
+      }),
     );
     this.bindDocument(document);
     this.register(() => closeFloating());
@@ -197,7 +199,9 @@ export default class AwesomeFormatBarPlugin extends Plugin {
     // Before the toolbars go: `disarmPainter` refreshes them.
     this.disarmPainter();
     // The sort arrow is CSS on <body>, and every window we bound may wear it.
-    for (const doc of this.boundDocuments) doc.body.removeClass(SORTABLE_CLASS);
+    for (const doc of this.boundDocuments.keys())
+      doc.body.removeClass(SORTABLE_CLASS);
+    for (const off of this.boundDocuments.values()) off();
     this.boundDocuments.clear();
     for (const toolbar of this.toolbars.values()) toolbar.destroy();
     this.toolbars.clear();
@@ -205,7 +209,7 @@ export default class AwesomeFormatBarPlugin extends Plugin {
 
   async saveSettings(): Promise<void> {
     await this.saveData(this.settings);
-    for (const doc of this.boundDocuments) this.markSortable(doc);
+    for (const doc of this.boundDocuments.keys()) this.markSortable(doc);
     await this.refreshToolbars();
   }
 
@@ -266,29 +270,38 @@ export default class AwesomeFormatBarPlugin extends Plugin {
   /** Bound per document: pop-out windows fire their own events. */
   private bindDocument(doc: Document): void {
     if (this.boundDocuments.has(doc)) return;
-    this.boundDocuments.add(doc);
+    // One controller per document: a closed window takes its listeners with it.
+    const controller = new AbortController();
+    const { signal } = controller;
+    this.boundDocuments.set(doc, () => controller.abort());
     const refresh = (): void => this.queueRefresh();
-    this.registerDomEvent(doc, "selectionchange", refresh);
+    this.registerDomEvent(doc, "selectionchange", refresh, { signal });
     // Scroll does not bubble, so it needs the capture phase.
-    doc.addEventListener("scroll", refresh, true);
-    this.register(() => doc.removeEventListener("scroll", refresh, true));
+    doc.addEventListener("scroll", refresh, { capture: true, signal });
 
     // Capture before the editor so handled navigation does not run its default.
     const onKeyDown = (evt: KeyboardEvent): void => this.onTableKeydown(evt);
-    doc.addEventListener("keydown", onKeyDown, true);
-    this.register(() => doc.removeEventListener("keydown", onKeyDown, true));
+    doc.addEventListener("keydown", onKeyDown, { capture: true, signal });
 
     const onClick = (evt: MouseEvent): void => {
       if (this.settings.sortTableOnHeaderClick) sortTableOnHeaderClick(evt);
     };
-    this.registerDomEvent(doc, "click", onClick);
+    this.registerDomEvent(doc, "click", onClick, { signal });
     this.markSortable(doc);
     // A window opened mid-stroke: the brush has to paint there too.
     this.markPainter();
     if (this.painter) this.listenForPaint();
 
     const win = doc.defaultView;
-    if (win) this.registerDomEvent(win, "resize", refresh);
+    if (win) this.registerDomEvent(win, "resize", refresh, { signal });
+  }
+
+  /** A window went away: drop its listeners before forgetting the document. */
+  private unbindDocument(doc: Document): void {
+    const off = this.boundDocuments.get(doc);
+    if (!off) return;
+    off();
+    this.boundDocuments.delete(doc);
   }
 
   /** Table navigation runs before the editor's normal Enter and Tab behavior. */
@@ -643,7 +656,7 @@ export default class AwesomeFormatBarPlugin extends Plugin {
   /** The crosshair is CSS, so the flag has to reach every window's body. */
   private markPainter(): void {
     const armed = this.painter !== null;
-    for (const doc of this.boundDocuments)
+    for (const doc of this.boundDocuments.keys())
       doc.body.toggleClass(PAINTER_CLASS, armed);
   }
 
@@ -683,7 +696,7 @@ export default class AwesomeFormatBarPlugin extends Plugin {
     const onKeyDown = (evt: KeyboardEvent): void => {
       if (evt.key === "Escape") this.disarmPainter();
     };
-    for (const doc of this.boundDocuments) {
+    for (const doc of this.boundDocuments.keys()) {
       doc.addEventListener("mouseup", onMouseUp);
       doc.addEventListener("keyup", onKeyUp);
       // Capture: Esc is ours before the editor gets a look at it.
