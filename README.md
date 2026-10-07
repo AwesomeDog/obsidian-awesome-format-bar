@@ -62,7 +62,7 @@ Obsidian is fast **if** you already speak Markdown. For everyone else — studen
 
 | | |
 | --- | --- |
-| **Toolbar positions** | Top ribbon, floating bar above the selection, fixed bottom bar — combine freely |
+| **Toolbar positions** | Top ribbon, floating bar above the selection, fixed bottom bar, editor menu (right-click) — four independent switches, combine freely |
 | **Commands** | **162** built-in, **146** available in the command palette for custom hotkeys |
 | **Tabs** | Home · Insert · View · Table · Utilities · **Pinned** |
 | **Callouts** | All 12 Obsidian callout types in one drop-down |
@@ -77,13 +77,14 @@ Obsidian is fast **if** you already speak Markdown. For everyone else — studen
 
 ## Features
 
-### 🧭 Three toolbar positions, freely combined
+### 🧭 Four positions, freely combined
 
 - **Ribbon (Top)** — the full, tabbed toolbar pinned above the editor. *Default.*
 - **Following** — a compact bar that floats above your current selection, like the selection toolbar in Word or Google Docs. **The Following bar never covers what you are editing.**
 - **Fixed** — a compact bar pinned to the bottom of the editor.
+- **Editor menu** — the whole command table as one submenu of the note's right-click menu.
 
-Each position is toggled independently, so you can run just the floating bar, just the ribbon, or all three.
+Each of the four is toggled independently, Desktop and Mobile have their own set.
 
 ### 🅰️ 162 formatting commands in a familiar layout
 
@@ -204,11 +205,11 @@ Settings → **Community plugins** → **Browse** → search for **"Awesome Form
 
 ## Getting started
 
-1. Open **Settings → Awesome Format Bar** and toggle the positions you want: **Top**, **Following**, **Fixed**.
+1. Open **Settings → Awesome Format Bar** and toggle the four positions you want: **Top**, **Following**, **Fixed** and **Editor menu**. Desktop and Mobile have their own set of switches.
 2. The **Ribbon (Top)** has six tabs; the last one, **Pinned**, holds the commands you pin yourself. While it is empty it shows an add hint; use the edit button to manage commands and groups.
 3. The **compact bars** (Following / Fixed) carry a fixed subset of commands; buttons that don't fit the available width collapse into the `⋯` overflow menu, which also lists every other command grouped by tab, and your pinned ones.
 4. Open the **Pinned** edit button to add commands, choose icons, create or rename groups, drag to reorder, move commands, or delete them. Settings keeps a fallback entry for the same manager. Pinned commands behave exactly like their command-palette counterparts.
-5. Prefer the keyboard? Turn **all three position toggles off** and the toolbar disappears from the interface entirely — the plugin then adds nothing to your screen, while all **146 palette-registered commands** keep working and can be bound to your own hotkeys in **Settings → Hotkeys**. In other words: you can use it as a pure command/hotkey pack and never click a button.
+5. Prefer the keyboard? Turn **all four toggles off** and the plugin adds nothing to your screen at all, while all **146 palette-registered commands** keep working and can be bound to your own hotkeys in **Settings → Hotkeys**. In other words: you can use it as a pure command/hotkey pack and never click a button.
 
 ---
 
@@ -216,7 +217,7 @@ Settings → **Community plugins** → **Browse** → search for **"Awesome Form
 
 | Section     | Contents                                                                                                                 |
 | ----------- | ------------------------------------------------------------------------------------------------------------------------ |
-| **Toolbar** | Independent toggles for Top / Following / Fixed                                                                          |
+| **Toolbar** | Independent toggles for Top / Following / Fixed / Editor menu — one set for Desktop, one for Mobile                       |
 | **Pinned**  | Open the Pinned manager to add commands, choose icons, manage groups, reorder, and delete                                  |
 | **Table**   | Keyboard navigation: Enter moves down a cell, Tab / Shift+Tab move between cells, Tab at the right edge adds a column and Enter on the last row adds a row; pad cell width with spaces; sort on header click in Reading view (never modifies the file)   |
 
@@ -246,7 +247,7 @@ Standard Markdown and Obsidian-flavoured Markdown. Six of the 16 highlight color
 Yes. 146 of the 162 commands appear in the command palette and can be bound to any hotkey.
 
 **I'm a keyboard person — can I hide the toolbar completely?**  
-Yes, and nothing is lost by doing it. Switch off all three positions (**Top / Following / Fixed**) in **Settings → Awesome Format Bar** and the plugin leaves zero footprint on the screen: no ribbon, no floating bar, no bottom bar. Every one of the **146 palette-registered commands** still runs, from the command palette or from a hotkey you assign in **Settings → Hotkeys** — including commands Obsidian has no built-in shortcut for, such as font color, highlight color, change case, callouts, table sorting and the line utilities. Think of it as an optional keyboard-only layer you can switch on whenever the mouse starts feeling slow.
+Yes, and nothing is lost by doing it. Switch off all four positions (**Top / Following / Fixed / Editor menu**) in **Settings → Awesome Format Bar** and the plugin leaves zero footprint on the screen: no ribbon, no floating bar, no bottom bar, no right-click entry. Every one of the **146 palette-registered commands** still runs, from the command palette or from a hotkey you assign in **Settings → Hotkeys** — including commands Obsidian has no built-in shortcut for, such as font color, highlight color, change case, callouts, table sorting and the line utilities. Think of it as an optional keyboard-only layer you can switch on whenever the mouse starts feeling slow.
 
 **Can I add buttons for commands from other plugins?**  
 Yes — that's the **Pinned** tab. Pin any command from the palette and choose an icon. If the owning plugin is disabled, the button greys out and the pin is preserved.
@@ -264,7 +265,7 @@ No. Reading-view header-click sorting is display-only and never modifies the not
 Put the caret on the picture's own line. **Align Center** (Home · Paragraph) centres it — a picture alone on a line *is* a paragraph, so no separate command is needed — and **Image Size ▼** (Insert · Illustrations) sets its width to 100–600 px, or **Original Size** to give the file's own size back; a width is written after an alias rather than over it, so `![[logo.png|Company logo]]` becomes `![[logo.png|Company logo|300]]`. **All Images ▼** applies the same width to every picture in the note at once, from anywhere in the note. **Alt Text** writes the alt text and selects it, **Caption** writes a caption line underneath and selects it, and **Reset Picture** drops both again. **Convert Syntax** swaps the picture between `![[a.png]]` and `![](a.png)`. Everything is written as plain Obsidian syntax, so the note reads the same without the plugin.
 
 **Can I hide the toolbar when I want a clean screen?**  
-Yes — toggle any position off in settings, or all three to hide it entirely (see the keyboard question above for what still works).
+Yes — toggle any position off in settings, or all four to hide it entirely (see the keyboard question above for what still works).
 
 **Is it configurable?**  
 Deliberately minimal — and that's the point. The built-in layout is fixed and theme-aware so it always looks native, never needs re-arranging, and never resets itself on update. Everything you'd actually want to change lives in one place: the **Pinned** tab, where you add any command, pick its icon, group it and drag it into order. The reasoning is in *Features → Zero configuration, theme-aware*.
