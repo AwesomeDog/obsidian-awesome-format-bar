@@ -3,7 +3,8 @@ import type {
   PinnedCommand,
   Settings,
   ToolbarPosition,
-  ToolbarPositionVisibility,
+  ToolbarToggle,
+  ToolbarVisibility,
 } from "./types";
 
 /** Defaults, migration, and which Positions exist right now. */
@@ -11,8 +12,8 @@ export const CURRENT_SETTINGS_VERSION = 1;
 
 export const DEFAULT_SETTINGS = {
   version: CURRENT_SETTINGS_VERSION,
-  desktop: { top: true, following: false, fixed: false },
-  mobile: { top: true, following: false, fixed: false },
+  desktop: { top: true, following: false, fixed: false, editorMenu: true },
+  mobile: { top: true, following: false, fixed: false, editorMenu: true },
   enableOnMobile: true,
   tableKeyNavigation: true,
   padCellWidthWithSpaces: true,
@@ -23,17 +24,25 @@ export const DEFAULT_SETTINGS = {
 } as const satisfies Settings;
 
 export const TOOLBAR_POSITIONS = ["top", "following", "fixed"] as const;
+
+/** The three Positions and the editor menu, in the order the row shows them. */
+export const TOOLBAR_TOGGLES = [
+  ...TOOLBAR_POSITIONS,
+  "editorMenu",
+] as const satisfies readonly ToolbarToggle[];
+
 function normalizeVisibility(
   raw: unknown,
-  fallback: ToolbarPositionVisibility,
-): ToolbarPositionVisibility {
+  fallback: ToolbarVisibility,
+): ToolbarVisibility {
   const source = (raw ?? {}) as Record<string, unknown>;
-  const pick = (key: ToolbarPosition): boolean =>
+  const pick = (key: ToolbarToggle): boolean =>
     typeof source[key] === "boolean" ? source[key] : fallback[key];
   return {
     top: pick("top"),
     following: pick("following"),
     fixed: pick("fixed"),
+    editorMenu: pick("editorMenu"),
   };
 }
 
@@ -121,4 +130,14 @@ export function enabledToolbarPositions(
   if (isMobile && !settings.enableOnMobile) return [];
   const visibility = isMobile ? settings.mobile : settings.desktop;
   return TOOLBAR_POSITIONS.filter((position) => visibility[position]);
+}
+
+/** Same master switch: mobile off means the editor menu goes with the bars. */
+export function editorMenuEnabled(
+  settings: Settings,
+  isMobile: boolean,
+): boolean {
+  if (isMobile && !settings.enableOnMobile) return false;
+  const visibility = isMobile ? settings.mobile : settings.desktop;
+  return visibility.editorMenu;
 }

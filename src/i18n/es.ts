@@ -209,6 +209,9 @@ export default {
   "Compact bar above the selection.":
     "La barra compacta se muestra encima de la selección.",
   "Ribbon pinned above the editor.": "La cinta se ancla encima del editor.",
+  "Editor menu": "Menú del editor",
+  "Adds a submenu with every command to the editor's right-click menu.":
+    "Añade al menú contextual del editor un submenú con todos los comandos.",
   "Enable on Mobile": "Habilitar en móvil",
   "Hides every bar on mobile without clearing its positions.":
     "Oculta todas las barras en móvil sin borrar sus posiciones.",

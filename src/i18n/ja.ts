@@ -209,6 +209,9 @@ export default {
   "Compact bar above the selection.":
     "コンパクト バーが選択範囲の上に表示されます。",
   "Ribbon pinned above the editor.": "リボンがエディターの上部に固定されます。",
+  "Editor menu": "エディターメニュー",
+  "Adds a submenu with every command to the editor's right-click menu.":
+    "エディターの右クリックメニューに、すべてのコマンドを含むサブメニューを追加します。",
   "Enable on Mobile": "モバイルで有効にする",
   "Hides every bar on mobile without clearing its positions.":
     "モバイルではすべてのバーを非表示にします。各位置のオン/オフの設定は保持されます。",

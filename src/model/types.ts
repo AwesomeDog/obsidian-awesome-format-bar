@@ -1,15 +1,20 @@
 export type ToolbarPosition = "top" | "following" | "fixed";
 
-export interface ToolbarPositionVisibility {
+/** Where the bar shows, plus the editor menu: one switch per place. */
+export type ToolbarToggle = ToolbarPosition | "editorMenu";
+
+export interface ToolbarVisibility {
   top: boolean;
   following: boolean;
   fixed: boolean;
+  /** The editor's own menu: every command under one submenu of its own. */
+  editorMenu: boolean;
 }
 
 export interface Settings {
   version: number;
-  desktop: ToolbarPositionVisibility;
-  mobile: ToolbarPositionVisibility;
+  desktop: ToolbarVisibility;
+  mobile: ToolbarVisibility;
   enableOnMobile: boolean;
   /** Source mode: Enter and Tab walk a table's cells instead of the text. */
   tableKeyNavigation: boolean;

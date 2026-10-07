@@ -209,6 +209,9 @@ export default {
   "Compact bar above the selection.":
     "간편 도구 모음이 선택 영역 위에 표시됩니다.",
   "Ribbon pinned above the editor.": "리본이 편집기 위쪽에 고정됩니다.",
+  "Editor menu": "편집기 메뉴",
+  "Adds a submenu with every command to the editor's right-click menu.":
+    "편집기 오른쪽 클릭 메뉴에 모든 명령이 담긴 하위 메뉴를 추가합니다.",
   "Enable on Mobile": "모바일에서 사용",
   "Hides every bar on mobile without clearing its positions.":
     "모바일에서 모든 도구 모음을 숨기며, 각 위치 설정은 지워지지 않습니다.",

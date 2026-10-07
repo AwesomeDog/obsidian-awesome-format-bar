@@ -62,7 +62,7 @@ export function allIconNames(): string[] {
 }
 
 /** First name in the chain this Obsidian has. */
-function resolveIconName(icon: string): string {
+export function resolveIconName(icon: string): string {
   if (iconExists(icon)) return icon;
   return (ICON_FALLBACKS[icon] ?? []).find(iconExists) ?? PLACEHOLDER_ICON;
 }

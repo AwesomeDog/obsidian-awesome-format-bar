@@ -21,6 +21,7 @@ import {
 import {
   CURRENT_SETTINGS_VERSION,
   DEFAULT_SETTINGS,
+  editorMenuEnabled,
   enabledToolbarPositions,
   normalizeSettings,
 } from "../src/model/preferences";
@@ -50,6 +51,7 @@ describe("normalizeSettings", () => {
       top: true,
       following: true,
       fixed: false,
+      editorMenu: true,
     });
     expect(result.mobile).toEqual(DEFAULT_SETTINGS.mobile);
   });
@@ -63,6 +65,7 @@ describe("normalizeSettings", () => {
       top: false,
       following: false,
       fixed: false,
+      editorMenu: true,
     });
   });
 
@@ -223,12 +226,29 @@ describe("enabledToolbarPositions", () => {
 
   it("reports every enabled position in a fixed order", () => {
     const settings = full();
-    settings.desktop = { top: true, following: true, fixed: true };
+    settings.desktop = {
+      top: true,
+      following: true,
+      fixed: true,
+      editorMenu: true,
+    };
     expect(enabledToolbarPositions(settings, false)).toEqual([
       "top",
       "following",
       "fixed",
     ]);
+  });
+});
+
+describe("editorMenuEnabled", () => {
+  it("follows the platform's own switch and the mobile master switch", () => {
+    const settings = full();
+    expect(editorMenuEnabled(settings, false)).toBe(true);
+    settings.desktop.editorMenu = false;
+    expect(editorMenuEnabled(settings, false)).toBe(false);
+    expect(editorMenuEnabled(settings, true)).toBe(true);
+    settings.enableOnMobile = false;
+    expect(editorMenuEnabled(settings, true)).toBe(false);
   });
 });
 
@@ -239,9 +259,11 @@ describe("setting keys", () => {
       "desktop.top",
       "desktop.following",
       "desktop.fixed",
+      "desktop.editorMenu",
       "mobile.top",
       "mobile.following",
       "mobile.fixed",
+      "mobile.editorMenu",
       "enableOnMobile",
       "tableKeyNavigation",
       "padCellWidthWithSpaces",

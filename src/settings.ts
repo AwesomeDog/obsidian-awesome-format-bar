@@ -9,12 +9,8 @@ import {
 } from "obsidian";
 import { t } from "./i18n/i18n";
 import type AwesomeFormatBarPlugin from "./main";
-import { TOOLBAR_POSITIONS } from "./model/preferences";
-import type {
-  Settings,
-  ToolbarPosition,
-  ToolbarPositionVisibility,
-} from "./model/types";
+import { TOOLBAR_TOGGLES } from "./model/preferences";
+import type { Settings, ToolbarToggle, ToolbarVisibility } from "./model/types";
 
 type PlatformKey = "desktop" | "mobile";
 const TABLE_KEYS = [
@@ -24,7 +20,7 @@ const TABLE_KEYS = [
 ] as const;
 type TableKey = (typeof TABLE_KEYS)[number];
 type SettingKey =
-  `${PlatformKey}.${ToolbarPosition}` | "enableOnMobile" | TableKey;
+  `${PlatformKey}.${ToolbarToggle}` | "enableOnMobile" | TableKey;
 
 function isTableKey(key: string): key is TableKey {
   return (TABLE_KEYS as readonly string[]).includes(key);
@@ -34,17 +30,20 @@ function toggle(key: SettingKey, name: string, desc: string): SettingGroupItem {
   return { control: { key, type: "toggle" }, desc: t(desc), name: t(name) };
 }
 
-const POSITION_LABELS: Record<ToolbarPosition, string> = {
+const TOGGLE_LABELS: Record<ToolbarToggle, string> = {
   fixed: "Fixed",
   following: "Following",
   top: "Top",
+  editorMenu: "Editor menu",
 };
 
-/** Tooltips: three toggles in one row leave no room for descriptions. */
-const POSITION_HINTS: Record<ToolbarPosition, string> = {
+/** Tooltips: four toggles in one row leave no room for descriptions. */
+const TOGGLE_HINTS: Record<ToolbarToggle, string> = {
   fixed: "Compact bar pinned to the bottom of the editor.",
   following: "Compact bar above the selection.",
   top: "Ribbon pinned above the editor.",
+  editorMenu:
+    "Adds a submenu with every command to the editor's right-click menu.",
 };
 
 export class FormatBarSettingTab extends PluginSettingTab {
@@ -119,13 +118,13 @@ export class FormatBarSettingTab extends PluginSettingTab {
     return {
       name: t(platform === "desktop" ? "Desktop" : "Mobile"),
       render: (setting: Setting): void => {
-        for (const position of TOOLBAR_POSITIONS) {
-          const key: SettingKey = `${platform}.${position}`;
+        for (const toggle of TOOLBAR_TOGGLES) {
+          const key: SettingKey = `${platform}.${toggle}`;
           const label = setting.controlEl.createEl("label", {
             cls: "awesome-format-bar-position",
           });
-          label.createSpan({ text: t(POSITION_LABELS[position]) });
-          setTooltip(label, t(POSITION_HINTS[position]));
+          label.createSpan({ text: t(TOGGLE_LABELS[toggle]) });
+          setTooltip(label, t(TOGGLE_HINTS[toggle]));
           new ToggleComponent(label)
             .setValue(readSettingKey(this.plugin.settings, key))
             .onChange(async (value) => {
@@ -151,8 +150,8 @@ export class FormatBarSettingTab extends PluginSettingTab {
 export function readSettingKey(settings: Settings, key: SettingKey): boolean {
   if (key === "enableOnMobile") return settings.enableOnMobile;
   if (isTableKey(key)) return settings[key];
-  const [platform, position] = key.split(".") as [PlatformKey, ToolbarPosition];
-  return settings[platform][position];
+  const [platform, toggle] = key.split(".") as [PlatformKey, ToolbarToggle];
+  return settings[platform][toggle];
 }
 
 export function writeSettingKey(
@@ -168,7 +167,7 @@ export function writeSettingKey(
     settings[key] = value;
     return;
   }
-  const [platform, position] = key.split(".") as [PlatformKey, ToolbarPosition];
-  const visibility: ToolbarPositionVisibility = settings[platform];
-  visibility[position] = value;
+  const [platform, toggle] = key.split(".") as [PlatformKey, ToolbarToggle];
+  const visibility: ToolbarVisibility = settings[platform];
+  visibility[toggle] = value;
 }

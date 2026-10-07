@@ -208,6 +208,9 @@ export default {
     "紧凑工具栏固定在编辑器底部。",
   "Compact bar above the selection.": "紧凑工具栏显示在所选内容上方。",
   "Ribbon pinned above the editor.": "功能区固定在编辑器上方。",
+  "Editor menu": "编辑器菜单",
+  "Adds a submenu with every command to the editor's right-click menu.":
+    "在编辑器的右键菜单中加入一个包含全部命令的子菜单。",
   "Enable on Mobile": "在移动端启用",
   "Hides every bar on mobile without clearing its positions.":
     "在移动端隐藏所有工具栏，但不会清空各位置的开关状态。",

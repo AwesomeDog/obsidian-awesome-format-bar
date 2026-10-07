@@ -208,6 +208,9 @@ export default {
     "精簡工具列固定在編輯器底部。",
   "Compact bar above the selection.": "精簡工具列顯示在所選範圍上方。",
   "Ribbon pinned above the editor.": "功能區固定在編輯器上方。",
+  "Editor menu": "編輯器選單",
+  "Adds a submenu with every command to the editor's right-click menu.":
+    "在編輯器的右鍵選單中加入一個包含所有指令的子選單。",
   "Enable on Mobile": "在行動裝置上啟用",
   "Hides every bar on mobile without clearing its positions.":
     "在行動裝置上隱藏所有工具列，但不會清除各位置的開關狀態。",

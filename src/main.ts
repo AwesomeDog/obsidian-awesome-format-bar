@@ -7,8 +7,11 @@ import {
   addIcon,
   getLanguage,
   type Editor,
+  type MarkdownFileInfo,
+  type Menu,
 } from "obsidian";
 import { commit, hasSelection, selectionRanges } from "./commands/apply";
+import { addCommandsToMenu } from "./editor-menu";
 import { exitFullscreen } from "./commands/dispatch";
 import {
   canRun,
@@ -37,6 +40,7 @@ import { setLanguage, t } from "./i18n/i18n";
 import { COMMANDS, commandById } from "./model/command-table";
 import {
   DEFAULT_SETTINGS,
+  editorMenuEnabled,
   enabledToolbarPositions,
   normalizeSettings,
 } from "./model/preferences";
@@ -164,6 +168,11 @@ export default class AwesomeFormatBarPlugin extends Plugin {
     this.registerEvent(this.app.workspace.on("window-open", reload));
     this.registerEvent(
       this.app.workspace.on("editor-change", () => this.queueRefresh()),
+    );
+    this.registerEvent(
+      this.app.workspace.on("editor-menu", (menu, editor, info) =>
+        this.addEditorMenu(menu, editor, info),
+      ),
     );
     // Another note is another job: the brush does not follow you there.
     this.registerEvent(
@@ -369,6 +378,28 @@ export default class AwesomeFormatBarPlugin extends Plugin {
         };
       },
     };
+  }
+
+  /** Right-click in the editor: the whole command table, in Obsidian's menu. */
+  private addEditorMenu(
+    menu: Menu,
+    editor: Editor,
+    info: MarkdownView | MarkdownFileInfo,
+  ): void {
+    if (!editorMenuEnabled(this.settings, Platform.isMobile)) return;
+    // A Canvas card or a hover editor is editable too; a note in Reading view
+    // is not, and there the menu is the only thing that would answer.
+    const view = info instanceof MarkdownView ? info : undefined;
+    const editable = !view || view.getMode() === "source";
+    addCommandsToMenu(menu, {
+      app: this.app,
+      editor: editable ? editor : null,
+      execute: (spec, optionValue): void => {
+        void this.execute(spec, view, optionValue);
+      },
+      pinned: this.settings.pinned,
+      title: this.manifest.name,
+    });
   }
 
   private registerCommands(): void {

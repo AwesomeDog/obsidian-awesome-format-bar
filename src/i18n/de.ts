@@ -210,6 +210,9 @@ export default {
     "Die kompakte Leiste wird über der Auswahl angezeigt.",
   "Ribbon pinned above the editor.":
     "Das Menüband wird über dem Editor fixiert.",
+  "Editor menu": "Editor-Menü",
+  "Adds a submenu with every command to the editor's right-click menu.":
+    "Fügt dem Rechtsklick-Menü des Editors ein Untermenü mit allen Befehlen hinzu.",
   "Enable on Mobile": "Auf Mobilgeräten aktivieren",
   "Hides every bar on mobile without clearing its positions.":
     "Blendet auf Mobilgeräten alle Leisten aus, ohne die Positionen zurückzusetzen.",

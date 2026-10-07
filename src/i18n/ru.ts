@@ -209,6 +209,9 @@ export default {
   "Compact bar above the selection.":
     "Компактная панель отображается над выделенным фрагментом.",
   "Ribbon pinned above the editor.": "Лента закреплена над редактором.",
+  "Editor menu": "Меню редактора",
+  "Adds a submenu with every command to the editor's right-click menu.":
+    "Добавляет в контекстное меню редактора подменю со всеми командами.",
   "Enable on Mobile": "Включить на мобильных устройствах",
   "Hides every bar on mobile without clearing its positions.":
     "Скрывает все панели на мобильных устройствах, не сбрасывая их положение.",
