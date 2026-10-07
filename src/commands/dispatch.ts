@@ -9,11 +9,13 @@ import { t } from "../i18n/i18n";
 import {
   insertBlockReference,
   insertCallout,
+  insertChartBlock,
   numberHeadings,
   sortHeadings,
   tableOfContents,
   toggleDropCap,
   toggleParagraphAlignment,
+  type ChartKind,
   type HeadingNumbering,
   type ParagraphAlignment,
 } from "../editor-ops/blocks";
@@ -73,7 +75,12 @@ import {
   tableFromDelimited,
   tableToText,
 } from "../editor-ops/tsv";
-import { deleteRanges, formatDateTime, insertText } from "../editor-ops/text";
+import {
+  deleteRanges,
+  formatDate,
+  formatDateTime,
+  insertText,
+} from "../editor-ops/text";
 import { cjkSpacing, cleanUp, smartPunctuation } from "../editor-ops/normalize";
 import { CASE_OPTIONS } from "../model/palettes";
 import { commit, selectionRanges } from "./apply";
@@ -352,6 +359,34 @@ const ALL_IMAGE_WIDTHS: Readonly<Record<string, string | null>> = {
   "image-size-all-original": null,
 };
 
+/** One Mermaid diagram type per item under the Chart button. */
+const CHART_KINDS: Readonly<Record<string, ChartKind>> = {
+  "chart-flowchart": "flowchart",
+  "chart-sequence": "sequence",
+  "chart-class": "class",
+  "chart-state": "state",
+  "chart-er": "er",
+  "chart-journey": "journey",
+  "chart-gantt": "gantt",
+  "chart-pie": "pie",
+  "chart-quadrant": "quadrant",
+  "chart-requirement": "requirement",
+  "chart-git-graph": "git-graph",
+  "chart-mindmap": "mindmap",
+  "chart-timeline": "timeline",
+  "chart-sankey": "sankey",
+  "chart-xychart": "xychart",
+  "chart-block": "block",
+  "chart-architecture": "architecture",
+  "chart-packet": "packet",
+  "chart-kanban": "kanban",
+  "chart-radar": "radar",
+  "chart-treemap": "treemap",
+  "chart-c4": "c4",
+  "chart-ishikawa": "ishikawa",
+  "chart-venn": "venn",
+};
+
 /** Word's own multilevel schemes; `null` takes the numbers back off. */
 const HEADING_NUMBERINGS: Readonly<Record<string, HeadingNumbering>> = {
   "number-headings-outline": "outline",
@@ -386,6 +421,9 @@ export function planFor(context: CommandContext, id: string): Plan | null {
 
   const numbering = HEADING_NUMBERINGS[id];
   if (numbering !== undefined) return numberHeadings(doc, numbering);
+
+  const kind = CHART_KINDS[id];
+  if (kind) return insertChartBlock(doc, ranges, kind, formatDate(new Date()));
 
   switch (id) {
     case "drop-cap":

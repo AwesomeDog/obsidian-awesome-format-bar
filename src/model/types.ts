@@ -61,6 +61,7 @@ type CommandPopup =
   | "table-sort"
   | "table-copy-as"
   | "table-grid"
+  | "chart"
   | "clean-up";
 
 export interface CommandSpec {

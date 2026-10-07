@@ -195,18 +195,15 @@ export function popoverSectionsFor(
           })),
         },
       ];
-    case "callout":
-    case "number-headings":
-    case "image-size":
-    case "image-size-all":
-    case "table-delete":
-    case "table-format":
-    case "table-sort":
-    case "table-copy-as":
-    case "clean-up":
+    // Everything else that is a drop-down at all: one item per command listed
+    // under it, the same shape the editor menu shows. Nothing here names a
+    // pop-up, so a new one needs no case of its own.
+    default: {
+      const ids = DROPDOWN_ITEMS[spec.popup ?? ""] ?? [];
+      if (ids.length === 0) return [];
       return [
         {
-          items: (DROPDOWN_ITEMS[spec.popup ?? ""] ?? []).map((id) => {
+          items: ids.map((id) => {
             const item = commandById(id);
             return {
               icon: item.icon,
@@ -216,7 +213,6 @@ export function popoverSectionsFor(
           }),
         },
       ];
-    default:
-      return [];
+    }
   }
 }

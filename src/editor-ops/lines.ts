@@ -150,3 +150,17 @@ export function removeLine(lines: Lines, line: number): Change {
     text: "",
   };
 }
+
+/** A block written beside a paragraph stops being a block: a table renders as
+ * plain text, and so does a Mermaid diagram. Both need a blank line around. */
+export function breakBefore(text: string): string {
+  if (text === "") return "";
+  if (text.endsWith("\n\n")) return "";
+  return text.endsWith("\n") ? "\n" : "\n\n";
+}
+
+export function breakAfter(text: string): string {
+  if (text === "") return "";
+  if (text.startsWith("\n\n")) return "";
+  return text.startsWith("\n") ? "\n" : "\n\n";
+}

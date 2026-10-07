@@ -92,7 +92,7 @@ Jede der vier Positionen wird unabhängig ein- und ausgeschaltet; Desktop und Mo
 
 Fett, Kursiv, Unterstreichen, Durchstreichen, Inline-Code, Inline-Formel, Text hervorheben (mit Farbe), Schriftfarbe, **Schriftart**, **Schriftgröße**, Formatierung löschen, Groß-/Kleinschreibung ändern, Überschriften 1–6, Aufzählung / Nummerierung / Aufgabenliste, Zitat, Einzüge, horizontale Linien, Rückgängig / Wiederholen, Suchen und Ersetzen, Absatzausrichtung — gruppiert genau dort, wo ein Word-Nutzer sie erwartet.
 
-Bilder bekommen auf **Einfügen · Illustrationen** ihre eigene Gruppe: **Bildgröße ▼** legt eine Breite von 100–600 px fest — oder stellt die eigene Größe der Datei wieder her —, **Alle Bilder ▼** wendet dieselbe Breite auf einmal auf jedes Bild der Notiz an, **Alternativtext** schreibt den Alternativtext und markiert ihn, und **Beschriftung** schreibt eine Beschriftungszeile unter das Bild und markiert sie, bereit zum Überschreiben. **Bild zurücksetzen** verwirft Breite und Alternativtext wieder, und **Syntax umwandeln** wechselt zwischen `![[a.png]]` und `![](a.png)`.
+Bilder bekommen auf **Einfügen · Illustrationen** ihre eigene Gruppe: **Bildgröße ▼** legt eine Breite von 100–600 px fest — oder stellt die eigene Größe der Datei wieder her —, **Alle Bilder ▼** wendet dieselbe Breite auf einmal auf jedes Bild der Notiz an, **Alternativtext** schreibt den Alternativtext und markiert ihn, und **Beschriftung** schreibt eine Beschriftungszeile unter das Bild und markiert sie, bereit zum Überschreiben. **Bild zurücksetzen** verwirft Breite und Alternativtext wieder, und **Syntax umwandeln** wechselt zwischen `![[a.png]]` und `![](a.png)`. **Diagramm ▼** schreibt ein Mermaid-Diagramm — ein Eintrag pro Diagrammtyp. Obsidian rendert alle vierundzwanzig und bietet keinen Befehl, um eines zu beginnen.
 
 ### 💬 Callout-Auswahl mit allen 12 Obsidian-Typen
 
@@ -151,7 +151,7 @@ Das ist eine bewusste Entscheidung, kein fehlendes Feature. Eine Leiste, die Ihn
 ### Einfügen
 
 - **Tabellen** — Tabelle, Text in Tabelle umwandeln, Als Tabelle einfügen
-- **Illustrationen** — Datei anfügen, Bildgröße ▼ (100 px, 200 px, 300 px, 400 px, 600 px, Ursprüngliche Größe), Alle Bilder ▼ (Alle Bilder 100 px, Alle Bilder 200 px, Alle Bilder 300 px, Alle Bilder 400 px, Alle Bilder 600 px, Alle Bilder Ursprüngliche Größe), Alternativtext, Beschriftung, Bild zurücksetzen, Syntax umwandeln
+- **Illustrationen** — Datei anfügen, Bildgröße ▼ (100 px, 200 px, 300 px, 400 px, 600 px, Ursprüngliche Größe), Alle Bilder ▼ (Alle Bilder 100 px, Alle Bilder 200 px, Alle Bilder 300 px, Alle Bilder 400 px, Alle Bilder 600 px, Alle Bilder Ursprüngliche Größe), Alternativtext, Beschriftung, Bild zurücksetzen, Syntax umwandeln, Diagramm ▼ (Flussdiagramm, Sequenzdiagramm, Klassendiagramm, Zustandsdiagramm, Entity-Relationship-Diagramm, Nutzerreise, Gantt-Diagramm, Kreisdiagramm, Quadrantendiagramm, Anforderungsdiagramm, Git-Graph, Mindmap, Zeitstrahl, Sankey-Diagramm, XY-Diagramm, Blockdiagramm, Architekturdiagramm, Paketdiagramm, Kanban-Board, Netzdiagramm, Treemap, C4-Diagramm, Ishikawa-Diagramm, Venn-Diagramm)
 - **Links** — Interner Link, Externer Link, Einbetten, Tag, Blockverweis
 - **Kommentare** — Kommentar
 - **Text** — Hinweis ▼ (Notiz-Callout, Zusammenfassung-Callout, Info-Callout, Tipp-Callout, Erfolg-Callout, Frage-Callout, Warnung-Callout, Fehlschlag-Callout, Gefahr-Callout, Fehler-Callout, Beispiel-Callout, Zitat-Callout), Codeblock, Datum und Uhrzeit, Initial

@@ -27,18 +27,35 @@ export function deleteRanges(ranges: readonly Range[]): Plan {
     ),
   };
 }
-/** `YYYY-MM-DD HH:mm` via a fixed en-US formatter — no locale drift. */
+/** A fixed en-US formatter — no locale drift. */
+function parts(date: Date, options: Intl.DateTimeFormatOptions) {
+  const formatted = new Intl.DateTimeFormat("en-US", options).formatToParts(
+    date,
+  );
+  return (type: string): string =>
+    formatted.find((part) => part.type === type)?.value ?? "";
+}
+
+/** `YYYY-MM-DD HH:mm` */
 export function formatDateTime(date: Date): string {
-  const parts = new Intl.DateTimeFormat("en-US", {
+  const get = parts(date, {
     day: "2-digit",
     hour: "2-digit",
     hour12: false,
     minute: "2-digit",
     month: "2-digit",
     year: "numeric",
-  }).formatToParts(date);
-  const get = (type: string): string =>
-    parts.find((part) => part.type === type)?.value ?? "";
+  });
   const hour = get("hour") === "24" ? "00" : get("hour");
   return `${get("year")}-${get("month")}-${get("day")} ${hour}:${get("minute")}`;
+}
+
+/** `YYYY-MM-DD`, the form a Gantt chart dates its tasks in. */
+export function formatDate(date: Date): string {
+  const get = parts(date, {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+  });
+  return `${get("year")}-${get("month")}-${get("day")}`;
 }

@@ -1,4 +1,11 @@
-import { asNumbers, compareText, Lines, replaceBlock } from "./lines";
+import {
+  asNumbers,
+  breakAfter,
+  breakBefore,
+  compareText,
+  Lines,
+  replaceBlock,
+} from "./lines";
 import {
   NO_CHANGE,
   normalizeRanges,
@@ -241,19 +248,6 @@ export function emptyTable(
     Array.from({ length: columns }, () => ""),
   );
   return renderTable(blank, [], format);
-}
-
-/** A table only renders as its own block: beside a paragraph it is plain text. */
-function breakBefore(text: string): string {
-  if (text === "") return "";
-  if (text.endsWith("\n\n")) return "";
-  return text.endsWith("\n") ? "\n" : "\n\n";
-}
-
-function breakAfter(text: string): string {
-  if (text === "") return "";
-  if (text.startsWith("\n\n")) return "";
-  return text.startsWith("\n") ? "\n" : "\n\n";
 }
 
 /** Insert `table` as a block of its own, replacing `ranges`. */

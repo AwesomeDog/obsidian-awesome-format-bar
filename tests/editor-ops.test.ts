@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   insertBlockReference,
   insertCallout,
+  insertChartBlock,
   numberHeadings,
   sortHeadings,
   toggleDropCap,
@@ -51,7 +52,7 @@ import {
   applySpanStyle,
   clearOwnedInlineHtml,
 } from "../src/editor-ops/spans";
-import { formatDateTime } from "../src/editor-ops/text";
+import { formatDate, formatDateTime } from "../src/editor-ops/text";
 
 /** Applies a plan the way the editor would, so tests assert on text. */
 function run(doc: string, plan: Plan): string {
@@ -979,6 +980,9 @@ describe("toggleDropCap", () => {
   });
 });
 
+/** Passed in, not read from the clock: a Gantt has to be assertable. */
+const TODAY = "2026-10-07";
+
 describe("insertions", () => {
   it("quotes a selection into a callout", () => {
     expect(apply("[a\nb]", (d, r) => insertCallout(d, r, "note"))).toBe(
@@ -997,6 +1001,68 @@ describe("insertions", () => {
       insertBlockReference("text ^abc123", [{ from: 0, to: 0 }], "new").changes,
     ).toHaveLength(0);
   });
+
+  // A diagram has no empty form: an empty block renders as an error, so this
+  // writes the smallest diagram of the kind, never a fence waiting to be typed.
+  it("writes a Mermaid block of its own", () => {
+    expect(
+      apply("|", (d, r) => insertChartBlock(d, r, "flowchart", TODAY)),
+    ).toBe("```mermaid\nflowchart LR\n  A --> B\n```");
+    expect(
+      apply("above|below", (d, r) =>
+        insertChartBlock(d, r, "flowchart", TODAY),
+      ),
+    ).toBe("above\n\n```mermaid\nflowchart LR\n  A --> B\n```\n\nbelow");
+  });
+
+  it("replaces the selection rather than wrapping it", () => {
+    expect(
+      apply("[notes]", (d, r) => insertChartBlock(d, r, "class", TODAY)),
+    ).toBe("```mermaid\nclassDiagram\n  Animal <|-- Duck\n```");
+  });
+
+  it("leaves the caret at the end of the last line inside", () => {
+    const plan = insertChartBlock("", [{ from: 0, to: 0 }], "flowchart", TODAY);
+    const caret = plan.select?.from ?? -1;
+    expect(run("", plan).slice(0, caret)).toBe(
+      "```mermaid\nflowchart LR\n  A --> B",
+    );
+  });
+
+  it("writes one diagram per cursor and selects none", () => {
+    const plan = insertChartBlock(
+      "a\nb",
+      [
+        { from: 0, to: 0 },
+        { from: 2, to: 2 },
+      ],
+      "flowchart",
+      TODAY,
+    );
+    expect(plan.select).toBeUndefined();
+    expect(plan.changes).toHaveLength(2);
+  });
+
+  it("dates a Gantt task with the day it is handed", () => {
+    expect(apply("|", (d, r) => insertChartBlock(d, r, "gantt", TODAY))).toBe(
+      "```mermaid\ngantt\n  title Project\n  section Phase\n  Task :a1, 2026-10-07, 7d\n```",
+    );
+  });
+
+  // Mermaid's radar grammar wants the brace on the label's own line; a line
+  // break between them is a parse error, so the shape is worth pinning down.
+  it("keeps a radar curve's brace on the label line", () => {
+    expect(apply("|", (d, r) => insertChartBlock(d, r, "radar", TODAY))).toBe(
+      [
+        "```mermaid",
+        "radar-beta",
+        "  axis A, B, C",
+        '  curve c1["One"]{ 0.8, 0.6, 0.9 }',
+        '  curve c2["Two"]{ 0.5, 0.9, 0.4 }',
+        "```",
+      ].join("\n"),
+    );
+  });
 });
 
 describe("formatDateTime", () => {
@@ -1005,6 +1071,13 @@ describe("formatDateTime", () => {
       "2026-09-01 04:41",
     );
     expect(formatDateTime(new Date(2026, 0, 9, 0, 5))).toBe("2026-01-09 00:05");
+  });
+});
+
+describe("formatDate", () => {
+  it("uses the same fixed pattern without a time", () => {
+    expect(formatDate(new Date(2026, 8, 1, 4, 41))).toBe("2026-09-01");
+    expect(formatDate(new Date(2026, 0, 9, 0, 5))).toBe("2026-01-09");
   });
 });
 

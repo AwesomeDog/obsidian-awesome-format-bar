@@ -1,6 +1,15 @@
-import { NO_CHANGE, order, type Change, type Plan, type Range } from "./plan";
+import {
+  NO_CHANGE,
+  normalizeRanges,
+  order,
+  type Change,
+  type Plan,
+  type Range,
+} from "./plan";
 import {
   blocksFor,
+  breakAfter,
+  breakBefore,
   compareText,
   fenceMask,
   FENCE,
@@ -494,4 +503,151 @@ export function toggleDropCap(doc: string, ranges: readonly Range[]): Plan {
     });
   }
   return { changes: order(changes) };
+}
+
+/** Every diagram type in the Mermaid Obsidian bundles, one command each. */
+export type ChartKind =
+  | "flowchart"
+  | "sequence"
+  | "class"
+  | "state"
+  | "er"
+  | "journey"
+  | "gantt"
+  | "pie"
+  | "quadrant"
+  | "requirement"
+  | "git-graph"
+  | "mindmap"
+  | "timeline"
+  | "sankey"
+  | "xychart"
+  | "block"
+  | "architecture"
+  | "packet"
+  | "kanban"
+  | "radar"
+  | "treemap"
+  | "c4"
+  | "ishikawa"
+  | "venn";
+
+/** A diagram has no empty form: an empty `mermaid` block renders as an error,
+ * so each kind starts life as the smallest diagram of its kind that renders.
+ * `{date}` is today, put in by `insertChartBlock`. */
+const CHART_EXAMPLES: Readonly<Record<ChartKind, string>> = {
+  flowchart: "flowchart LR\n  A --> B",
+  sequence: "sequenceDiagram\n  Alice->>Bob: Hello\n  Bob-->>Alice: Hi",
+  class: "classDiagram\n  Animal <|-- Duck",
+  state: "stateDiagram-v2\n  [*] --> Idle\n  Idle --> Busy\n  Busy --> [*]",
+  er: "erDiagram\n  CUSTOMER ||--o{ ORDER : places",
+  journey: "journey\n  title A day\n  section Morning\n    Wake up: 5: Me",
+  gantt: "gantt\n  title Project\n  section Phase\n  Task :a1, {date}, 7d",
+  pie: 'pie\n  "First" : 40\n  "Second" : 60',
+  quadrant: [
+    "quadrantChart",
+    "  title Reach and effort",
+    "  x-axis Low reach --> High reach",
+    "  y-axis Low effort --> High effort",
+    "  quadrant-1 We should expand",
+    "  quadrant-2 Need to promote",
+    "  quadrant-3 Re-evaluate",
+    "  quadrant-4 May be improved",
+    '  "Item A": [0.9, 0.2]',
+  ].join("\n"),
+  requirement: [
+    "requirementDiagram",
+    "  requirement r {",
+    "    id: 1",
+    "    text: the test text.",
+    "    risk: high",
+    "    verifymethod: test",
+    "  }",
+  ].join("\n"),
+  "git-graph": "gitGraph\n  commit\n  branch feature\n  commit",
+  mindmap: "mindmap\n  root((Root))\n    A\n    B",
+  timeline: "timeline\n  title History\n  2026 : Something happened",
+  sankey: "sankey-beta\n  A, B, 10\n  A, C, 20",
+  xychart: [
+    "xychart-beta",
+    "  x-axis [1, 2, 3]",
+    "  y-axis 0 --> 10",
+    "  bar [3, 6, 9]",
+    "  line [2, 5, 8]",
+  ].join("\n"),
+  block: "block-beta\n  columns 2\n  a\n  b\n  c",
+  architecture: [
+    "architecture-beta",
+    "  group api(cloud)[API]",
+    "  service db(database)[Database] in api",
+    "  service app(server)[App] in api",
+    "  app:R -- L:db",
+  ].join("\n"),
+  packet: 'packet-beta\n  0-15: "Source Port"\n  16-31: "Destination Port"',
+  kanban: "kanban\n  Todo\n    Task A\n  Done\n    Task B",
+  // The brace follows the label on the same line: Mermaid's radar grammar
+  // has no newline there, and a line break is a parse error.
+  radar: [
+    "radar-beta",
+    "  axis A, B, C",
+    '  curve c1["One"]{ 0.8, 0.6, 0.9 }',
+    '  curve c2["Two"]{ 0.5, 0.9, 0.4 }',
+  ].join("\n"),
+  treemap: [
+    "treemap-beta",
+    '  "Section 1"',
+    '    "Leaf 1": 12',
+    '    "Leaf 2": 8',
+    '  "Section 2"',
+    '    "Leaf 3": 5',
+  ].join("\n"),
+  c4: [
+    "C4Context",
+    "  title System Context",
+    '  Person(customer, "Customer")',
+    '  System(system, "System")',
+    '  Rel(customer, system, "Uses")',
+  ].join("\n"),
+  ishikawa: [
+    "ishikawa-beta",
+    "  Blurry Photo",
+    "  Process",
+    "    Out of focus",
+    "    Shutter speed too slow",
+    "  User",
+    "    Shaky hands",
+  ].join("\n"),
+  venn: [
+    "venn-beta",
+    '  title "Team overlap"',
+    "  set Frontend",
+    "  set Backend",
+    '  union Frontend,Backend["APIs"]',
+  ].join("\n"),
+};
+
+/** Insert a Mermaid diagram as a block of its own, replacing `ranges`. */
+export function insertChartBlock(
+  doc: string,
+  ranges: readonly Range[],
+  kind: ChartKind,
+  today: string,
+): Plan {
+  const text =
+    "```mermaid\n" + CHART_EXAMPLES[kind].replace("{date}", today) + "\n```";
+  const list = normalizeRanges(ranges);
+  const changes = list.map((range) => ({
+    from: range.from,
+    to: range.to,
+    text:
+      breakBefore(doc.slice(0, range.from)) +
+      text +
+      breakAfter(doc.slice(range.to)),
+  }));
+  const first = list[0];
+  if (list.length !== 1 || !first) return { changes: order(changes) };
+  // Inside the block, at the end of the last line: the fence is not for typing.
+  const caret =
+    first.from + breakBefore(doc.slice(0, first.from)).length + text.length - 4;
+  return { changes, select: { from: caret, to: caret } };
 }

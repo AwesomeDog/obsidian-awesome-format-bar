@@ -103,6 +103,8 @@ export const BUILT_IN_COMMAND_TABS = [
           "image-caption",
           "image-reset",
           "image-convert-syntax",
+          // Chart last, the way Word ends its own Illustrations group with it.
+          "chart",
         ],
       },
       {

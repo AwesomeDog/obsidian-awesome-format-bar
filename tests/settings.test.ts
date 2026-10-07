@@ -305,6 +305,30 @@ describe("command table contract", () => {
     expect([...placed].sort()).toEqual([...expected].sort());
   });
 
+  // Both the popover and the editor menu read a drop-down's items out of
+  // DROPDOWN_ITEMS, so a button listed nowhere there opens empty. The pop-ups
+  // that carry their own data are the exceptions.
+  it("gives every drop-down button items to show", () => {
+    const ownData = new Set([
+      "case",
+      "character-panel",
+      "color",
+      "font-family",
+      "font-size",
+      "highlight-color",
+      "table-grid",
+    ]);
+    const empty = (COMMANDS as readonly CommandSpec[])
+      .filter(
+        (spec) =>
+          spec.popup !== undefined &&
+          !ownData.has(spec.popup) &&
+          (DROPDOWN_ITEMS[spec.popup] ?? []).length === 0,
+      )
+      .map((spec) => spec.id);
+    expect(empty).toEqual([]);
+  });
+
   it("places every table command in the tab Word's Layout tab matches", () => {
     expect(BUILT_IN_COMMAND_TABS[3]?.groups.map((group) => group.name)).toEqual(
       ["Rows & Columns", "Format", "Alignment", "Data"],

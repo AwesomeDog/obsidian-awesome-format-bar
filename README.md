@@ -90,7 +90,7 @@ Each of the four is toggled independently, Desktop and Mobile have their own set
 
 Bold, italic, underline, strikethrough, inline code, inline math, highlight (with color), font color, **font family**, **font size**, clear formatting, change case, headings 1–6, bullet / numbered / task lists, quotes, indentation, horizontal rules, undo/redo, find & replace, paragraph alignment — grouped exactly where a Word user expects them.
 
-Pictures get their own group on **Insert · Illustrations**: **Image Size ▼** sets a width of 100–600 px — or restores the file's own size — **All Images ▼** applies the same width to every picture in the note at once, **Alt Text** writes the alt text and selects it, and **Caption** writes a caption line under the picture and selects it, ready to type over. **Reset Picture** drops the width and the alt text again, and **Convert Syntax** swaps a picture between `![[a.png]]` and `![](a.png)`.
+Pictures get their own group on **Insert · Illustrations**: **Image Size ▼** sets a width of 100–600 px — or restores the file's own size — **All Images ▼** applies the same width to every picture in the note at once, **Alt Text** writes the alt text and selects it, and **Caption** writes a caption line under the picture and selects it, ready to type over. **Reset Picture** drops the width and the alt text again, and **Convert Syntax** swaps a picture between `![[a.png]]` and `![](a.png)`. **Chart ▼** writes a Mermaid diagram, one item per diagram type — Obsidian renders all twenty-four and gives no command to start one.
 
 ### 💬 Callout picker — all 12 Obsidian callout types
 
@@ -149,7 +149,7 @@ That is a deliberate trade-off, not a missing feature. A toolbar that lets you r
 ### Insert
 
 - **Tables** — Table, Convert Text to Table, Paste as Table
-- **Illustrations** — Attach File, Image Size ▼ (100 px, 200 px, 300 px, 400 px, 600 px, Original Size), All Images ▼ (All Images 100 px, All Images 200 px, All Images 300 px, All Images 400 px, All Images 600 px, All Images Original Size), Alt Text, Caption, Reset Picture, Convert Syntax
+- **Illustrations** — Attach File, Image Size ▼ (100 px, 200 px, 300 px, 400 px, 600 px, Original Size), All Images ▼ (All Images 100 px, All Images 200 px, All Images 300 px, All Images 400 px, All Images 600 px, All Images Original Size), Alt Text, Caption, Reset Picture, Convert Syntax, Chart ▼ (Flowchart, Sequence Diagram, Class Diagram, State Diagram, Entity Relationship, User Journey, Gantt, Pie Chart, Quadrant Chart, Requirement Diagram, Git Graph, Mindmap, Timeline, Sankey Diagram, XY Chart, Block Diagram, Architecture Diagram, Packet Diagram, Kanban Board, Radar Chart, Treemap, C4 Diagram, Ishikawa Diagram, Venn Diagram)
 - **Links** — Internal Link, External Link, Embed, Tag, Block Reference
 - **Comments** — Comment
 - **Text** — Callout ▼ (Note, Abstract, Info, Tip, Success, Question, Warning, Failure, Danger, Bug, Example, Quote), Code Block, Date and Time, Drop Cap

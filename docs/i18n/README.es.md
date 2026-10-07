@@ -92,7 +92,7 @@ Cada una de las cuatro se activa de forma independiente; Escritorio y Móvil tie
 
 Negrita, cursiva, subrayado, tachado, código en línea, fórmula en línea, resaltar（con color）, color de fuente, **fuente**, **tamaño de fuente**, borrar formato, cambiar mayúsculas y minúsculas, títulos 1–6, viñetas / numeración / lista de tareas, cita, sangría, línea horizontal, deshacer / rehacer, buscar y reemplazar, alineación de párrafo —— agrupados exactamente donde un usuario de Word los espera.
 
-Las imágenes tienen su propio grupo en **Insertar · Ilustraciones**: **Tamaño de imagen ▼** fija un ancho de 100–600 px ——o devuelve el tamaño propio del archivo——, **Todas las imágenes ▼** aplica el mismo ancho a todas las imágenes de la nota a la vez, **Texto alternativo** escribe el texto alternativo y lo selecciona, y **Título** escribe una línea de título debajo de la imagen y la selecciona, lista para escribir encima. **Restablecer imagen** descarta el ancho y el texto alternativo, y **Convertir sintaxis** cambia la imagen entre `![[a.png]]` y `![](a.png)`.
+Las imágenes tienen su propio grupo en **Insertar · Ilustraciones**: **Tamaño de imagen ▼** fija un ancho de 100–600 px ——o devuelve el tamaño propio del archivo——, **Todas las imágenes ▼** aplica el mismo ancho a todas las imágenes de la nota a la vez, **Texto alternativo** escribe el texto alternativo y lo selecciona, y **Título** escribe una línea de título debajo de la imagen y la selecciona, lista para escribir encima. **Restablecer imagen** descarta el ancho y el texto alternativo, y **Convertir sintaxis** cambia la imagen entre `![[a.png]]` y `![](a.png)`. **Gráfico ▼** escribe un diagrama Mermaid, una entrada por tipo de diagrama: Obsidian renderiza los veinticuatro y no ofrece ningún comando para empezar uno.
 
 ### 💬 Selector de recuadros —— los 12 tipos de Obsidian
 
@@ -151,7 +151,7 @@ Es una compensación deliberada, no una función que falta. Una barra que te dej
 ### Insertar
 
 - **Tablas** —— Tabla, Convertir texto en tabla, Pegar como tabla
-- **Ilustraciones** —— Adjuntar archivo, Tamaño de imagen ▼（100 px, 200 px, 300 px, 400 px, 600 px, Tamaño original）, Todas las imágenes ▼（Todas las imágenes 100 px, Todas las imágenes 200 px, Todas las imágenes 300 px, Todas las imágenes 400 px, Todas las imágenes 600 px, Todas las imágenes Tamaño original）, Texto alternativo, Título, Restablecer imagen, Convertir sintaxis
+- **Ilustraciones** —— Adjuntar archivo, Tamaño de imagen ▼（100 px, 200 px, 300 px, 400 px, 600 px, Tamaño original）, Todas las imágenes ▼（Todas las imágenes 100 px, Todas las imágenes 200 px, Todas las imágenes 300 px, Todas las imágenes 400 px, Todas las imágenes 600 px, Todas las imágenes Tamaño original）, Texto alternativo, Título, Restablecer imagen, Convertir sintaxis, Gráfico ▼ （Diagrama de flujo, Diagrama de secuencia, Diagrama de clases, Diagrama de estados, Diagrama entidad-relación, Recorrido del usuario, Diagrama de Gantt, Gráfico circular, Gráfico de cuadrantes, Diagrama de requisitos, Gráfico de Git, Mapa mental, Línea de tiempo, Diagrama de Sankey, Gráfico XY, Diagrama de bloques, Diagrama de arquitectura, Diagrama de paquetes, Tablero Kanban, Gráfico de radar, Treemap, Diagrama C4, Diagrama de Ishikawa, Diagrama de Venn）
 - **Vínculos** —— Vínculo interno, Vínculo externo, Incrustar, Etiqueta, Referencia de bloque
 - **Comentarios** —— Comentario
 - **Texto** —— Recuadro ▼（Nota, Resumen, Información, Sugerencia, Éxito, Pregunta, Advertencia, Fallo, Peligro, Error, Ejemplo, Cita）, Bloque de código, Fecha y hora, Letra capital
