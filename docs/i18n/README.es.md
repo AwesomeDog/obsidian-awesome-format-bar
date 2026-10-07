@@ -56,7 +56,7 @@ Obsidian es rápido **si** ya hablas Markdown. Para todos los demás ——estud
 - **Texto plano para siempre.** Nada de formato propietario, ni base de datos, ni cautividad: tus notas siguen siendo simples archivos `.md`.
 - **Sin conexión y privado.** Sin llamadas de red, sin cuentas, sin telemetría. La biblioteca de unos 2.150 emoji viaja dentro del plugin.
 - **Tu propio lanzador, si lo quieres.** La pestaña **Anclado** guarda cualquier comando que elijas ——del núcleo, de este plugin o de otro——, así que la barra se adapta a ti sin convertirse en un proyecto de configuración.
-- **También para el teclado.** Desactiva las cuatro posiciones de la barra y la interfaz desaparece por completo: los 146 comandos registrados en la paleta siguen disponibles y puedes asignarles tus propios atajos. Y cuando la barra **está activa**, al pasar el cursor por un botón su tooltip muestra el atajo asignado ahora mismo a ese comando ——el tuyo o el predeterminado de Obsidian. Si lo cambias en **Configuración → Atajos de teclado**, el tooltip lo sigue al instante, sin reiniciar.
+- **También para el teclado.** Desactiva las cuatro posiciones de la barra y la interfaz desaparece por completo: los 170 comandos registrados en la paleta siguen disponibles y puedes asignarles tus propios atajos. Y cuando la barra **está activa**, al pasar el cursor por un botón su tooltip muestra el atajo asignado ahora mismo a ese comando ——el tuyo o el predeterminado de Obsidian. Si lo cambias en **Configuración → Atajos de teclado**, el tooltip lo sigue al instante, sin reiniciar.
 
 ---
 
@@ -65,7 +65,7 @@ Obsidian es rápido **si** ya hablas Markdown. Para todos los demás ——estud
 |                     |                                                                          |
 | ------------------- | ------------------------------------------------------------------------ |
 | **Posiciones**      | Cinta superior, barra flotante sobre la selección, barra inferior fija, menú del editor (clic derecho) —— cuatro interruptores independientes, combinables libremente |
-| **Comandos**        | **162** integrados, **146** disponibles en la paleta de comandos para atajos propios |
+| **Comandos**        | **187** integrados, **170** disponibles en la paleta de comandos para atajos propios |
 | **Pestañas**        | Inicio · Insertar · Vista · Tabla · Utilidades · **Anclado**               |
 | **Recuadros**       | Los 12 tipos de recuadro de Obsidian en un solo desplegable               |
 | **Emoji y símbolos** | Unos 2.150 emoji, kaomoji y símbolos, totalmente sin conexión            |
@@ -88,7 +88,7 @@ Obsidian es rápido **si** ya hablas Markdown. Para todos los demás ——estud
 
 Cada una de las cuatro se activa de forma independiente; Escritorio y Móvil tienen su propio conjunto de interruptores.
 
-### 🅰️ 162 comandos de formato en una distribución conocida
+### 🅰️ 187 comandos de formato en una distribución conocida
 
 Negrita, cursiva, subrayado, tachado, código en línea, fórmula en línea, resaltar（con color）, color de fuente, **fuente**, **tamaño de fuente**, borrar formato, cambiar mayúsculas y minúsculas, títulos 1–6, viñetas / numeración / lista de tareas, cita, sangría, línea horizontal, deshacer / rehacer, buscar y reemplazar, alineación de párrafo —— agrupados exactamente donde un usuario de Word los espera.
 
@@ -138,7 +138,7 @@ Es una compensación deliberada, no una función que falta. Una barra que te dej
 
 ## Referencia completa de comandos
 
-146 de los 162 comandos están registrados en la **paleta de comandos**, así que puedes asignarles tus propios atajos de teclado. （Los contenedores desplegables y el panel de emoji y símbolos solo existen en la barra.）
+170 de los 187 comandos están registrados en la **paleta de comandos**, así que puedes asignarles tus propios atajos de teclado. （Los contenedores desplegables y el panel de emoji y símbolos solo existen en la barra.）
 
 ### Inicio
 
@@ -211,7 +211,7 @@ Configuración → **Plugins de la comunidad** → **Explorar** → busca **“A
 2. La **cinta（Superior）** tiene seis pestañas; la última, **Anclado**, guarda los comandos que ancles tú. Mientras está vacía muestra un aviso para añadir; usa el botón de edición para gestionar los comandos y los grupos.
 3. Las **barras compactas**（Flotante / Inferior）llevan un subconjunto fijo de comandos; los botones que no caben en el ancho disponible se recogen en el menú de desbordamiento `⋯`, que también enumera todos los demás comandos agrupados por pestaña, y los que tengas anclados.
 4. Abre el botón de edición de **Anclado** para añadir comandos, elegir iconos, crear un grupo nuevo o cambiar el nombre del grupo, arrastrar para reordenar, mover comandos o eliminarlos. Configuración conserva una entrada alternativa que abre ese mismo gestor. Los comandos anclados se comportan exactamente igual que sus equivalentes en la paleta de comandos.
-5. ¿Prefieres el teclado? Desactiva **los cuatro interruptores** y el plugin no añade nada a tu pantalla, mientras los **146 comandos registrados en la paleta** siguen funcionando y puedes asignarles tus propios atajos en **Configuración → Atajos de teclado**. Dicho de otro modo: puedes usarlo como un paquete puro de comandos y atajos sin pulsar un solo botón.
+5. ¿Prefieres el teclado? Desactiva **los cuatro interruptores** y el plugin no añade nada a tu pantalla, mientras los **170 comandos registrados en la paleta** siguen funcionando y puedes asignarles tus propios atajos en **Configuración → Atajos de teclado**. Dicho de otro modo: puedes usarlo como un paquete puro de comandos y atajos sin pulsar un solo botón.
 
 ---
 
@@ -246,10 +246,10 @@ No. Negrita, títulos, listas, vínculos, tablas, recuadros, bloques de código 
 Markdown estándar y Markdown con sabor a Obsidian. Seis de los 16 colores de resaltado usan la sintaxis de resaltado con color propia de Obsidian, así que siguen siendo Markdown puro. Solo donde Markdown no tiene sintaxis ——subrayado, superíndice, subíndice, alineación de párrafo, color del texto, los otros diez colores de resaltado, fuente y tamaño de fuente, letra capital—— el plugin emite pequeñas etiquetas HTML en línea estándar, que Obsidian renderiza de forma nativa.
 
 **¿Puedo seguir usando mis atajos de teclado?**  
-Sí. 146 de los 162 comandos aparecen en la paleta de comandos y se pueden asociar a cualquier atajo.
+Sí. 170 de los 187 comandos aparecen en la paleta de comandos y se pueden asociar a cualquier atajo.
 
 **Soy de teclado ——¿puedo ocultar la barra por completo?**  
-Sí, y no pierdes nada por hacerlo. Desactiva las cuatro posiciones（**Superior / Flotante / Inferior / Menú del editor**）en **Configuración → Awesome Format Bar** y el plugin no deja rastro en la pantalla: ni cinta, ni barra flotante, ni barra inferior, ni entrada en el menú contextual. Los **146 comandos registrados en la paleta** siguen funcionando todos, desde la paleta de comandos o desde un atajo que asignes en **Configuración → Atajos de teclado** ——incluidos comandos para los que Obsidian no tiene atajo propio, como el color de fuente, el color de resaltado, cambiar mayúsculas y minúsculas, los recuadros, ordenar tablas y las utilidades de líneas——. Piénsalo como una capa opcional solo de teclado que puedes activar cuando el ratón empiece a sentirse lento.
+Sí, y no pierdes nada por hacerlo. Desactiva las cuatro posiciones（**Superior / Flotante / Inferior / Menú del editor**）en **Configuración → Awesome Format Bar** y el plugin no deja rastro en la pantalla: ni cinta, ni barra flotante, ni barra inferior, ni entrada en el menú contextual. Los **170 comandos registrados en la paleta** siguen funcionando todos, desde la paleta de comandos o desde un atajo que asignes en **Configuración → Atajos de teclado** ——incluidos comandos para los que Obsidian no tiene atajo propio, como el color de fuente, el color de resaltado, cambiar mayúsculas y minúsculas, los recuadros, ordenar tablas y las utilidades de líneas——. Piénsalo como una capa opcional solo de teclado que puedes activar cuando el ratón empiece a sentirse lento.
 
 **¿Puedo añadir botones para comandos de otros plugins?**  
 Sí ——para eso está la pestaña **Anclado**——. Ancla cualquier comando de la paleta y elige un icono. Si el plugin propietario está desactivado, el botón se atenúa y el anclado se conserva.

@@ -56,7 +56,7 @@ Obsidian est rapide **à condition** de déjà parler Markdown. Pour tous les au
 - **Du texte brut pour toujours.** Pas de format propriétaire, pas de base de données, pas d'enfermement —— vos notes restent de simples fichiers `.md`.
 - **Hors ligne et privé.** Aucun appel réseau, aucun compte, aucune télémétrie. La bibliothèque d'environ 2 150 emoji est livrée dans le plugin.
 - **Votre propre lanceur, si vous en voulez un.** L'onglet **Épinglé** accueille n'importe quelle commande de votre choix —— du cœur d'Obsidian, de ce plugin ou d'un autre —— pour que la barre se plie à vous au lieu de devenir un projet de configuration.
-- **Aussi pensé pour le clavier.** Désactivez les quatre positions de la barre et l'interface disparaît complètement —— les 146 commandes enregistrées dans la palette restent disponibles et peuvent être associées à vos propres raccourcis. Et quand la barre **est affichée**, passer la souris sur un bouton affiche dans son infobulle le raccourci actuellement associé à cette commande —— le vôtre ou celui d'Obsidian. Modifiez-le dans **Paramètres → Raccourcis** et l'infobulle suit immédiatement, sans redémarrage.
+- **Aussi pensé pour le clavier.** Désactivez les quatre positions de la barre et l'interface disparaît complètement —— les 170 commandes enregistrées dans la palette restent disponibles et peuvent être associées à vos propres raccourcis. Et quand la barre **est affichée**, passer la souris sur un bouton affiche dans son infobulle le raccourci actuellement associé à cette commande —— le vôtre ou celui d'Obsidian. Modifiez-le dans **Paramètres → Raccourcis** et l'infobulle suit immédiatement, sans redémarrage.
 
 ---
 
@@ -65,7 +65,7 @@ Obsidian est rapide **à condition** de déjà parler Markdown. Pour tous les au
 |                        |                                                                          |
 | ---------------------- | ------------------------------------------------------------------------ |
 | **Positions**          | Ruban en haut, barre flottante au-dessus de la sélection, barre en bas, menu de l'éditeur (clic droit) —— quatre interrupteurs indépendants, à combiner librement |
-| **Commandes**          | **162** intégrées, dont **146** dans la palette de commandes pour des raccourcis personnalisés |
+| **Commandes**          | **187** intégrées, dont **170** dans la palette de commandes pour des raccourcis personnalisés |
 | **Onglets**            | Accueil · Insertion · Affichage · Tableau · Utilitaires · **Épinglé**      |
 | **Encadrés**           | Les 12 types d'encadrés Obsidian dans une seule liste déroulante            |
 | **Emoji et symboles**  | Environ 2 150 emoji, kaomoji et symboles, entièrement hors ligne            |
@@ -88,7 +88,7 @@ Obsidian est rapide **à condition** de déjà parler Markdown. Pour tous les au
 
 Chacune des quatre s'active indépendamment ; Bureau et Mobile ont chacun leur jeu d'interrupteurs.
 
-### 🅰️ 162 commandes de mise en forme dans une disposition familière
+### 🅰️ 187 commandes de mise en forme dans une disposition familière
 
 Gras, Italique, Souligné, Barré, Code en ligne, Formule en ligne, Surligner（avec couleur）, Couleur de police, **Police**, **Taille de police**, Effacer la mise en forme, Modifier la casse, Titre 1 à 6, listes à puces / numérotées / de tâches, Citation, retraits, Ligne horizontale, Annuler / Rétablir, Rechercher et remplacer, alignement des paragraphes —— regroupés exactement là où un utilisateur de Word les attend.
 
@@ -138,7 +138,7 @@ C'est un compromis délibéré, pas une fonction manquante. Une barre qui vous l
 
 ## Liste complète des commandes
 
-146 des 162 commandes sont enregistrées dans la **palette de commandes**, vous pouvez donc leur attribuer vos propres raccourcis clavier.（Les conteneurs déroulants et le panneau Emoji et symboles n'existent que dans la barre d'outils.）
+170 des 187 commandes sont enregistrées dans la **palette de commandes**, vous pouvez donc leur attribuer vos propres raccourcis clavier.（Les conteneurs déroulants et le panneau Emoji et symboles n'existent que dans la barre d'outils.）
 
 ### Accueil
 
@@ -211,7 +211,7 @@ Paramètres → **Plugins communautaires** → **Parcourir** → recherchez **«
 2. Le **ruban（Haut）** comporte six onglets ; le dernier, **Épinglé**, contient les commandes que vous épinglez vous-même. Tant qu'il est vide, il affiche une invite à ajouter une commande ; utilisez le bouton d'édition pour gérer les commandes et les groupes.
 3. Les **barres compactes**（Flottante / Bas）n'emportent qu'un sous-ensemble fixe de commandes ; les boutons qui ne tiennent pas dans la largeur disponible se replient dans le menu de débordement `⋯`, qui liste aussi toutes les autres commandes regroupées par onglet, ainsi que vos commandes épinglées.
 4. Ouvrez le bouton d'édition de l'onglet **Épinglé** pour ajouter des commandes, choisir des icônes, créer un nouveau groupe ou renommer un groupe, glisser pour réorganiser, déplacer une commande vers un autre groupe, ou les supprimer. Les paramètres conservent une entrée de repli —— « Gérer les commandes et groupes épinglés. » —— qui ouvre le même gestionnaire. Les commandes épinglées se comportent exactement comme leurs équivalents de la palette de commandes.
-5. Vous préférez le clavier ? Désactivez **les quatre interrupteurs** et le plugin n'ajoute alors plus rien à votre écran, tandis que les **146 commandes enregistrées dans la palette** continuent de fonctionner et peuvent être associées à vos propres raccourcis dans **Paramètres → Raccourcis**. Autrement dit : vous pouvez l'utiliser comme un simple lot de commandes et de raccourcis, sans jamais cliquer sur un bouton.
+5. Vous préférez le clavier ? Désactivez **les quatre interrupteurs** et le plugin n'ajoute alors plus rien à votre écran, tandis que les **170 commandes enregistrées dans la palette** continuent de fonctionner et peuvent être associées à vos propres raccourcis dans **Paramètres → Raccourcis**. Autrement dit : vous pouvez l'utiliser comme un simple lot de commandes et de raccourcis, sans jamais cliquer sur un bouton.
 
 ---
 
@@ -246,10 +246,10 @@ Non. Gras, titres, listes, liens, tableaux, encadrés, blocs de code et formules
 Du Markdown standard et du Markdown saveur Obsidian. Six des 16 couleurs de surlignage utilisent la syntaxe de surlignage coloré propre à Obsidian et restent donc du Markdown pur. Ce n'est que là où le Markdown n'a pas de syntaxe —— souligné, exposant, indice, alignement des paragraphes, couleur du texte, les dix autres couleurs de surlignage, police et taille de police, lettrine —— que le plugin émet quelques balises HTML en ligne standard, qu'Obsidian affiche nativement.
 
 **Puis-je continuer à utiliser mes raccourcis clavier ?**  
-Oui. 146 des 162 commandes apparaissent dans la palette de commandes et peuvent être associées à n'importe quel raccourci.
+Oui. 170 des 187 commandes apparaissent dans la palette de commandes et peuvent être associées à n'importe quel raccourci.
 
 **Je suis un adepte du clavier —— puis-je masquer complètement la barre d'outils ?**  
-Oui, et vous ne perdez rien à le faire. Désactivez les quatre positions（**Haut / Flottante / Bas / Menu de l'éditeur**）dans **Paramètres → Awesome Format Bar** et le plugin ne laisse aucune trace à l'écran : ni ruban, ni barre flottante, ni barre en bas, ni entrée dans le menu contextuel. Les **146 commandes enregistrées dans la palette** fonctionnent toutes encore, depuis la palette de commandes ou depuis un raccourci que vous attribuez dans **Paramètres → Raccourcis** —— y compris des commandes pour lesquelles Obsidian n'a aucun raccourci intégré, comme la Couleur de police, la Couleur de surlignage, Modifier la casse, les Encadrés, Trier les lignes et les utilitaires de lignes. Voyez-y une couche clavier facultative, à activer dès que la souris commence à sembler lente.
+Oui, et vous ne perdez rien à le faire. Désactivez les quatre positions（**Haut / Flottante / Bas / Menu de l'éditeur**）dans **Paramètres → Awesome Format Bar** et le plugin ne laisse aucune trace à l'écran : ni ruban, ni barre flottante, ni barre en bas, ni entrée dans le menu contextuel. Les **170 commandes enregistrées dans la palette** fonctionnent toutes encore, depuis la palette de commandes ou depuis un raccourci que vous attribuez dans **Paramètres → Raccourcis** —— y compris des commandes pour lesquelles Obsidian n'a aucun raccourci intégré, comme la Couleur de police, la Couleur de surlignage, Modifier la casse, les Encadrés, Trier les lignes et les utilitaires de lignes. Voyez-y une couche clavier facultative, à activer dès que la souris commence à sembler lente.
 
 **Puis-je ajouter des boutons pour les commandes d'autres plugins ?**  
 Oui —— c'est l'onglet **Épinglé**. Épinglez n'importe quelle commande de la palette et choisissez une icône. Si le plugin propriétaire est désactivé, le bouton se grise et l'épingle est conservée.
