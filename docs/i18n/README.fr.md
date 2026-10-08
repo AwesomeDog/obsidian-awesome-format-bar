@@ -5,7 +5,7 @@
 
 [![Privacy](https://img.shields.io/badge/privacy-no%20AI%20%C2%B7%20no%20network%20%C2%B7%20no%20telemetry-brightgreen)](#compatibility)
 [![Last commit](https://img.shields.io/github/last-commit/AwesomeDog/obsidian-awesome-format-bar?label=last%20commit)](https://github.com/AwesomeDog/obsidian-awesome-format-bar/commits/main)
-[![Obsidian](https://img.shields.io/badge/Obsidian-1.13.7%2B-7C3AED)](https://obsidian.md)
+[![Obsidian](https://img.shields.io/badge/Obsidian-1.14%2B-7C3AED)](https://obsidian.md)
 [![GitHub release](https://img.shields.io/github/v/release/AwesomeDog/obsidian-awesome-format-bar)](https://github.com/AwesomeDog/obsidian-awesome-format-bar/releases/latest)
 [![Downloads](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fobsidianmd%2Fobsidian-releases%2Fmaster%2Fcommunity-plugin-stats.json&query=%24%5B%22awesome-format-bar%22%5D.downloads&label=downloads&color=573E7A)](https://obsidian.md/plugins?id=awesome-format-bar)
 [![Commands](https://img.shields.io/badge/commands-100+-informational)](#full-command-reference)
@@ -68,12 +68,15 @@ Obsidian est rapide **à condition** de déjà parler Markdown. Pour tous les au
 | **Commandes**          | **187** intégrées, dont **170** dans la palette de commandes pour des raccourcis personnalisés |
 | **Onglets**            | Accueil · Insertion · Affichage · Tableau · Utilitaires · **Épinglé**      |
 | **Encadrés**           | Les 12 types d'encadrés Obsidian dans une seule liste déroulante            |
+| **Graphiques**         | 24 types de diagrammes Mermaid — diagramme de flux, diagramme de séquence, diagramme de classes, diagramme d'états, diagramme entité-relation, diagramme de Gantt, graphique circulaire, carte mentale, chronologie, graphique Git, tableau Kanban, diagramme d'architecture, diagramme C4, diagramme de Sankey et plus — insérés comme un bloc de code directement modifiable |
 | **Emoji et symboles**  | Environ 2 150 emoji, kaomoji et symboles, entièrement hors ligne            |
-| **Édition de tableau** | Insérer / supprimer / déplacer lignes et colonnes, aligner, trier, supprimer les lignes en double, transposer, remettre en forme, convertir en texte, coller en tant que tableau, copier en CSV |
-| **Édition d’image**    | aligner, taille, texte alternatif, légende, réinitialiser l’image, convertir la syntaxe |
+| **Édition de tableau** | Insérer / supprimer / déplacer lignes et colonnes, aligner, trier, supprimer les lignes en double, transposer, remettre en forme, convertir en texte, **coller en tant que tableau** (directement depuis Excel, Numbers ou Sheets), copier en TSV / CSV / JSON |
+| **Édition d’image**    | aligner, taille (une seule image ou **toutes les images de la note d'un coup**), texte alternatif, légende, réinitialiser l’image, convertir `![[…]] ⇄ ![](…)` |
+| **Lecture et concentration** | Aperçu en direct ⇄ Source, mode focus, mode zen, mode machine à écrire, afficher les espaces, numéros de ligne, zoom, fractionner, tout réduire / développer |
+| **Outils de lignes et de texte** | Fusionner / Diviser / Inverser les lignes, Dupliquer, Trier la liste, Trier les titres, Ponctuation intelligente, Espacement CJK, et **Nettoyer** (espaces de fin, lignes vides, URL nues, caractères invisibles, emphases et puces) |
+| **En plus**            | Table des matières, Reproduire la mise en forme, Lettrine, Note de bas de page, Référence de bloc, Bloc de formule, Date et heure |
 | **Boutons personnalisés** | Onglet **Épinglé** —— épinglez *n'importe quelle* commande（du cœur, de ce plugin ou d'un autre）avec vos propres icônes et vos propres groupes |
 | **Configuration**      | Aucune. Suit le thème, prêt à l'emploi                                      |
-| **Requis**             | Obsidian **1.13.7 et plus**                                                |
 
 ---
 
@@ -227,7 +230,7 @@ Paramètres → **Plugins communautaires** → **Parcourir** → recherchez **«
 
 ## Compatibilité
 
-- Obsidian **1.13.7 et plus**
+- Obsidian **1.14 et plus**
 - Fonctionne avec l'éditeur Markdown et s'adapte à votre thème actif, en mode clair comme en mode sombre.
 - Pas d'IA, aucun accès réseau, aucun compte, aucune télémétrie —— tout s'exécute localement.
 - La version publiée ne contient que trois fichiers : `main.js`、`manifest.json`、`styles.css`.

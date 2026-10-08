@@ -5,7 +5,7 @@
 
 [![Privacy](https://img.shields.io/badge/privacy-no%20AI%20%C2%B7%20no%20network%20%C2%B7%20no%20telemetry-brightgreen)](#compatibility)
 [![Last commit](https://img.shields.io/github/last-commit/AwesomeDog/obsidian-awesome-format-bar?label=last%20commit)](https://github.com/AwesomeDog/obsidian-awesome-format-bar/commits/main)
-[![Obsidian](https://img.shields.io/badge/Obsidian-1.13.7%2B-7C3AED)](https://obsidian.md)
+[![Obsidian](https://img.shields.io/badge/Obsidian-1.14%2B-7C3AED)](https://obsidian.md)
 [![GitHub release](https://img.shields.io/github/v/release/AwesomeDog/obsidian-awesome-format-bar)](https://github.com/AwesomeDog/obsidian-awesome-format-bar/releases/latest)
 [![Downloads](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fobsidianmd%2Fobsidian-releases%2Fmaster%2Fcommunity-plugin-stats.json&query=%24%5B%22awesome-format-bar%22%5D.downloads&label=downloads&color=573E7A)](https://obsidian.md/plugins?id=awesome-format-bar)
 [![Commands](https://img.shields.io/badge/commands-100+-informational)](#full-command-reference)
@@ -68,12 +68,15 @@
 | **コマンド数**     | 内蔵 **187** 個、うち **170** 個はコマンドパレットから独自のホットキーを設定可能  |
 | **タブ**          | ホーム · 挿入 · 表示 · テーブル · ユーティリティ · **ピン留め**          |
 | **コールアウト**    | Obsidian の 12 種類すべてのコールアウトを 1 つのドロップダウンに集約      |
+| **グラフ**      | 24 種類の Mermaid 図 —— フローチャート、シーケンス図、クラス図、状態図、ER 図、ガントチャート、円グラフ、マインドマップ、タイムライン、Git グラフ、カンバンボード、アーキテクチャ図、C4 図、サンキーダイアグラムなど —— 挿入したその場で編集できるコードブロックとして書き込まれます |
 | **絵文字と記号**    | 約 2,150 件の絵文字・顔文字・記号、完全オフライン                   |
-| **テーブル編集**    | 行と列の挿入 / 削除 / 移動、配置、並べ替え、重複行の削除、転置、書式設定、テキストへの変換、テーブルとして貼り付け、CSV としてコピー         |
-| **画像編集**      | 配置、サイズ、代替テキスト、キャプション、画像をリセット、構文を変換                                       |
+| **テーブル編集**    | 行と列の挿入 / 削除 / 移動、配置、並べ替え、重複行の削除、転置、書式設定、テキストへの変換、**テーブルとして貼り付け**（Excel / Numbers / Sheets からそのまま）、TSV / CSV / JSON としてコピー |
+| **画像編集**      | 配置、サイズ（1 枚だけ、または**ノート内の全画像を一度に**）、代替テキスト、キャプション、画像をリセット、`![[…]] ⇄ ![](…)` の構文変換 |
+| **読み心地と集中**   | ライブプレビュー ⇄ ソース、フォーカス モード、禅モード、タイプライターモード、空白を表示、行番号、ズーム、分割、すべて折りたたむ / 展開 |
+| **行とテキストのユーティリティ** | 行の結合 / 行の分割 / 行を逆順に、複製、リストを並べ替え、見出しを並べ替え、スマート句読点、CJKスペース、そして**クリーンアップ**（末尾の空白、空白行、裸の URL、不可視文字、強調と箇条書きスタイル） |
+| **そのほか**      | 目次、書式のコピー、ドロップキャップ、脚注、ブロック参照、数式ブロック、日付と時刻 |
 | **カスタムボタン**   | **ピン留め**タブ——任意のコマンド（コア、本プラグイン、他プラグイン）を、自分のアイコンとグループでピン留め          |
 | **設定は必要か**     | 不要。テーマに追従し、設定ゼロで使えます                           |
-| **必要環境**       | Obsidian **1.13.7 以上**                             |
 
 ---
 
@@ -227,7 +230,7 @@
 
 ## 互換性
 
-- Obsidian **1.13.7 以上**
+- Obsidian **1.14 以上**
 - Markdown エディターで動作し、ライトモードとダークモードの両方でアクティブなテーマに追従します。
 - AI なし、ネットワークアクセスなし、アカウント不要、テレメトリーなし——すべてローカルで動作します。
 - リリース物はちょうど 3 ファイルです：`main.js`、`manifest.json`、`styles.css`。

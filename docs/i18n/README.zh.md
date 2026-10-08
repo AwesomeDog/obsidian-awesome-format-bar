@@ -5,7 +5,7 @@
 
 [![Privacy](https://img.shields.io/badge/privacy-no%20AI%20%C2%B7%20no%20network%20%C2%B7%20no%20telemetry-brightgreen)](#compatibility)
 [![Last commit](https://img.shields.io/github/last-commit/AwesomeDog/obsidian-awesome-format-bar?label=last%20commit)](https://github.com/AwesomeDog/obsidian-awesome-format-bar/commits/main)
-[![Obsidian](https://img.shields.io/badge/Obsidian-1.13.7%2B-7C3AED)](https://obsidian.md)
+[![Obsidian](https://img.shields.io/badge/Obsidian-1.14%2B-7C3AED)](https://obsidian.md)
 [![GitHub release](https://img.shields.io/github/v/release/AwesomeDog/obsidian-awesome-format-bar)](https://github.com/AwesomeDog/obsidian-awesome-format-bar/releases/latest)
 [![Downloads](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fobsidianmd%2Fobsidian-releases%2Fmaster%2Fcommunity-plugin-stats.json&query=%24%5B%22awesome-format-bar%22%5D.downloads&label=downloads&color=573E7A)](https://obsidian.md/plugins?id=awesome-format-bar)
 [![Commands](https://img.shields.io/badge/commands-100+-informational)](#full-command-reference)
@@ -68,12 +68,15 @@
 | **命令数**     | 内置 **187** 条，其中 **170** 条进入命令面板可自定义快捷键 |
 | **选项卡**     | 开始 · 插入 · 视图 · 表格 · 工具 · **已固定**       |
 | **Callout** | 12 种 Obsidian Callout 类型，一个下拉全包        |
+| **图表** | 24 种 Mermaid 图表类型 —— 流程图、时序图、类图、状态图、实体关系图、甘特图、饼图、思维导图、时间线、Git 图、看板、架构图、C4 图、桑基图等等 —— 插入即为可直接编辑的代码块 |
 | **表情与符号**   | 约 2,150 条表情、颜文字与符号，完全离线                |
-| **表格编辑**    | 增 / 删 / 移动行列、对齐、排序、删除重复行、转置、重排格式、转换为文本、粘贴为表格、复制为 CSV |
-| **图片编辑**    | 对齐、大小、替代文本、题注、重置图片、转换语法                          |
+| **表格编辑**    | 增 / 删 / 移动行列、对齐、排序、删除重复行、转置、重排格式、转换为文本、**粘贴为表格**（直接来自 Excel / Numbers / Sheets）、复制为 TSV / CSV / JSON |
+| **图片编辑**    | 对齐、大小（单张图片，或**一次性改掉笔记里的每一张**）、替代文本、题注、重置图片、`![[…]] ⇄ ![](…)` 语法转换 |
+| **阅读与专注** | 实时预览 ⇄ 源码、专注模式、禅模式、打字机模式、显示空白字符、行号、缩放、分屏、全部折叠 / 展开 |
+| **行与文本工具** | 合并行 / 拆分行 / 反转行、重复、排序列表、排序标题、智能标点、中日韩间距，以及**清理**（行尾空格、连续空行、裸 URL、不可见字符、强调与项目符号样式） |
+| **其他** | 目录、格式刷、首字下沉、脚注、块引用、数学块、日期和时间 |
 | **自定义按钮**   | **已固定**选项卡 —— 固定**任意**命令（核心命令、本插件的、或其他插件的），图标和分组都由你定         |
 | **是否需要配置**  | 不需要。跟随主题，开箱即用                          |
-| **要求**      | Obsidian **1.13.7 及以上**                |
 
 ---
 
@@ -228,7 +231,7 @@
 
 ## 兼容性
 
-- Obsidian **1.13.7 及以上**
+- Obsidian **1.14 及以上**
 - 适配 Markdown 编辑器，浅色与深色模式下都跟随当前主题。
 - 无 AI、不联网、不要账号、无遥测——一切都在本地运行。
 - 发布物只有三个文件：`main.js`、`manifest.json`、`styles.css`。

@@ -5,7 +5,7 @@
 
 [![Privacy](https://img.shields.io/badge/privacy-no%20AI%20%C2%B7%20no%20network%20%C2%B7%20no%20telemetry-brightgreen)](#compatibility)
 [![Last commit](https://img.shields.io/github/last-commit/AwesomeDog/obsidian-awesome-format-bar?label=last%20commit)](https://github.com/AwesomeDog/obsidian-awesome-format-bar/commits/main)
-[![Obsidian](https://img.shields.io/badge/Obsidian-1.13.7%2B-7C3AED)](https://obsidian.md)
+[![Obsidian](https://img.shields.io/badge/Obsidian-1.14%2B-7C3AED)](https://obsidian.md)
 [![GitHub release](https://img.shields.io/github/v/release/AwesomeDog/obsidian-awesome-format-bar)](https://github.com/AwesomeDog/obsidian-awesome-format-bar/releases/latest)
 [![Downloads](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fobsidianmd%2Fobsidian-releases%2Fmaster%2Fcommunity-plugin-stats.json&query=%24%5B%22awesome-format-bar%22%5D.downloads&label=downloads&color=573E7A)](https://obsidian.md/plugins?id=awesome-format-bar)
 [![Commands](https://img.shields.io/badge/commands-100+-informational)](#full-command-reference)
@@ -68,12 +68,15 @@
 | **指令數** | 內建 **187** 筆，其中 **170** 筆進入命令面板可自訂快捷鍵 |
 | **選項卡** | 常用 · 插入 · 檢視 · 表格 · 公用工具 · **已釘選** |
 | **標註** | 12 種 Obsidian 標註類型，一個下拉全包 |
+| **圖表** | 24 種 Mermaid 圖表類型 —— 流程圖、時序圖、類別圖、狀態圖、實體關係圖、甘特圖、圓餅圖、心智圖、時間軸、Git 圖、看板、架構圖、C4 圖、桑基圖等等 —— 插入即為可直接編輯的程式碼區塊 |
 | **表情符號與符號** | 約 2,150 筆表情符號、顏文字與符號，完全離線 |
-| **表格編輯** | 增 / 刪 / 移動列欄、對齊、排序、刪除重複列、轉置表格、重排格式、將表格轉換為文字、貼上為表格、複製為 ▼ (TSV, CSV, JSON, Markdown) |
-| **圖片編輯** | 對齊、大小、替代文字、題註、重設圖片、轉換語法 |
+| **表格編輯** | 增 / 刪 / 移動列欄、對齊、排序、刪除重複列、轉置表格、重排格式、將表格轉換為文字、**貼上為表格**（直接來自 Excel / Numbers / Sheets）、複製為 TSV / CSV / JSON |
+| **圖片編輯** | 對齊、大小（單張圖片，或**一次改掉筆記裡的每一張**）、替代文字、題註、重設圖片、`![[…]] ⇄ ![](…)` 語法轉換 |
+| **閱讀與專注** | 即時預覽 ⇄ 原始碼、專注模式、禪模式、打字機模式、顯示空格、行號、縮放、分割視窗、全部摺疊 / 展開 |
+| **列與文字工具** | 合併列、分割列、反轉行、重複、排序清單、排序標題、智慧標點、中日韓間距，以及**清理**（行尾空白、連續空白行、裸 URL、不可見字元、強調與項目符號樣式） |
+| **其他** | 目錄、複製格式、首字下沉、腳注、區塊參照、公式區塊、日期與時間 |
 | **自訂按鈕** | **已釘選**選項卡 —— 釘選**任何**指令（核心指令、本外掛的、或其他外掛的），圖示與分組都由你定 |
 | **是否需要設定** | 不需要。跟隨主題，開箱即用 |
-| **需求** | Obsidian **1.13.7 以上** |
 
 ---
 
@@ -227,7 +230,7 @@
 
 ## 相容性
 
-- Obsidian **1.13.7 以上**
+- Obsidian **1.14 以上**
 - 搭配 Markdown 編輯器運作，淺色與深色模式下都配合你目前的主題。
 - 無 AI、不連網路、不要帳號、無遙測——一切都在本機執行。
 - 發布物只有三個檔案：`main.js`、`manifest.json`、`styles.css`。

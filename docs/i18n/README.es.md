@@ -5,7 +5,7 @@
 
 [![Privacy](https://img.shields.io/badge/privacy-no%20AI%20%C2%B7%20no%20network%20%C2%B7%20no%20telemetry-brightgreen)](#compatibility)
 [![Last commit](https://img.shields.io/github/last-commit/AwesomeDog/obsidian-awesome-format-bar?label=last%20commit)](https://github.com/AwesomeDog/obsidian-awesome-format-bar/commits/main)
-[![Obsidian](https://img.shields.io/badge/Obsidian-1.13.7%2B-7C3AED)](https://obsidian.md)
+[![Obsidian](https://img.shields.io/badge/Obsidian-1.14%2B-7C3AED)](https://obsidian.md)
 [![GitHub release](https://img.shields.io/github/v/release/AwesomeDog/obsidian-awesome-format-bar)](https://github.com/AwesomeDog/obsidian-awesome-format-bar/releases/latest)
 [![Downloads](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fobsidianmd%2Fobsidian-releases%2Fmaster%2Fcommunity-plugin-stats.json&query=%24%5B%22awesome-format-bar%22%5D.downloads&label=downloads&color=573E7A)](https://obsidian.md/plugins?id=awesome-format-bar)
 [![Commands](https://img.shields.io/badge/commands-100+-informational)](#full-command-reference)
@@ -68,12 +68,15 @@ Obsidian es rápido **si** ya hablas Markdown. Para todos los demás ——estud
 | **Comandos**        | **187** integrados, **170** disponibles en la paleta de comandos para atajos propios |
 | **Pestañas**        | Inicio · Insertar · Vista · Tabla · Utilidades · **Anclado**               |
 | **Recuadros**       | Los 12 tipos de recuadro de Obsidian en un solo desplegable               |
+| **Gráficos**        | 24 tipos de diagramas Mermaid — diagrama de flujo, diagrama de secuencia, diagrama de clases, diagrama de estados, diagrama entidad-relación, diagrama de Gantt, gráfico circular, mapa mental, línea de tiempo, gráfico de Git, tablero Kanban, diagrama de arquitectura, diagrama C4, diagrama de Sankey y más — insertados como un bloque de código editable al instante |
 | **Emoji y símbolos** | Unos 2.150 emoji, kaomoji y símbolos, totalmente sin conexión            |
-| **Edición de tablas** | Insertar / eliminar / mover filas y columnas, alinear, ordenar, quitar filas duplicadas, transponer, reformatear, convertir en texto, pegar como tabla, copiar como CSV |
-| **Edición de imágenes** | alinear, tamaño, texto alternativo, título, restablecer imagen, convertir sintaxis |
+| **Edición de tablas** | Insertar / eliminar / mover filas y columnas, alinear, ordenar, quitar filas duplicadas, transponer, reformatear, convertir en texto, **pegar como tabla** (directamente desde Excel, Numbers o Sheets), copiar como TSV / CSV / JSON |
+| **Edición de imágenes** | alinear, tamaño (una sola imagen o **todas las imágenes de la nota a la vez**), texto alternativo, título, restablecer imagen, convertir `![[…]] ⇄ ![](…)` |
+| **Lectura y concentración** | Live Preview ⇄ Origen, modo de enfoque, modo zen, modo máquina de escribir, mostrar espacios, números de línea, zoom, dividir, contraer / expandir todo |
+| **Utilidades de líneas y texto** | Combinar / Dividir / Invertir líneas, Duplicar, Ordenar lista, Ordenar títulos, Puntuación inteligente, Espaciado CJK y **Limpiar** (espacios finales, líneas en blanco, URL desnudas, caracteres invisibles, énfasis y viñetas) |
+| **Además**          | Índice, Copiar formato, Letra capital, Nota al pie, Referencia de bloque, Bloque de fórmula, Fecha y hora |
 | **Botones propios** | Pestaña **Anclado** —— ancla **cualquier** comando（del núcleo, de este plugin o de otro）con tus propios iconos y grupos |
 | **Configuración**   | Ninguna. Se adapta al tema, listo para usar                               |
-| **Requiere**        | Obsidian **1.13.7 o superior**                                            |
 
 ---
 
@@ -227,7 +230,7 @@ Configuración → **Plugins de la comunidad** → **Explorar** → busca **“A
 
 ## Compatibilidad
 
-- Obsidian **1.13.7 o superior**
+- Obsidian **1.14 o superior**
 - Funciona con el editor Markdown y se adapta a tu tema activo tanto en modo claro como oscuro.
 - Sin IA, sin acceso a la red, sin cuentas, sin telemetría: todo se ejecuta en local.
 - La versión publicada son exactamente tres archivos: `main.js`, `manifest.json` y `styles.css`.

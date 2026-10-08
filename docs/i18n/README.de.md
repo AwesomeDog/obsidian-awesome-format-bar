@@ -5,7 +5,7 @@
 
 [![Privacy](https://img.shields.io/badge/privacy-no%20AI%20%C2%B7%20no%20network%20%C2%B7%20no%20telemetry-brightgreen)](#compatibility)
 [![Last commit](https://img.shields.io/github/last-commit/AwesomeDog/obsidian-awesome-format-bar?label=last%20commit)](https://github.com/AwesomeDog/obsidian-awesome-format-bar/commits/main)
-[![Obsidian](https://img.shields.io/badge/Obsidian-1.13.7%2B-7C3AED)](https://obsidian.md)
+[![Obsidian](https://img.shields.io/badge/Obsidian-1.14%2B-7C3AED)](https://obsidian.md)
 [![GitHub release](https://img.shields.io/github/v/release/AwesomeDog/obsidian-awesome-format-bar)](https://github.com/AwesomeDog/obsidian-awesome-format-bar/releases/latest)
 [![Downloads](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fobsidianmd%2Fobsidian-releases%2Fmaster%2Fcommunity-plugin-stats.json&query=%24%5B%22awesome-format-bar%22%5D.downloads&label=downloads&color=573E7A)](https://obsidian.md/plugins?id=awesome-format-bar)
 [![Commands](https://img.shields.io/badge/commands-100+-informational)](#full-command-reference)
@@ -68,12 +68,15 @@ Obsidian ist schnell — **wenn** Sie bereits Markdown beherrschen. Für alle an
 | **Befehle**         | **187** integrierte, davon **170** in der Befehlspalette für eigene Tastenkürzel                   |
 | **Registerkarten**  | Start · Einfügen · Ansicht · Tabelle · Hilfsprogramme · **Angeheftet**                              |
 | **Callouts**        | Alle 12 Obsidian-Callout-Typen in einem Aufklappmenü                                               |
+| **Diagramme**   | 24 Mermaid-Diagrammtypen — Flussdiagramm, Sequenzdiagramm, Klassendiagramm, Zustandsdiagramm, Entity-Relationship-Diagramm, Gantt-Diagramm, Kreisdiagramm, Mindmap, Zeitstrahl, Git-Graph, Kanban-Board, Architekturdiagramm, C4-Diagramm, Sankey-Diagramm und mehr — als direkt bearbeitbarer Codeblock eingefügt |
 | **Emoji und Symbole** | Rund 2.150 Emoji, Kaomoji und Symbole, vollständig offline                                       |
-| **Tabellenbearbeitung** | Zeilen und Spalten einfügen, löschen und verschieben, ausrichten, sortieren, doppelte Zeilen entfernen, transponieren, neu formatieren, in Text umwandeln, als Tabelle einfügen, als CSV kopieren |
-| **Bildbearbeitung** | ausrichten, Größe, Alternativtext, Beschriftung, Bild zurücksetzen, Syntax umwandeln |
+| **Tabellenbearbeitung** | Zeilen und Spalten einfügen, löschen und verschieben, ausrichten, sortieren, doppelte Zeilen entfernen, transponieren, neu formatieren, in Text umwandeln, **als Tabelle einfügen** (direkt aus Excel, Numbers oder Sheets), als TSV / CSV / JSON kopieren |
+| **Bildbearbeitung** | ausrichten, Größe (ein einzelnes Bild oder **alle Bilder der Notiz auf einmal**), Alternativtext, Beschriftung, Bild zurücksetzen, `![[…]] ⇄ ![](…)` umwandeln |
+| **Lesen und Fokus** | Live Preview ⇄ Quellmodus, Fokusmodus, Zen-Modus, Schreibmaschinen-Modus, Leerzeichen anzeigen, Zeilennummern, Zoom, teilen, alle reduzieren / erweitern |
+| **Zeilen- und Textwerkzeuge** | Zeilen zusammenführen / teilen / umkehren, Duplizieren, Liste sortieren, Überschriften sortieren, Intelligente Zeichensetzung, CJK-Abstände und **Bereinigen** (nachgestellte Leerzeichen, Leerzeilen, nackte URLs, unsichtbare Zeichen, Auszeichnungen und Aufzählungszeichen) |
+| **Außerdem**    | Inhaltsverzeichnis, Format übertragen, Initial, Fußnote, Blockverweis, Formelblock, Datum und Uhrzeit |
 | **Eigene Schaltflächen** | Registerkarte **Angeheftet** — heften Sie **beliebige** Befehle an (Kernbefehle, die dieses Plugins oder die eines anderen), mit eigenen Symbolen und Gruppen |
 | **Einrichtung nötig** | Keine. Themenangepasst, ohne Konfiguration                                                       |
-| **Voraussetzung**   | Obsidian **1.13.7+**                                                                                |
 
 ---
 
@@ -227,7 +230,7 @@ Einstellungen → **Community-Plugins** → **Durchsuchen** → nach **„Awesom
 
 ## Kompatibilität
 
-- Obsidian **1.13.7+**
+- Obsidian **1.14+**
 - Funktioniert mit dem Markdown-Editor und passt sich im hellen wie im dunklen Modus an das aktive Theme an.
 - Keine KI, kein Netzwerkzugriff, keine Konten, keine Telemetrie — alles läuft lokal.
 - Das Release besteht aus genau drei Dateien: `main.js`, `manifest.json`, `styles.css`.

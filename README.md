@@ -5,7 +5,7 @@
 
 [![Privacy](https://img.shields.io/badge/privacy-no%20AI%20%C2%B7%20no%20network%20%C2%B7%20no%20telemetry-brightgreen)](#compatibility)
 [![Last commit](https://img.shields.io/github/last-commit/AwesomeDog/obsidian-awesome-format-bar?label=last%20commit)](https://github.com/AwesomeDog/obsidian-awesome-format-bar/commits/main)
-[![Obsidian](https://img.shields.io/badge/Obsidian-1.13.7%2B-7C3AED)](https://obsidian.md)
+[![Obsidian](https://img.shields.io/badge/Obsidian-1.14%2B-7C3AED)](https://obsidian.md)
 [![GitHub release](https://img.shields.io/github/v/release/AwesomeDog/obsidian-awesome-format-bar)](https://github.com/AwesomeDog/obsidian-awesome-format-bar/releases/latest)
 [![Downloads](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fobsidianmd%2Fobsidian-releases%2Fmaster%2Fcommunity-plugin-stats.json&query=%24%5B%22awesome-format-bar%22%5D.downloads&label=downloads&color=573E7A)](https://obsidian.md/plugins?id=awesome-format-bar)
 [![Commands](https://img.shields.io/badge/commands-100+-informational)](#full-command-reference)
@@ -66,12 +66,15 @@ Obsidian is fast **if** you already speak Markdown. For everyone else — studen
 | **Commands** | **187** built-in, **170** available in the command palette for custom hotkeys |
 | **Tabs** | Home · Insert · View · Table · Utilities · **Pinned** |
 | **Callouts** | All 12 Obsidian callout types in one drop-down |
+| **Charts** | 24 Mermaid diagram types — flowchart, sequence, class, state, ER, Gantt, pie, mindmap, timeline, Git graph, Kanban, architecture, C4, Sankey and more — inserted as a ready-to-edit code block |
 | **Emoji & symbols** | ~2,150 emoji, kaomoji and symbols, fully offline |
-| **Table editing** | Insert/delete/move rows & columns, align, sort, remove duplicate rows, transpose, re-format, convert to text, paste as table, copy as CSV |
-| **Image editing** | align, size, alt text, caption, reset picture, convert syntax |
+| **Table editing** | Insert/delete/move rows & columns, align, sort, remove duplicate rows, transpose, re-format, convert to text, **Paste as Table** from Excel/Numbers/Sheets, copy as TSV / CSV / JSON |
+| **Image editing** | align, size (single picture or **every picture in the note at once**), alt text, caption, reset picture, convert `![[…]]` ⇄ `![](…)` |
+| **Reading & focus** | Live Preview ⇄ Source, Focus Mode, Zen Mode, Typewriter Mode, Show Whitespace, line numbers, zoom, split, collapse / expand all |
+| **Line & text utilities** | Merge / Split / Reverse Lines, Duplicate, Sort List, Sort Headings, Smart Punctuation, CJK Spacing, and **Clean Up** (trailing spaces, blank lines, bare URLs, invisible characters, emphasis & bullet style) |
+| **Extras** | Table of Contents, Format Painter, Drop Cap, Footnote, Block Reference, Math Block, Date and Time |
 | **Custom buttons** | **Pinned** tab — pin *any* command (core, this plugin's, or another plugin's) with your own icons and groups |
 | **Setup required** | None. Theme-aware, zero configuration |
-| **Requires** | Obsidian **1.13.7+** |
 
 ---
 
@@ -225,7 +228,7 @@ Settings → **Community plugins** → **Browse** → search for **"Awesome Form
 
 ## Compatibility
 
-- Obsidian **1.13.7+**
+- Obsidian **1.14+**
 - Works with the Markdown editor and adapts to your active theme in both light and dark mode.
 - No AI, no network access, no accounts, no telemetry — everything runs locally.
 - The release is exactly three files: `main.js`, `manifest.json`, `styles.css`.

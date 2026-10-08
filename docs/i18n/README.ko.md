@@ -5,7 +5,7 @@
 
 [![Privacy](https://img.shields.io/badge/privacy-no%20AI%20%C2%B7%20no%20network%20%C2%B7%20no%20telemetry-brightgreen)](#compatibility)
 [![Last commit](https://img.shields.io/github/last-commit/AwesomeDog/obsidian-awesome-format-bar?label=last%20commit)](https://github.com/AwesomeDog/obsidian-awesome-format-bar/commits/main)
-[![Obsidian](https://img.shields.io/badge/Obsidian-1.13.7%2B-7C3AED)](https://obsidian.md)
+[![Obsidian](https://img.shields.io/badge/Obsidian-1.14%2B-7C3AED)](https://obsidian.md)
 [![GitHub release](https://img.shields.io/github/v/release/AwesomeDog/obsidian-awesome-format-bar)](https://github.com/AwesomeDog/obsidian-awesome-format-bar/releases/latest)
 [![Downloads](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fobsidianmd%2Fobsidian-releases%2Fmaster%2Fcommunity-plugin-stats.json&query=%24%5B%22awesome-format-bar%22%5D.downloads&label=downloads&color=573E7A)](https://obsidian.md/plugins?id=awesome-format-bar)
 [![Commands](https://img.shields.io/badge/commands-100+-informational)](#full-command-reference)
@@ -68,12 +68,15 @@
 | **명령**         | 내장 **187**개, 이 중 **170**개는 명령 팔레트에서 단축키를 직접 지정 가능 |
 | **탭**          | 홈 · 삽입 · 보기 · 표 · 유틸리티 · **고정됨**                   |
 | **콜아웃**        | Obsidian 콜아웃 12종을 하나의 드롭다운에                        |
+| **차트**         | 24종 Mermaid 다이어그램 —— 흐름도, 시퀀스 다이어그램, 클래스 다이어그램, 상태 다이어그램, 개체 관계 다이어그램, 간트 차트, 원형 차트, 마인드맵, 타임라인, Git 그래프, 칸반 보드, 아키텍처 다이어그램, C4 다이어그램, 생키 다이어그램 등 —— 바로 편집할 수 있는 코드 블록으로 삽입 |
 | **이모지 및 기호**   | 약 2,150개의 이모지·카오모지·기호, 완전 오프라인                     |
-| **표 편집**       | 행 / 열 삽입·삭제·이동, 맞춤, 정렬, 중복 행 제거, 전치, 서식 다시 지정, 텍스트로 변환, 표로 붙여넣기, CSV로 복사 |
-| **이미지 편집**     | 맞춤, 크기, 대체 텍스트, 캡션, 이미지 초기화, 구문 변환                                     |
+| **표 편집**       | 행 / 열 삽입·삭제·이동, 맞춤, 정렬, 중복 행 제거, 전치, 서식 다시 지정, 텍스트로 변환, **표로 붙여넣기**（Excel / Numbers / Sheets에서 바로）, TSV / CSV / JSON으로 복사 |
+| **이미지 편집**     | 맞춤, 크기（한 장만, 또는 **노트 안의 모든 이미지를 한 번에**）, 대체 텍스트, 캡션, 이미지 초기화, `![[…]] ⇄ ![](…)` 구문 변환 |
+| **읽기와 집중**     | 라이브 프리뷰 ⇄ 소스, 집중 모드, 젠 모드, 타자기 모드, 공백 표시, 줄 번호, 확대/축소, 분할, 모두 접기 / 펼치기 |
+| **줄 및 텍스트 유틸리티** | 줄 병합 / 줄 분할 / 줄 순서 뒤집기, 복제, 목록 정렬, 제목 정렬, 스마트 문장 부호, CJK 간격, 그리고 **정리**（줄 끝 공백, 빈 줄, 일반 URL, 보이지 않는 문자, 강조 및 글머리 기호 스타일） |
+| **기타**         | 목차, 서식 복사, 첫 글자 확대, 각주, 블록 참조, 수식 블록, 날짜 및 시간 |
 | **사용자 지정 버튼**  | **고정됨** 탭 —— *어떤* 명령이든 고정 가능（코어, 이 플러그인, 다른 플러그인）하며 원하는 아이콘과 그룹까지 지정 |
 | **설정이 필요한가요**  | 아니요. 테마를 따르며 별도 구성이 없습니다                            |
-| **요구 사항**      | Obsidian **1.13.7 이상**                             |
 
 ---
 
@@ -227,7 +230,7 @@
 
 ## 호환성
 
-- Obsidian **1.13.7 이상**
+- Obsidian **1.14 이상**
 - Markdown 편집기에서 동작하며, 밝은 모드와 어두운 모드 모두 현재 테마에 맞춥니다.
 - AI 없음, 네트워크 접속도, 계정도, 원격 측정도 없습니다——모든 것이 로컬에서 실행됩니다.
 - 릴리스 파일은 정확히 세 개입니다: `main.js`, `manifest.json`, `styles.css`.
