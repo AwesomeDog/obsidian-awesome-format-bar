@@ -1,17 +1,7 @@
 import { setTooltip } from "obsidian";
 import Picker from "vanilla-picker/csp";
-import { t } from "../i18n/i18n";
-import { commandById, DROPDOWN_ITEMS } from "../model/command-table";
-import {
-  CASE_OPTIONS,
-  FONT_FAMILIES,
-  FONT_SIZES,
-  HIGHLIGHT_COLORS,
-  NATIVE_COUNT,
-  NATIVE_HIGHLIGHTS,
-  STANDARD_COLORS,
-  type NativeHighlight,
-} from "../model/palettes";
+import { popupSections, type PopupChoice } from "../model/popups";
+import { STANDARD_COLORS } from "../model/palettes";
 import type { CommandSpec } from "../model/types";
 import { openFloatingLayer } from "./floating";
 import type { ToolbarHost } from "./host";
@@ -108,29 +98,31 @@ function openColorPicker(
   layer.place();
 }
 
-/** No Color and the picker: the same two entries under either palette. */
-function colorExtras(
+/** One choice as the popover draws it. */
+function toItem(
   spec: CommandSpec,
   host: ToolbarHost,
   anchor: HTMLElement,
-  property: string,
-): PopoverSection {
+  choice: PopupChoice,
+): PopoverItem {
+  const target = choice.command ?? spec;
+  const { icon, label, swatch } = choice;
+  // The picker is the one choice that needs an anchor of its own.
+  const property = choice.picker;
+  if (property !== undefined)
+    return {
+      icon,
+      label,
+      onChoose: () =>
+        openColorPicker(anchor, host, (hex) =>
+          host.execute(target, `${property}:${hex}`),
+        ),
+    };
   return {
-    items: [
-      {
-        icon: "ban",
-        label: t("No Color"),
-        onChoose: () => host.execute(spec, `${property}:none`),
-      },
-      {
-        icon: "pipette",
-        label: t("More colors…"),
-        onChoose: () =>
-          openColorPicker(anchor, host, (hex) =>
-            host.execute(spec, `${property}:${hex}`),
-          ),
-      },
-    ],
+    icon,
+    label,
+    swatch,
+    onChoose: () => host.execute(target, choice.value),
   };
 }
 
@@ -140,79 +132,8 @@ export function popoverSectionsFor(
   host: ToolbarHost,
   anchor: HTMLElement,
 ): readonly PopoverSection[] {
-  switch (spec.popup) {
-    case "color":
-      return [
-        {
-          grid: 10,
-          items: STANDARD_COLORS.map((hex) => ({
-            label: hex,
-            swatch: hex,
-            onChoose: () => host.execute(spec, `color:${hex}`),
-          })),
-        },
-        colorExtras(spec, host, anchor, "color"),
-      ];
-    case "highlight-color": {
-      const swatch = (hex: string): PopoverItem => ({
-        label: hex,
-        swatch: hex,
-        onChoose: () => host.execute(spec, `background:${hex}`),
-      });
-      // The leading six are Obsidian's own, and what renders is the theme
-      // variable, not this hex: showing the hex would promise a color the
-      // editor never paints.
-      const native = (entry: NativeHighlight): PopoverItem => ({
-        label: entry.hex,
-        swatch: `var(${entry.variable})`,
-        onChoose: () => host.execute(spec, `background:${entry.hex}`),
-      });
-      return [
-        { grid: NATIVE_COUNT, items: NATIVE_HIGHLIGHTS.map(native) },
-        { grid: 5, items: HIGHLIGHT_COLORS.slice(NATIVE_COUNT).map(swatch) },
-        colorExtras(spec, host, anchor, "background"),
-      ];
-    }
-    case "font-size":
-    case "font-family": {
-      const property = spec.popup === "font-size" ? "font-size" : "font-family";
-      const options = spec.popup === "font-size" ? FONT_SIZES : FONT_FAMILIES;
-      return [
-        {
-          items: options.map((option) => ({
-            label: t(option.label),
-            onChoose: () => host.execute(spec, `${property}:${option.value}`),
-          })),
-        },
-      ];
-    }
-    case "case":
-      return [
-        {
-          items: CASE_OPTIONS.map((option) => ({
-            label: t(option.label),
-            onChoose: () => host.execute(spec, option.mode),
-          })),
-        },
-      ];
-    // Everything else that is a drop-down at all: one item per command listed
-    // under it, the same shape the editor menu shows. Nothing here names a
-    // pop-up, so a new one needs no case of its own.
-    default: {
-      const ids = DROPDOWN_ITEMS[spec.popup ?? ""] ?? [];
-      if (ids.length === 0) return [];
-      return [
-        {
-          items: ids.map((id) => {
-            const item = commandById(id);
-            return {
-              icon: item.icon,
-              label: item.name,
-              onChoose: () => host.execute(item),
-            };
-          }),
-        },
-      ];
-    }
-  }
+  return popupSections(spec.popup).map((section) => ({
+    grid: section.grid,
+    items: section.items.map((choice) => toItem(spec, host, anchor, choice)),
+  }));
 }

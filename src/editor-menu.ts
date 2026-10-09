@@ -1,19 +1,10 @@
 import { MenuItem, type App, type Editor, type Menu } from "obsidian";
 import { canRun, runConditions } from "./commands/execute";
 import { registeredCommandName } from "./commands/registered";
-import { commandById, DROPDOWN_ITEMS } from "./model/command-table";
+import { commandById } from "./model/command-table";
 import { BUILT_IN_COMMAND_TABS, PINNED_TAB } from "./model/layout";
 import { pinnedGroupLabel, pinnedGroups, pinnedSpecs } from "./model/pinned";
-import {
-  CASE_OPTIONS,
-  FONT_FAMILIES,
-  FONT_SIZES,
-  HIGHLIGHT_COLORS,
-  NATIVE_COUNT,
-  NATIVE_HIGHLIGHTS,
-  STANDARD_COLORS,
-} from "./model/palettes";
-import { t } from "./i18n/i18n";
+import { popupSections, type PopupChoice } from "./model/popups";
 import type { CommandSpec, PinnedCommand } from "./model/types";
 import { resolveIconName } from "./toolbar/icons";
 
@@ -37,16 +28,6 @@ export interface EditorMenuOptions {
 interface Build {
   readonly conditions: ReturnType<typeof runConditions>;
   readonly execute: EditorMenuOptions["execute"];
-}
-
-/** One choice behind a pop-up command: the same spec, one option value. */
-interface Choice {
-  readonly label: string;
-  readonly spec: CommandSpec;
-  readonly value?: string;
-  readonly icon?: string;
-  /** A CSS color: the dot in front of the label, for the color palettes. */
-  readonly swatch?: string;
 }
 
 /** The whole command table, under one item of the menu Obsidian just built. */
@@ -120,11 +101,17 @@ function addCommand(menu: Menu, spec: CommandSpec, build: Build): void {
       return;
     }
     const submenu = item.setSubmenu();
-    for (const choice of choices) addChoice(submenu, choice, build);
+    for (const choice of choices) addChoice(submenu, choice, spec, build);
   });
 }
 
-function addChoice(menu: Menu, choice: Choice, build: Build): void {
+function addChoice(
+  menu: Menu,
+  choice: PopupChoice,
+  spec: CommandSpec,
+  build: Build,
+): void {
+  const target = choice.command ?? spec;
   menu.addItem((item) => {
     item.setTitle(
       choice.swatch === undefined
@@ -134,8 +121,8 @@ function addChoice(menu: Menu, choice: Choice, build: Build): void {
     item.setIcon(
       choice.icon === undefined ? null : resolveIconName(choice.icon),
     );
-    if (!canRun(choice.spec, build.conditions)) item.setDisabled(true);
-    else item.onClick(() => build.execute(choice.spec, choice.value));
+    if (!canRun(target, build.conditions)) item.setDisabled(true);
+    else item.onClick(() => build.execute(target, choice.value));
   });
 }
 
@@ -149,60 +136,12 @@ function swatchTitle(label: string, color: string): DocumentFragment {
   });
 }
 
-/** What a pop-up button offers, in the order the popover lists it. */
-function choicesFor(spec: CommandSpec): readonly Choice[] {
-  switch (spec.popup) {
-    case "color":
-      return [
-        ...STANDARD_COLORS.map((hex) => swatch(spec, hex, `color:${hex}`)),
-        none(spec, "color"),
-      ];
-    case "highlight-color":
-      return [
-        // The first six render as a theme variable, so the dot shows that.
-        ...NATIVE_HIGHLIGHTS.map((entry) => ({
-          label: entry.hex,
-          spec,
-          swatch: `var(${entry.variable})`,
-          value: `background:${entry.hex}`,
-        })),
-        ...HIGHLIGHT_COLORS.slice(NATIVE_COUNT).map((hex) =>
-          swatch(spec, hex, `background:${hex}`),
-        ),
-        none(spec, "background"),
-      ];
-    case "font-size":
-      return FONT_SIZES.map((option) => ({
-        label: t(option.label),
-        spec,
-        value: `font-size:${option.value}`,
-      }));
-    case "font-family":
-      return FONT_FAMILIES.map((option) => ({
-        label: t(option.label),
-        spec,
-        value: `font-family:${option.value}`,
-      }));
-    case "case":
-      return CASE_OPTIONS.map((option) => ({
-        label: t(option.label),
-        spec,
-        value: option.mode,
-      }));
-    default:
-      // The drop-down buttons: each item is a command of its own.
-      return (DROPDOWN_ITEMS[spec.popup ?? ""] ?? []).map((id) => {
-        const item = commandById(id);
-        return { icon: item.icon, label: item.name, spec: item };
-      });
-  }
-}
-
-function swatch(spec: CommandSpec, hex: string, value: string): Choice {
-  return { label: hex, spec, swatch: hex, value };
-}
-
-/** The picker is not here, so the palettes end where the popover goes on. */
-function none(spec: CommandSpec, property: string): Choice {
-  return { icon: "ban", label: t("No Color"), spec, value: `${property}:none` };
+/**
+ * What a pop-up button offers, in the order the popover lists it. The color
+ * picker is the one choice a menu has no anchor to hang, so it drops out here.
+ */
+function choicesFor(spec: CommandSpec): readonly PopupChoice[] {
+  return popupSections(spec.popup)
+    .flatMap((section) => section.items)
+    .filter((choice) => choice.picker === undefined);
 }
