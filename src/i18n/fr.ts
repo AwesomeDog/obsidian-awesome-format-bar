@@ -52,6 +52,10 @@ export default {
   Undo: "Annuler",
   Redo: "Rétablir",
   "Find and Replace": "Rechercher et remplacer",
+  Select: "Sélectionner",
+  "Select All": "Tout sélectionner",
+  "Select Text with Similar Formatting":
+    "Sélectionner le texte avec une mise en forme similaire",
   "Internal Link": "Lien interne",
   "External Link": "Lien externe",
   Embed: "Incorporer",
@@ -302,6 +306,8 @@ export default {
     "Le presse-papiers ne contient pas d’URI valide.",
   "No duplicate rows found.": "Aucune ligne en double trouvée.",
   "Removed duplicate rows: {count}": "Lignes en double supprimées : {count}",
+  "Put the cursor in formatted text first.":
+    "Placez d'abord le curseur dans du texte mis en forme.",
   "Put the cursor inside a table first.":
     "Place d’abord le curseur dans un tableau.",
   "Table copied as {format}.": "Tableau copié en {format}.",

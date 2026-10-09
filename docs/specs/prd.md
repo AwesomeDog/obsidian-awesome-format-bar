@@ -66,7 +66,7 @@ A fixed built-in subset of commands, grouped by dividers. Buttons that don't fit
 
 ## 5. Commands
 
-**187 built-in commands** across 5 tabs and 25 groups, plus the Pinned tab. Drop-down items stay under their parent buttons, while the other commands are registered in the command palette, so users can assign their own shortcuts. That leaves **170** palette entries: the 17 left out are the 16 drop-down parents and the emoji panel, which only open a menu instead of acting.
+**190 built-in commands** across 5 tabs and 25 groups, plus the Pinned tab. Drop-down items stay under their parent buttons, while the other commands are registered in the command palette, so users can assign their own shortcuts. That leaves **172** palette entries: the 18 left out are the 17 drop-down parents and the emoji panel, which only open a menu instead of acting.
 
 ### Tab 1 · Home
 
@@ -74,11 +74,15 @@ A fixed built-in subset of commands, grouped by dividers. Buttons that don't fit
 - **Font** — Font Family, Font Size, Bold, Italic, Underline, Strikethrough, Subscript, Superscript, Inline Code, Inline Math, Highlight, Highlight Color, Font Color, Clear Formatting, Change Case
 - **Paragraph** — Bullet List, Numbered List, Number Headings ▼ (Number Headings 1. 1.1. 1.1.1., Number Headings 1) a) i), Number Headings I. A. 1., No Numbering), Task List, Quote, Decrease Indent, Increase Indent, Renumber List, Sort Lines, Move List Item Up / Down, Swap Line Up / Down, Align Left / Center / Right / Justify, Horizontal Rule
 - **Styles** — Heading 1–6, Remove Heading
-- **Editing** — Undo, Redo, Find and Replace
+- **Editing** — Undo, Redo, Find and Replace, Select ▼ (Select All, Select Text with Similar Formatting)
 
 **Paste URI as Link** reads one URI with a scheme from the clipboard and wraps each selected range as a Markdown link using an angle-bracket destination. It requires a selection and leaves regular Paste unchanged. Word keeps its paste variants in this group too, which is why it sits with Paste as Plain Text rather than with the links on Insert.
 
 **Format Painter** copies the character formatting of a selection and assigns it to the next one: what the source lacks is stripped from the target, so painting from plain text clears formatting. One click paints once and puts the brush down; double-clicking the button keeps it on until Esc. It carries bold, italic, strikethrough, highlight, highlight color, underline, subscript, superscript, font color, font size and font family — and nothing else: inline code, inline math, links and block-level marks are left alone in both directions. The interaction needs a mouse, so the button is greyed out on mobile.
+
+**Select All** selects the whole note. Obsidian's editor context menu has it but registers no command for it, so it cannot be pinned from the palette either — which is why the bar carries it.
+
+**Select Text with Similar Formatting** takes the innermost inline mark under the caret as its sample and selects the text of every run wearing it: bold with bold, a yellow highlight with the other yellow highlights but not a red one, and one `<span style="…">` with the spans carrying the same style. A selection works as the sample too, and the innermost mark wins either way — at the italic inside a bold it is the italic that decides. A run is the text between the marks, never the marks themselves, so what the user ends up with is exactly what they can retype. Fenced code is not text to read, and neither is the inside of a code span or of an inline formula: an asterisk there is an asterisk, not an emphasis. Where the caret sits on plain text — or on an asterisk between two spaces — nothing is selected, and a notice says so.
 
 **Move List Item Up / Down** moves the list item at a single collapsed caret together with its continuation lines and every nested item. It swaps with the adjacent sibling; at a sibling boundary, the first child can move to the end of the previous parent and the last child can move to the start of the next parent. It never crosses a blank line, code fence or heading, and does nothing for a heading, non-list text, selection or multiple carets. Ordered lists are renumbered after a move, and the caret follows the moved item.
 
@@ -136,7 +140,7 @@ Column-level names (*Align Column…*, *Sort Rows…*) distinguish these from th
 
 ### Tab 6 · Pinned
 
-Pin **any command from the command palette** — core commands, other plugins' commands, or this plugin's own 170 — to the toolbar with an icon of your choice. The built-in set is the intersection of what most people use often; the one or two commands a given user can't live without usually fall outside it.
+Pin **any command from the command palette** — core commands, other plugins' commands, or this plugin's own 172 — to the toolbar with an icon of your choice. The built-in set is the intersection of what most people use often; the one or two commands a given user can't live without usually fall outside it.
 
 | Item | Convention |
 |---|---|
@@ -218,7 +222,7 @@ The Table options govern editing behavior and text output, not toolbar layout, s
 - User-created commands — Pinned surfaces existing commands, it doesn't create new ones.
 - Emoji shortcodes: no `:smile:` expansion, no autocomplete while typing; the panel inserts raw characters.
 - Custom emoji sets, user-editable character lists.
-- Reordering, hiding or showing the 187 built-in commands.
+- Reordering, hiding or showing the 190 built-in commands.
 - Toolbar appearance customization: background or icon color pickers, theme variants.
 
 ---
@@ -230,7 +234,7 @@ The Table options govern editing behavior and text output, not toolbar layout, s
 | **Position** | Where a toolbar renders: **Top**, **Following**, **Fixed**. Three independent toggles. |
 | **Layout** | How a position renders: **Ribbon** (Top) or **Compact** (Following / Fixed). |
 | **Tab · Group · Button** | Ribbon structure. A **drop-down** button holds several commands; a Compact **overflow menu** (`⋯`) holds the buttons that don't fit. |
-| **Command** | An action the toolbar runs. **187 built-in commands** plus any **pinned command**. |
+| **Command** | An action the toolbar runs. **190 built-in commands** plus any **pinned command**. |
 | **Source · Group · Entry** | Emoji & Symbols panel structure: three sources (Emoji, Kaomoji, Symbols) → groups → entries. Picking an entry inserts a character. |
 | **Word terminology** | Display names follow Microsoft Word (*Bold*, *Clear Formatting*), initial capitals, no `Toggle` prefix. |
 | **Plugin icon** | The plugin's icon in Obsidian's left sidebar. "Ribbon" on its own always means the toolbar layout. |

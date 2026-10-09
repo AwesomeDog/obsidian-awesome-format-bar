@@ -52,6 +52,9 @@ export default {
   Undo: "元に戻す",
   Redo: "やり直し",
   "Find and Replace": "検索と置換",
+  Select: "選択",
+  "Select All": "すべて選択",
+  "Select Text with Similar Formatting": "類似する書式のテキストを選択",
   "Internal Link": "内部リンク",
   "External Link": "外部リンク",
   Embed: "埋め込み",
@@ -300,6 +303,8 @@ export default {
     "クリップボードに有効な URI がありません。",
   "No duplicate rows found.": "重複行は見つかりませんでした。",
   "Removed duplicate rows: {count}": "重複行を削除しました：{count}",
+  "Put the cursor in formatted text first.":
+    "まずカーソルを書式設定されたテキストに置いてください。",
   "Put the cursor inside a table first.":
     "先にカーソルをテーブル内に置いてください。",
   "Table copied as {format}.": "{format} としてテーブルをコピーしました。",

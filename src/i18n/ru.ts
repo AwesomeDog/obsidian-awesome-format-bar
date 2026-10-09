@@ -52,6 +52,10 @@ export default {
   Undo: "Отменить",
   Redo: "Повторить",
   "Find and Replace": "Найти и заменить",
+  Select: "Выбрать",
+  "Select All": "Выделить всё",
+  "Select Text with Similar Formatting":
+    "Выделить текст с похожим форматированием",
   "Internal Link": "Внутренняя ссылка",
   "External Link": "Внешняя ссылка",
   Embed: "Внедрить",
@@ -299,6 +303,8 @@ export default {
     "В буфере обмена нет допустимого URI.",
   "No duplicate rows found.": "Повторяющиеся строки не найдены.",
   "Removed duplicate rows: {count}": "Удалено повторяющихся строк: {count}",
+  "Put the cursor in formatted text first.":
+    "Сначала поместите курсор в отформатированный текст.",
   "Put the cursor inside a table first.":
     "Сначала поместите курсор внутрь таблицы.",
   "Table copied as {format}.": "Таблица скопирована как {format}.",

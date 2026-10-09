@@ -28,7 +28,11 @@ import {
   setAllImageSizes,
   setImageSize,
 } from "../editor-ops/image";
-import { toggleInlinePair } from "../editor-ops/inline";
+import {
+  selectAll,
+  selectSimilarFormatting,
+  toggleInlinePair,
+} from "../editor-ops/inline";
 import {
   duplicate,
   mergeLines,
@@ -426,6 +430,14 @@ export function planFor(context: CommandContext, id: string): Plan | null {
   if (kind) return insertChartBlock(doc, ranges, kind, formatDate(new Date()));
 
   switch (id) {
+    case "select-all":
+      return selectAll(doc);
+    case "select-similar-formatting": {
+      const plan = selectSimilarFormatting(doc, ranges);
+      if (plan.selections === undefined)
+        new Notice(t("Put the cursor in formatted text first."));
+      return plan;
+    }
     case "drop-cap":
       return toggleDropCap(doc, ranges);
     case "renumber-list":

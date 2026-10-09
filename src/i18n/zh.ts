@@ -52,6 +52,9 @@ export default {
   Undo: "撤销",
   Redo: "恢复",
   "Find and Replace": "查找和替换",
+  Select: "选择",
+  "Select All": "全选",
+  "Select Text with Similar Formatting": "选择格式相似的文本",
   "Internal Link": "内部链接",
   "External Link": "外部链接",
   Embed: "嵌入",
@@ -296,6 +299,7 @@ export default {
   "Clipboard does not contain a valid URI.": "剪贴板中没有有效的 URI。",
   "No duplicate rows found.": "没有找到重复行。",
   "Removed duplicate rows: {count}": "已删除重复行：{count}",
+  "Put the cursor in formatted text first.": "请先将光标放在带格式的文字中。",
   "Put the cursor inside a table first.": "请先将光标放在表格内。",
   "Table copied as {format}.": "已复制表格为 {format}。",
   "Select the text whose formatting you want to copy.":

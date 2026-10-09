@@ -62,7 +62,8 @@ type CommandPopup =
   | "table-copy-as"
   | "table-grid"
   | "chart"
-  | "clean-up";
+  | "clean-up"
+  | "select";
 
 export interface CommandSpec {
   readonly id: string;

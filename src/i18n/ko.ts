@@ -52,6 +52,9 @@ export default {
   Undo: "실행 취소",
   Redo: "다시 실행",
   "Find and Replace": "찾기 및 바꾸기",
+  Select: "선택",
+  "Select All": "전체 선택",
+  "Select Text with Similar Formatting": "유사한 서식의 텍스트 선택",
   "Internal Link": "내부 링크",
   "External Link": "외부 링크",
   Embed: "포함",
@@ -298,6 +301,8 @@ export default {
     "클립보드에 유효한 URI가 없습니다.",
   "No duplicate rows found.": "중복 행을 찾지 못했습니다.",
   "Removed duplicate rows: {count}": "중복 행 제거됨: {count}",
+  "Put the cursor in formatted text first.":
+    "먼저 커서를 서식이 적용된 텍스트에 놓으세요.",
   "Put the cursor inside a table first.": "먼저 커서를 표 안에 두세요.",
   "Table copied as {format}.": "{format} 형식으로 표를 복사했습니다.",
   "Select the text whose formatting you want to copy.":

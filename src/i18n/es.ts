@@ -52,6 +52,10 @@ export default {
   Undo: "Deshacer",
   Redo: "Rehacer",
   "Find and Replace": "Buscar y reemplazar",
+  Select: "Seleccionar",
+  "Select All": "Seleccionar todo",
+  "Select Text with Similar Formatting":
+    "Seleccionar texto con formato similar",
   "Internal Link": "Vínculo interno",
   "External Link": "Vínculo externo",
   Embed: "Incrustar",
@@ -300,6 +304,8 @@ export default {
     "El portapapeles no contiene una URI válida.",
   "No duplicate rows found.": "No se encontraron filas duplicadas.",
   "Removed duplicate rows: {count}": "Filas duplicadas eliminadas: {count}",
+  "Put the cursor in formatted text first.":
+    "Coloque primero el cursor en texto con formato.",
   "Put the cursor inside a table first.":
     "Coloca primero el cursor dentro de una tabla.",
   "Table copied as {format}.": "Tabla copiada como {format}.",

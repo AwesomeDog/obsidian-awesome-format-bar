@@ -52,6 +52,10 @@ export default {
   Undo: "Rückgängig",
   Redo: "Wiederholen",
   "Find and Replace": "Suchen und Ersetzen",
+  Select: "Auswählen",
+  "Select All": "Alles auswählen",
+  "Select Text with Similar Formatting":
+    "Text mit ähnlicher Formatierung auswählen",
   "Internal Link": "Interner Link",
   "External Link": "Externer Link",
   Embed: "Einbetten",
@@ -301,6 +305,8 @@ export default {
     "Die Zwischenablage enthält keine gültige URI.",
   "No duplicate rows found.": "Keine doppelten Zeilen gefunden.",
   "Removed duplicate rows: {count}": "Doppelte Zeilen entfernt: {count}",
+  "Put the cursor in formatted text first.":
+    "Setzen Sie den Cursor zuerst in formatierten Text.",
   "Put the cursor inside a table first.":
     "Setze den Cursor zuerst in eine Tabelle.",
   "Table copied as {format}.": "Tabelle als {format} kopiert.",

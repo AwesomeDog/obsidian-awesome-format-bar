@@ -21,7 +21,18 @@ export function hasSelection(editor: Editor): boolean {
 
 /** The single write path. Nothing else in the plugin mutates the document. */
 export function commit(editor: Editor, plan: Plan): void {
-  if (plan.changes.length === 0) return;
+  if (plan.changes.length === 0) {
+    // Selection alone: there is no transaction to carry it, so the editor's
+    // own multi-cursor call does the whole job.
+    if (plan.selections)
+      editor.setSelections(
+        plan.selections.map((range) => ({
+          anchor: editor.offsetToPos(range.from),
+          head: editor.offsetToPos(range.to),
+        })),
+      );
+    return;
+  }
 
   const changes: EditorChange[] = plan.changes.map((change) => ({
     from: editor.offsetToPos(change.from),

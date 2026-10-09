@@ -82,7 +82,10 @@ export const BUILT_IN_COMMAND_TABS = [
           "remove-heading",
         ],
       },
-      { name: "Editing", commands: ["undo", "redo", "find-replace"] },
+      {
+        name: "Editing",
+        commands: ["undo", "redo", "find-replace", "select"],
+      },
     ],
   },
   {

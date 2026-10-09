@@ -345,6 +345,21 @@ export const COMMANDS = [
     kind: "registered",
     registeredCommandId: "editor:open-search-replace",
   },
+  {
+    id: "select",
+    name: "Select",
+    icon: "text-select",
+    kind: "editor",
+    popup: "select",
+    commandPalette: false,
+  },
+  { id: "select-all", name: "Select All", icon: "box-select", kind: "editor" },
+  {
+    id: "select-similar-formatting",
+    name: "Select Text with Similar Formatting",
+    icon: "scan-text",
+    kind: "editor",
+  },
 
   // Insert · Tables
   {
@@ -1286,6 +1301,7 @@ export const DROPDOWN_ITEMS: Readonly<Record<string, readonly CommandId[]>> = {
     "copy-table-as-json",
     "copy-table-as-markdown",
   ],
+  select: ["select-all", "select-similar-formatting"],
   "clean-up": [
     "clean-up-trailing-spaces",
     "clean-up-blank-lines",

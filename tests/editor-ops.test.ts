@@ -19,7 +19,11 @@ import {
   setAllImageSizes,
   setImageSize,
 } from "../src/editor-ops/image";
-import { toggleInlinePair } from "../src/editor-ops/inline";
+import {
+  selectAll,
+  selectSimilarFormatting,
+  toggleInlinePair,
+} from "../src/editor-ops/inline";
 import { Lines, blocksFor } from "../src/editor-ops/lines";
 import {
   cjkSpacing,
@@ -187,6 +191,92 @@ describe("toggleInlinePair", () => {
       toggleInlinePair(doc, ranges, "$", "$");
     expect(apply("$[x]$", math)).toBe("x");
     expect(apply("[x]", math)).toBe("$x$");
+  });
+});
+
+describe("selectAll", () => {
+  it("selects the whole note", () => {
+    const { doc } = parse("one two");
+    expect(selectAll(doc).selections).toEqual([{ from: 0, to: 7 }]);
+  });
+});
+
+/** The text each range covers, so a selection reads as text and not offsets. */
+function selected(input: string): string[] | undefined {
+  const { doc, ranges } = parse(input);
+  return selectSimilarFormatting(doc, ranges).selections?.map((range) =>
+    doc.slice(range.from, range.to),
+  );
+}
+
+describe("selectSimilarFormatting", () => {
+  it("selects every run wearing the mark under the cursor", () => {
+    expect(selected("a **o|ne** b **two**")).toEqual(["one", "two"]);
+  });
+
+  it("reads the innermost mark, so the italic of a bold wins", () => {
+    expect(selected("a **bold *it|alic* here** b")).toEqual(["italic"]);
+  });
+
+  it("reads the bold around that italic when the cursor is on the bold", () => {
+    expect(selected("a **bo|ld *italic* here** b")).toEqual([
+      "bold *italic* here",
+    ]);
+  });
+
+  it("takes its sample from a selection as well as from a caret", () => {
+    expect(selected("a **[on]e** b **two**")).toEqual(["one", "two"]);
+  });
+
+  it("keeps two colors of highlight apart", () => {
+    const yellow = "\u{1F7E1}";
+    const red = "\u{1F534}";
+    expect(
+      selected(`==${yellow}ye|llow== and ==${red}red== and ==plain==`),
+    ).toEqual(["yellow"]);
+  });
+
+  it("does not let a plain highlight stand for a colored one", () => {
+    const yellow = "\u{1F7E1}";
+    expect(selected(`==pl|ain== and ==${yellow}yellow==`)).toEqual(["plain"]);
+  });
+
+  it("skips fenced code", () => {
+    expect(selected("a **o|ne**\n\n```\n**two**\n```\n")).toEqual(["one"]);
+  });
+
+  it("skips a mark written inside inline code", () => {
+    expect(selected("a **o|ne** and `**two**`")).toEqual(["one"]);
+  });
+
+  it("selects inline code itself", () => {
+    expect(selected("a `o|ne` and `two`")).toEqual(["one", "two"]);
+  });
+
+  it("selects the spans carrying the same style", () => {
+    const red = '<span style="color:#e03131">';
+    const blue = '<span style="color:#1971c2">';
+    expect(
+      selected(
+        `${red}o|ne</span> and ${red}two</span> and ${blue}three</span>`,
+      ),
+    ).toEqual(["one", "two"]);
+  });
+
+  it("selects every underline", () => {
+    expect(selected("<u>o|ne</u> and <u>two</u>")).toEqual(["one", "two"]);
+  });
+
+  it("does not read an asterisk between spaces as emphasis", () => {
+    expect(selected("2 *| 3 * 4")).toBeUndefined();
+  });
+
+  it("does not emphasize inside a word with underscores", () => {
+    expect(selected("snake_case_|name")).toBeUndefined();
+  });
+
+  it("selects nothing when the cursor is on plain text", () => {
+    expect(selected("just |words")).toBeUndefined();
   });
 });
 

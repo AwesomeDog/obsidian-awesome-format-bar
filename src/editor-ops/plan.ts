@@ -12,6 +12,8 @@ export interface Change {
 export interface Plan {
   readonly changes: readonly Change[];
   readonly select?: Range;
+  /** Several ranges at once, for the commands that only move the cursor. */
+  readonly selections?: readonly Range[];
 }
 
 export const NO_CHANGE: Plan = { changes: [] };
