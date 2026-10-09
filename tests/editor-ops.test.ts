@@ -888,10 +888,19 @@ describe("mergeLines", () => {
     expect(apply("[中文\n中文]", mergeLines)).toBe("中文中文");
   });
 
+  // Kana and hangul are CJK too: a space beside them reads as noise as well.
+  it("joins kana and hangul without inserting a space", () => {
+    expect(apply("[ひらがな\n한국어]", mergeLines)).toBe("ひらがな한국어");
+  });
+
   it("does not join the lines a code fence holds", () => {
     expect(apply("[a\nb\n```\nc\nd\n```]", mergeLines)).toBe(
       "a b\n```\nc\nd\n```",
     );
+  });
+
+  it("does not join the lines a math block holds", () => {
+    expect(apply("[a\nb\n$$\nc\nd\n$$]", mergeLines)).toBe("a b\n$$\nc\nd\n$$");
   });
 });
 

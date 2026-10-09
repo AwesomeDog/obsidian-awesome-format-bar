@@ -1,4 +1,4 @@
-import { FENCE } from "./lines";
+import { CJK, fenceMask, Lines } from "./lines";
 import {
   normalizeRanges,
   order,
@@ -6,9 +6,6 @@ import {
   type Plan,
   type Range,
 } from "./plan";
-
-const CJK =
-  "\\p{Script=Han}\\p{Script=Hiragana}\\p{Script=Katakana}\\p{Script=Hangul}";
 
 /** A URL is copied verbatim: an em dash where `--` was stops it resolving. */
 const ADDRESS = /[a-z][a-z0-9+.-]*:\/\/[^\s<>()"']+/giu;
@@ -33,12 +30,11 @@ function editLines(
   text: string,
   edit: (line: string, editable: boolean) => string | null,
 ): string {
+  const lines = new Lines(text);
+  const fenced = fenceMask(lines);
   const kept: string[] = [];
-  let fenced = false;
-  for (const line of text.split("\n")) {
-    const marker = FENCE.test(line);
-    if (marker) fenced = !fenced;
-    const edited = edit(line, !fenced && !marker);
+  for (let line = 0; line < lines.count; line++) {
+    const edited = edit(lines.at(line), !fenced[line]);
     if (edited !== null) kept.push(edited);
   }
   return kept.join("\n");
@@ -104,7 +100,8 @@ export function smartPunctuation(doc: string, ranges: readonly Range[]): Plan {
 }
 
 export function cjkSpacing(doc: string, ranges: readonly Range[]): Plan {
-  const cjk = `[${CJK}]`;
+  // `CJK.source` already is a character class, brackets included.
+  const cjk = CJK.source;
   const latin = `[A-Za-z0-9]`;
   return planRanges(doc, scope(doc, ranges), (text) =>
     mapEditable(text, (part) =>

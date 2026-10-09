@@ -1,19 +1,12 @@
 import {
   asNumbers,
-  breakAfter,
-  breakBefore,
   compareText,
+  fenceMask,
+  insertBlock,
   Lines,
   replaceBlock,
 } from "./lines";
-import {
-  NO_CHANGE,
-  normalizeRanges,
-  order,
-  type Change,
-  type Plan,
-  type Range,
-} from "./plan";
+import { NO_CHANGE, order, type Change, type Plan, type Range } from "./plan";
 import { insertText } from "./text";
 import { displayWidth, padToWidth } from "./width";
 
@@ -33,42 +26,12 @@ export interface MarkdownTable {
 }
 const DELIMITER = /^:?-+:?$/;
 
-/** Captured markers: a ``` block never closes on `~~~`; a miss reformats code. */
-const FENCE = /^\s*(`{3,}|~{3,}|\${2,})/;
-
 /** A size or an alias: a pipe inside `[[…]]` is not a cell edge. */
 const WIKI_LINK = /!?\[\[[^\]]*\]\]/g;
 
 /** A table row, but never a bare `---` rule. */
 export function isTableLine(line: string): boolean {
   return line.replace(WIKI_LINK, "").trim().includes("|");
-}
-
-/** Pipes inside a fence are content, not cells. */
-function fencedLines(lines: Lines): boolean[] {
-  const inside = new Array<boolean>(lines.count).fill(false);
-  let open = "";
-  for (let line = 0; line < lines.count; line++) {
-    const text = lines.at(line);
-    const marker = FENCE.exec(text)?.[1] ?? "";
-    if (open === "") {
-      if (marker === "") continue;
-      // A single-line `$$…$$` cancels out, so only an odd count opens a block.
-      if (marker[0] === "$" && (text.match(/\$\$/g) ?? []).length % 2 === 0) {
-        inside[line] = true;
-        continue;
-      }
-      open = marker;
-    } else if (
-      marker !== "" &&
-      marker[0] === open[0] &&
-      marker.length >= open.length
-    ) {
-      open = "";
-    }
-    inside[line] = true;
-  }
-  return inside;
 }
 
 function splitCells(text: string): string[] {
@@ -152,7 +115,7 @@ function tableScan(
 
 export function tableAt(doc: string, offset: number): MarkdownTable | null {
   const lines = new Lines(doc);
-  return tableScan(lines, fencedLines(lines), lines.lineOf(offset));
+  return tableScan(lines, fenceMask(lines), lines.lineOf(offset));
 }
 
 interface TableCellPosition {
@@ -256,20 +219,8 @@ export function insertTableBlock(
   ranges: readonly Range[],
   table: string,
 ): Plan {
-  const list = normalizeRanges(ranges);
-  const changes = list.map((range) => ({
-    from: range.from,
-    to: range.to,
-    text:
-      breakBefore(doc.slice(0, range.from)) +
-      table +
-      breakAfter(doc.slice(range.to)),
-  }));
-  const first = list[0];
-  if (list.length !== 1 || !first) return { changes: order(changes) };
   // Word leaves the caret in the first cell, which starts after `| `.
-  const caret = first.from + breakBefore(doc.slice(0, first.from)).length + 2;
-  return { changes, select: { from: caret, to: caret } };
+  return insertBlock(doc, ranges, table, "| ".length);
 }
 
 /** Word's Convert to Text: one tab-separated line per row, header included. */
@@ -571,7 +522,7 @@ export function formatTable(
 
 export function formatAllTables(doc: string, format: TableFormat): Plan {
   const lines = new Lines(doc);
-  const fenced = fencedLines(lines);
+  const fenced = fenceMask(lines);
   const changes: Change[] = [];
   let line = 0;
   while (line < lines.count) {
@@ -607,9 +558,9 @@ export function sortRows(
       ? (numbers[x] ?? 0) - (numbers[y] ?? 0)
       : compareText(text[x] ?? "", text[y] ?? "");
 
-  const order = body.map((row, at) => ({ at, row }));
-  order.sort((x, y) => (descending ? before(y.at, x.at) : before(x.at, y.at)));
-  return edit(table, format, [header, ...order.map((entry) => entry.row)]);
+  const ranked = body.map((row, at) => ({ at, row }));
+  ranked.sort((x, y) => (descending ? before(y.at, x.at) : before(x.at, y.at)));
+  return edit(table, format, [header, ...ranked.map((entry) => entry.row)]);
 }
 
 /** Excel's Remove Duplicates: the first row of a kind stays, later copies go.

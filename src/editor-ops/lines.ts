@@ -1,7 +1,17 @@
-import { normalizeRanges, type Change, type Range } from "./plan";
+import {
+  normalizeRanges,
+  order,
+  type Change,
+  type Plan,
+  type Range,
+} from "./plan";
 
-/** A fence is a divider for renumbering, sorting, joining and splitting alike. */
-export const FENCE = /^\s*(?:```|~~~)/;
+/**
+ * A fence is a divider for renumbering, sorting, joining and splitting alike.
+ * The marker is captured so a ``` block never closes on `~~~`; `$$` counts as
+ * one too, because a math block is content nobody rewrites.
+ */
+export const FENCE = /^\s*(`{3,}|~{3,}|\${2,})/;
 
 /**
  * True for a fence marker and for every line it holds. Unlike a divider,
@@ -9,15 +19,34 @@ export const FENCE = /^\s*(?:```|~~~)/;
  * so a selection that starts inside a fence is protected too.
  */
 export function fenceMask(lines: Lines): boolean[] {
-  const out: boolean[] = [];
-  let inside = false;
+  const out = new Array<boolean>(lines.count).fill(false);
+  let open = "";
   for (let line = 0; line < lines.count; line++) {
-    const marker = FENCE.test(lines.at(line));
-    if (marker) inside = !inside;
-    out.push(inside || marker);
+    const text = lines.at(line);
+    const marker = FENCE.exec(text)?.[1] ?? "";
+    if (open === "") {
+      if (marker === "") continue;
+      // A single-line `$$…$$` cancels out, so only an odd count opens a block.
+      if (marker[0] === "$" && (text.match(/\$\$/g) ?? []).length % 2 === 0) {
+        out[line] = true;
+        continue;
+      }
+      open = marker;
+    } else if (
+      marker !== "" &&
+      marker[0] === open[0] &&
+      marker.length >= open.length
+    ) {
+      open = "";
+    }
+    out[line] = true;
   }
   return out;
 }
+
+/** Han, kana and hangul: the scripts a Latin space reads as noise beside. */
+export const CJK =
+  /[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Hangul}]/u;
 
 const LATIN = new Intl.Collator("en-US", {
   numeric: true,
@@ -163,4 +192,31 @@ export function breakAfter(text: string): string {
   if (text === "") return "";
   if (text.startsWith("\n\n")) return "";
   return text.startsWith("\n") ? "\n" : "\n\n";
+}
+
+/**
+ * Writes `text` as a block of its own over `ranges`, with the caret left at
+ * `caretInText`. Several cursors keep the editor's own selections: more than
+ * one block has no single caret to name.
+ */
+export function insertBlock(
+  doc: string,
+  ranges: readonly Range[],
+  text: string,
+  caretInText: number,
+): Plan {
+  const list = normalizeRanges(ranges);
+  const changes = list.map((range) => ({
+    from: range.from,
+    to: range.to,
+    text:
+      breakBefore(doc.slice(0, range.from)) +
+      text +
+      breakAfter(doc.slice(range.to)),
+  }));
+  const first = list[0];
+  if (list.length !== 1 || !first) return { changes: order(changes) };
+  const caret =
+    first.from + breakBefore(doc.slice(0, first.from)).length + caretInText;
+  return { changes: order(changes), select: { from: caret, to: caret } };
 }

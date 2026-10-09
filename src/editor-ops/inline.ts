@@ -1,4 +1,4 @@
-import { FENCE } from "./lines";
+import { fenceMask, Lines } from "./lines";
 import { highlightEmojiAt } from "../model/palettes";
 import {
   NO_CHANGE,
@@ -134,18 +134,20 @@ function touches(ranges: readonly Range[], from: number, to: number): boolean {
 
 /** Fenced code: nothing it holds is a mark, however it reads. */
 function fencedRanges(doc: string): Range[] {
+  const lines = new Lines(doc);
+  const fenced = fenceMask(lines);
   const out: Range[] = [];
-  let at = 0;
   let open = -1;
-  for (const line of doc.split("\n")) {
-    if (FENCE.test(line)) {
-      if (open < 0) open = at;
-      else {
-        out.push({ from: open, to: at + line.length });
-        open = -1;
-      }
+  for (let line = 0; line < lines.count; line++) {
+    if (fenced[line]) {
+      if (open < 0) open = lines.start(line);
+      continue;
     }
-    at += line.length + 1;
+    // The line above closed the block; `end` is its terminator.
+    if (open >= 0) {
+      out.push({ from: open, to: lines.end(line - 1) });
+      open = -1;
+    }
   }
   if (open >= 0) out.push({ from: open, to: doc.length });
   return out;

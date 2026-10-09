@@ -1,5 +1,5 @@
 import { NO_CHANGE, order, type Change, type Plan, type Range } from "./plan";
-import { FENCE, Lines } from "./lines";
+import { fenceMask, Lines } from "./lines";
 
 /** `![[a.png]]`, `![[a.png|300]]`; the pipe segment is a size or an alias. */
 const WIKI_EMBED = /!\[\[([^\]]*)\]\]/g;
@@ -215,15 +215,11 @@ export function setImageSize(
  */
 export function setAllImageSizes(doc: string, width: string | null): Plan {
   const lines = new Lines(doc);
+  const fenced = fenceMask(lines);
   const changes: Change[] = [];
-  let fenced = false;
   for (let line = 0; line < lines.count; line++) {
     const text = lines.at(line);
-    if (FENCE.test(text)) {
-      fenced = !fenced;
-      continue;
-    }
-    if (fenced) continue;
+    if (fenced[line]) continue;
     const marker = pipe(text);
     for (const embed of embedsIn(text)) {
       const parts = partsIn(text, embed, marker);

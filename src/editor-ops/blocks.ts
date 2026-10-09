@@ -1,18 +1,10 @@
-import {
-  NO_CHANGE,
-  normalizeRanges,
-  order,
-  type Change,
-  type Plan,
-  type Range,
-} from "./plan";
+import { NO_CHANGE, order, type Change, type Plan, type Range } from "./plan";
 import {
   blocksFor,
-  breakAfter,
-  breakBefore,
+  CJK,
   compareText,
   fenceMask,
-  FENCE,
+  insertBlock,
   Lines,
   removeLine,
   replaceBlock,
@@ -103,13 +95,12 @@ interface Section {
 
 /** The note's outline: its first heading through its last line of content. */
 function outlineRange(lines: Lines): [number, number] | null {
-  let inFence = false;
+  const fenced = fenceMask(lines);
   let start = -1;
   let end = -1;
   for (let line = 0; line < lines.count; line++) {
     const text = lines.at(line);
-    if (FENCE.test(text)) inFence = !inFence;
-    if (inFence) continue;
+    if (fenced[line]) continue;
     if (HEADING.test(text)) {
       if (start < 0) start = line;
       end = line;
@@ -122,12 +113,11 @@ function outlineRange(lines: Lines): [number, number] | null {
 function parseSections(lines: Lines, from: number, to: number): Section[] {
   const roots: Section[] = [];
   const stack: Section[] = [];
-  let inFence = false;
+  const fenced = fenceMask(lines);
 
   for (let line = from; line <= to; line++) {
     const text = lines.at(line);
-    if (FENCE.test(text)) inFence = !inFence;
-    const marker = inFence ? null : HEADING.exec(text);
+    const marker = fenced[line] ? null : HEADING.exec(text);
     if (!marker) {
       stack[stack.length - 1]?.lines.push(text);
       continue;
@@ -299,12 +289,11 @@ export function numberHeadings(doc: string, scheme: HeadingNumbering): Plan {
   const lines = new Lines(doc);
   const changes: Change[] = [];
   const counters: number[] = [];
-  let inFence = false;
+  const fenced = fenceMask(lines);
 
   for (let line = firstContentLine(lines); line < lines.count; line++) {
     const text = lines.at(line);
-    if (FENCE.test(text)) inFence = !inFence;
-    const marker = inFence ? null : HEADING.exec(text);
+    const marker = fenced[line] ? null : HEADING.exec(text);
     if (!marker) continue;
 
     const level = (marker[1] ?? "").length;
@@ -400,9 +389,6 @@ function dropCapStyle(character: string): string {
 }
 
 const DROP_CAP_OPEN = /^<span style="float:left[^"]*">([^<]*)<\/span>/;
-
-const CJK =
-  /[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Hangul}]/u;
 
 /** Only a letter or a digit can be dropped: no punctuation, no markers. */
 const DROPPABLE = /[\p{L}\p{N}]/u;
@@ -635,19 +621,6 @@ export function insertChartBlock(
 ): Plan {
   const text =
     "```mermaid\n" + CHART_EXAMPLES[kind].replace("{date}", today) + "\n```";
-  const list = normalizeRanges(ranges);
-  const changes = list.map((range) => ({
-    from: range.from,
-    to: range.to,
-    text:
-      breakBefore(doc.slice(0, range.from)) +
-      text +
-      breakAfter(doc.slice(range.to)),
-  }));
-  const first = list[0];
-  if (list.length !== 1 || !first) return { changes: order(changes) };
-  // Inside the block, at the end of the last line: the fence is not for typing.
-  const caret =
-    first.from + breakBefore(doc.slice(0, first.from)).length + text.length - 4;
-  return { changes, select: { from: caret, to: caret } };
+  // Inside the block, at the end of its last line: the fence is not for typing.
+  return insertBlock(doc, ranges, text, text.length - "\n```".length);
 }

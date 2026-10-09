@@ -304,6 +304,23 @@ export default class AwesomeFormatBarPlugin extends Plugin {
     this.boundDocuments.delete(doc);
   }
 
+  /**
+   * The view an event came from. Not the active one: a pop-out window and an
+   * inactive pane each hold an editor of their own, and `iterateAllLeaves`
+   * reaches the pop-out ones too.
+   */
+  private viewOf(target: EventTarget | null): MarkdownView | null {
+    if (!(target instanceof Element)) return null;
+    let found: MarkdownView | null = null;
+    this.app.workspace.iterateAllLeaves((leaf) => {
+      if (found || leaf.isDeferred) return;
+      if (!(leaf.view instanceof MarkdownView)) return;
+      // `contains` reads across windows: a pop-out has a document of its own.
+      if (leaf.view.contentEl.contains(target)) found = leaf.view;
+    });
+    return found;
+  }
+
   /** Table navigation runs before the editor's normal Enter and Tab behavior. */
   private onTableKeydown(evt: KeyboardEvent): void {
     if (evt.isComposing) return;
@@ -319,7 +336,7 @@ export default class AwesomeFormatBarPlugin extends Plugin {
     if (!target.closest(".cm-editor")) return;
     if (target.closest(".cm-table-widget")) return;
 
-    const view = this.app.workspace.getActiveViewOfType(MarkdownView);
+    const view = this.viewOf(evt.target);
     if (!view || view.getMode() !== "source") return;
     const editor = view.editor;
     // A selection would be replaced; let Enter do that. Shift+Enter replaces
@@ -672,10 +689,11 @@ export default class AwesomeFormatBarPlugin extends Plugin {
   }
 
   /** Word paints when the drag ends; a keyboard selection ends on a keyup. */
-  private paintSelection(): void {
+  private paintSelection(target: EventTarget | null): void {
     const painter = this.painter;
     if (!painter) return;
-    const view = this.app.workspace.getActiveViewOfType(MarkdownView);
+    // The view the selection was made in, which a pop-out may own.
+    const view = this.viewOf(target);
     if (!view || view.getMode() !== "source") return;
     const editor = view.editor;
     const ranges = selectionRanges(editor);
@@ -689,9 +707,10 @@ export default class AwesomeFormatBarPlugin extends Plugin {
   /** Bound per document: the mouseup that paints may come from any window. */
   private listenForPaint(): void {
     this.stopListeningForPaint();
-    const onMouseUp = (): void => this.paintSelection();
+    const onMouseUp = (evt: MouseEvent): void =>
+      this.paintSelection(evt.target);
     const onKeyUp = (evt: KeyboardEvent): void => {
-      if (NAVIGATION_KEYS.has(evt.key)) this.paintSelection();
+      if (NAVIGATION_KEYS.has(evt.key)) this.paintSelection(evt.target);
     };
     const onKeyDown = (evt: KeyboardEvent): void => {
       if (evt.key === "Escape") this.disarmPainter();

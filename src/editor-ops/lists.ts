@@ -9,6 +9,7 @@ import {
 } from "./plan";
 import {
   blocksFor,
+  CJK,
   compareText,
   FENCE,
   fenceMask,
@@ -75,24 +76,22 @@ interface ListLevel {
 /** One counter per indent level; two blank lines or a fence start a new list. */
 export function renumberList(doc: string, ranges: readonly Range[]): Plan {
   const lines = new Lines(doc);
+  const fenced = fenceMask(lines);
   const changes: Change[] = [];
 
   for (const [rawStart, rawEnd] of blocksFor(lines, ranges)) {
     const [start, end] = listBlock(lines, rawStart, rawEnd);
     const stack: ListLevel[] = [];
     let blanks = 0;
-    let inFence = false;
 
     for (let line = start; line <= end; line++) {
       const text = lines.at(line);
 
-      if (FENCE.test(text)) {
-        inFence = !inFence;
+      if (fenced[line]) {
         stack.length = 0;
         blanks = 0;
         continue;
       }
-      if (inFence) continue;
       if (text.trim() === "") {
         blanks++;
         continue;
@@ -440,8 +439,6 @@ export function moveListItem(
 
 /** Only marks that cannot end a sentence, so prose never shatters. */
 const SEPARATORS = ["、", "，", ",", ";", "；", "|", "·"] as const;
-/** CJK, where a space reads as noise rather than separation. */
-const CJK = /[㐀-鿿]/;
 
 /** The separator the selection uses most; ties go to the earliest. */
 function pickSeparator(text: string): string | null {
