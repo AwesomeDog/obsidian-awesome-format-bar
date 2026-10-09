@@ -57,6 +57,8 @@ import {
   applyHighlightColor,
   applySpanStyle,
   clearOwnedInlineHtml,
+  setStyle,
+  styleValue,
 } from "../src/editor-ops/spans";
 import { formatDate, formatDateTime } from "../src/editor-ops/text";
 
@@ -396,6 +398,38 @@ describe("normalization", () => {
     expect(run(doc, cleanUp(doc, [], "invisible-characters"))).toBe(
       "ab\n```\nc\u200bd\n```",
     );
+  });
+});
+
+describe("inline styles", () => {
+  it("reads a property, skipping spaces and empty declarations", () => {
+    expect(styleValue("color:red", "color")).toBe("red");
+    expect(styleValue("color: red ; ;font-size:1.5em", "font-size")).toBe(
+      "1.5em",
+    );
+    expect(styleValue("color:red", "background")).toBeNull();
+    expect(styleValue("no-colon-here", "color")).toBeNull();
+  });
+
+  it("sets one property and leaves the others in their order", () => {
+    expect(setStyle("color:red", "background", "#eee")).toBe(
+      "color:red;background:#eee",
+    );
+    expect(setStyle("color:red;background:#eee", "color", null)).toBe(
+      "background:#eee",
+    );
+    expect(setStyle("background:#eee", "background", null)).toBe("");
+  });
+
+  it("reads back what it writes", () => {
+    const style = setStyle(
+      setStyle("", "font-size", "1.5em"),
+      "font-family",
+      "Georgia,serif",
+    );
+    expect(style).toBe("font-size:1.5em;font-family:Georgia,serif");
+    expect(styleValue(style, "font-family")).toBe("Georgia,serif");
+    expect(styleValue(style, "font-size")).toBe("1.5em");
   });
 });
 

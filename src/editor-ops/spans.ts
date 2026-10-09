@@ -18,22 +18,47 @@ interface InlineWrapper {
   readonly close?: InlineTag;
 }
 
-function editStyle(
+interface Declaration {
+  readonly name: string;
+  readonly value: string;
+}
+
+/** The declarations of an inline `style`, in the order they are written. */
+function declarations(style: string): Declaration[] {
+  const out: Declaration[] = [];
+  for (const part of style.split(";")) {
+    const text = part.trim();
+    if (text === "") continue;
+    const at = text.indexOf(":");
+    out.push(
+      at < 0
+        ? { name: text, value: "" }
+        : {
+            name: text.slice(0, at).trim(),
+            value: text.slice(at + 1).trim(),
+          },
+    );
+  }
+  return out;
+}
+
+/** What `style` gives `property`, or `null` when it gives it nothing. */
+export function styleValue(
+  style: string,
+  property: SpanProperty,
+): string | null {
+  for (const pair of declarations(style))
+    if (pair.name === property) return pair.value || null;
+  return null;
+}
+
+/** `style` carrying `property: value`; `null` takes the property out. */
+export function setStyle(
   style: string,
   property: SpanProperty,
   value: string | null,
 ): string {
-  const pairs = style
-    .split(";")
-    .map((part) => part.trim())
-    .filter(Boolean)
-    .map((part) => {
-      const at = part.indexOf(":");
-      return at < 0
-        ? { name: part, value: "" }
-        : { name: part.slice(0, at).trim(), value: part.slice(at + 1).trim() };
-    })
-    .filter((pair) => pair.name !== property);
+  const pairs = declarations(style).filter((pair) => pair.name !== property);
   if (value) pairs.push({ name: property, value });
   return pairs.map((pair) => `${pair.name}:${pair.value}`).join(";");
 }
@@ -54,7 +79,7 @@ export function applySpanStyle(
     // The selection swallows the whole span: rewrite it in place.
     const whole = SPAN_WHOLE.exec(inner);
     if (whole) {
-      const style = editStyle(whole[1] ?? "", property, value);
+      const style = setStyle(whole[1] ?? "", property, value);
       const body = whole[2] ?? "";
       changes.push({
         from: range.from,
@@ -67,7 +92,7 @@ export function applySpanStyle(
     // The selection sits exactly inside a span: rewrite the opening tag.
     const before = SPAN_OPEN_BEFORE.exec(doc.slice(0, range.from));
     if (before && doc.startsWith(SPAN_CLOSE, range.to)) {
-      const style = editStyle(before[1] ?? "", property, value);
+      const style = setStyle(before[1] ?? "", property, value);
       const openFrom = range.from - (before[0] ?? "").length;
       if (style) {
         changes.push({
@@ -206,7 +231,7 @@ export function applyHighlightColor(
     // so a background span becomes a highlight instead of nesting one.
     const before = SPAN_OPEN_BEFORE.exec(doc.slice(0, range.from));
     if (before && doc.startsWith(SPAN_CLOSE, range.to)) {
-      const style = editStyle(before[1] ?? "", "background", null);
+      const style = setStyle(before[1] ?? "", "background", null);
       const open = style ? `<span style="${style}">` : "";
       changes.push({
         from: range.from - (before[0] ?? "").length,

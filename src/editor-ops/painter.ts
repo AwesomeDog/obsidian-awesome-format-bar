@@ -8,6 +8,7 @@ import {
   type Plan,
   type Range,
 } from "./plan";
+import { styleValue, type SpanProperty } from "./spans";
 
 /** What Format Painter copies: character formatting, and nothing else. */
 export interface InlineFormat {
@@ -416,20 +417,10 @@ function leadingMarkers(doc: string, at: number, state: ScanState): void {
   }
 }
 
-function styleValue(style: string, property: string): string | null {
-  for (const part of style.split(";")) {
-    const at = part.indexOf(":");
-    if (at < 0) continue;
-    if (part.slice(0, at).trim() !== property) continue;
-    return part.slice(at + 1).trim() || null;
-  }
-  return null;
-}
-
 /** Innermost wins: a nested span overrides the one around it. */
 function spanProperty(
   spans: readonly SpanOpen[],
-  property: string,
+  property: SpanProperty,
 ): string | null {
   for (let i = spans.length - 1; i >= 0; i--) {
     const value = styleValue(spans[i]?.style ?? "", property);
@@ -438,6 +429,7 @@ function spanProperty(
   return null;
 }
 
+/** Written the way `setStyle` writes and `styleValue` reads: `name:value;…`. */
 function styleText(style: {
   color: string | null;
   background: string | null;

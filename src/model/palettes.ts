@@ -145,7 +145,7 @@ export const FONT_SIZES = [
 
 /**
  * CSS generic families only: a named font renders only where it is installed.
- * A value must also hold no `;`, which `editStyle` splits pairs on — a chain of
+ * A value must also hold no `;`, which `setStyle` splits pairs on — a chain of
  * fallbacks can only be written with commas.
  */
 export const FONT_FAMILIES = [
