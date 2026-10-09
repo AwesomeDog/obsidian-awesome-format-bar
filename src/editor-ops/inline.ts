@@ -249,10 +249,55 @@ function verbatimRuns(
   return { runs, spans };
 }
 
-const INLINE_TAG = /<(\/)?(span|u|sub|sup)\b[^>]*>/gi;
+/** The four wrappers this plugin writes: `<span>`, `<u>`, `<sub>`, `<sup>`. */
+const INLINE_TAG = /<(\/?)(span|u|sub|sup)\b[^>]*>/gi;
 const SPAN_STYLE = /style="([^"]*)"/i;
 
-/** The four wrappers this plugin writes: `<span>`, `<u>`, `<sub>`, `<sup>`. */
+export const SPAN_CLOSE = "</span>";
+export const SPAN_WHOLE = /^<span style="([^"]*)">([\s\S]*)<\/span>$/;
+
+/** One of the four, as written in the note. */
+export interface InlineTag {
+  readonly from: number;
+  readonly to: number;
+  /** Lowercased: an HTML tag name carries its case in the file, not in meaning. */
+  readonly name: string;
+  readonly closing: boolean;
+  /** The `style` attribute of a `<span>`; empty on the other three. */
+  readonly style: string;
+  /** The tag itself, markers included. */
+  readonly raw: string;
+}
+
+function tagOf(match: RegExpMatchArray): InlineTag {
+  const raw = match[0] ?? "";
+  const from = match.index ?? 0;
+  const name = (match[2] ?? "").toLowerCase();
+  return {
+    closing: match[1] === "/",
+    from,
+    name,
+    raw,
+    style: name === "span" ? (SPAN_STYLE.exec(raw)?.[1] ?? "") : "",
+    to: from + raw.length,
+  };
+}
+
+/** Every one of the four in `doc`, in document order. */
+export function inlineTags(doc: string): InlineTag[] {
+  // `matchAll` copies `lastIndex`, so it is set before the walk, not left over.
+  INLINE_TAG.lastIndex = 0;
+  return [...doc.matchAll(INLINE_TAG)].map(tagOf);
+}
+
+/** The one starting exactly at `at`, or `null` when none does. */
+export function inlineTagAt(doc: string, at: number): InlineTag | null {
+  INLINE_TAG.lastIndex = at;
+  const match = INLINE_TAG.exec(doc);
+  if (!match || match.index !== at) return null;
+  return tagOf(match);
+}
+
 function tagRuns(doc: string, fences: readonly Range[]): InlineRun[] {
   const runs: InlineRun[] = [];
   interface Open {
@@ -263,27 +308,28 @@ function tagRuns(doc: string, fences: readonly Range[]): InlineRun[] {
   }
   const stack: Open[] = [];
 
-  for (const match of doc.matchAll(INLINE_TAG)) {
-    const raw = match[0] ?? "";
-    const from = match.index ?? 0;
-    const name = (match[2] ?? "").toLowerCase();
-    if (match[1] !== "/") {
+  for (const tag of inlineTags(doc)) {
+    if (!tag.closing) {
       stack.push({
-        name,
-        from,
-        to: from + raw.length,
-        variant: name === "span" ? (SPAN_STYLE.exec(raw)?.[1] ?? "") : "",
+        name: tag.name,
+        from: tag.from,
+        to: tag.to,
+        variant: tag.style,
       });
       continue;
     }
-    const to = from + raw.length;
     let at = stack.length - 1;
-    while (at >= 0 && stack[at]?.name !== name) at--;
+    while (at >= 0 && stack[at]?.name !== tag.name) at--;
     if (at < 0) continue;
     const open = stack.splice(at, 1)[0];
     if (!open) continue;
-    if (touches(fences, open.from, to)) continue;
-    runs.push({ from: open.to, to: from, kind: name, variant: open.variant });
+    if (touches(fences, open.from, tag.to)) continue;
+    runs.push({
+      from: open.to,
+      to: tag.from,
+      kind: tag.name,
+      variant: open.variant,
+    });
   }
   return runs;
 }

@@ -1,4 +1,5 @@
 import { isDropCapStyle } from "./blocks";
+import { inlineTagAt, SPAN_CLOSE, SPAN_WHOLE } from "./inline";
 import { highlightEmojiAt, nativeHighlightOf } from "../model/palettes";
 import {
   normalizeRanges,
@@ -43,10 +44,6 @@ const PAIRS = [
   { key: "superscript", open: "<sup>", close: "</sup>" },
 ] as const satisfies readonly { key: PairKey; open: string; close: string }[];
 
-const SPAN_CLOSE = "</span>";
-const SPAN_WHOLE = /^<span style="([^"]*)">([\s\S]*)<\/span>$/;
-const TAG = /<(\/?)(span|u|sub|sup)\b[^>]*>/g;
-const TAG_STYLE = /style="([^"]*)"/;
 const WORD = /[0-9A-Za-z]/;
 
 interface Marker {
@@ -144,24 +141,23 @@ function nextMarker(doc: string, at: number, state: ScanState): Marker | null {
       : { kind: "italic", at, length: 1 };
   }
   if (ch !== "<") return null;
-  TAG.lastIndex = at;
-  const tag = TAG.exec(doc);
-  if (!tag || tag.index !== at) return null;
-  if (tag[2] === "span")
+  const tag = inlineTagAt(doc, at);
+  if (!tag) return null;
+  if (tag.name === "span")
     return {
       kind: "span",
       at,
-      length: tag[0].length,
-      closing: tag[1] === "/",
-      style: TAG_STYLE.exec(tag[0])?.[1] ?? "",
+      length: tag.to - tag.from,
+      closing: tag.closing,
+      style: tag.style,
     };
   const kind =
-    tag[2] === "u"
+    tag.name === "u"
       ? "underline"
-      : tag[2] === "sub"
+      : tag.name === "sub"
         ? "subscript"
         : "superscript";
-  return { kind, at, length: tag[0].length, closing: tag[1] === "/" };
+  return { kind, at, length: tag.to - tag.from, closing: tag.closing };
 }
 
 function apply(state: ScanState, marker: Marker): void {

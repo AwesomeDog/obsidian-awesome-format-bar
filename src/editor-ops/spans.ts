@@ -1,4 +1,5 @@
 import { highlightEmojiAt, nativeHighlightOf } from "../model/palettes";
+import { inlineTags, SPAN_CLOSE, SPAN_WHOLE, type InlineTag } from "./inline";
 import {
   normalizeRanges,
   order,
@@ -10,17 +11,7 @@ import {
 /** One writer for all four: Font Color, Highlight Color, Font Size, Font Family. */
 export type SpanProperty = "color" | "background" | "font-size" | "font-family";
 
-const SPAN_CLOSE = "</span>";
 const SPAN_OPEN_BEFORE = /<span style="([^"]*)">$/;
-const SPAN_WHOLE = /^<span style="([^"]*)">([\s\S]*)<\/span>$/;
-const CLEARABLE_TAG = /<\/?(span|u|sub|sup)\b[^>]*>/gi;
-
-interface InlineTag {
-  readonly from: number;
-  readonly to: number;
-  readonly name: string;
-  readonly closing: boolean;
-}
 
 interface InlineWrapper {
   readonly open: InlineTag;
@@ -254,21 +245,10 @@ export function clearOwnedInlineHtml(
   const wrappers: InlineWrapper[] = [];
   const unmatched: InlineTag[] = [];
   const stack: InlineTag[] = [];
-  CLEARABLE_TAG.lastIndex = 0;
-  for (
-    let match = CLEARABLE_TAG.exec(doc);
-    match;
-    match = CLEARABLE_TAG.exec(doc)
-  ) {
-    const raw = match[0] ?? "";
-    const tag: InlineTag = {
-      from: match.index,
-      to: match.index + raw.length,
-      name: (match[1] ?? "").toLowerCase(),
-      closing: raw.startsWith("</"),
-    };
+  for (const tag of inlineTags(doc)) {
     if (!tag.closing) {
-      if (!/\/\s*>$/.test(raw)) stack.push(tag);
+      // `<span />` closes itself: there is no tag to pair it with.
+      if (!/\/\s*>$/.test(tag.raw)) stack.push(tag);
       continue;
     }
 

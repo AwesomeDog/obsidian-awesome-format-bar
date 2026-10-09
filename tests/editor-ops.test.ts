@@ -22,6 +22,8 @@ import {
 import {
   selectAll,
   selectSimilarFormatting,
+  inlineTagAt,
+  inlineTags,
   toggleInlinePair,
 } from "../src/editor-ops/inline";
 import { Lines, blocksFor } from "../src/editor-ops/lines";
@@ -277,6 +279,37 @@ describe("selectSimilarFormatting", () => {
 
   it("selects nothing when the cursor is on plain text", () => {
     expect(selected("just |words")).toBeUndefined();
+  });
+});
+
+describe("inlineTags", () => {
+  it("reads the name, the direction and the style of each tag", () => {
+    const doc = 'a<span style="color:red">b</span><sub>c</sub>';
+    expect(inlineTags(doc)).toMatchObject([
+      { closing: false, name: "span", style: "color:red" },
+      { closing: true, name: "span", style: "" },
+      { closing: false, name: "sub", style: "" },
+      { closing: true, name: "sub", style: "" },
+    ]);
+    expect(inlineTags(doc)[1]?.raw).toBe("</span>");
+  });
+
+  it("lowercases the name, so a tag written in caps is the same tag", () => {
+    expect(inlineTags("<SPAN>x</SPAN>").map((tag) => tag.name)).toEqual([
+      "span",
+      "span",
+    ]);
+  });
+
+  it("leaves a tag that closes nothing for the caller to deal with", () => {
+    expect(inlineTags("</u>")[0]).toMatchObject({ closing: true, name: "u" });
+  });
+
+  it("finds a tag only where it starts", () => {
+    const doc = 'a<span style="color:red">b';
+    expect(inlineTagAt(doc, 1)?.name).toBe("span");
+    expect(inlineTagAt(doc, 0)).toBeNull();
+    expect(inlineTagAt(doc, 3)).toBeNull();
   });
 });
 
