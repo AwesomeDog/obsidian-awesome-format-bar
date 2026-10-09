@@ -77,33 +77,6 @@ function caretEmbed(embeds: readonly Embed[], column: number): Embed | null {
   );
 }
 
-/** The embed the caret sits on, as offsets into the whole document. */
-function caretPicture(
-  doc: string,
-  range: Range | undefined,
-): {
-  readonly start: number;
-  readonly end: number;
-  readonly wiki: boolean;
-  readonly marker: string;
-  readonly source: string;
-} | null {
-  if (!range) return null;
-  const lines = new Lines(doc);
-  const line = lines.lineOf(range.from);
-  const text = lines.at(line);
-  const embed = caretEmbed(embedsIn(text), range.from - lines.start(line));
-  if (!embed) return null;
-  return {
-    start: lines.start(line) + embed.from,
-    end: lines.start(line) + embed.to,
-    wiki: embed.wiki,
-    // Inside a table cell the pipe has to be escaped, or it splits the row.
-    marker: pipe(text),
-    source: text.slice(embed.from, embed.to),
-  };
-}
-
 interface Parts {
   /** `![[target]]` / `![](url)`: what the picture points at. */
   readonly target: string;
@@ -164,24 +137,60 @@ function linkEmbed(parts: Parts, marker: string): string {
   return `![${alt.join(marker)}](${parts.target})`;
 }
 
-/** `null` clears the size; `string` sets it. Returns `null` to leave the line. */
-function sizedEmbed(
-  line: string,
-  embed: Embed,
-  width: string | null,
-): string | null {
+/** One embed of `line`, parsed; `null` when it is not a picture. */
+function partsIn(line: string, embed: Embed, marker: string): Parts | null {
   const text = line.slice(embed.from, embed.to);
-  const marker = pipe(line);
-
   if (embed.wiki) {
     const parts = wikiParts(text.slice(3, -2), marker);
-    if (!IMAGE_EXTENSION.test(fileOf(parts.target))) return null;
-    return wikiEmbed({ ...parts, size: width }, marker);
+    // A wiki embed can point at a note, a PDF or a sound: only a picture has one.
+    return IMAGE_EXTENSION.test(fileOf(parts.target)) ? parts : null;
   }
+  return linkParts(text, marker);
+}
 
-  const parts = linkParts(text, marker);
+/** The picture the caret is on: where its text is, and what it carries. */
+interface Picture {
+  readonly start: number;
+  readonly end: number;
+  readonly wiki: boolean;
+  readonly marker: string;
+  readonly parts: Parts;
+}
+
+/** `null` outside a picture, or on a wiki embed that is not one. */
+function caretPicture(doc: string, ranges: readonly Range[]): Picture | null {
+  const range = ranges[0];
+  if (!range) return null;
+  const lines = new Lines(doc);
+  const line = lines.lineOf(range.from);
+  const text = lines.at(line);
+  const embed = caretEmbed(embedsIn(text), range.from - lines.start(line));
+  if (!embed) return null;
+  const marker = pipe(text);
+  const parts = partsIn(text, embed, marker);
   if (!parts) return null;
-  return linkEmbed({ ...parts, size: width }, marker);
+  return {
+    start: lines.start(line) + embed.from,
+    end: lines.start(line) + embed.to,
+    wiki: embed.wiki,
+    parts,
+    marker,
+  };
+}
+
+/** The picture's own span, rewritten in the grammar it is already written in. */
+function rewrite(picture: Picture, parts: Parts): Plan {
+  const { start, end, wiki, marker } = picture;
+  return {
+    changes: [
+      {
+        from: start,
+        to: end,
+        // Inside a table cell the pipe has to be escaped, or it splits the row.
+        text: wiki ? wikiEmbed(parts, marker) : linkEmbed(parts, marker),
+      },
+    ],
+  };
 }
 
 /**
@@ -193,35 +202,10 @@ export function setImageSize(
   ranges: readonly Range[],
   width: string | null,
 ): Plan {
-  const found = caretPicture(doc, ranges[0]);
-  if (!found) return NO_CHANGE;
-  const { start, end, wiki, marker, source } = found;
-
-  if (wiki) {
-    const parts = wikiParts(source.slice(3, -2), marker);
-    if (!IMAGE_EXTENSION.test(fileOf(parts.target))) return NO_CHANGE;
-    return {
-      changes: [
-        {
-          from: start,
-          to: end,
-          text: wikiEmbed({ ...parts, size: width }, marker),
-        },
-      ],
-    };
-  }
-
-  const parts = linkParts(source, marker);
-  if (!parts) return NO_CHANGE;
-  return {
-    changes: [
-      {
-        from: start,
-        to: end,
-        text: linkEmbed({ ...parts, size: width }, marker),
-      },
-    ],
-  };
+  const picture = caretPicture(doc, ranges);
+  return picture
+    ? rewrite(picture, { ...picture.parts, size: width })
+    : NO_CHANGE;
 }
 
 /**
@@ -240,10 +224,15 @@ export function setAllImageSizes(doc: string, width: string | null): Plan {
       continue;
     }
     if (fenced) continue;
+    const marker = pipe(text);
     for (const embed of embedsIn(text)) {
+      const parts = partsIn(text, embed, marker);
+      if (!parts) continue;
       const source = text.slice(embed.from, embed.to);
-      const next = sizedEmbed(text, embed, width);
-      if (next === null || next === source) continue;
+      const next = embed.wiki
+        ? wikiEmbed({ ...parts, size: width }, marker)
+        : linkEmbed({ ...parts, size: width }, marker);
+      if (next === source) continue;
       changes.push({
         from: lines.start(line) + embed.from,
         to: lines.start(line) + embed.to,
@@ -263,71 +252,30 @@ export function insertImageAlt(
   ranges: readonly Range[],
   placeholder: string,
 ): Plan {
-  const found = caretPicture(doc, ranges[0]);
-  if (!found) return NO_CHANGE;
-  const { start, end, wiki, marker, source } = found;
-
-  if (wiki) {
-    const parts = wikiParts(source.slice(3, -2), marker);
-    if (!IMAGE_EXTENSION.test(fileOf(parts.target))) return NO_CHANGE;
-    const alt = parts.alt === "" ? placeholder : parts.alt;
-    const from = start + `![[${parts.target}${marker}`.length;
-    return {
-      changes: [
-        { from: start, to: end, text: wikiEmbed({ ...parts, alt }, marker) },
-      ],
-      select: { from, to: from + alt.length },
-    };
-  }
-
-  const parts = linkParts(source, marker);
-  if (!parts) return NO_CHANGE;
+  const picture = caretPicture(doc, ranges);
+  if (!picture) return NO_CHANGE;
+  const { parts, wiki, marker } = picture;
   const alt = parts.alt === "" ? placeholder : parts.alt;
-  const from = start + "![".length;
+  // Where the alt text starts: past `![[target|` in a wiki embed, past `![` in a
+  // Markdown image, where the size comes after the alt rather than before it.
+  const from =
+    picture.start + (wiki ? `![[${parts.target}${marker}`.length : "![".length);
   return {
-    changes: [
-      { from: start, to: end, text: linkEmbed({ ...parts, alt }, marker) },
-    ],
+    ...rewrite(picture, { ...parts, alt }),
     select: { from, to: from + alt.length },
   };
 }
 
 /** Word's Reset Picture: drops the size and the alt text, keeps the picture. */
 export function resetImage(doc: string, ranges: readonly Range[]): Plan {
-  const found = caretPicture(doc, ranges[0]);
-  if (!found) return NO_CHANGE;
-  const { start, end, wiki, marker, source } = found;
-
-  if (wiki) {
-    const parts = wikiParts(source.slice(3, -2), marker);
-    if (!IMAGE_EXTENSION.test(fileOf(parts.target))) return NO_CHANGE;
-    if (parts.alt === "" && parts.size === null) return NO_CHANGE;
-    return {
-      changes: [
-        {
-          from: start,
-          to: end,
-          text: wikiEmbed(
-            { target: parts.target, alt: "", size: null },
-            marker,
-          ),
-        },
-      ],
-    };
-  }
-
-  const parts = linkParts(source, marker);
-  if (!parts) return NO_CHANGE;
-  if (parts.alt === "" && parts.size === null) return NO_CHANGE;
-  return {
-    changes: [
-      {
-        from: start,
-        to: end,
-        text: linkEmbed({ ...parts, alt: "", size: null }, marker),
-      },
-    ],
-  };
+  const picture = caretPicture(doc, ranges);
+  if (!picture) return NO_CHANGE;
+  if (picture.parts.alt === "" && picture.parts.size === null) return NO_CHANGE;
+  return rewrite(picture, {
+    target: picture.parts.target,
+    alt: "",
+    size: null,
+  });
 }
 
 /** A URL has no place inside `![[]]`, so those stay Markdown links. */
@@ -341,39 +289,22 @@ export function convertImageSyntax(
   doc: string,
   ranges: readonly Range[],
 ): Plan {
-  const found = caretPicture(doc, ranges[0]);
-  if (!found) return NO_CHANGE;
-  const { start, end, wiki, marker, source } = found;
-
-  if (wiki) {
-    const parts = wikiParts(source.slice(3, -2), marker);
-    if (!IMAGE_EXTENSION.test(fileOf(parts.target))) return NO_CHANGE;
-    return {
-      changes: [
-        {
-          from: start,
-          to: end,
-          text: linkEmbed(
-            {
-              ...parts,
-              target: parts.target.replace(/ /g, "%20"),
-            },
-            marker,
-          ),
-        },
-      ],
-    };
-  }
-
-  const parts = linkParts(source, marker);
-  if (!parts || ABSOLUTE_URL.test(parts.target)) return NO_CHANGE;
+  const picture = caretPicture(doc, ranges);
+  if (!picture) return NO_CHANGE;
+  const { parts, wiki, marker, start, end } = picture;
+  if (!wiki && ABSOLUTE_URL.test(parts.target)) return NO_CHANGE;
   return {
     changes: [
       {
         from: start,
         to: end,
-        text: wikiEmbed(
-          { ...parts, target: parts.target.replace(/%20/g, " ") },
+        text: (wiki ? linkEmbed : wikiEmbed)(
+          {
+            ...parts,
+            target: wiki
+              ? parts.target.replace(/ /g, "%20")
+              : parts.target.replace(/%20/g, " "),
+          },
           marker,
         ),
       },

@@ -45,7 +45,7 @@ export interface PinnedCommand {
 type CommandKind = "registered" | "editor" | "clipboard" | "view";
 
 /** Commands that open their own floating layer instead of acting immediately. */
-type CommandPopup =
+export type CommandPopup =
   | "color"
   | "highlight-color"
   | "font-size"

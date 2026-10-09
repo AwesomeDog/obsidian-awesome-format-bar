@@ -154,6 +154,8 @@ function reorderRuns(
   const fenced = fenceMask(lines);
 
   for (const [a, b] of blocksFor(lines, ranges, "collapsed-paragraph")) {
+    // One line has nothing to reorder or to join.
+    if (a === b) continue;
     const source: string[] = [];
     for (let line = a; line <= b; line++) source.push(lines.at(line));
 
@@ -534,36 +536,7 @@ export function duplicate(doc: string, ranges: readonly Range[]): Plan {
 
 /** Blank lines and fenced code stay put, so a paragraph stays a paragraph. */
 export function mergeLines(doc: string, ranges: readonly Range[]): Plan {
-  const lines = new Lines(doc);
-  const fenced = fenceMask(lines);
-  const changes: Change[] = [];
-
-  for (const [a, b] of blocksFor(lines, ranges, "collapsed-paragraph")) {
-    // One line has nothing to join.
-    if (a === b) continue;
-    const source: string[] = [];
-    for (let line = a; line <= b; line++) source.push(lines.at(line));
-
-    const result: string[] = [];
-    let run: string[] = [];
-    const flush = (): void => {
-      if (run.length > 1) result.push(joinRun(run));
-      else result.push(...run);
-      run = [];
-    };
-    for (const [index, text] of source.entries()) {
-      // A fence and everything it holds is copied, never joined.
-      if ((fenced[a + index] ?? false) || text.trim() === "") {
-        flush();
-        result.push(text);
-        continue;
-      }
-      run.push(text);
-    }
-    flush();
-
-    if (result.some((text, index) => text !== source[index]))
-      changes.push(replaceBlock(lines, a, b, result.join("\n")));
-  }
-  return { changes: order(changes) };
+  return reorderRuns(new Lines(doc), ranges, (run) =>
+    run.length > 1 ? [joinRun(run)] : [...run],
+  );
 }

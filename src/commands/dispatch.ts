@@ -86,8 +86,29 @@ import {
   insertText,
 } from "../editor-ops/text";
 import { cjkSpacing, cleanUp, smartPunctuation } from "../editor-ops/normalize";
+import { DROPDOWN_ITEMS } from "../model/command-table";
 import { CASE_OPTIONS } from "../model/palettes";
+import type { CommandPopup } from "../model/types";
 import { commit, selectionRanges } from "./apply";
+
+/**
+ * One drop-down's items, each mapped to the `optionValue` it runs with. The
+ * names come out of `DROPDOWN_ITEMS`, so an item is named in exactly one place
+ * and a new one needs no entry here.
+ */
+function optionValues<T extends string | null>(
+  popup: CommandPopup,
+  valueOf: (id: string) => T,
+): Readonly<Record<string, T>> {
+  const out: Record<string, T> = {};
+  for (const id of DROPDOWN_ITEMS[popup] ?? []) out[id] = valueOf(id);
+  return out;
+}
+
+/** `image-size-300` -> `300`; `-original` -> `null`, the file's own size. */
+function widthOf(prefix: string): (id: string) => string | null {
+  return (id) => (id.endsWith("-original") ? null : id.slice(prefix.length));
+}
 
 /** Context for local commands; registered commands forward to Obsidian. */
 export interface CommandContext {
@@ -328,76 +349,33 @@ const PARAGRAPH_ALIGNMENTS: Readonly<Record<string, ParagraphAlignment>> = {
 };
 
 /** Obsidian's twelve callout types, one command each under the Callout button. */
-const CALLOUT_TYPES: Readonly<Record<string, string>> = {
-  "callout-note": "note",
-  "callout-abstract": "abstract",
-  "callout-info": "info",
-  "callout-tip": "tip",
-  "callout-success": "success",
-  "callout-question": "question",
-  "callout-warning": "warning",
-  "callout-failure": "failure",
-  "callout-danger": "danger",
-  "callout-bug": "bug",
-  "callout-example": "example",
-  "callout-quote": "quote",
-};
+const CALLOUT_TYPES = optionValues("callout", (id) =>
+  id.slice("callout-".length),
+);
 
 /** The widths Word offers; `null` clears the size back to the file's own. */
-const IMAGE_WIDTHS: Readonly<Record<string, string | null>> = {
-  "image-size-100": "100",
-  "image-size-200": "200",
-  "image-size-300": "300",
-  "image-size-400": "400",
-  "image-size-600": "600",
-  "image-size-original": null,
-};
+const IMAGE_WIDTHS = optionValues("image-size", widthOf("image-size-"));
 
 /** The same widths, applied to every picture in the note. */
-const ALL_IMAGE_WIDTHS: Readonly<Record<string, string | null>> = {
-  "image-size-all-100": "100",
-  "image-size-all-200": "200",
-  "image-size-all-300": "300",
-  "image-size-all-400": "400",
-  "image-size-all-600": "600",
-  "image-size-all-original": null,
-};
+const ALL_IMAGE_WIDTHS = optionValues(
+  "image-size-all",
+  widthOf("image-size-all-"),
+);
 
 /** One Mermaid diagram type per item under the Chart button. */
-const CHART_KINDS: Readonly<Record<string, ChartKind>> = {
-  "chart-flowchart": "flowchart",
-  "chart-sequence": "sequence",
-  "chart-class": "class",
-  "chart-state": "state",
-  "chart-er": "er",
-  "chart-journey": "journey",
-  "chart-gantt": "gantt",
-  "chart-pie": "pie",
-  "chart-quadrant": "quadrant",
-  "chart-requirement": "requirement",
-  "chart-git-graph": "git-graph",
-  "chart-mindmap": "mindmap",
-  "chart-timeline": "timeline",
-  "chart-sankey": "sankey",
-  "chart-xychart": "xychart",
-  "chart-block": "block",
-  "chart-architecture": "architecture",
-  "chart-packet": "packet",
-  "chart-kanban": "kanban",
-  "chart-radar": "radar",
-  "chart-treemap": "treemap",
-  "chart-c4": "c4",
-  "chart-ishikawa": "ishikawa",
-  "chart-venn": "venn",
-};
+const CHART_KINDS = optionValues(
+  "chart",
+  (id) => id.slice("chart-".length) as ChartKind,
+);
 
-/** Word's own multilevel schemes; `null` takes the numbers back off. */
-const HEADING_NUMBERINGS: Readonly<Record<string, HeadingNumbering>> = {
-  "number-headings-outline": "outline",
-  "number-headings-multilevel": "multilevel",
-  "number-headings-roman": "roman",
-  "no-heading-numbering": null,
-};
+/** Word's own multilevel schemes; the one off-scheme id takes them back off. */
+const HEADING_NUMBERINGS = optionValues(
+  "number-headings",
+  (id) =>
+    (id === "no-heading-numbering"
+      ? null
+      : id.slice("number-headings-".length)) as HeadingNumbering,
+);
 
 /** The local half of the command table; registered commands forward instead. */
 export function planFor(context: CommandContext, id: string): Plan | null {
@@ -415,7 +393,7 @@ export function planFor(context: CommandContext, id: string): Plan | null {
   if (align) return toggleParagraphAlignment(doc, ranges, align);
 
   const callout = CALLOUT_TYPES[id];
-  if (callout) return insertCallout(doc, ranges, callout);
+  if (callout !== undefined) return insertCallout(doc, ranges, callout);
 
   const width = IMAGE_WIDTHS[id];
   if (width !== undefined) return setImageSize(doc, ranges, width);
@@ -427,7 +405,8 @@ export function planFor(context: CommandContext, id: string): Plan | null {
   if (numbering !== undefined) return numberHeadings(doc, numbering);
 
   const kind = CHART_KINDS[id];
-  if (kind) return insertChartBlock(doc, ranges, kind, formatDate(new Date()));
+  if (kind !== undefined)
+    return insertChartBlock(doc, ranges, kind, formatDate(new Date()));
 
   switch (id) {
     case "select-all":
