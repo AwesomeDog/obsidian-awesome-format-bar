@@ -78,6 +78,30 @@ export function asNumbers(values: readonly string[]): readonly number[] | null {
   return values.map((value) => parseFloat(value.replace(/[\p{Sc}%,]/gu, "")));
 }
 
+/**
+ * `items` in the order `valueOf` puts them: a whole column of numbers sorts
+ * numerically, anything else by text. Ties keep the order they were given.
+ * Sort Rows and the Reading-view header click share this, so clicking a
+ * header puts the rows where the command would.
+ */
+export function sortByText<T>(
+  items: readonly T[],
+  valueOf: (item: T) => string,
+  descending: boolean,
+): T[] {
+  const values = items.map(valueOf);
+  const numbers = asNumbers(values);
+  const before = (x: number, y: number): number =>
+    numbers
+      ? (numbers[x] ?? 0) - (numbers[y] ?? 0)
+      : compareText(values[x] ?? "", values[y] ?? "");
+
+  return items
+    .map((item, at) => ({ at, item }))
+    .sort((x, y) => (descending ? before(y.at, x.at) : before(x.at, y.at)))
+    .map((entry) => entry.item);
+}
+
 export class Lines {
   readonly text: string;
   private readonly starts: number[] = [0];

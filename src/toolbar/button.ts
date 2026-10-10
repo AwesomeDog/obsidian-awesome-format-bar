@@ -11,6 +11,26 @@ function withHotkey(name: string, hotkey: string): string {
   return hotkey ? `${name} (${hotkey})` : name;
 }
 
+/**
+ * Where a click on a command goes: the two pop-ups that draw a layer of their
+ * own, then the drop-downs, then a command that acts at once. Every entry
+ * point a button has — the bar, the overflow list — comes through here, so a
+ * new kind of pop-up is wired in one place.
+ */
+export function runCommand(
+  anchor: HTMLElement,
+  spec: CommandSpec,
+  host: ToolbarHost,
+): void {
+  if (spec.popup === "character-panel") void openCharPanel(anchor, spec, host);
+  else if (spec.popup === "table-grid") openTableGrid(anchor, spec, host);
+  else if (spec.popup)
+    openPopover(anchor, popoverSectionsFor(spec, host, anchor), () =>
+      host.focusEditor(),
+    );
+  else host.execute(spec);
+}
+
 /** The single button renderer shared by both layouts. */
 export function createButton(
   parent: HTMLElement,
@@ -35,16 +55,7 @@ export function createButton(
 
   // Keep the editor selection: never let the button take focus.
   button.addEventListener("pointerdown", (event) => event.preventDefault());
-  button.addEventListener("click", () => {
-    if (spec.popup === "character-panel")
-      void openCharPanel(button, spec, host);
-    else if (spec.popup === "table-grid") openTableGrid(button, spec, host);
-    else if (spec.popup)
-      openPopover(button, popoverSectionsFor(spec, host, button), () =>
-        host.focusEditor(),
-      );
-    else host.execute(spec);
-  });
+  button.addEventListener("click", () => runCommand(button, spec, host));
   return button;
 }
 

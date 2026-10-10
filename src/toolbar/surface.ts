@@ -11,17 +11,10 @@ import {
 } from "../model/layout";
 import { pinnedGroupLabel, pinnedGroups } from "../model/pinned";
 import type { CommandSpec, ToolbarPosition } from "../model/types";
-import { createButton, createTabButton } from "./button";
-import { openCharPanel } from "./char-panel";
+import { createButton, createTabButton, runCommand } from "./button";
 import type { ToolbarHost } from "./host";
 import { resolveIcon } from "./icons";
-import {
-  openPopover,
-  popoverSectionsFor,
-  type PopoverItem,
-  type PopoverSection,
-} from "./popover";
-import { openTableGrid } from "./table-grid";
+import { openPopover, type PopoverItem, type PopoverSection } from "./popover";
 
 /** One Position's bar; the Position decides the Layout. */
 const FOLLOWING_GAP = 8;
@@ -347,23 +340,10 @@ export class ToolbarSurface {
     const foldedIds = new Set(this.overflowed.map((spec) => spec.id));
     const sections: PopoverSection[] = [];
 
-    // Same dispatch as `createButton`; the Emoji & Symbols panel is no section.
-    const choose = (spec: CommandSpec): void => {
-      if (spec.popup === "character-panel")
-        void openCharPanel(anchor, spec, this.host);
-      else if (spec.popup === "table-grid")
-        openTableGrid(anchor, spec, this.host);
-      else if (spec.popup)
-        openPopover(anchor, popoverSectionsFor(spec, this.host, anchor), () =>
-          this.host.focusEditor(),
-        );
-      else this.host.execute(spec);
-    };
-
     const toItem = (spec: CommandSpec): PopoverItem => ({
       icon: spec.icon,
       label: spec.name,
-      onChoose: () => choose(spec),
+      onChoose: () => runCommand(anchor, spec, this.host),
     });
 
     if (foldedIds.size) {

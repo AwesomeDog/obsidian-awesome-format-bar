@@ -1,10 +1,9 @@
 import {
-  asNumbers,
-  compareText,
   fenceMask,
   insertBlock,
   Lines,
   replaceBlock,
+  sortByText,
 } from "./lines";
 import { NO_CHANGE, order, type Change, type Plan, type Range } from "./plan";
 import { insertText } from "./text";
@@ -263,6 +262,22 @@ function findTableEditContext(
   };
 }
 
+/**
+ * Every table op looks the caret's table up the same way, and answers the
+ * same thing when there is none. `miss` is that answer: `NO_CHANGE` for a
+ * command that writes nothing, `null` for the keys that let the editor's own
+ * Enter and Tab through.
+ */
+function withTable<T>(
+  doc: string,
+  offset: number,
+  miss: T,
+  run: (hit: TableEditContext) => T,
+): T {
+  const hit = findTableEditContext(doc, offset);
+  return hit ? run(hit) : miss;
+}
+
 function edit(
   table: MarkdownTable,
   format: TableFormat,
@@ -328,16 +343,15 @@ function insertRowAt(
   format: TableFormat,
   at: (row: number) => number,
 ): Plan {
-  const hit = findTableEditContext(doc, offset);
-  if (!hit) return NO_CHANGE;
-  const { cell, columns, table } = hit;
-  const row = at(cell.row);
-  const plan = edit(table, format, insertAt(table.rows, row, blank(columns)));
-  const change = plan.changes[0];
-  if (!change) return NO_CHANGE;
-  // Rendered line 0 is the header and line 1 the rule, so row `row` is `row + 1`.
-  const caret = change.from + cellOffset(change.text, row + 1, 0);
-  return { changes: plan.changes, select: { from: caret, to: caret } };
+  return withTable(doc, offset, NO_CHANGE, ({ cell, columns, table }) => {
+    const row = at(cell.row);
+    const plan = edit(table, format, insertAt(table.rows, row, blank(columns)));
+    const change = plan.changes[0];
+    // Rendered line 0 is the header and line 1 the rule, so row `row` is `row + 1`.
+    if (!change) return NO_CHANGE;
+    const caret = change.from + cellOffset(change.text, row + 1, 0);
+    return { changes: plan.changes, select: { from: caret, to: caret } };
+  });
 }
 
 /** Above the header is impossible: the header is the first line by definition. */
@@ -365,16 +379,15 @@ function insertColumnAt(
   format: TableFormat,
   delta: number,
 ): Plan {
-  const hit = findTableEditContext(doc, offset);
-  if (!hit) return NO_CHANGE;
-  const { cell, table } = hit;
-  const at = cell.column + delta;
-  return edit(
-    table,
-    format,
-    table.rows.map((row) => insertAt(row, at, "")),
-    insertAt(table.align, at, "none"),
-  );
+  return withTable(doc, offset, NO_CHANGE, ({ cell, table }) => {
+    const at = cell.column + delta;
+    return edit(
+      table,
+      format,
+      table.rows.map((row) => insertAt(row, at, "")),
+      insertAt(table.align, at, "none"),
+    );
+  });
 }
 
 export function insertColumnLeft(
@@ -400,11 +413,11 @@ export function deleteRow(
   offset: number,
   format: TableFormat,
 ): Plan {
-  const hit = findTableEditContext(doc, offset);
-  if (!hit) return NO_CHANGE;
-  const { cell, table } = hit;
-  if (table.rows.length === 1) return dropBlock(table);
-  return edit(table, format, dropAt(table.rows, cell.row));
+  return withTable(doc, offset, NO_CHANGE, ({ cell, table }) =>
+    table.rows.length === 1
+      ? dropBlock(table)
+      : edit(table, format, dropAt(table.rows, cell.row)),
+  );
 }
 
 export function deleteColumn(
@@ -412,21 +425,20 @@ export function deleteColumn(
   offset: number,
   format: TableFormat,
 ): Plan {
-  const hit = findTableEditContext(doc, offset);
-  if (!hit) return NO_CHANGE;
-  const { cell, columns, table } = hit;
-  // Empties rather than deletes: the header is worth keeping.
-  if (columns === 1)
-    return edit(
-      table,
-      format,
-      table.rows.map(() => [""]),
-    );
-  return edit(
-    table,
-    format,
-    table.rows.map((row) => dropAt(row, cell.column)),
-    dropAt(table.align, cell.column),
+  return withTable(doc, offset, NO_CHANGE, ({ cell, columns, table }) =>
+    // Empties rather than deletes: the header is worth keeping.
+    columns === 1
+      ? edit(
+          table,
+          format,
+          table.rows.map(() => [""]),
+        )
+      : edit(
+          table,
+          format,
+          table.rows.map((row) => dropAt(row, cell.column)),
+          dropAt(table.align, cell.column),
+        ),
   );
 }
 
@@ -442,12 +454,11 @@ export function moveRow(
   format: TableFormat,
   delta: number,
 ): Plan {
-  const hit = findTableEditContext(doc, offset);
-  if (!hit) return NO_CHANGE;
-  const { cell, table } = hit;
-  const to = cell.row + delta;
-  if (to < 0 || to >= table.rows.length) return NO_CHANGE;
-  return edit(table, format, swapAt(table.rows, cell.row, to));
+  return withTable(doc, offset, NO_CHANGE, ({ cell, table }) => {
+    const to = cell.row + delta;
+    if (to < 0 || to >= table.rows.length) return NO_CHANGE;
+    return edit(table, format, swapAt(table.rows, cell.row, to));
+  });
 }
 
 export function moveColumn(
@@ -456,17 +467,16 @@ export function moveColumn(
   format: TableFormat,
   delta: number,
 ): Plan {
-  const hit = findTableEditContext(doc, offset);
-  if (!hit) return NO_CHANGE;
-  const { cell, columns, table } = hit;
-  const to = cell.column + delta;
-  if (to < 0 || to >= columns) return NO_CHANGE;
-  return edit(
-    table,
-    format,
-    table.rows.map((row) => swapAt(row, cell.column, to)),
-    swapAt(table.align, cell.column, to),
-  );
+  return withTable(doc, offset, NO_CHANGE, ({ cell, columns, table }) => {
+    const to = cell.column + delta;
+    if (to < 0 || to >= columns) return NO_CHANGE;
+    return edit(
+      table,
+      format,
+      table.rows.map((row) => swapAt(row, cell.column, to)),
+      swapAt(table.align, cell.column, to),
+    );
+  });
 }
 
 /** The columns a selection touches: aligning a span of cells aligns them all,
@@ -497,18 +507,17 @@ export function alignColumn(
   align: ColumnAlignment,
   selection?: readonly Range[],
 ): Plan {
-  const hit = findTableEditContext(doc, offset);
-  if (!hit) return NO_CHANGE;
-  const { cell, table } = hit;
-  const columns = new Set([cell.column]);
-  for (const range of selection ?? [])
-    for (const column of columnsInRange(table, range)) columns.add(column);
-  return edit(
-    table,
-    format,
-    table.rows,
-    table.align.map((value, column) => (columns.has(column) ? align : value)),
-  );
+  return withTable(doc, offset, NO_CHANGE, ({ cell, table }) => {
+    const columns = new Set([cell.column]);
+    for (const range of selection ?? [])
+      for (const column of columnsInRange(table, range)) columns.add(column);
+    return edit(
+      table,
+      format,
+      table.rows,
+      table.align.map((value, column) => (columns.has(column) ? align : value)),
+    );
+  });
 }
 
 export function formatTable(
@@ -516,8 +525,9 @@ export function formatTable(
   offset: number,
   format: TableFormat,
 ): Plan {
-  const hit = findTableEditContext(doc, offset);
-  return hit ? edit(hit.table, format, hit.table.rows) : NO_CHANGE;
+  return withTable(doc, offset, NO_CHANGE, ({ table }) =>
+    edit(table, format, table.rows),
+  );
 }
 
 export function formatAllTables(doc: string, format: TableFormat): Plan {
@@ -545,22 +555,16 @@ export function sortRows(
   format: TableFormat,
   descending: boolean,
 ): Plan {
-  const hit = findTableEditContext(doc, offset);
-  if (!hit) return NO_CHANGE;
-  const { cell, table } = hit;
-  const [header, ...body] = table.rows;
-  if (!header || body.length < 2) return NO_CHANGE;
-
-  const text = body.map((row) => row[cell.column] ?? "");
-  const numbers = asNumbers(text);
-  const before = (x: number, y: number): number =>
-    numbers
-      ? (numbers[x] ?? 0) - (numbers[y] ?? 0)
-      : compareText(text[x] ?? "", text[y] ?? "");
-
-  const ranked = body.map((row, at) => ({ at, row }));
-  ranked.sort((x, y) => (descending ? before(y.at, x.at) : before(x.at, y.at)));
-  return edit(table, format, [header, ...ranked.map((entry) => entry.row)]);
+  return withTable(doc, offset, NO_CHANGE, ({ cell, table }) => {
+    const [header, ...body] = table.rows;
+    if (!header || body.length < 2) return NO_CHANGE;
+    const sorted = sortByText(
+      body,
+      (row) => row[cell.column] ?? "",
+      descending,
+    );
+    return edit(table, format, [header, ...sorted]);
+  });
 }
 
 /** Excel's Remove Duplicates: the first row of a kind stays, later copies go.
@@ -571,23 +575,27 @@ export function removeDuplicateRows(
   offset: number,
   format: TableFormat,
 ): { plan: Plan; removed: number | null } {
-  const hit = findTableEditContext(doc, offset);
-  if (!hit) return { plan: NO_CHANGE, removed: null };
-  const { table } = hit;
-  const [header, ...body] = table.rows;
-  if (!header) return { plan: NO_CHANGE, removed: null };
+  return withTable(
+    doc,
+    offset,
+    { plan: NO_CHANGE, removed: null },
+    ({ table }) => {
+      const [header, ...body] = table.rows;
+      if (!header) return { plan: NO_CHANGE, removed: null };
 
-  const seen = new Set<string>();
-  const kept = body.filter((row) => {
-    // `JSON.stringify`: no separator can occur inside a cell.
-    const key = JSON.stringify(row);
-    if (seen.has(key)) return false;
-    seen.add(key);
-    return true;
-  });
-  const removed = body.length - kept.length;
-  if (removed === 0) return { plan: NO_CHANGE, removed };
-  return { plan: edit(table, format, [header, ...kept]), removed };
+      const seen = new Set<string>();
+      const kept = body.filter((row) => {
+        // `JSON.stringify`: no separator can occur inside a cell.
+        const key = JSON.stringify(row);
+        if (seen.has(key)) return false;
+        seen.add(key);
+        return true;
+      });
+      const removed = body.length - kept.length;
+      if (removed === 0) return { plan: NO_CHANGE, removed };
+      return { plan: edit(table, format, [header, ...kept]), removed };
+    },
+  );
 }
 
 /** Shift+Enter inside a cell. GFM keeps a row on one line, so the break has to
@@ -607,32 +615,32 @@ export function transposeTable(
   offset: number,
   format: TableFormat,
 ): Plan {
-  const hit = findTableEditContext(doc, offset);
-  if (!hit) return NO_CHANGE;
-  const { cell, columns, table } = hit;
-  const rows = Array.from({ length: columns }, (_, column) =>
-    Array.from(
+  return withTable(doc, offset, NO_CHANGE, ({ cell, columns, table }) => {
+    const rows = Array.from({ length: columns }, (_, column) =>
+      Array.from(
+        { length: table.rows.length },
+        (_, row) => table.rows[row]?.[column] ?? "",
+      ),
+    );
+    // Alignment belongs to columns; after transposition the new columns were rows.
+    const align = Array.from(
       { length: table.rows.length },
-      (_, row) => table.rows[row]?.[column] ?? "",
-    ),
-  );
-  // Alignment belongs to columns; after transposition the new columns were rows.
-  const align = Array.from(
-    { length: table.rows.length },
-    () => "none" as const,
-  );
-  const plan = edit(table, format, rows, align);
-  const change = plan.changes[0];
-  if (!change) return NO_CHANGE;
+      () => "none" as const,
+    );
+    const plan = edit(table, format, rows, align);
+    const change = plan.changes[0];
+    if (!change) return NO_CHANGE;
 
-  // Keep the caret in the corresponding logical cell: (row, column) -> (column, row).
-  const targetRow = Math.min(cell.column, rows.length - 1);
-  const targetColumn = Math.min(cell.row, table.rows.length - 1);
-  const renderedLine = targetRow === 0 ? 0 : targetRow + 1;
-  const caret =
-    change.from + cellOffset(change.text, renderedLine, targetColumn);
-  return { changes: plan.changes, select: { from: caret, to: caret } };
+    // Keep the caret in the corresponding logical cell: (row, column) -> (column, row).
+    const targetRow = Math.min(cell.column, rows.length - 1);
+    const targetColumn = Math.min(cell.row, table.rows.length - 1);
+    const renderedLine = targetRow === 0 ? 0 : targetRow + 1;
+    const caret =
+      change.from + cellOffset(change.text, renderedLine, targetColumn);
+    return { changes: plan.changes, select: { from: caret, to: caret } };
+  });
 }
+
 /** Offset of the first character of `column` on rendered line `line`. */
 function cellOffset(rendered: string, line: number, column: number): number {
   const lines = rendered.split("\n");
@@ -660,20 +668,18 @@ export function planTableEnter(
   offset: number,
   format: TableFormat,
 ): Plan | null {
-  const hit = findTableEditContext(doc, offset);
-  if (!hit) return null;
-  const { cell, columns, table } = hit;
+  return withTable(doc, offset, null, ({ cell, columns, table }) => {
+    const rows = [...table.rows];
+    if (cell.row >= rows.length - 1) rows.push(blank(columns));
 
-  const rows = [...table.rows];
-  if (cell.row >= rows.length - 1) rows.push(blank(columns));
-
-  const plan = edit(table, format, rows);
-  const change = plan.changes[0];
-  if (!change) return null;
-  // Rendered line 0 is the header and line 1 the rule, so row `i` is `i + 1`.
-  const caret =
-    change.from + cellOffset(change.text, cell.row + 2, cell.column);
-  return { changes: plan.changes, select: { from: caret, to: caret } };
+    const plan = edit(table, format, rows);
+    const change = plan.changes[0];
+    if (!change) return null;
+    // Rendered line 0 is the header and line 1 the rule, so row `i` is `i + 1`.
+    const caret =
+      change.from + cellOffset(change.text, cell.row + 2, cell.column);
+    return { changes: plan.changes, select: { from: caret, to: caret } };
+  });
 }
 
 /** Tab moves horizontally; the right edge grows the table by one column. */
@@ -683,50 +689,50 @@ export function planTableTab(
   format: TableFormat,
   backwards: boolean,
 ): Plan | null {
-  const hit = findTableEditContext(doc, offset);
-  if (!hit) return null;
-  const { cell, columns, table } = hit;
-  let row = cell.row;
-  let column = cell.column;
-  let rows = table.rows;
-  let align = table.align;
+  return withTable(doc, offset, null, ({ cell, columns, table }) => {
+    let row = cell.row;
+    let column = cell.column;
+    let rows = table.rows;
+    let align = table.align;
 
-  if (backwards) {
-    if (column > 0) column--;
-    else if (row > 0) {
-      row--;
-      column = columns - 1;
+    if (backwards) {
+      if (column > 0) column--;
+      else if (row > 0) {
+        row--;
+        column = columns - 1;
+      }
+    } else if (column + 1 < columns) column++;
+    else {
+      rows = table.rows.map((current) => [...current, ""]);
+      align = [...table.align, "none"];
+      column++;
     }
-  } else if (column + 1 < columns) column++;
-  else {
-    rows = table.rows.map((current) => [...current, ""]);
-    align = [...table.align, "none"];
-    column++;
-  }
 
-  const plan = edit(table, format, rows, align);
-  const change = plan.changes[0];
-  if (!change) return null;
-  const renderedLine = row === 0 ? 0 : row + 1;
-  const value = rows[row]?.[column] ?? "";
-  const caret = change.from + cellOffset(change.text, renderedLine, column);
-  if (value === "")
-    return { changes: plan.changes, select: { from: caret, to: caret } };
+    const plan = edit(table, format, rows, align);
+    const change = plan.changes[0];
+    if (!change) return null;
+    const renderedLine = row === 0 ? 0 : row + 1;
+    const value = rows[row]?.[column] ?? "";
+    const caret = change.from + cellOffset(change.text, renderedLine, column);
+    if (value === "")
+      return { changes: plan.changes, select: { from: caret, to: caret } };
 
-  const lines = change.text.split("\n");
-  let before = 0;
-  for (let i = 0; i < renderedLine; i++) before += (lines[i] ?? "").length + 1;
-  const raw = escapeCell(value);
-  const lineText = lines[renderedLine] ?? "";
-  const start = Math.max(0, caret - change.from - before);
-  const content = lineText.indexOf(raw, start);
-  if (content < 0)
-    return { changes: plan.changes, select: { from: caret, to: caret } };
-  return {
-    changes: plan.changes,
-    select: {
-      from: change.from + before + content,
-      to: change.from + before + content + raw.length,
-    },
-  };
+    const lines = change.text.split("\n");
+    let before = 0;
+    for (let i = 0; i < renderedLine; i++)
+      before += (lines[i] ?? "").length + 1;
+    const raw = escapeCell(value);
+    const lineText = lines[renderedLine] ?? "";
+    const start = Math.max(0, caret - change.from - before);
+    const content = lineText.indexOf(raw, start);
+    if (content < 0)
+      return { changes: plan.changes, select: { from: caret, to: caret } };
+    return {
+      changes: plan.changes,
+      select: {
+        from: change.from + before + content,
+        to: change.from + before + content + raw.length,
+      },
+    };
+  });
 }
