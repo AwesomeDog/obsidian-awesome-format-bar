@@ -268,16 +268,26 @@ function numberingText(
   return `${tokens.join(".")}${scheme.separator} `;
 }
 
-/** Front matter comes first: a YAML comment `# note` is not a heading. */
-function firstContentLine(lines: Lines): number {
-  if (lines.count === 0 || lines.at(0).trim() !== "---") return 0;
+/**
+ * The YAML front matter: the `---` that opens it through the one that closes,
+ * both included, or `null` when the note has none. A closing `---` that never
+ * comes is not front matter either, and neither is a `---` rule followed by a
+ * blank line — that is a rule with a paragraph under it.
+ */
+function frontMatter(lines: Lines): Block | null {
+  if (lines.count === 0 || lines.at(0).trim() !== "---") return null;
   for (let line = 1; line < lines.count; line++) {
     const text = lines.at(line).trim();
-    if (text === "---") return line + 1;
-    // A `---` rule followed by a blank line starts the note; it holds no YAML.
-    if (text === "") return 0;
+    if (text === "---") return [0, line];
+    if (text === "") return null;
   }
-  return 0;
+  return null;
+}
+
+/** Front matter comes first: a YAML comment `# note` is not a heading. */
+function firstContentLine(lines: Lines): number {
+  const matter = frontMatter(lines);
+  return matter ? matter[1] + 1 : 0;
 }
 
 /**
@@ -405,14 +415,6 @@ export function isDropCapStyle(style: string): boolean {
   return /float:\s*left/.test(style);
 }
 
-/** The last line of the YAML front matter, or -1 when there is none. */
-function frontmatterEnd(lines: Lines): number {
-  if (lines.at(0).trim() !== "---") return -1;
-  for (let line = 1; line < lines.count; line++)
-    if (lines.at(line).trim() === "---") return line;
-  return -1;
-}
-
 interface DropCapTarget {
   readonly line: number;
   /** Offset of the text's first character, markers stripped. */
@@ -424,11 +426,12 @@ function dropCapTargets(
   lines: Lines,
   fence: readonly boolean[],
   blocks: readonly Block[],
-  frontmatter: number,
+  frontmatter: Block | null,
 ): DropCapTarget[] {
   const out: DropCapTarget[] = [];
   for (const [a, b] of blocks) {
-    if (a <= frontmatter || fence[a]) continue;
+    if (frontmatter && a <= frontmatter[1]) continue;
+    if (fence[a]) continue;
     // An aligned paragraph is wrapped in a div; its text starts below it.
     let line = a;
     if (PARAGRAPH_ALIGNMENT_OPEN.test(lines.at(line).trim()) && b > line)
@@ -458,7 +461,7 @@ export function toggleDropCap(doc: string, ranges: readonly Range[]): Plan {
     lines,
     fenceMask(lines),
     blocksFor(lines, ranges, "paragraph"),
-    frontmatterEnd(lines),
+    frontMatter(lines),
   );
   const first = targets[0];
   if (!first) return NO_CHANGE;

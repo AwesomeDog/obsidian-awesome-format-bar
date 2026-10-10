@@ -237,11 +237,13 @@ function askText(
   );
 }
 
+/** What the pointer is carrying: a whole group, or one command inside one. */
+type Drag =
+  | { kind: "group"; index: number }
+  | { kind: "command"; group: string; index: number };
+
 class PinnedManagerModal extends Modal {
-  private dragging:
-    | { kind: "group"; index: number }
-    | { kind: "command"; group: string; index: number }
-    | null = null;
+  private dragging: Drag | null = null;
 
   constructor(
     app: App,
@@ -390,50 +392,55 @@ class PinnedManagerModal extends Modal {
     this.render();
   }
 
-  private groupDrag(el: HTMLElement, index: number): void {
+  /**
+   * The four drag events one row needs. `accepts` is asked twice, once to
+   * arm the drop and once to take it, so a row that shows no drop target
+   * never takes one.
+   */
+  private dragRow(
+    el: HTMLElement,
+    start: () => Drag,
+    accepts: (drag: Drag) => boolean,
+    move: (from: number) => Promise<void>,
+  ): void {
     el.addEventListener("dragstart", (event) => {
-      this.dragging = { kind: "group", index };
-      event.dataTransfer?.setData("text/plain", "group");
+      const drag = start();
+      this.dragging = drag;
+      event.dataTransfer?.setData("text/plain", drag.kind);
     });
     el.addEventListener("dragover", (event) => {
-      if (this.dragging?.kind === "group") event.preventDefault();
+      const drag = this.dragging;
+      if (drag && accepts(drag)) event.preventDefault();
     });
     el.addEventListener("drop", (event) => {
       event.preventDefault();
       const drag = this.dragging;
       this.dragging = null;
-      if (drag?.kind === "group" && drag.index !== index)
-        void this.actions
-          .moveGroup(drag.index, index)
-          .then(() => this.render());
+      if (!drag || !accepts(drag)) return;
+      void move(drag.index).then(() => this.render());
     });
     el.addEventListener("dragend", () => (this.dragging = null));
   }
 
+  private groupDrag(el: HTMLElement, index: number): void {
+    this.dragRow(
+      el,
+      () => ({ kind: "group", index }),
+      // Onto itself is not a move, so it is not a drop target either.
+      (drag) => drag.kind === "group" && drag.index !== index,
+      (from) => this.actions.moveGroup(from, index),
+    );
+  }
+
   private commandDrag(el: HTMLElement, group: string, index: number): void {
-    el.addEventListener("dragstart", (event) => {
-      this.dragging = { kind: "command", group, index };
-      event.dataTransfer?.setData("text/plain", "command");
-    });
-    el.addEventListener("dragover", (event) => {
-      const drag = this.dragging;
-      if (drag?.kind === "command" && drag.group === group)
-        event.preventDefault();
-    });
-    el.addEventListener("drop", (event) => {
-      event.preventDefault();
-      const drag = this.dragging;
-      this.dragging = null;
-      if (
-        drag?.kind === "command" &&
-        drag.group === group &&
-        drag.index !== index
-      )
-        void this.actions
-          .moveCommand(group, drag.index, index)
-          .then(() => this.render());
-    });
-    el.addEventListener("dragend", () => (this.dragging = null));
+    this.dragRow(
+      el,
+      () => ({ kind: "command", group, index }),
+      // Only within the group it started in: moving across groups is the menu.
+      (drag) =>
+        drag.kind === "command" && drag.group === group && drag.index !== index,
+      (from) => this.actions.moveCommand(group, from, index),
+    );
   }
 }
 
