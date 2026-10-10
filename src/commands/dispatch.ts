@@ -166,13 +166,30 @@ function toggleFullscreen(context: CommandContext): void {
   fullscreenEl = containerEl;
 }
 
+/**
+ * Read off the document, not off `fullscreenEl`: Esc leaves Zen without
+ * telling us, and a pop-out window fullscreens in a document of its own.
+ */
+export function isZenModeOn(view: MarkdownView): boolean {
+  return view.containerEl.ownerDocument.fullscreenElement === view.containerEl;
+}
+
 /** What Focus Mode closed, so exit brings back only those two sides. */
 let focusRestore: { left: boolean; right: boolean } | null = null;
+
+/**
+ * Both sidebars closed is what Focus Mode is, so the lit button and the next
+ * press agree: collapsing the two by hand lights it, and it then restores.
+ */
+export function isFocusModeOn(app: App): boolean {
+  const { leftSplit, rightSplit } = app.workspace;
+  return leftSplit.collapsed && rightSplit.collapsed;
+}
 
 /** Closes both sidebars through Obsidian's own split state */
 function toggleFocusMode(app: App): void {
   const { leftSplit, rightSplit } = app.workspace;
-  if (leftSplit.collapsed && rightSplit.collapsed) {
+  if (isFocusModeOn(app)) {
     // No memory after a reload while focused: bring both back, never no-op.
     const back = focusRestore ?? { left: true, right: true };
     if (back.left) leftSplit.expand();

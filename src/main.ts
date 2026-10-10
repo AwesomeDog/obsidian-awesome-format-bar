@@ -12,7 +12,11 @@ import {
 } from "obsidian";
 import { commit, hasSelection, selectionRanges } from "./commands/apply";
 import { addCommandsToMenu } from "./editor-menu";
-import { exitFullscreen } from "./commands/dispatch";
+import {
+  exitFullscreen,
+  isFocusModeOn,
+  isZenModeOn,
+} from "./commands/dispatch";
 import {
   canRun,
   executeSpec,
@@ -278,6 +282,8 @@ export default class AwesomeFormatBarPlugin extends Plugin {
     this.registerDomEvent(doc, "selectionchange", refresh, { signal });
     // Scroll does not bubble, so it needs the capture phase.
     doc.addEventListener("scroll", refresh, { capture: true, signal });
+    // Zen ends on Esc, and nothing else reports that.
+    doc.addEventListener("fullscreenchange", refresh, { signal });
 
     // Capture before the editor so handled navigation does not run its default.
     const onKeyDown = (evt: KeyboardEvent): void => this.onTableKeydown(evt);
@@ -403,11 +409,15 @@ export default class AwesomeFormatBarPlugin extends Plugin {
         return {
           inTable: conditions.inTable,
           isEnabled: (spec: CommandSpec): boolean => canRun(spec, conditions),
-          // Plugin-wide: every bar shows a lit brush, and a lit pilcrow while
-          // whitespace is on. Neither is a state of the view it belongs to.
+          // A mode that stays on until it is switched off. Zen lit the view it
+          // fullscreened, so only that view's bar lights; the rest are held
+          // plugin-wide or workspace-wide, and every bar wears them alike.
           isLatched: (spec: CommandSpec): boolean =>
             (spec.id === "format-painter" && this.painter !== null) ||
-            (spec.id === "show-whitespace" && this.settings.showWhitespace),
+            (spec.id === "show-whitespace" && this.settings.showWhitespace) ||
+            (spec.id === "typewriter-mode" && isTypewriterModeEnabled()) ||
+            (spec.id === "zen-mode" && isZenModeOn(view)) ||
+            (spec.id === "focus-mode" && isFocusModeOn(this.app)),
         };
       },
     };
