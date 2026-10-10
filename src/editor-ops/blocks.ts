@@ -2,7 +2,6 @@ import { NO_CHANGE, order, type Change, type Plan, type Range } from "./plan";
 import {
   blocksFor,
   CJK,
-  compareText,
   fenceMask,
   insertBlock,
   Lines,
@@ -10,6 +9,12 @@ import {
   replaceBlock,
   type Block,
 } from "./lines";
+import {
+  flattenOutline,
+  parseOutline,
+  sortOutline,
+  type Outline,
+} from "./outline";
 
 export type ParagraphAlignment = "left" | "center" | "right" | "justify";
 
@@ -86,11 +91,16 @@ export function insertCallout(
 
 const HEADING = /^(#{1,6})\s/;
 
-interface Section {
-  level: number;
-  /** The heading line, plus every line up to the next heading. */
-  lines: string[];
-  children: Section[];
+/** A fenced `#` is code, not a heading: it opens no section, but it still rides
+ * with the one above it. */
+function headingLevelOf(
+  fenced: readonly boolean[],
+): (text: string, line: number) => number | null {
+  return (text, line) => {
+    if (fenced[line]) return null;
+    const marker = HEADING.exec(text);
+    return marker ? (marker[1] ?? "").length : null;
+  };
 }
 
 /** The note's outline: its first heading through its last line of content. */
@@ -109,48 +119,14 @@ function outlineRange(lines: Lines): [number, number] | null {
   return start < 0 ? null : [start, end];
 }
 
-/** Sections are cut at `#` markers; a quoted or fenced one stays body text. */
-function parseSections(lines: Lines, from: number, to: number): Section[] {
-  const roots: Section[] = [];
-  const stack: Section[] = [];
-  const fenced = fenceMask(lines);
-
-  for (let line = from; line <= to; line++) {
-    const text = lines.at(line);
-    const marker = fenced[line] ? null : HEADING.exec(text);
-    if (!marker) {
-      stack[stack.length - 1]?.lines.push(text);
-      continue;
-    }
-    const level = (marker[1] ?? "").length;
-    const section: Section = { level, lines: [text], children: [] };
-    while (stack.length > 0 && (stack[stack.length - 1]?.level ?? 0) >= level)
-      stack.pop();
-    const parent = stack[stack.length - 1];
-    (parent ? parent.children : roots).push(section);
-    stack.push(section);
-  }
-  return roots;
-}
-
-function headingText(section: Section): string {
+/** The outline's own text: the heading line, markers off. */
+function headingText(section: Outline): string {
   return (section.lines[0] ?? "").replace(HEADING, "").trim();
 }
 
-function sortSections(sections: readonly Section[]): Section[] {
-  return sections
-    .map((section) => ({
-      ...section,
-      children: sortSections(section.children),
-    }))
-    .sort((a, b) => compareText(headingText(a), headingText(b)));
-}
-
-function flattenSections(sections: readonly Section[]): string[] {
-  return sections.flatMap((section) => [
-    ...section.lines,
-    ...flattenSections(section.children),
-  ]);
+/** Every heading in the note, nested by its level. */
+function sectionsIn(lines: Lines, from: number, to: number): Outline[] {
+  return parseOutline(lines, from, to, headingLevelOf(fenceMask(lines)));
 }
 
 /** Reorders each level of the note's outline; a section keeps its own body. */
@@ -160,9 +136,9 @@ export function sortHeadings(doc: string): Plan {
   if (!range) return NO_CHANGE;
   const [start, end] = range;
   const source = lines.slice(start, end);
-  const result = flattenSections(
-    sortSections(parseSections(lines, start, end)),
-  ).join("\n");
+  const result = flattenOutline(
+    sortOutline(sectionsIn(lines, start, end), headingText),
+  ).lines.join("\n");
   return result === source
     ? NO_CHANGE
     : { changes: [replaceBlock(lines, start, end, result)] };
@@ -320,7 +296,7 @@ export function numberHeadings(doc: string, scheme: HeadingNumbering): Plan {
 }
 
 /** One `- [[#Heading|Heading]]` per heading, indented two spaces per level. */
-function outlineEntries(sections: readonly Section[], depth: number): string[] {
+function outlineEntries(sections: readonly Outline[], depth: number): string[] {
   return sections.flatMap((section) => {
     const text = headingText(section);
     const entry =
@@ -339,7 +315,7 @@ export function tableOfContents(
   const outline = outlineRange(lines);
   if (!outline) return NO_CHANGE;
   const [start, end] = outline;
-  const entries = outlineEntries(parseSections(lines, start, end), 0);
+  const entries = outlineEntries(sectionsIn(lines, start, end), 0);
   if (entries.length === 0) return NO_CHANGE;
 
   const blocks = blocksFor(lines, ranges, "paragraph");
