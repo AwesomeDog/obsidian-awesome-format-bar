@@ -6,9 +6,14 @@ import type { ToolbarHost } from "./host";
 /** Word's grid: ten columns by eight rows, swept with the mouse. */
 const COLUMNS = 10;
 const ROWS = 8;
-/** A Markdown table of one row is only a header, which is not a table. */
-const MIN_COLUMN = 1;
+/** Cell indices, one below the size `choose` sends: the smallest table is one
+ * column by two rows — a header alone is not a table, but a single column is. */
+const MIN_COLUMN = 0;
 const MIN_ROW = 1;
+/** Nothing is under the pointer yet, so the grid opens on 2 × 2 and the sweep
+ * takes it from there, down to one column if that is where it lands. */
+const START_COLUMN = 1;
+const START_ROW = 1;
 
 /** Enter and Space come free: the cells are buttons. Arrows do not. */
 const ARROWS: Readonly<Record<string, readonly [number, number]>> = {
@@ -30,8 +35,8 @@ export function openTableGrid(
   grid.style.setProperty("--formatbar-grid-columns", String(COLUMNS));
 
   // Zero-based cell under the pointer, which is also the size: `3x4` is (2, 3).
-  let column = MIN_COLUMN;
-  let row = MIN_ROW;
+  let column = START_COLUMN;
+  let row = START_ROW;
   const cells: HTMLButtonElement[] = [];
 
   const paint = (): void => {
