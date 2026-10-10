@@ -26,18 +26,35 @@ function isListLine(text: string): boolean {
   return ORDERED.test(text) || BULLET.test(text);
 }
 
-function listBlock(lines: Lines, a: number, b: number): Block {
-  const continues = (text: string): boolean =>
-    isListLine(text) || /^\s{2,}\S/.test(text);
+/** A line indented under an item: its lazy continuation. */
+const INDENTED = /^\s{2,}\S/;
+
+function continues(text: string): boolean {
+  return isListLine(text) || INDENTED.test(text);
+}
+
+/** The list `a..b` belongs to, walking outwards from it. `bridge` crosses one
+ * blank line when a list line waits on the other side; `fence` ends the walk at
+ * a fence an item has indented into itself. */
+function listRun(
+  lines: Lines,
+  a: number,
+  b: number,
+  bridge: boolean,
+  fence: boolean,
+): Block {
+  const takes = (text: string): boolean =>
+    continues(text) && !(fence && FENCE.test(text));
 
   let start = a;
   while (start > 0) {
     const previous = lines.at(start - 1);
-    if (continues(previous)) {
+    if (takes(previous)) {
       start--;
       continue;
     }
     if (
+      bridge &&
       previous.trim() === "" &&
       start >= 2 &&
       isListLine(lines.at(start - 2))
@@ -51,11 +68,12 @@ function listBlock(lines: Lines, a: number, b: number): Block {
   let end = b;
   while (end < lines.count - 1) {
     const next = lines.at(end + 1);
-    if (continues(next)) {
+    if (takes(next)) {
       end++;
       continue;
     }
     if (
+      bridge &&
       next.trim() === "" &&
       end + 2 <= lines.count - 1 &&
       isListLine(lines.at(end + 2))
@@ -66,6 +84,11 @@ function listBlock(lines: Lines, a: number, b: number): Block {
     break;
   }
   return [start, end];
+}
+
+/** Renumbering and sorting take the whole list, blank line and all. */
+function listBlock(lines: Lines, a: number, b: number): Block {
+  return listRun(lines, a, b, true, false);
 }
 
 interface ListLevel {
@@ -270,32 +293,10 @@ function flatten(
   return { lines: result, targetLine };
 }
 
-function isMoveContinuation(text: string): boolean {
-  return /^\s{2,}\S/.test(text);
-}
-
-/** The contiguous list run around a cursor; blank lines and fences divide it. */
+/** Moving one item stays in its own run: a blank line or a fence ends it. */
 function moveRun(lines: Lines, line: number): Block | null {
-  const current = lines.at(line);
-  if (!isListLine(current) && !isMoveContinuation(current)) return null;
-
-  let start = line;
-  while (start > 0) {
-    const previous = lines.at(start - 1);
-    if (previous.trim() === "" || FENCE.test(previous)) break;
-    if (!isListLine(previous) && !isMoveContinuation(previous)) break;
-    start--;
-  }
-
-  let end = line;
-  while (end < lines.count - 1) {
-    const next = lines.at(end + 1);
-    if (next.trim() === "" || FENCE.test(next)) break;
-    if (!isListLine(next) && !isMoveContinuation(next)) break;
-    end++;
-  }
-
-  return [start, end];
+  if (!continues(lines.at(line))) return null;
+  return listRun(lines, line, line, false, true);
 }
 
 /** Sorting leaves ordered items out of sequence, so they are renumbered. */

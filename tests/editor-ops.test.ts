@@ -799,6 +799,12 @@ describe("moveListItem", () => {
     );
   });
 
+  it("does not cross a fence an item has indented into itself", () => {
+    expect(apply("- A\n  ```\n  x\n  ```\n- B|", moveUp)).toBe(
+      "- A\n  ```\n  x\n  ```\n- B",
+    );
+  });
+
   it("requires one collapsed cursor", () => {
     expect(apply("[- A\n- B]", moveDown)).toBe("- A\n- B");
     expect(
