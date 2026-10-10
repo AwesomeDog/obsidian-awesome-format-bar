@@ -1,5 +1,13 @@
 import { isDropCapStyle } from "./blocks";
-import { inlineTagAt, SPAN_CLOSE, SPAN_WHOLE } from "./inline";
+import {
+  nextInlineMarker,
+  scanInline,
+  SPAN_CLOSE,
+  SPAN_WHOLE,
+  type InlineKind,
+  type InlineMarker,
+  type VerbatimState,
+} from "./inline";
 import { highlightEmojiAt, nativeHighlightOf } from "../model/palettes";
 import {
   normalizeRanges,
@@ -45,27 +53,13 @@ const PAIRS = [
   { key: "superscript", open: "<sup>", close: "</sup>" },
 ] as const satisfies readonly { key: PairKey; open: string; close: string }[];
 
-const WORD = /[0-9A-Za-z]/;
-
-interface Marker {
-  readonly kind: PairKey | "span" | "code" | "math" | "escape";
-  readonly at: number;
-  readonly length: number;
-  readonly closing?: boolean;
-  readonly style?: string;
-  /** On `==`: the color 1.14 writes as an emoji right after the marker. */
-  readonly color?: string | null;
-}
-
 interface SpanOpen {
   readonly at: number;
   readonly end: number;
   readonly style: string;
 }
 
-interface ScanState {
-  code: boolean;
-  math: boolean;
+interface ScanState extends VerbatimState {
   on: Record<PairKey, boolean>;
   openAt: Partial<Record<PairKey, { at: number; length: number }>>;
   spans: SpanOpen[];
@@ -96,77 +90,22 @@ function freshState(): ScanState {
   };
 }
 
-function isWord(ch: string | undefined): boolean {
-  return ch !== undefined && WORD.test(ch);
+/** A walk of its own: the same markers, a state of its own. */
+function copyState(state: ScanState): ScanState {
+  return {
+    ...state,
+    on: { ...state.on },
+    openAt: { ...state.openAt },
+    spans: [...state.spans],
+  };
 }
 
-function nextMarker(doc: string, at: number, state: ScanState): Marker | null {
-  const ch = doc[at];
-  if (ch === undefined) return null;
-  if (ch === "\\") return { kind: "escape", at, length: 2 };
-  const fence = () => (doc.startsWith("```", at) ? 3 : 1);
-  if (state.code)
-    return ch === "`" ? { kind: "code", at, length: fence() } : null;
-  if (state.math) return ch === "$" ? { kind: "math", at, length: 1 } : null;
-  if (ch === "`") return { kind: "code", at, length: fence() };
-  if (ch === "$") return { kind: "math", at, length: 1 };
-  if (ch === "*")
-    return doc.startsWith("**", at)
-      ? { kind: "bold", at, length: 2 }
-      : { kind: "italic", at, length: 1 };
-  if (ch === "~")
-    return doc.startsWith("~~", at)
-      ? { kind: "strikethrough", at, length: 2 }
-      : null;
-  if (ch === "=") {
-    if (!doc.startsWith("==", at)) return null;
-    const emoji = highlightEmojiAt(doc, at + 2);
-    return emoji === null
-      ? { kind: "highlight", at, length: 2 }
-      : {
-          kind: "highlight",
-          at,
-          length: 2 + emoji.length,
-          color: emoji.hex,
-        };
-  }
-  if (ch === "_") {
-    // `snake_case` is not emphasis.
-    const double = doc.startsWith("__", at);
-    if (isWord(doc[at - 1]) || isWord(doc[at + (double ? 2 : 1)])) return null;
-    return double
-      ? { kind: "bold", at, length: 2 }
-      : { kind: "italic", at, length: 1 };
-  }
-  if (ch !== "<") return null;
-  const tag = inlineTagAt(doc, at);
-  if (!tag) return null;
-  if (tag.name === "span")
-    return {
-      kind: "span",
-      at,
-      length: tag.to - tag.from,
-      closing: tag.closing,
-      style: tag.style,
-    };
-  const kind =
-    tag.name === "u"
-      ? "underline"
-      : tag.name === "sub"
-        ? "subscript"
-        : "superscript";
-  return { kind, at, length: tag.to - tag.from, closing: tag.closing };
-}
-
-function apply(state: ScanState, marker: Marker): void {
+function apply(state: ScanState, marker: InlineMarker): void {
   switch (marker.kind) {
+    // Code and math are the walk's own state: it carries `verbatim` along.
     case "escape":
-      return;
     case "code":
-      state.code = !state.code;
-      return;
     case "math":
-      state.math = !state.math;
       return;
     case "span":
       if (marker.closing) {
@@ -185,7 +124,8 @@ function apply(state: ScanState, marker: Marker): void {
       });
       return;
     default: {
-      const on = !state.on[marker.kind];
+      // `*` and `_` say which way they read; the rest take it from the state.
+      const on = marker.open ?? !state.on[marker.kind];
       state.on[marker.kind] = on;
       if (on) {
         state.openAt[marker.kind] = { at: marker.at, length: marker.length };
@@ -261,16 +201,16 @@ function capture(
   range: Range,
 ): { state: ScanState; inner: Range } {
   const state = freshState();
-  let at = paragraphStart(doc, range.from);
-  while (at < range.from) {
-    const marker = nextMarker(doc, at, state);
-    if (!marker) {
-      at++;
-      continue;
-    }
-    apply(state, marker);
-    at += marker.length;
-  }
+  scanInline(
+    doc,
+    paragraphStart(doc, range.from),
+    range.from,
+    (marker) => {
+      apply(state, marker);
+      return true;
+    },
+    state,
+  );
   return { state, inner: peelLayers(doc, range, state) };
 }
 
@@ -281,37 +221,34 @@ function closingOffset(
   from: number,
   key: PairKey,
 ): { at: number; length: number } | null {
-  const scan: ScanState = {
-    ...state,
-    on: { ...state.on },
-    openAt: { ...state.openAt },
-    spans: [...state.spans],
-  };
-  const end = paragraphEnd(doc, from);
-  let at = from;
-  while (at < end) {
-    const marker = nextMarker(doc, at, scan);
-    if (!marker) {
-      at++;
-      continue;
-    }
-    apply(scan, marker);
-    if (marker.kind === key && !scan.on[key])
-      return { at: marker.at, length: marker.length };
-    at += marker.length;
-  }
-  return null;
+  const scan = copyState(state);
+  let found: { at: number; length: number } | null = null;
+  scanInline(
+    doc,
+    from,
+    paragraphEnd(doc, from),
+    (marker) => {
+      apply(scan, marker);
+      if (marker.kind === key && !scan.on[key]) {
+        found = { at: marker.at, length: marker.length };
+        return false;
+      }
+      return true;
+    },
+    scan,
+  );
+  return found;
 }
 
 /** What the selection carries: `whole` begins and ends inside it, `opened` runs past an
  * edge, `closed` began before one. A straddling run is reported, never cut in half. */
 interface Enclosed {
-  readonly whole: Marker[];
-  readonly opened: Marker[];
-  readonly closed: Marker[];
+  readonly whole: InlineMarker[];
+  readonly opened: InlineMarker[];
+  readonly closed: InlineMarker[];
 }
 
-function closeOf(key: Marker["kind"]): string {
+function closeOf(key: InlineKind): string {
   return PAIRS.find((pair) => pair.key === key)?.close ?? "";
 }
 
@@ -321,61 +258,48 @@ function enclosedMarkers(
   from: number,
   to: number,
 ): Enclosed {
-  const scan: ScanState = {
-    ...state,
-    on: { ...state.on },
-    openAt: { ...state.openAt },
-    spans: [...state.spans],
-  };
-  const pending = new Map<PairKey, Marker[]>();
-  const openSpans: Marker[] = [];
+  const scan = copyState(state);
+  const pending = new Map<PairKey, InlineMarker[]>();
+  const openSpans: InlineMarker[] = [];
   /** Drop caps opened in this walk: their close tags pair with these, not
    *  with `openSpans`, and neither is reported as a marker to cut. */
   let dropOpen = 0;
-  const whole: Marker[] = [];
-  const opened: Marker[] = [];
-  const closed: Marker[] = [];
-  let at = from;
+  const whole: InlineMarker[] = [];
+  const opened: InlineMarker[] = [];
+  const closed: InlineMarker[] = [];
   // On past `to` so a run that carries on is matched, not taken for a stray.
-  const end = paragraphEnd(doc, from);
-  while (at < end) {
-    const marker = nextMarker(doc, at, scan);
-    if (!marker) {
-      at++;
-      continue;
-    }
+  const walk = (marker: InlineMarker): boolean => {
     const within = marker.at >= from && marker.at + marker.length <= to;
     apply(scan, marker);
-    at += marker.length;
     if (
       marker.kind === "escape" ||
       marker.kind === "code" ||
       marker.kind === "math"
     )
-      continue;
+      return true;
     if (marker.kind === "span") {
       if (!marker.closing) {
         if (isDropCapStyle(marker.style ?? "")) dropOpen++;
         else if (within) openSpans.push(marker);
-        continue;
+        return true;
       }
       if (dropOpen > 0) {
         dropOpen--;
-        continue;
+        return true;
       }
       const open = openSpans.pop();
       if (!open) {
         if (within) closed.push(marker);
       } else if (within) whole.push(open, marker);
       else opened.push(open);
-      continue;
+      return true;
     }
     const stack = pending.get(marker.kind) ?? [];
     // `apply` has just toggled the flag: on means this marker opened the run.
     if (scan.on[marker.kind]) {
       if (within) stack.push(marker);
       pending.set(marker.kind, stack);
-      continue;
+      return true;
     }
     const open = stack.pop();
     pending.set(marker.kind, stack);
@@ -383,7 +307,9 @@ function enclosedMarkers(
       if (within) closed.push(marker);
     } else if (within) whole.push(open, marker);
     else opened.push(open);
-  }
+    return true;
+  };
+  scanInline(doc, from, paragraphEnd(doc, from), walk, scan);
   return { whole, opened, closed };
 }
 
@@ -391,7 +317,7 @@ function enclosedMarkers(
 function leadingMarkers(doc: string, at: number, state: ScanState): void {
   let cursor = at;
   for (;;) {
-    const marker = nextMarker(doc, cursor, state);
+    const marker = nextInlineMarker(doc, cursor, state);
     if (!marker || marker.closing) return;
     if (
       marker.kind === "escape" ||

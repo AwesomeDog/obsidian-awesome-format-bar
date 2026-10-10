@@ -279,6 +279,10 @@ describe("selectSimilarFormatting", () => {
     expect(selected("snake_case_|name")).toBeUndefined();
   });
 
+  it("reads an escaped marker as the text it stands for", () => {
+    expect(selected("a \\*o|ne\\* b")).toBeUndefined();
+  });
+
   it("selects nothing when the cursor is on plain text", () => {
     expect(selected("just |words")).toBeUndefined();
   });
@@ -1691,5 +1695,18 @@ describe("format painter", () => {
 
   it("leaves a target that already wears the format alone", () => {
     expect(paint("**[bold]**", brush("**[b]**"))).toBe("**bold**");
+  });
+
+  it("reads no markup inside a fence, whatever marks it", () => {
+    expect(brush("~~~\n**[b]**\n~~~")).toEqual(plain);
+    expect(brush("```\n**[b]**\n```")).toEqual(plain);
+  });
+
+  it("does not read an asterisk between spaces as emphasis", () => {
+    expect(brush("2 *[ 3 ]* 4")).toEqual(plain);
+  });
+
+  it("reads an underscore pair as emphasis, not as a word", () => {
+    expect(brush("[_a_]").italic).toBe(true);
   });
 });

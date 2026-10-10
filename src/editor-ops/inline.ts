@@ -4,7 +4,6 @@ import {
   NO_CHANGE,
   normalizeRanges,
   order,
-  touches,
   type Change,
   type Plan,
   type Range,
@@ -118,7 +117,7 @@ export function selectSimilarFormatting(
 
 /** One run of inline formatting: the text between its marks. */
 interface InlineRun extends Range {
-  readonly kind: string;
+  readonly kind: InlineKind;
   /** What tells two runs of a kind apart: a highlight's color, a span's style. */
   readonly variant: string;
 }
@@ -144,104 +143,195 @@ function fencedRanges(doc: string): Range[] {
   return out;
 }
 
-/** `**`, `~~` and `==`: one pattern each, all read the same way. */
-const MARKED: readonly (readonly [RegExp, string, string])[] = [
-  [/\*\*([\s\S]+?)\*\*/g, "**", "strong"],
-  [/~~([\s\S]+?)~~/g, "~~", "strikethrough"],
-  [/==([^=\n]+?)==/g, "==", "highlight"],
-];
+/** What a walk of the inline syntax can find. */
+export type InlineKind =
+  | "escape"
+  | "code"
+  | "math"
+  | "bold"
+  | "italic"
+  | "strikethrough"
+  | "highlight"
+  | "underline"
+  | "subscript"
+  | "superscript"
+  | "span";
 
-function markedRuns(doc: string, skip: readonly Range[]): InlineRun[] {
-  const runs: InlineRun[] = [];
-  for (const [pattern, delimiter, kind] of MARKED)
-    for (const match of doc.matchAll(pattern)) {
-      const start = match.index ?? 0;
-      const from = start + delimiter.length;
-      const to = from + (match[1] ?? "").length;
-      if (touches(skip, start, from)) continue;
-      if (touches(skip, to, to + delimiter.length)) continue;
-      // A highlight wears its color as an emoji right after the opening `==`.
-      const color = kind === "highlight" ? highlightEmojiAt(doc, from) : null;
-      runs.push({
-        from: color ? from + color.length : from,
-        to,
-        kind,
-        variant: color ? color.hex : "",
-      });
-    }
-  return runs;
+/** One marker at one offset. `open` is absent where both directions read. */
+export interface InlineMarker {
+  readonly kind: InlineKind;
+  readonly at: number;
+  readonly length: number;
+  readonly open?: boolean;
+  /** On a tag: whether it closes one. */
+  readonly closing?: boolean;
+  /** The `style` of a `<span>`. */
+  readonly style?: string;
+  /** The hex a `==` carries as an emoji, if any. */
+  readonly color?: string | null;
+}
+
+/** Whether the walk stands inside a code span or an inline formula. */
+export interface VerbatimState {
+  code: boolean;
+  math: boolean;
 }
 
 const WORD_CHAR = /[\p{L}\p{N}]/u;
 const WHITESPACE = /\s/;
 
-/** `*`/`_` the way CommonMark reads them: neither opens before a space, and
- * `_` never emphasizes inside a word. */
-function delimiterRuns(
+/** `*` and `_` the way CommonMark reads them: neither opens before a space, and
+ * `_` never emphasizes inside a word. `null` is no marker at all, `undefined`
+ * is one that reads either way. */
+function direction(
   doc: string,
-  skip: readonly Range[],
-  delimiter: "*" | "_",
-): InlineRun[] {
-  const runs: InlineRun[] = [];
-  const charAt = (at: number): string => doc[at] ?? "\n";
-  const opens = (at: number): boolean =>
-    !WHITESPACE.test(charAt(at + 1)) &&
-    !(delimiter === "_" && WORD_CHAR.test(charAt(at - 1))) &&
-    !touches(skip, at, at + 1);
-  const closes = (at: number): boolean =>
-    !WHITESPACE.test(charAt(at - 1)) &&
-    !(delimiter === "_" && WORD_CHAR.test(charAt(at + 1))) &&
-    !touches(skip, at, at + 1);
-
-  let open = -1;
-  for (let at = 0; at < doc.length; at++) {
-    if (charAt(at) !== delimiter) continue;
-    // Half of a `**` or `__`: that is strong, not this.
-    if (charAt(at - 1) === delimiter || charAt(at + 1) === delimiter) continue;
-    if (open < 0) {
-      if (opens(at)) open = at + 1;
-      continue;
-    }
-    if (!closes(at)) {
-      open = opens(at) ? at + 1 : -1;
-      continue;
-    }
-    runs.push({ from: open, to: at, kind: "emphasis", variant: "" });
-    open = -1;
-  }
-  return runs;
+  at: number,
+  length: number,
+): boolean | null | undefined {
+  const before = doc[at - 1] ?? "\n";
+  const after = doc[at + length] ?? "\n";
+  const underscore = doc[at] === "_";
+  const opens =
+    !WHITESPACE.test(after) && !(underscore && WORD_CHAR.test(before));
+  const closes =
+    !WHITESPACE.test(before) && !(underscore && WORD_CHAR.test(after));
+  if (!opens && !closes) return null;
+  return opens === closes ? undefined : opens;
 }
 
-const VERBATIM = /(`+)([\s\S]*?)\1|\$[^$\n]+?\$/g;
-
-/** Code spans and inline formulas: read literally, never scanned for marks. They come
- * back twice, being both formatting to select and spans to skip in the same pass. */
-function verbatimRuns(
+/** The marker starting at `at`, or `null`. The one reading of the inline syntax:
+ * the runs below and the Format Painter both walk it. */
+export function nextInlineMarker(
   doc: string,
-  fences: readonly Range[],
-): { runs: InlineRun[]; spans: Range[] } {
+  at: number,
+  state: VerbatimState,
+): InlineMarker | null {
+  const ch = doc[at];
+  if (ch === undefined) return null;
+  if (ch === "\\") return { at, kind: "escape", length: 2 };
+
+  const ticks = doc.startsWith("```", at) ? 3 : 1;
+  if (state.code)
+    return ch === "`" ? { at, kind: "code", length: ticks } : null;
+  if (state.math) return ch === "$" ? { at, kind: "math", length: 1 } : null;
+  if (ch === "`") return { at, kind: "code", length: ticks };
+  if (ch === "$") return { at, kind: "math", length: 1 };
+
+  if (ch === "*" || ch === "_") {
+    const double = doc.startsWith(ch === "*" ? "**" : "__", at);
+    const length = double ? 2 : 1;
+    const open = direction(doc, at, length);
+    return open === null
+      ? null
+      : { at, kind: double ? "bold" : "italic", length, open };
+  }
+  if (ch === "~")
+    return doc.startsWith("~~", at)
+      ? { at, kind: "strikethrough", length: 2 }
+      : null;
+  if (ch === "=") {
+    if (!doc.startsWith("==", at)) return null;
+    const emoji = highlightEmojiAt(doc, at + 2);
+    return emoji === null
+      ? { at, kind: "highlight", length: 2 }
+      : { at, color: emoji.hex, kind: "highlight", length: 2 + emoji.length };
+  }
+  if (ch !== "<") return null;
+
+  const tag = inlineTagAt(doc, at);
+  if (!tag) return null;
+  const length = tag.to - tag.from;
+  if (tag.name === "span")
+    return { at, closing: tag.closing, kind: "span", length, style: tag.style };
+  const kind =
+    tag.name === "u"
+      ? "underline"
+      : tag.name === "sub"
+        ? "subscript"
+        : "superscript";
+  return { at, closing: tag.closing, kind, length };
+}
+
+let fenced: { doc: string; ranges: readonly Range[] } | null = null;
+
+/** A walk stops at every fence, and they do not move while one runs. */
+function fencesOf(doc: string): readonly Range[] {
+  if (fenced?.doc !== doc) fenced = { doc, ranges: fencedRanges(doc) };
+  return fenced.ranges;
+}
+
+/** Every marker of `doc[from..to)`, in order; fenced code is walked over.
+ * `visit` returning false ends the walk. `verbatim` is where a walk that starts
+ * mid-document stands; it is carried along as the walk goes. */
+export function scanInline(
+  doc: string,
+  from: number,
+  to: number,
+  visit: (marker: InlineMarker) => boolean | void,
+  verbatim?: VerbatimState,
+): void {
+  const fences = fencesOf(doc);
+  const state: VerbatimState = verbatim ?? { code: false, math: false };
+  const end = Math.min(to, doc.length);
+  let at = Math.max(0, from);
+  // Fences are in order and never overlap, so one index walks them.
+  let next = 0;
+  while (at < end) {
+    while (next < fences.length && (fences[next]?.to ?? 0) <= at) next++;
+    const fence = fences[next];
+    if (fence && at >= fence.from) {
+      at = fence.to;
+      next++;
+      continue;
+    }
+    const marker = nextInlineMarker(doc, at, state);
+    if (!marker) {
+      at++;
+      continue;
+    }
+    if (visit(marker) === false) return;
+    if (marker.kind === "code") state.code = !state.code;
+    else if (marker.kind === "math") state.math = !state.math;
+    at += marker.length;
+  }
+}
+
+/** What tells two runs of a kind apart: a highlight's color, a span's style. */
+function variantOf(marker: InlineMarker): string {
+  if (marker.kind === "highlight") return marker.color ?? "";
+  if (marker.kind === "span") return marker.style ?? "";
+  return "";
+}
+
+/** Every run of inline formatting in the note, outermost and innermost alike. */
+function inlineRuns(doc: string): InlineRun[] {
   const runs: InlineRun[] = [];
-  const spans: Range[] = [];
-  for (const match of doc.matchAll(VERBATIM)) {
-    const start = match.index ?? 0;
-    const to = start + (match[0] ?? "").length;
-    if (touches(fences, start, to)) continue;
-    spans.push({ from: start, to });
-    const ticks = (match[1] ?? "").length;
-    const from = start + (ticks || 1);
+  const open = new Map<InlineKind, InlineMarker[]>();
+
+  scanInline(doc, 0, doc.length, (marker) => {
+    if (marker.kind === "escape") return;
+    const stack = open.get(marker.kind) ?? [];
+    // A tag knows its direction; the rest toggle, so an empty stack opens.
+    const opens =
+      marker.open ??
+      (marker.closing === undefined ? stack.length === 0 : !marker.closing);
+    if (opens) {
+      stack.push(marker);
+      open.set(marker.kind, stack);
+      return;
+    }
+    const start = stack.pop();
+    if (!start) return;
     runs.push({
-      from,
-      to: to - (ticks || 1),
-      kind: ticks ? "code" : "math",
-      variant: "",
+      from: start.at + start.length,
+      kind: marker.kind,
+      to: marker.at,
+      variant: variantOf(start),
     });
-  }
-  return { runs, spans };
-}
+  });
 
-/** The four wrappers this plugin writes: `<span>`, `<u>`, `<sub>`, `<sup>`. */
-const INLINE_TAG = /<(\/?)(span|u|sub|sup)\b[^>]*>/gi;
-const SPAN_STYLE = /style="([^"]*)"/i;
+  return runs.sort((a, b) => a.from - b.from || a.to - b.to);
+}
 
 export const SPAN_CLOSE = "</span>";
 export const SPAN_WHOLE = /^<span style="([^"]*)">([\s\S]*)<\/span>$/;
@@ -258,6 +348,9 @@ export interface InlineTag {
   /** The tag itself, markers included. */
   readonly raw: string;
 }
+
+const INLINE_TAG = /<(\/?)(span|u|sub|sup)\b[^>]*>/gi;
+const SPAN_STYLE = /style="([^"]*)"/i;
 
 function tagOf(match: RegExpMatchArray): InlineTag {
   const raw = match[0] ?? "";
@@ -321,34 +414,4 @@ export function pairTags(
   }
   orphans.push(...stack);
   return { pairs, orphans };
-}
-
-function tagRuns(doc: string, fences: readonly Range[]): InlineRun[] {
-  const runs: InlineRun[] = [];
-  // Every one opens a pair here: a `<span />` is a span nobody is inside, and
-  // this walk is looking for the text between two tags, not for tags to cut.
-  for (const { open, close } of pairTags(doc, () => true).pairs) {
-    if (touches(fences, open.from, close.to)) continue;
-    runs.push({
-      from: open.to,
-      to: close.from,
-      kind: close.name,
-      variant: open.style,
-    });
-  }
-  return runs;
-}
-
-/** Every run of inline formatting in the note, outermost and innermost alike. */
-function inlineRuns(doc: string): InlineRun[] {
-  const fences = fencedRanges(doc);
-  const verbatim = verbatimRuns(doc, fences);
-  const skip = [...fences, ...verbatim.spans];
-  return [
-    ...markedRuns(doc, skip),
-    ...delimiterRuns(doc, skip, "*"),
-    ...delimiterRuns(doc, skip, "_"),
-    ...verbatim.runs,
-    ...tagRuns(doc, fences),
-  ].sort((a, b) => a.from - b.from || a.to - b.to);
 }
