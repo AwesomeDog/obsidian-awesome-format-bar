@@ -136,10 +136,7 @@ function swatchTitle(label: string, color: string): DocumentFragment {
   });
 }
 
-/**
- * What a pop-up button offers, in the order the popover lists it. The color
- * picker is the one choice a menu has no anchor to hang, so it drops out here.
- */
+/** A pop-up button's choices in the popover's order, minus the picker: a menu has no anchor for it. */
 function choicesFor(spec: CommandSpec): readonly PopupChoice[] {
   return popupSections(spec.popup)
     .flatMap((section) => section.items)

@@ -142,13 +142,8 @@ export function resolveContext(
     : { app, editor, format, optionValue };
 }
 
-/** The editor that has focus, or `null` when nothing editable does.
- *
- * `getActiveViewOfType` only ever sees notes, so it misses the embedded
- * editors inside Canvas cards and hover editors. `activeEditor` covers both,
- * and it is a MarkdownView exactly when a note itself has focus — which is
- * what keeps Reading view out: there the view is a MarkdownView whose mode is
- * not source. */
+// The editor with focus, or `null`: `getActiveViewOfType` misses Canvas cards and
+// hover editors, and a note in Reading view is a MarkdownView in a mode that is not source.
 function focusedEditor(app: App): Editor | null {
   const owner = app.workspace.activeEditor;
   if (owner && !(owner instanceof MarkdownView)) return owner.editor ?? null;

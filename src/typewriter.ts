@@ -63,10 +63,8 @@ class Typewriter {
     this.decorations = Decoration.set(currentLine.range(line.from));
   }
 
-  /** Room above and below, so the first and last line can still reach the
-   * middle. The height comes from a measure: `update()` runs before the DOM is
-   * resynced.
-   */
+  /** Room above and below, so the first and last line still reach the middle;
+   * the height comes from a measure: `update()` runs before the DOM is resynced. */
   private center(): void {
     this.view.requestMeasure({
       read: (view) => ({

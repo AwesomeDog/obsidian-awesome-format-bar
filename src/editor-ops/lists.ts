@@ -1,6 +1,7 @@
 import {
   NO_CHANGE,
   applyChanges,
+  lineOffset,
   normalizeRanges,
   order,
   type Change,
@@ -352,9 +353,9 @@ function offsetAtLine(
   line: number,
   ch: number,
 ): number {
-  let offset = start;
-  for (let i = 0; i < line; i++) offset += (lines[i]?.length ?? 0) + 1;
-  return offset + Math.min(ch, lines[line]?.length ?? 0);
+  return (
+    start + lineOffset(lines, line) + Math.min(ch, lines[line]?.length ?? 0)
+  );
 }
 
 /** Moves one list item and its subtree, following Outliner's boundary rules. */

@@ -91,11 +91,7 @@ import { CASE_OPTIONS } from "../model/palettes";
 import type { CommandPopup } from "../model/types";
 import { commit, selectionRanges } from "./apply";
 
-/**
- * One drop-down's items, each mapped to the `optionValue` it runs with. The
- * names come out of `DROPDOWN_ITEMS`, so an item is named in exactly one place
- * and a new one needs no entry here.
- */
+/** One drop-down's items to `optionValue`; `DROPDOWN_ITEMS` names them, not this. */
 function optionValues<T extends string | null>(
   popup: CommandPopup,
   valueOf: (id: string) => T,
@@ -166,10 +162,7 @@ function toggleFullscreen(context: CommandContext): void {
   fullscreenEl = containerEl;
 }
 
-/**
- * Read off the document, not off `fullscreenEl`: Esc leaves Zen without
- * telling us, and a pop-out window fullscreens in a document of its own.
- */
+/** Read off the document, not `fullscreenEl`: Esc leaves Zen without telling us. */
 export function isZenModeOn(view: MarkdownView): boolean {
   return view.containerEl.ownerDocument.fullscreenElement === view.containerEl;
 }
@@ -177,10 +170,7 @@ export function isZenModeOn(view: MarkdownView): boolean {
 /** What Focus Mode closed, so exit brings back only those two sides. */
 let focusRestore: { left: boolean; right: boolean } | null = null;
 
-/**
- * Both sidebars closed is what Focus Mode is, so the lit button and the next
- * press agree: collapsing the two by hand lights it, and it then restores.
- */
+/** Both sidebars closed is Focus Mode, so collapsing them by hand lights the button. */
 export function isFocusModeOn(app: App): boolean {
   const { leftSplit, rightSplit } = app.workspace;
   return leftSplit.collapsed && rightSplit.collapsed;
@@ -235,9 +225,8 @@ function nativePaste(plain: boolean): boolean {
   return true;
 }
 
-/** The Copy as drop-down. Markdown re-renders through `renderTable`, so what
- * lands on the clipboard is a valid table even where the source was not.
- * `label` stays untranslated: it names a file format. */
+/** The Copy as drop-down; Markdown re-renders through `renderTable`, so the
+ * clipboard gets a valid table. `label` names a file format, so it stays untranslated. */
 const COPY_TABLE_AS: Readonly<
   Record<
     string,

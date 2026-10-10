@@ -22,10 +22,7 @@ function outsideUrls(text: string, edit: (chunk: string) => string): string {
   return out + edit(text.slice(at));
 }
 
-/**
- * The one walk over fenced code. `editable` is false for fence markers and
- * everything inside them; returning `null` drops the line.
- */
+/** The one walk over fenced code: `editable` is false inside a fence; `null` drops the line. */
 function editLines(
   text: string,
   edit: (line: string, editable: boolean) => string | null,
@@ -157,11 +154,8 @@ function normalizeBullets(text: string): string {
   );
 }
 
-/**
- * ZWSP, word joiner, BOM and soft hyphen: nothing in a note can want them.
- * ZWJ and ZWNJ are left alone — ZWJ is what holds an emoji family together,
- * ZWNJ carries meaning in Persian and Arabic — and so are the direction marks.
- */
+// ZWSP, word joiner, BOM and soft hyphen: nothing in a note can want them. ZWJ and ZWNJ
+// are left alone — an emoji family needs one, Persian needs the other.
 const INVISIBLE = /[\u00ad\u200b\u2060\ufeff]/gu;
 
 /** NBSP turns into a plain space; every other odd space is someone's layout. */

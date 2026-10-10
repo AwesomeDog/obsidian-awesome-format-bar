@@ -14,12 +14,8 @@ export const STANDARD_COLORS = [
   "#7030a0",
 ] as const;
 
-/**
- * Word's highlighter palette (15) plus Orange, which Word's font palette has
- * and its highlighter does not. The first six are the ones Obsidian renders
- * natively, as `==` followed by an emoji; the other ten have no native syntax
- * and go out as `<span style="background:…">`.
- */
+/** Word's highlighter palette plus Orange. The first six Obsidian renders as `==🟡…==`;
+ * the other ten have no native syntax and go out as `<span style="background:…">`. */
 export const HIGHLIGHT_COLORS: readonly string[] = [
   "#ffff00", // Yellow   → ==🟡…==
   "#ff0000", // Red      → ==🔴…==
@@ -43,11 +39,7 @@ export const HIGHLIGHT_COLORS: readonly string[] = [
 /** How many of `HIGHLIGHT_COLORS` Obsidian renders natively: the leading slice. */
 export const NATIVE_COUNT = 6;
 
-/**
- * Those six. `variable` is what decides the color on screen, so it is also
- * what the palette swatch has to show: painting `hex` there would promise a
- * color the editor never renders.
- */
+/** Those six: `variable` decides the color on screen, so the swatch shows it, not `hex`. */
 export const NATIVE_HIGHLIGHTS = [
   {
     emoji: "\u{1F7E1}",
@@ -89,11 +81,8 @@ export const NATIVE_HIGHLIGHTS = [
 
 export type NativeHighlight = (typeof NATIVE_HIGHLIGHTS)[number];
 
-/**
- * Every emoji Obsidian reads as a highlight color: the six circles it writes,
- * and the six squares it accepts as well. Values index into
- * `HIGHLIGHT_COLORS`.
- */
+/** Every highlight emoji: the six circles Obsidian writes, the six squares it accepts.
+ * Values index into `HIGHLIGHT_COLORS`. */
 const HIGHLIGHT_EMOJI: Readonly<Record<string, number>> = {
   "\u{1F7E1}": 0,
   "\u{1F7E8}": 0,
@@ -128,10 +117,7 @@ export function highlightEmojiAt(
   return hex === undefined ? null : { hex, length: emoji.length };
 }
 
-/**
- * Relative sizes, in `em` — they scale with the surrounding text, so a span
- * survives a theme or zoom change. `none` clears the property, like the colors.
- */
+/** Relative sizes in `em`, so a span survives a theme or zoom change; `none` clears it. */
 export const FONT_SIZES = [
   { label: "Default", value: "none" },
   { label: "0.5", value: "0.5em" },
@@ -143,11 +129,8 @@ export const FONT_SIZES = [
   { label: "3", value: "3em" },
 ] as const;
 
-/**
- * CSS generic families only: a named font renders only where it is installed.
- * A value must also hold no `;`, which `setStyle` splits pairs on — a chain of
- * fallbacks can only be written with commas.
- */
+/** CSS generic families only: a named font renders only where it is installed, and a
+ * value must hold no `;`, which `setStyle` splits on — fallbacks take commas. */
 export const FONT_FAMILIES = [
   { label: "Default", value: "none" },
   { label: "Serif", value: "serif" },

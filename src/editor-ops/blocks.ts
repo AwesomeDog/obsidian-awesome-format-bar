@@ -243,11 +243,7 @@ function numberToken(style: NumberStyle, value: number): string {
   }
 }
 
-/**
- * A number this plugin wrote. Every scheme ends in `.` or `)`, so a heading
- * that only starts with a number — `## 2024 in review` — is left alone, and a
- * scheme can be swapped for another without stacking one on top of the first.
- */
+/** A number this plugin wrote: every scheme ends in `.` or `)`, so a bare number is not one. */
 const NUMBERED_HEADING =
   /^(#{1,6})[ \t]+(?:[0-9]+(?:\.[0-9]+)*\.|[IVXLCDM]+\.|[A-Z]\.|[0-9]+\)|[ivxlcdm]+\)|[a-z]\))[ \t]+/;
 
@@ -268,12 +264,8 @@ function numberingText(
   return `${tokens.join(".")}${scheme.separator} `;
 }
 
-/**
- * The YAML front matter: the `---` that opens it through the one that closes,
- * both included, or `null` when the note has none. A closing `---` that never
- * comes is not front matter either, and neither is a `---` rule followed by a
- * blank line — that is a rule with a paragraph under it.
- */
+// The YAML front matter, both `---` included, or `null`. A blank line before the
+// closing `---` means it was a rule all along, so neither counts.
 function frontMatter(lines: Lines): Block | null {
   if (lines.count === 0 || lines.at(0).trim() !== "---") return null;
   for (let line = 1; line < lines.count; line++) {
@@ -290,11 +282,7 @@ function firstContentLine(lines: Lines): number {
   return matter ? matter[1] + 1 : 0;
 }
 
-/**
- * Writes outline numbering on every heading of the note, or takes it off with
- * `null`. The whole note is the scope: numbering that stops at a selection
- * would carry on from the wrong number below it.
- */
+/** Numbers every heading, or takes it off with `null`; a selection would carry on from the wrong number. */
 export function numberHeadings(doc: string, scheme: HeadingNumbering): Plan {
   const lines = new Lines(doc);
   const changes: Change[] = [];
@@ -386,12 +374,8 @@ export function insertBlockReference(
   };
 }
 
-/**
- * The three parts of a drop cap, in one string so the whole thing travels in
- * the file: `float` is what makes the lines wrap around it, and the reduced
- * `line-height` is what lets them come back up beside it. Without the float
- * the first character is only large.
- */
+// `float` wraps the lines around the cap and the reduced `line-height` lets them
+// come back up beside it; without the float the first character is only large.
 function dropCapStyle(character: string): string {
   // A full-width glyph reads far larger than a latin one at the same `em`.
   const size = CJK.test(character) ? "2.2em" : "3.4em";
@@ -403,11 +387,7 @@ const DROP_CAP_OPEN = /^<span style="float:left[^"]*">([^<]*)<\/span>/;
 /** Only a letter or a digit can be dropped: no punctuation, no markers. */
 const DROPPABLE = /[\p{L}\p{N}]/u;
 
-/**
- * Markers that may sit in front of a paragraph's text. A drop cap written
- * before one of them is still a drop cap and can still be taken off, which is
- * why these come off before the search rather than ruling the line out.
- */
+/** Markers a paragraph may wear; stripped before the search, so a cap behind one is still found. */
 const BLOCK_PREFIX = /^(?:> ?(?:\[![\w-]+\]\s*)?|#{1,6}\s|[-*+]\s|\d+[.)]\s)+/;
 
 /** `true` for the style a drop cap writes, whatever else it carries. */
@@ -466,9 +446,8 @@ export function toggleDropCap(doc: string, ranges: readonly Range[]): Plan {
   const first = targets[0];
   if (!first) return NO_CHANGE;
 
-  // One direction for the whole selection. Unlike the alignments, which each
-  // toggle on their own, a drop cap is a decoration on the paragraph: half
-  // added and half removed is not a thing anyone asked for.
+  // One direction for the whole selection: a drop cap decorates the paragraph,
+  // and half added and half removed is not a thing anyone asked for.
   const removing = first.has;
   const changes: Change[] = [];
   for (const target of targets) {
@@ -521,9 +500,8 @@ export type ChartKind =
   | "ishikawa"
   | "venn";
 
-/** A diagram has no empty form: an empty `mermaid` block renders as an error,
- * so each kind starts life as the smallest diagram of its kind that renders.
- * `{date}` is today, put in by `insertChartBlock`. */
+/** A diagram has no empty form, so each kind starts as the smallest one that renders.
+ * `{date}` is today, written in by `insertChartBlock`. */
 const CHART_EXAMPLES: Readonly<Record<ChartKind, string>> = {
   flowchart: "flowchart LR\n  A --> B",
   sequence: "sequenceDiagram\n  Alice->>Bob: Hello\n  Bob-->>Alice: Hi",

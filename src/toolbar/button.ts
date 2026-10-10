@@ -11,12 +11,8 @@ function withHotkey(name: string, hotkey: string): string {
   return hotkey ? `${name} (${hotkey})` : name;
 }
 
-/**
- * Where a click on a command goes: the two pop-ups that draw a layer of their
- * own, then the drop-downs, then a command that acts at once. Every entry
- * point a button has — the bar, the overflow list — comes through here, so a
- * new kind of pop-up is wired in one place.
- */
+/** Where a click goes: the two pop-ups that draw a layer of their own, then the drop-downs,
+ * then a command that acts at once — every entry point a button has comes through here. */
 export function runCommand(
   anchor: HTMLElement,
   spec: CommandSpec,

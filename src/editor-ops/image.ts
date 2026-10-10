@@ -14,10 +14,7 @@ const EMPHASIS_LINE = /^\s*(?:\*([^*\n]+)\*|_([^_\n]+)_)\s*$/;
 /** What a row may hold before its first cell: whitespace, quotes, cell pipes. */
 const ROW_PREFIX = /^[\s>|]*$/;
 
-/**
- * A row splits on its pipes, so a size written in one needs `\|`. Stricter
- * than `isTableLine`, which any pipe at all satisfies.
- */
+/** A row splits on pipes, so a size inside one needs `\|`: stricter than `isTableLine`. */
 function isRowLine(line: string): boolean {
   const at = line.indexOf("|");
   return at >= 0 && ROW_PREFIX.test(line.slice(0, at));
@@ -85,11 +82,8 @@ interface Parts {
   readonly size: string | null;
 }
 
-/**
- * Splits a wiki embed's inner text. Obsidian allows `![[a.png|alias|300]]` and
- * reads the width from the **last** pipe, so a written alias no longer hides
- * the size — and a size that is not last is not a size at all.
- */
+// Obsidian reads the width from the **last** pipe, so `![[a.png|alias|300]]` keeps
+// its size: a size that is not last is not a size at all.
 function wikiParts(inner: string, marker: string): Parts {
   const segments = inner.split(marker);
   const target = segments[0] ?? "";
@@ -109,11 +103,8 @@ function wikiEmbed(parts: Parts, marker: string): string {
 
 const MARKDOWN_PARTS = /^!\[([^\]]*)\]\((.*)\)$/;
 
-/**
- * A Markdown image carries its width in the **alt text**, not the URL:
- * `![alt|300](url)`, or `![300](url)` with no alt text. Obsidian reads the size
- * from the last pipe there, and with no pipe at all a bare width still counts.
- */
+// The width rides in the **alt text**, not the URL: `![alt|300](url)` or `![300](url)`.
+// Obsidian reads the size from the last pipe; with no pipe a bare width still counts.
 function linkParts(text: string, marker: string): Parts | null {
   const parsed = MARKDOWN_PARTS.exec(text);
   if (!parsed) return null;
@@ -193,10 +184,7 @@ function rewrite(picture: Picture, parts: Parts): Plan {
   };
 }
 
-/**
- * Sets or clears the width of one picture. Extra cursors are ignored: a size
- * belongs to a single embed, so several at once has no single meaning.
- */
+/** Sets or clears one picture's width; a size belongs to one embed, so extra cursors are ignored. */
 export function setImageSize(
   doc: string,
   ranges: readonly Range[],
@@ -208,11 +196,8 @@ export function setImageSize(
     : NO_CHANGE;
 }
 
-/**
- * The same width on every picture in the note. Unlike the single-picture
- * commands it ignores the caret, so it runs from anywhere in the note.
- * Fenced code is skipped: a note about Markdown may well show an embed.
- */
+/** The same width on every picture: ignores the caret, so it runs from anywhere.
+ * Fenced code is skipped — a note about Markdown may well show an embed. */
 export function setAllImageSizes(doc: string, width: string | null): Plan {
   const lines = new Lines(doc);
   const fenced = fenceMask(lines);
@@ -239,10 +224,7 @@ export function setAllImageSizes(doc: string, width: string | null): Plan {
   return changes.length === 0 ? NO_CHANGE : { changes: order(changes) };
 }
 
-/**
- * Writes the alt text of one picture and selects it, so typing replaces it.
- * Alt text already there is selected instead of duplicated.
- */
+/** Writes the alt text and selects it; alt text already there is selected, not duplicated. */
 export function insertImageAlt(
   doc: string,
   ranges: readonly Range[],
@@ -277,10 +259,7 @@ export function resetImage(doc: string, ranges: readonly Range[]): Plan {
 /** A URL has no place inside `![[]]`, so those stay Markdown links. */
 const ABSOLUTE_URL = /^[a-z][a-z0-9+.-]*:\/\//i;
 
-/**
- * Swaps one picture between the two syntaxes. A space has to change sides
- * with it: `%20` in a URL, a plain space inside a wiki embed.
- */
+/** Swaps the syntax; a space changes sides with it: `%20` in a URL, plain inside `![[]]`. */
 export function convertImageSyntax(
   doc: string,
   ranges: readonly Range[],
@@ -317,10 +296,7 @@ function captionBody(line: string): Range | null {
   return at < 0 ? null : { from: at, to: at + body.length };
 }
 
-/**
- * Writes `*placeholder*` under the picture and selects it, so typing replaces
- * it. A caption already there is selected instead of duplicated.
- */
+/** Writes `*placeholder*` under the picture and selects it; a caption already there is selected. */
 export function insertImageCaption(
   doc: string,
   ranges: readonly Range[],

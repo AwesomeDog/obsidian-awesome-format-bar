@@ -1,8 +1,9 @@
 import { highlightEmojiAt, nativeHighlightOf } from "../model/palettes";
-import { inlineTags, SPAN_CLOSE, SPAN_WHOLE, type InlineTag } from "./inline";
+import { pairTags, SPAN_CLOSE, SPAN_WHOLE } from "./inline";
 import {
   normalizeRanges,
   order,
+  touches,
   type Change,
   type Plan,
   type Range,
@@ -12,11 +13,6 @@ import {
 export type SpanProperty = "color" | "background" | "font-size" | "font-family";
 
 const SPAN_OPEN_BEFORE = /<span style="([^"]*)">$/;
-
-interface InlineWrapper {
-  readonly open: InlineTag;
-  readonly close?: InlineTag;
-}
 
 interface Declaration {
   readonly name: string;
@@ -126,11 +122,8 @@ export function applySpanStyle(
 const HIGHLIGHT_OPEN = "==";
 const HIGHLIGHT_CLOSE = "==";
 
-/**
- * The `==` opening a highlight whose text starts at `to`, with the emoji it
- * carries. Every highlight emoji is one code point outside the BMP, so the
- * marker sits two units further back when there is one.
- */
+/** The `==` opening a highlight whose text starts at `to`, with the emoji it carries.
+ * An emoji is one code point outside the BMP, so the marker sits two units back. */
 function highlightOpening(
   doc: string,
   to: number,
@@ -145,12 +138,8 @@ function highlightOpening(
     : null;
 }
 
-/**
- * Highlight Color. The six colors Obsidian renders natively go out as
- * `==🟡…==`; the other ten and any picked color have no native syntax and
- * stay a span. `null` is No Color, which takes the highlight away whole —
- * markers and all, the way Word's does.
- */
+/** Highlight Color: the six Obsidian renders go out as `==🟡…==`, the rest as a span.
+ * `null` is No Color, which takes the highlight away whole, markers and all. */
 export function applyHighlightColor(
   doc: string,
   ranges: readonly Range[],
@@ -267,43 +256,20 @@ export function clearOwnedInlineHtml(
   );
   if (selected.length === 0) return { changes: [] };
 
-  const wrappers: InlineWrapper[] = [];
-  const unmatched: InlineTag[] = [];
-  const stack: InlineTag[] = [];
-  for (const tag of inlineTags(doc)) {
-    if (!tag.closing) {
-      // `<span />` closes itself: there is no tag to pair it with.
-      if (!/\/\s*>$/.test(tag.raw)) stack.push(tag);
-      continue;
-    }
+  const { pairs, orphans } = pairTags(
+    doc,
+    // `<span />` closes itself: there is no tag to pair it with.
+    (tag) => !/\/\s*>$/.test(tag.raw),
+  );
 
-    let openIndex = stack.length - 1;
-    while (openIndex >= 0 && stack[openIndex]?.name !== tag.name) openIndex--;
-    if (openIndex < 0) {
-      unmatched.push(tag);
-      continue;
-    }
-    const open = stack.splice(openIndex, 1)[0];
-    if (open) wrappers.push({ open, close: tag });
-  }
-  unmatched.push(...stack);
-
-  const touched = (from: number, to: number): boolean =>
-    selected.some((range) => range.from < to && range.to > from);
   const changes: Change[] = [];
-  for (const wrapper of wrappers) {
-    const end = wrapper.close?.to ?? doc.length;
-    if (!touched(wrapper.open.from, end)) continue;
-    changes.push({ from: wrapper.open.from, to: wrapper.open.to, text: "" });
-    if (wrapper.close)
-      changes.push({
-        from: wrapper.close.from,
-        to: wrapper.close.to,
-        text: "",
-      });
+  for (const { open, close } of pairs) {
+    if (!touches(selected, open.from, close.to)) continue;
+    changes.push({ from: open.from, to: open.to, text: "" });
+    changes.push({ from: close.from, to: close.to, text: "" });
   }
-  for (const tag of unmatched) {
-    if (touched(tag.from, tag.to))
+  for (const tag of orphans) {
+    if (touches(selected, tag.from, tag.to))
       changes.push({ from: tag.from, to: tag.to, text: "" });
   }
   return { changes: order(changes) };

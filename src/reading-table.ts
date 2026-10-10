@@ -1,9 +1,6 @@
 import { sortByText } from "./editor-ops/lines";
 
-/**
- * Reading view only: the rendered rows move, the file does not.
- * Ascending, then descending, then back to the order Obsidian rendered.
- */
+/** Reading view only: the rows move, the file does not. Ascending, descending, then back. */
 type Order = "asc" | "desc" | "none";
 
 const NEXT: Readonly<Record<Order, Order>> = {

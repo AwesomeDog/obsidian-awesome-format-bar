@@ -310,11 +310,8 @@ export default class AwesomeFormatBarPlugin extends Plugin {
     this.boundDocuments.delete(doc);
   }
 
-  /**
-   * The view an event came from. Not the active one: a pop-out window and an
-   * inactive pane each hold an editor of their own, and `iterateAllLeaves`
-   * reaches the pop-out ones too.
-   */
+  /** The view an event came from, not the active one: a pop-out and an inactive pane
+   * each hold an editor, and `iterateAllLeaves` reaches the pop-out ones too. */
   private viewOf(target: EventTarget | null): MarkdownView | null {
     if (!(target instanceof Element)) return null;
     let found: MarkdownView | null = null;
@@ -409,9 +406,8 @@ export default class AwesomeFormatBarPlugin extends Plugin {
         return {
           inTable: conditions.inTable,
           isEnabled: (spec: CommandSpec): boolean => canRun(spec, conditions),
-          // A mode that stays on until it is switched off. Zen lit the view it
-          // fullscreened, so only that view's bar lights; the rest are held
-          // plugin-wide or workspace-wide, and every bar wears them alike.
+          // A mode that stays on until switched off. Zen lit the view it fullscreened, so
+          // only that view's bar lights; the rest are held plugin- or workspace-wide.
           isLatched: (spec: CommandSpec): boolean =>
             (spec.id === "format-painter" && this.painter !== null) ||
             (spec.id === "show-whitespace" && this.settings.showWhitespace) ||

@@ -15,11 +15,7 @@ interface HotkeyManager {
 
 type AppWithHotkeyManager = App & { hotkeyManager?: HotkeyManager };
 
-/**
- * The key a command is bound to right now: the user's binding wins, the
- * factory default backs it up. Obsidian resolves that fallback itself, so
- * hand-rolling it would drop one of the two.
- */
+/** The bound key: the user's binding wins, Obsidian resolves the factory default. */
 export function registeredHotkey(app: App, id: string): string {
   return (
     (app as AppWithHotkeyManager).hotkeyManager?.printHotkeyForCommand(id) ?? ""

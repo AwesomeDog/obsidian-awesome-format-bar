@@ -5,7 +5,14 @@ import {
   replaceBlock,
   sortByText,
 } from "./lines";
-import { NO_CHANGE, order, type Change, type Plan, type Range } from "./plan";
+import {
+  lineOffset,
+  NO_CHANGE,
+  order,
+  type Change,
+  type Plan,
+  type Range,
+} from "./plan";
 import { insertText } from "./text";
 import { displayWidth, padToWidth } from "./width";
 
@@ -262,12 +269,8 @@ function findTableEditContext(
   };
 }
 
-/**
- * Every table op looks the caret's table up the same way, and answers the
- * same thing when there is none. `miss` is that answer: `NO_CHANGE` for a
- * command that writes nothing, `null` for the keys that let the editor's own
- * Enter and Tab through.
- */
+/** Every table op looks the caret's table up the same way; `miss` is the answer when
+ * there is none: `NO_CHANGE` for a command, `null` to let Enter and Tab through. */
 function withTable<T>(
   doc: string,
   offset: number,
@@ -567,9 +570,8 @@ export function sortRows(
   });
 }
 
-/** Excel's Remove Duplicates: the first row of a kind stays, later copies go.
- * Whole rows, so a row differing in any column survives; the header is excluded.
- * `removed` is what the caller reports; `null` means there was no table at all. */
+/** Excel's Remove Duplicates: whole rows, header excluded. `removed` is what the
+ * caller reports; `null` means there was no table at all. */
 export function removeDuplicateRows(
   doc: string,
   offset: number,
@@ -598,9 +600,8 @@ export function removeDuplicateRows(
   );
 }
 
-/** Shift+Enter inside a cell. GFM keeps a row on one line, so the break has to
- * be `<br>` — the same text `escapeCell` turns a stray newline into on the way
- * out. `null` outside a table, so the editor keeps its own Shift+Enter there. */
+/** Shift+Enter inside a cell: GFM keeps a row on one line, so the break has to be `<br>`.
+ * `null` outside a table, so the editor keeps its own Shift+Enter there. */
 export function insertCellBreak(
   doc: string,
   ranges: readonly Range[],
@@ -645,8 +646,7 @@ export function transposeTable(
 function cellOffset(rendered: string, line: number, column: number): number {
   const lines = rendered.split("\n");
   const target = lines[line] ?? "";
-  let before = 0;
-  for (let i = 0; i < line; i++) before += (lines[i] ?? "").length + 1;
+  const before = lineOffset(lines, line);
 
   let pipes = 0;
   for (let i = 0; i < target.length; i++) {
@@ -718,9 +718,7 @@ export function planTableTab(
       return { changes: plan.changes, select: { from: caret, to: caret } };
 
     const lines = change.text.split("\n");
-    let before = 0;
-    for (let i = 0; i < renderedLine; i++)
-      before += (lines[i] ?? "").length + 1;
+    const before = lineOffset(lines, renderedLine);
     const raw = escapeCell(value);
     const lineText = lines[renderedLine] ?? "";
     const start = Math.max(0, caret - change.from - before);

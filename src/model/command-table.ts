@@ -156,9 +156,8 @@ export const COMMANDS = [
     kind: "registered",
     registeredCommandId: "editor:toggle-numbered-list",
   },
-  // The numbers go into the heading text itself, so each scheme ends in `.` or
-  // `)`: that is what the next run recognizes, and what keeps a heading that
-  // merely starts with a number (`## 2024 in review`) out of it.
+  // Each scheme ends in `.` or `)`, which is what the next run recognizes and what
+  // keeps a heading that merely starts with a number out of it.
   {
     id: "number-headings",
     name: "Number Headings",
@@ -525,9 +524,8 @@ export const COMMANDS = [
     requiresImage: true,
   },
 
-  // Word's Chart. Obsidian renders every Mermaid diagram and gives no command
-  // to write one, so the whole list sits here. Each item is the smallest
-  // diagram of its kind that renders: an empty `mermaid` block is an error.
+  // Obsidian renders Mermaid but gives no command to write it, so the whole list sits
+  // here; each item is the smallest diagram of its kind that renders.
   {
     id: "chart",
     name: "Chart",
@@ -705,9 +703,8 @@ export const COMMANDS = [
     popup: "callout",
     commandPalette: false,
   },
-  // Drop-down items: one command per Obsidian callout type, in the order
-  // Obsidian lists them. Aliases (`summary`, `hint`, `error`…) write the same
-  // type under another name, so they get no button of their own.
+  // One command per callout type, in Obsidian's order. Aliases write the same type
+  // under another name, so they get no button of their own.
   {
     id: "callout-note",
     name: "Note Callout",

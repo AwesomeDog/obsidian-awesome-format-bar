@@ -392,11 +392,8 @@ class PinnedManagerModal extends Modal {
     this.render();
   }
 
-  /**
-   * The four drag events one row needs. `accepts` is asked twice, once to
-   * arm the drop and once to take it, so a row that shows no drop target
-   * never takes one.
-   */
+  /** The four drag events one row needs; `accepts` is asked twice, to arm the drop
+   * and to take it, so a row showing no drop target never takes one. */
   private dragRow(
     el: HTMLElement,
     start: () => Drag,

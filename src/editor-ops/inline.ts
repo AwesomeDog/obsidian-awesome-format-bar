@@ -4,6 +4,7 @@ import {
   NO_CHANGE,
   normalizeRanges,
   order,
+  touches,
   type Change,
   type Plan,
   type Range,
@@ -89,14 +90,8 @@ export function selectAll(doc: string): Plan {
   return { changes: [], selections: [{ from: 0, to: doc.length }] };
 }
 
-/** Word's Select Text with Similar Formatting: every run wearing what the
- * cursor wears.
- *
- * Two runs match on the mark and on what tells two of a kind apart — a
- * highlight's color, a span's style — so a red highlight never selects a
- * yellow one. Fenced code is not text to read, and neither is the inside of
- * a code span or of an inline formula: a `*` there is a `*`, not an emphasis.
- */
+/** Every run wearing what the cursor wears; a red highlight never selects a yellow one.
+ * Fenced code, code spans and inline formulas are never scanned for marks. */
 export function selectSimilarFormatting(
   doc: string,
   ranges: readonly Range[],
@@ -126,10 +121,6 @@ interface InlineRun extends Range {
   readonly kind: string;
   /** What tells two runs of a kind apart: a highlight's color, a span's style. */
   readonly variant: string;
-}
-
-function touches(ranges: readonly Range[], from: number, to: number): boolean {
-  return ranges.some((range) => from < range.to && to > range.from);
 }
 
 /** Fenced code: nothing it holds is a mark, however it reads. */
@@ -223,9 +214,8 @@ function delimiterRuns(
 
 const VERBATIM = /(`+)([\s\S]*?)\1|\$[^$\n]+?\$/g;
 
-/** Code spans and inline formulas: read literally, and never scanned for
- * marks. They come back twice, because they are formatting to select and
- * spans to skip in the same pass. */
+/** Code spans and inline formulas: read literally, never scanned for marks. They come
+ * back twice, being both formatting to select and spans to skip in the same pass. */
 function verbatimRuns(
   doc: string,
   fences: readonly Range[],
@@ -298,37 +288,52 @@ export function inlineTagAt(doc: string, at: number): InlineTag | null {
   return tagOf(match);
 }
 
-function tagRuns(doc: string, fences: readonly Range[]): InlineRun[] {
-  const runs: InlineRun[] = [];
-  interface Open {
-    readonly name: string;
-    readonly from: number;
-    readonly to: number;
-    readonly variant: string;
-  }
-  const stack: Open[] = [];
+/** An opening tag with the closing tag that ended it. */
+export interface InlineWrapper {
+  readonly open: InlineTag;
+  readonly close: InlineTag;
+}
+
+/** Pairs each closing tag with the last tag of its name still open; nearer wins.
+ * `opens` rules a tag out of opening one; whatever is left comes back in `orphans`. */
+export function pairTags(
+  doc: string,
+  opens: (tag: InlineTag) => boolean,
+): { pairs: readonly InlineWrapper[]; orphans: readonly InlineTag[] } {
+  const pairs: InlineWrapper[] = [];
+  const orphans: InlineTag[] = [];
+  const stack: InlineTag[] = [];
 
   for (const tag of inlineTags(doc)) {
     if (!tag.closing) {
-      stack.push({
-        name: tag.name,
-        from: tag.from,
-        to: tag.to,
-        variant: tag.style,
-      });
+      if (opens(tag)) stack.push(tag);
       continue;
     }
+
     let at = stack.length - 1;
     while (at >= 0 && stack[at]?.name !== tag.name) at--;
-    if (at < 0) continue;
+    if (at < 0) {
+      orphans.push(tag);
+      continue;
+    }
     const open = stack.splice(at, 1)[0];
-    if (!open) continue;
-    if (touches(fences, open.from, tag.to)) continue;
+    if (open) pairs.push({ open, close: tag });
+  }
+  orphans.push(...stack);
+  return { pairs, orphans };
+}
+
+function tagRuns(doc: string, fences: readonly Range[]): InlineRun[] {
+  const runs: InlineRun[] = [];
+  // Every one opens a pair here: a `<span />` is a span nobody is inside, and
+  // this walk is looking for the text between two tags, not for tags to cut.
+  for (const { open, close } of pairTags(doc, () => true).pairs) {
+    if (touches(fences, open.from, close.to)) continue;
     runs.push({
       from: open.to,
-      to: tag.from,
-      kind: tag.name,
-      variant: open.variant,
+      to: close.from,
+      kind: close.name,
+      variant: open.style,
     });
   }
   return runs;

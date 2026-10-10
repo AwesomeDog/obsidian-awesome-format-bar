@@ -6,18 +6,11 @@ import {
   type Range,
 } from "./plan";
 
-/**
- * A fence is a divider for renumbering, sorting, joining and splitting alike.
- * The marker is captured so a ``` block never closes on `~~~`; `$$` counts as
- * one too, because a math block is content nobody rewrites.
- */
+/** A fence is a divider for renumbering, sorting, joining and splitting alike.
+ * The marker is captured, so a ``` block never closes on `~~~`; `$` counts too. */
 export const FENCE = /^\s*(`{3,}|~{3,}|\${2,})/;
 
-/**
- * True for a fence marker and for every line it holds. Unlike a divider,
- * which the run walkers can spot one line at a time, this is asked per line
- * so a selection that starts inside a fence is protected too.
- */
+/** True for a fence marker and every line it holds, so a selection starting inside one is protected. */
 export function fenceMask(lines: Lines): boolean[] {
   const out = new Array<boolean>(lines.count).fill(false);
   let open = "";
@@ -78,12 +71,8 @@ export function asNumbers(values: readonly string[]): readonly number[] | null {
   return values.map((value) => parseFloat(value.replace(/[\p{Sc}%,]/gu, "")));
 }
 
-/**
- * `items` in the order `valueOf` puts them: a whole column of numbers sorts
- * numerically, anything else by text. Ties keep the order they were given.
- * Sort Rows and the Reading-view header click share this, so clicking a
- * header puts the rows where the command would.
- */
+/** `items` in the order `valueOf` puts them: numbers numerically, else by text; ties keep order.
+ * Shared by Sort Rows and the header click, so clicking agrees with the command. */
 export function sortByText<T>(
   items: readonly T[],
   valueOf: (item: T) => string,
@@ -218,11 +207,8 @@ export function breakAfter(text: string): string {
   return text.startsWith("\n") ? "\n" : "\n\n";
 }
 
-/**
- * Writes `text` as a block of its own over `ranges`, with the caret left at
- * `caretInText`. Several cursors keep the editor's own selections: more than
- * one block has no single caret to name.
- */
+/** Writes `text` as its own block over `ranges`, caret left at `caretInText`.
+ * Several cursors keep the editor's own selections: no single caret to name. */
 export function insertBlock(
   doc: string,
   ranges: readonly Range[],

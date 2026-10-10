@@ -39,6 +39,15 @@ export function normalizeRanges(ranges: readonly Range[]): Range[] {
   return out;
 }
 
+/** True where `from..to` and `range` share a character; touching is not overlap. */
+export function touches(
+  ranges: readonly Range[],
+  from: number,
+  to: number,
+): boolean {
+  return ranges.some((range) => from < range.to && to > range.from);
+}
+
 /** CodeMirror requires sorted, non-overlapping changes. */
 export function order(changes: Change[]): Change[] {
   return changes.sort((a, b) => a.from - b.from);
@@ -53,6 +62,13 @@ export function applyChanges(text: string, changes: readonly Change[]): string {
     cursor = change.to;
   }
   return out + text.slice(cursor);
+}
+
+/** Offset of `line`'s first character. `offsetToPosition` is the way back. */
+export function lineOffset(lines: readonly string[], line: number): number {
+  let offset = 0;
+  for (let i = 0; i < line; i++) offset += (lines[i]?.length ?? 0) + 1;
+  return offset;
 }
 
 interface Position {

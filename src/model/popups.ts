@@ -12,10 +12,7 @@ import {
 } from "./palettes";
 import type { CommandPopup, CommandSpec } from "./types";
 
-/**
- * What a drop-down button offers. One table, so the floating popover and the
- * editor menu cannot drift apart: both read it and draw it their own way.
- */
+/** What a drop-down offers: one table, so the popover and the editor menu cannot drift apart. */
 export interface PopupChoice {
   readonly label: string;
   readonly icon?: string;
@@ -46,10 +43,7 @@ function colorExtras(property: string): PopupSection {
   };
 }
 
-/**
- * The sections `popup` opens. `undefined` is a command with no drop-down at
- * all, and yields nothing to draw.
- */
+/** The sections `popup` opens; `undefined` is no drop-down at all and yields nothing. */
 export function popupSections(
   popup: CommandPopup | undefined,
 ): readonly PopupSection[] {
@@ -67,9 +61,8 @@ export function popupSections(
         colorExtras("color"),
       ];
     case "highlight-color": {
-      // The leading six are Obsidian's own, and what renders is the theme
-      // variable, not this hex: showing the hex would promise a color the
-      // editor never paints.
+      // The leading six are Obsidian's own, and the theme variable is what renders:
+      // showing the hex would promise a color the editor never paints.
       const native = (entry: NativeHighlight): PopupChoice => ({
         label: entry.hex,
         swatch: `var(${entry.variable})`,

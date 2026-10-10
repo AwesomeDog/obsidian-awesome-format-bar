@@ -4,9 +4,8 @@ import { renderTable, tableAt, type TableFormat } from "./table";
 
 /** Escaping and padding stay `renderTable`'s job, so output matches a table op. */
 
-/** `null` means one column. Excel copies one column without any tab, so
- * reading "Smith, John" as two fields would silently corrupt it; a real CSV
- * never puts a space beside its comma, and quotes a field that holds one. */
+/** `null` means one column: Excel copies one column without a tab, so "Smith, John" must
+ * not read as two. A real CSV quotes a field with a space rather than padding it. */
 function detectDelimiter(text: string): string | null {
   const tabs = (text.match(/\t/g) ?? []).length;
   if (tabs > 0) return "\t";
@@ -125,8 +124,7 @@ export function tableToText(doc: string, offset: number): Plan {
 }
 
 /** Header row first: its cells name the keys, the rest become one record each.
- * Values stay strings — a `007` or `1.50` turned into a number is data loss,
- * and a Markdown table carries no type to put back. */
+ * Values stay strings — a `007` turned into a number is data loss. */
 export function jsonFromTable(rows: readonly (readonly string[])[]): string {
   const [header, ...body] = rows;
   if (!header) return "[]";
@@ -138,9 +136,8 @@ export function jsonFromTable(rows: readonly (readonly string[])[]): string {
   );
 }
 
-/** A Markdown table allows two things JSON keys do not: a blank header and two
- * columns of the same name. Excel's Power Query fills those in as `Column3` and
- * `Name2`; matching it beats silently dropping one of the columns. */
+/** A Markdown table allows two things JSON keys do not: a blank header and two columns
+ * of one name. Power Query fills those in as `Column3` and `Name2`; so does this. */
 function keysFor(header: readonly string[]): readonly string[] {
   const used = new Map<string, number>();
   return header.map((cell, index) => {
