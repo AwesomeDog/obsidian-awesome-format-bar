@@ -274,6 +274,8 @@ export default {
   "Show commands": "Afficher les commandes",
   "Search…": "Rechercher…",
   "Search characters": "Rechercher des caractères",
+  "Clear search": "Effacer la recherche",
+  Categories: "Catégories",
   "No matches": "Aucun résultat",
   "No Color": "Aucune couleur",
   "More colors…": "Autres couleurs…",

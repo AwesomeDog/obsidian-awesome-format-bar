@@ -48,9 +48,10 @@ export function touches(
   return ranges.some((range) => from < range.to && to > range.from);
 }
 
-/** CodeMirror requires sorted, non-overlapping changes. */
-export function order(changes: Change[]): Change[] {
-  return changes.sort((a, b) => a.from - b.from);
+/** CodeMirror requires sorted, non-overlapping changes. Sorted into a copy:
+ * callers keep building the array they passed in. */
+export function order(changes: readonly Change[]): Change[] {
+  return [...changes].sort((a, b) => a.from - b.from);
 }
 
 /** Not how the editor writes: it lets tests assert on text. */

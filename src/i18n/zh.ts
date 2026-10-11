@@ -270,6 +270,8 @@ export default {
   "Show commands": "显示命令",
   "Search…": "搜索…",
   "Search characters": "搜索字符",
+  "Clear search": "清除搜索",
+  Categories: "分类",
   "No matches": "无匹配项",
   "No Color": "无颜色",
   "More colors…": "其他颜色…",

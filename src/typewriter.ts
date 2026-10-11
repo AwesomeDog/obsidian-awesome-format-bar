@@ -66,6 +66,8 @@ class Typewriter {
   /** Room above and below, so the first and last line still reach the middle;
    * the height comes from a measure: `update()` runs before the DOM is resynced. */
   private center(): void {
+    // The window the editor lives in: a pop-out has one of its own.
+    const win = this.view.dom.ownerDocument.defaultView ?? window;
     this.view.requestMeasure({
       read: (view) => ({
         offset: Math.round(view.dom.clientHeight * OFFSET_RATIO),
@@ -74,7 +76,7 @@ class Typewriter {
       write: ({ offset, head }, view) => {
         if (!this.alive) return;
         view.contentDOM.style.paddingBlock = `${offset}px`;
-        window.requestAnimationFrame(() => {
+        win.requestAnimationFrame(() => {
           if (!this.alive) return;
           view.dispatch({
             effects: EditorView.scrollIntoView(head, {

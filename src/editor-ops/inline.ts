@@ -349,8 +349,14 @@ export interface InlineTag {
   readonly raw: string;
 }
 
-const INLINE_TAG = /<(\/?)(span|u|sub|sup)\b[^>]*>/gi;
+const INLINE_TAG = /<(\/?)(span|u|sub|sup)\b[^>]*>/i;
 const SPAN_STYLE = /style="([^"]*)"/i;
+
+/** One instance per walk: both below drive `lastIndex`, so neither may move
+ * the other's. */
+function tagPattern(): RegExp {
+  return new RegExp(INLINE_TAG, "gi");
+}
 
 function tagOf(match: RegExpMatchArray): InlineTag {
   const raw = match[0] ?? "";
@@ -368,15 +374,14 @@ function tagOf(match: RegExpMatchArray): InlineTag {
 
 /** Every one of the four in `doc`, in document order. */
 export function inlineTags(doc: string): InlineTag[] {
-  // `matchAll` copies `lastIndex`, so it is set before the walk, not left over.
-  INLINE_TAG.lastIndex = 0;
-  return [...doc.matchAll(INLINE_TAG)].map(tagOf);
+  return [...doc.matchAll(tagPattern())].map(tagOf);
 }
 
 /** The one starting exactly at `at`, or `null` when none does. */
 export function inlineTagAt(doc: string, at: number): InlineTag | null {
-  INLINE_TAG.lastIndex = at;
-  const match = INLINE_TAG.exec(doc);
+  const pattern = tagPattern();
+  pattern.lastIndex = at;
+  const match = pattern.exec(doc);
   if (!match || match.index !== at) return null;
   return tagOf(match);
 }

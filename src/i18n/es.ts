@@ -273,6 +273,8 @@ export default {
   "Show commands": "Mostrar comandos",
   "Search…": "Buscar…",
   "Search characters": "Buscar caracteres",
+  "Clear search": "Borrar búsqueda",
+  Categories: "Categorías",
   "No matches": "Sin coincidencias",
   "No Color": "Sin color",
   "More colors…": "Más colores…",

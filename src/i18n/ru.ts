@@ -273,6 +273,8 @@ export default {
   "Show commands": "Показать команды",
   "Search…": "Поиск…",
   "Search characters": "Поиск символов",
+  "Clear search": "Очистить поиск",
+  Categories: "Категории",
   "No matches": "Ничего не найдено",
   "No Color": "Нет цвета",
   "More colors…": "Другие цвета…",

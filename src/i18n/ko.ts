@@ -271,6 +271,8 @@ export default {
   "Show commands": "명령 표시",
   "Search…": "검색…",
   "Search characters": "문자 검색",
+  "Clear search": "검색 지우기",
+  Categories: "카테고리",
   "No matches": "일치하는 항목 없음",
   "No Color": "색 없음",
   "More colors…": "다른 색…",

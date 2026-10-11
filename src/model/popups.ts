@@ -104,7 +104,7 @@ export function popupSections(
     // Everything else that is a drop-down at all: one item per command listed
     // under it. Nothing here names a pop-up, so a new one needs no case.
     default: {
-      const ids = DROPDOWN_ITEMS[popup ?? ""] ?? [];
+      const ids = popup ? (DROPDOWN_ITEMS[popup] ?? []) : [];
       if (ids.length === 0) return [];
       return [
         {

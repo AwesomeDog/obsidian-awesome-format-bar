@@ -272,6 +272,8 @@ export default {
   "Show commands": "コマンドを表示",
   "Search…": "検索…",
   "Search characters": "文字を検索",
+  "Clear search": "検索をクリア",
+  Categories: "カテゴリ",
   "No matches": "該当する項目はありません",
   "No Color": "色なし",
   "More colors…": "その他の色…",

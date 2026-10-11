@@ -57,6 +57,8 @@ export async function openCharPanel(
     },
   );
 
+  // The window the panel lives in: a pop-out has one of its own.
+  const win = layer.el.ownerDocument.defaultView ?? window;
   layer.el.addClass("is-char-panel");
   layer.el.setAttr("tabindex", "-1");
   const usage = host.charUsage();
@@ -80,7 +82,7 @@ export async function openCharPanel(
 
   const clearBtn = searchWrapper.createEl("button", {
     attr: {
-      "aria-label": "Clear search",
+      "aria-label": t("Clear search"),
       tabindex: "-1",
       type: "button",
     },
@@ -96,7 +98,7 @@ export async function openCharPanel(
 
   // 3. Category Navigation (Single-row horizontal scrollable chips)
   const categoryNavEl = layer.el.createDiv({
-    attr: { "aria-label": "Categories", role: "tablist" },
+    attr: { "aria-label": t("Categories"), role: "tablist" },
     cls: "char-category-nav",
   });
 
@@ -134,7 +136,7 @@ export async function openCharPanel(
     statusOverride?: string,
   ): void {
     if (statusTimer) {
-      window.clearTimeout(statusTimer);
+      win.clearTimeout(statusTimer);
       statusTimer = null;
     }
 
@@ -153,7 +155,7 @@ export async function openCharPanel(
     }
 
     if (statusOverride) {
-      statusTimer = window.setTimeout(() => {
+      statusTimer = win.setTimeout(() => {
         updatePreview(lastPicked);
       }, 1000);
     }
@@ -201,7 +203,7 @@ export async function openCharPanel(
 
     if (cell) {
       cell.addClass("is-inserted");
-      window.setTimeout(() => cell.removeClass("is-inserted"), 250);
+      win.setTimeout(() => cell.removeClass("is-inserted"), 250);
     }
 
     updatePreview(candidate, "Inserted");
@@ -278,7 +280,7 @@ export async function openCharPanel(
         });
 
         if (isCatActive) {
-          window.requestAnimationFrame(() => {
+          win.requestAnimationFrame(() => {
             chip.scrollIntoView({ block: "nearest", inline: "nearest" });
           });
         }

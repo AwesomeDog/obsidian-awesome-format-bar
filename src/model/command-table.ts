@@ -1,4 +1,4 @@
-import type { CommandSpec } from "./types";
+import type { CommandPopup, CommandSpec } from "./types";
 
 /** Adding a command starts here; everything else reads it through `commandById`. */
 export const COMMANDS = [
@@ -1247,8 +1247,11 @@ export const COMMANDS = [
 
 export type CommandId = (typeof COMMANDS)[number]["id"];
 
-/** Drop-down items: no Ribbon group lists them, but each has a palette entry. */
-export const DROPDOWN_ITEMS: Readonly<Record<string, readonly CommandId[]>> = {
+/** Drop-down items: no Ribbon group lists them, but each has a palette entry.
+ * Keyed by `CommandPopup`, so a new pop-up that forgets its items is a type error. */
+export const DROPDOWN_ITEMS: Readonly<
+  Partial<Record<CommandPopup, readonly CommandId[]>>
+> = {
   callout: [
     "callout-note",
     "callout-abstract",
