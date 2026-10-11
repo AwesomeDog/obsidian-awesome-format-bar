@@ -159,6 +159,23 @@ export class ToolbarSurface {
     this.refresh();
   }
 
+  /** Pinned entries, grouped and resolved to the specs their commands name.
+   * Rebuilt on every open: a pinned command's plugin may have gone since. */
+  private pinnedGroups(): readonly {
+    label: string;
+    specs: readonly CommandSpec[];
+  }[] {
+    const byCommand = new Map(
+      this.host.pinnedSpecs().map((spec) => [spec.registeredCommandId, spec]),
+    );
+    return pinnedGroups(this.host.pinnedCommands()).map((group) => ({
+      label: pinnedGroupLabel(group.name),
+      specs: group.commands
+        .map((entry) => byCommand.get(entry.commandId))
+        .filter((spec): spec is CommandSpec => Boolean(spec)),
+    }));
+  }
+
   private renderPinned(panel: HTMLElement): void {
     const actions = panel.createDiv({ cls: "pinned-actions" });
     const edit = actions.createEl("button", {
@@ -169,26 +186,17 @@ export class ToolbarSurface {
     setTooltip(edit, t("Manage Pinned"));
     edit.addEventListener("click", () => this.host.editPinned());
 
-    const specs = this.host.pinnedSpecs();
-    const byCommand = new Map(
-      specs.map((spec) => [spec.registeredCommandId, spec] as const),
-    );
-    const groups = pinnedGroups(this.host.pinnedCommands());
+    const groups = this.pinnedGroups();
     if (groups.length === 0) {
       const groupEl = panel.createDiv({ cls: "group" });
       groupEl.createDiv({ cls: "group-empty", text: t(PINNED_EMPTY) });
     }
-    for (const group of groups) {
+    for (const { label, specs } of groups) {
       const groupEl = panel.createDiv({ cls: "group" });
       const row = groupEl.createDiv({ cls: "group-buttons" });
-      for (const entry of group.commands) {
-        const spec = byCommand.get(entry.commandId);
-        if (spec) this.buttons.set(createButton(row, spec, this.host), spec);
-      }
-      groupEl.createDiv({
-        cls: "group-name",
-        text: pinnedGroupLabel(group.name),
-      });
+      for (const spec of specs)
+        this.buttons.set(createButton(row, spec, this.host), spec);
+      groupEl.createDiv({ cls: "group-name", text: label });
     }
     this.refresh();
   }
@@ -370,23 +378,15 @@ export class ToolbarSurface {
       }
     }
 
-    const specsByCommand = new Map(
-      this.host
-        .pinnedSpecs()
-        .map((spec) => [spec.registeredCommandId, spec] as const),
-    );
-    for (const group of pinnedGroups(this.host.pinnedCommands())) {
-      const items = group.commands
-        .map((entry) => specsByCommand.get(entry.commandId))
-        .filter((spec): spec is CommandSpec => Boolean(spec))
-        .map((spec) => ({ ...toItem(spec), disabled: !state.isEnabled(spec) }));
+    for (const { label, specs } of this.pinnedGroups()) {
+      const items = specs.map((spec) => ({
+        ...toItem(spec),
+        disabled: !state.isEnabled(spec),
+      }));
       if (items.length)
         sections.push({
           items,
-          title: t("{tab} · {group}", {
-            tab: PINNED_TAB.name,
-            group: pinnedGroupLabel(group.name),
-          }),
+          title: t("{tab} · {group}", { tab: PINNED_TAB.name, group: label }),
         });
     }
 

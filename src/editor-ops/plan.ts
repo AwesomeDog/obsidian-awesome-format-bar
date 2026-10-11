@@ -54,6 +54,22 @@ export function order(changes: readonly Change[]): Change[] {
   return [...changes].sort((a, b) => a.from - b.from);
 }
 
+/** One change per range `transform` moved. Shared by every command that rewrites
+ * the selected text and leaves the rest of the document alone. */
+export function transformRanges(
+  doc: string,
+  ranges: readonly Range[],
+  transform: (text: string) => string,
+): Plan {
+  const changes: Change[] = [];
+  for (const range of normalizeRanges(ranges)) {
+    const source = doc.slice(range.from, range.to);
+    const text = transform(source);
+    if (text !== source) changes.push({ from: range.from, to: range.to, text });
+  }
+  return { changes: order(changes) };
+}
+
 /** Not how the editor writes: it lets tests assert on text. */
 export function applyChanges(text: string, changes: readonly Change[]): string {
   let out = "";

@@ -1,8 +1,7 @@
 import { CJK, fenceMask, Lines } from "./lines";
 import {
   normalizeRanges,
-  order,
-  type Change,
+  transformRanges,
   type Plan,
   type Range,
 } from "./plan";
@@ -52,20 +51,6 @@ function mapEditable(
   );
 }
 
-function planRanges(
-  doc: string,
-  ranges: readonly Range[],
-  transform: (text: string) => string,
-): Plan {
-  const changes: Change[] = [];
-  for (const range of normalizeRanges(ranges)) {
-    const source = doc.slice(range.from, range.to);
-    const text = transform(source);
-    if (text !== source) changes.push({ from: range.from, to: range.to, text });
-  }
-  return { changes: order(changes) };
-}
-
 function scope(doc: string, ranges: readonly Range[]): Range[] {
   const selected = normalizeRanges(ranges).filter(
     (range) => range.from !== range.to,
@@ -74,7 +59,7 @@ function scope(doc: string, ranges: readonly Range[]): Range[] {
 }
 
 export function smartPunctuation(doc: string, ranges: readonly Range[]): Plan {
-  return planRanges(doc, scope(doc, ranges), (text) =>
+  return transformRanges(doc, scope(doc, ranges), (text) =>
     mapEditable(text, (part) => {
       // Outside the URL walk, so a URL never resets which quote is opening.
       let opening = true;
@@ -100,7 +85,7 @@ export function cjkSpacing(doc: string, ranges: readonly Range[]): Plan {
   // `CJK.source` already is a character class, brackets included.
   const cjk = CJK.source;
   const latin = `[A-Za-z0-9]`;
-  return planRanges(doc, scope(doc, ranges), (text) =>
+  return transformRanges(doc, scope(doc, ranges), (text) =>
     mapEditable(text, (part) =>
       part
         .replace(new RegExp(`(${cjk})[ ]*(${latin})`, "gu"), "$1 $2")
@@ -186,5 +171,5 @@ export function cleanUp(
     "bullet-style": normalizeBullets,
     "invisible-characters": dropInvisible,
   };
-  return planRanges(doc, scope(doc, ranges), transforms[kind]);
+  return transformRanges(doc, scope(doc, ranges), transforms[kind]);
 }

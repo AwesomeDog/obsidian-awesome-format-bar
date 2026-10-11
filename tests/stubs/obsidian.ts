@@ -6,3 +6,13 @@ export class PluginSettingTab {
     public plugin: unknown,
   ) {}
 }
+
+export class Notice {
+  constructor(public message: string) {}
+}
+
+export const Platform = {
+  isDesktopApp: true,
+  isMobileApp: false,
+  isMobile: false,
+};

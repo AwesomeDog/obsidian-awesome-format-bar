@@ -36,6 +36,19 @@ export function flattenPinnedGroups(
   return groups.flatMap((group) => [...group.commands]);
 }
 
+/** A copy of that view the moves below can splice: it is not the stored data. */
+interface EditableGroup {
+  name: string;
+  commands: PinnedCommand[];
+}
+
+function editableGroups(pinned: readonly PinnedCommand[]): EditableGroup[] {
+  return pinnedGroups(pinned).map((group) => ({
+    name: group.name,
+    commands: [...group.commands],
+  }));
+}
+
 function groupValue(name: string): string | undefined {
   const trimmed = name.trim();
   return trimmed === "" || trimmed === DEFAULT_PIN_GROUP ? undefined : trimmed;
@@ -48,9 +61,9 @@ export function movePinnedToGroup(
 ): PinnedCommand[] {
   const entry = pinned.find((candidate) => candidate.commandId === commandId);
   if (!entry) return [...pinned];
-  const groups = pinnedGroups(pinned).map((group) => ({
-    name: group.name,
-    commands: [...group.commands].filter(
+  const groups = editableGroups(pinned).map((group) => ({
+    ...group,
+    commands: group.commands.filter(
       (candidate) => candidate.commandId !== commandId,
     ),
   }));
@@ -83,10 +96,7 @@ export function movePinnedGroup(
   from: number,
   to: number,
 ): PinnedCommand[] {
-  const groups = pinnedGroups(pinned).map((group) => ({
-    name: group.name,
-    commands: [...group.commands],
-  }));
+  const groups = editableGroups(pinned);
   const [moved] = groups.splice(from, 1);
   if (!moved) return [...pinned];
   groups.splice(Math.max(0, Math.min(to, groups.length)), 0, moved);
@@ -99,10 +109,7 @@ export function movePinnedWithinGroup(
   from: number,
   to: number,
 ): PinnedCommand[] {
-  const groups = pinnedGroups(pinned).map((group) => ({
-    name: group.name,
-    commands: [...group.commands],
-  }));
+  const groups = editableGroups(pinned);
   const group = groups.find((candidate) => candidate.name === groupName);
   if (!group) return [...pinned];
   const [moved] = group.commands.splice(from, 1);

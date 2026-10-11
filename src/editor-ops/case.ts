@@ -1,10 +1,4 @@
-import {
-  normalizeRanges,
-  order,
-  type Change,
-  type Plan,
-  type Range,
-} from "./plan";
+import { transformRanges, type Plan, type Range } from "./plan";
 
 export type CaseMode =
   | "upper"
@@ -79,13 +73,5 @@ export function changeCase(
   ranges: readonly Range[],
   mode: CaseMode,
 ): Plan {
-  const changes: Change[] = [];
-  for (const range of normalizeRanges(ranges)) {
-    if (range.from === range.to) continue;
-    const source = doc.slice(range.from, range.to);
-    const next = convertCase(source, mode);
-    if (next !== source)
-      changes.push({ from: range.from, to: range.to, text: next });
-  }
-  return { changes: order(changes) };
+  return transformRanges(doc, ranges, (text) => convertCase(text, mode));
 }

@@ -122,14 +122,24 @@ export function normalizeSettings(raw: unknown): Settings {
   };
 }
 
+/** The toggles in force now, or `null` when mobile is off: nothing shows there. */
+function visibilityFor(
+  settings: Settings,
+  isMobile: boolean,
+): ToolbarVisibility | null {
+  if (isMobile && !settings.enableOnMobile) return null;
+  return isMobile ? settings.mobile : settings.desktop;
+}
+
 /** Which toolbar positions should exist now. Never mutates stored settings. */
 export function enabledToolbarPositions(
   settings: Settings,
   isMobile: boolean,
 ): ToolbarPosition[] {
-  if (isMobile && !settings.enableOnMobile) return [];
-  const visibility = isMobile ? settings.mobile : settings.desktop;
-  return TOOLBAR_POSITIONS.filter((position) => visibility[position]);
+  const visibility = visibilityFor(settings, isMobile);
+  return visibility
+    ? TOOLBAR_POSITIONS.filter((position) => visibility[position])
+    : [];
 }
 
 /** Same master switch: mobile off means the editor menu goes with the bars. */
@@ -137,7 +147,5 @@ export function editorMenuEnabled(
   settings: Settings,
   isMobile: boolean,
 ): boolean {
-  if (isMobile && !settings.enableOnMobile) return false;
-  const visibility = isMobile ? settings.mobile : settings.desktop;
-  return visibility.editorMenu;
+  return visibilityFor(settings, isMobile)?.editorMenu ?? false;
 }

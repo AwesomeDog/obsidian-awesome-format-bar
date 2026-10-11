@@ -213,13 +213,18 @@ export default class AwesomeFormatBarPlugin extends Plugin {
 
   async saveSettings(): Promise<void> {
     await this.saveData(this.settings);
-    for (const doc of this.boundDocuments.keys()) this.markSortable(doc);
+    this.markSortable();
     await this.refreshToolbars();
   }
 
+  /** Every flag below is CSS on <body>, so it has to reach every window we bound. */
+  private markBodyClass(cls: string, on: boolean): void {
+    for (const doc of this.boundDocuments.keys()) doc.body.toggleClass(cls, on);
+  }
+
   /** The arrow is CSS, so the setting reaches it as a body class. */
-  private markSortable(doc: Document): void {
-    doc.body.toggleClass(SORTABLE_CLASS, this.settings.sortTableOnHeaderClick);
+  private markSortable(): void {
+    this.markBodyClass(SORTABLE_CLASS, this.settings.sortTableOnHeaderClick);
   }
 
   /** Read once per editor: a toggle reaches it through `updateOptions()`. */
@@ -293,7 +298,7 @@ export default class AwesomeFormatBarPlugin extends Plugin {
       if (this.settings.sortTableOnHeaderClick) sortTableOnHeaderClick(evt);
     };
     this.registerDomEvent(doc, "click", onClick, { signal });
-    this.markSortable(doc);
+    this.markSortable();
     // A window opened mid-stroke: the brush has to paint there too.
     this.markPainter();
     if (this.painter) this.listenForPaint();
@@ -678,9 +683,7 @@ export default class AwesomeFormatBarPlugin extends Plugin {
 
   /** The crosshair is CSS, so the flag has to reach every window's body. */
   private markPainter(): void {
-    const armed = this.painter !== null;
-    for (const doc of this.boundDocuments.keys())
-      doc.body.toggleClass(PAINTER_CLASS, armed);
+    this.markBodyClass(PAINTER_CLASS, this.painter !== null);
   }
 
   /** One transaction: a multi-cursor paint is still a single undo. */
