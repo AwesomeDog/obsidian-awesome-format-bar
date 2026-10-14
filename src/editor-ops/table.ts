@@ -349,11 +349,7 @@ function insertRowAt(
   return withTable(doc, offset, NO_CHANGE, ({ cell, columns, table }) => {
     const row = at(cell.row);
     const plan = edit(table, format, insertAt(table.rows, row, blank(columns)));
-    const change = plan.changes[0];
-    // Rendered line 0 is the header and line 1 the rule, so row `row` is `row + 1`.
-    if (!change) return NO_CHANGE;
-    const caret = change.from + cellOffset(change.text, row + 1, 0);
-    return { changes: plan.changes, select: { from: caret, to: caret } };
+    return withCaretAt(plan, row + 1, 0);
   });
 }
 
@@ -628,17 +624,14 @@ export function transposeTable(
       { length: table.rows.length },
       () => "none" as const,
     );
-    const plan = edit(table, format, rows, align);
-    const change = plan.changes[0];
-    if (!change) return NO_CHANGE;
-
     // Keep the caret in the corresponding logical cell: (row, column) -> (column, row).
     const targetRow = Math.min(cell.column, rows.length - 1);
     const targetColumn = Math.min(cell.row, table.rows.length - 1);
-    const renderedLine = targetRow === 0 ? 0 : targetRow + 1;
-    const caret =
-      change.from + cellOffset(change.text, renderedLine, targetColumn);
-    return { changes: plan.changes, select: { from: caret, to: caret } };
+    return withCaretAt(
+      edit(table, format, rows, align),
+      targetRow === 0 ? 0 : targetRow + 1,
+      targetColumn,
+    );
   });
 }
 
@@ -662,6 +655,14 @@ function cellOffset(rendered: string, line: number, column: number): number {
   return before + target.length;
 }
 
+/** `plan` with a collapsed caret in the `column` cell of rendered `line`. */
+function withCaretAt(plan: Plan, line: number, column: number): Plan {
+  const change = plan.changes[0];
+  if (!change) return plan;
+  const caret = change.from + cellOffset(change.text, line, column);
+  return { changes: plan.changes, select: { from: caret, to: caret } };
+}
+
 /** `null` outside a table, so the caller lets Enter through. */
 export function planTableEnter(
   doc: string,
@@ -672,13 +673,7 @@ export function planTableEnter(
     const rows = [...table.rows];
     if (cell.row >= rows.length - 1) rows.push(blank(columns));
 
-    const plan = edit(table, format, rows);
-    const change = plan.changes[0];
-    if (!change) return null;
-    // Rendered line 0 is the header and line 1 the rule, so row `i` is `i + 1`.
-    const caret =
-      change.from + cellOffset(change.text, cell.row + 2, cell.column);
-    return { changes: plan.changes, select: { from: caret, to: caret } };
+    return withCaretAt(edit(table, format, rows), cell.row + 2, cell.column);
   });
 }
 
@@ -709,22 +704,19 @@ export function planTableTab(
     }
 
     const plan = edit(table, format, rows, align);
-    const change = plan.changes[0];
-    if (!change) return null;
     const renderedLine = row === 0 ? 0 : row + 1;
     const value = rows[row]?.[column] ?? "";
-    const caret = change.from + cellOffset(change.text, renderedLine, column);
-    if (value === "")
-      return { changes: plan.changes, select: { from: caret, to: caret } };
+    if (value === "") return withCaretAt(plan, renderedLine, column);
 
+    const change = plan.changes[0];
+    if (!change) return null;
     const lines = change.text.split("\n");
     const before = lineOffset(lines, renderedLine);
     const raw = escapeCell(value);
     const lineText = lines[renderedLine] ?? "";
-    const start = Math.max(0, caret - change.from - before);
+    const start = cellOffset(change.text, renderedLine, column) - before;
     const content = lineText.indexOf(raw, start);
-    if (content < 0)
-      return { changes: plan.changes, select: { from: caret, to: caret } };
+    if (content < 0) return withCaretAt(plan, renderedLine, column);
     return {
       changes: plan.changes,
       select: {
