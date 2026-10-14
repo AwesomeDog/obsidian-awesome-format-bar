@@ -248,6 +248,9 @@ Nein. Fett, Überschriften, Listen, Links, Tabellen, Callouts, Codeblöcke und F
 **Was genau wird in meine Notizen geschrieben?**  
 Standard-Markdown und Obsidian-Markdown. Sechs der 16 Hervorhebungsfarben nutzen Obsidians eigene Syntax für farbige Hervorhebungen und bleiben damit reines Markdown. Nur dort, wo Markdown keine Syntax hat — Unterstreichen, Hochstellen, Tiefstellen, Absatzausrichtung, Schriftfarbe, die übrigen zehn Hervorhebungsfarben, Schriftart und Schriftgröße, Initial — schreibt das Plugin wenige, standardkonforme Inline-HTML-Tags, die Obsidian nativ darstellt.
 
+**Sieht eine gewählte Schrift auf einem anderen Gerät genauso aus?**  
+Die fünf generischen Familien schon — sie werden auf jeder Maschine aufgelöst. Eine benannte Schrift erscheint nur dort, wo sie installiert ist; deshalb wird jede mit einer Rückfallsvariante geschrieben: Auf einer Maschine ohne sie bleibt die Notiz eine Serifen-, eine serifenlose oder eine nichtproportionale Schrift. Auf dem Desktop listet das Drop-down außerdem die Schriften des eigenen Rechners und graut die aus, die er nicht hat.  
+
 **Kann ich meine Tastenkürzel weiter verwenden?**  
 Ja. 172 der 190 Befehle erscheinen in der Befehlspalette und lassen sich an ein beliebiges Tastenkürzel binden.
 

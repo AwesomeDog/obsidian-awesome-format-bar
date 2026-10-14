@@ -4,7 +4,11 @@ import { registeredCommandName } from "./commands/registered";
 import { commandById } from "./model/command-table";
 import { BUILT_IN_COMMAND_TABS, PINNED_TAB } from "./model/layout";
 import { pinnedGroupLabel, pinnedGroups, pinnedSpecs } from "./model/pinned";
-import { popupSections, type PopupChoice } from "./model/popups";
+import {
+  popupSections,
+  type PopupChoice,
+  type PopupSection,
+} from "./model/popups";
 import type { CommandSpec, PinnedCommand } from "./model/types";
 import { resolveIconName } from "./toolbar/icons";
 
@@ -87,7 +91,10 @@ function addGroup(
 function addCommand(menu: Menu, spec: CommandSpec, build: Build): void {
   // Both open a floating layer of their own, and a menu has no anchor for one.
   if (spec.popup === "character-panel" || spec.popup === "table-grid") return;
-  const choices = choicesFor(spec);
+  const sections = choiceSectionsFor(spec);
+  const choices = sections
+    .flatMap((section) => section.items)
+    .filter((choice) => choice.picker === undefined);
   const runnable = canRun(spec, build.conditions);
 
   menu.addItem((item) => {
@@ -101,7 +108,16 @@ function addCommand(menu: Menu, spec: CommandSpec, build: Build): void {
       return;
     }
     const submenu = item.setSubmenu();
-    for (const choice of choices) addChoice(submenu, choice, spec, build);
+    for (const section of sections) {
+      const items = section.items.filter(
+        (choice) => choice.picker === undefined,
+      );
+      if (items.length === 0) continue;
+      const title = section.title;
+      if (title)
+        submenu.addItem((caption) => caption.setTitle(title).setIsLabel(true));
+      for (const choice of items) addChoice(submenu, choice, spec, build);
+    }
   });
 }
 
@@ -113,17 +129,22 @@ function addChoice(
 ): void {
   const target = choice.command ?? spec;
   menu.addItem((item) => {
-    item.setTitle(
-      choice.swatch === undefined
-        ? choice.label
-        : swatchTitle(choice.label, choice.swatch),
-    );
+    item.setTitle(choiceTitle(choice));
     item.setIcon(
       choice.icon === undefined ? null : resolveIconName(choice.icon),
     );
-    if (!canRun(target, build.conditions)) item.setDisabled(true);
+    if (choice.disabled === true || !canRun(target, build.conditions))
+      item.setDisabled(true);
     else item.onClick(() => build.execute(target, choice.value));
   });
+}
+
+function choiceTitle(choice: PopupChoice): string | DocumentFragment {
+  if (choice.preview !== undefined)
+    return previewTitle(choice.label, choice.preview);
+  return choice.swatch === undefined
+    ? choice.label
+    : swatchTitle(choice.label, choice.swatch);
 }
 
 /** A dot and the hex: `MenuItem` has no swatch of its own. */
@@ -136,9 +157,16 @@ function swatchTitle(label: string, color: string): DocumentFragment {
   });
 }
 
-/** A pop-up button's choices in the popover's order, minus the picker: a menu has no anchor for it. */
-function choicesFor(spec: CommandSpec): readonly PopupChoice[] {
-  return popupSections(spec.popup)
-    .flatMap((section) => section.items)
-    .filter((choice) => choice.picker === undefined);
+function previewTitle(label: string, stack: string): DocumentFragment {
+  return createFragment((fragment) => {
+    const text = createSpan({ text: label });
+    text.style.fontFamily = stack;
+    fragment.append(text);
+  });
+}
+
+/** A pop-up button's choices in the popover's order, minus the picker: a menu has
+ * no anchor for it, and no search box for hundreds of the machine's own fonts. */
+function choiceSectionsFor(spec: CommandSpec): readonly PopupSection[] {
+  return popupSections(spec.popup, { localFonts: { kind: "unsupported" } });
 }

@@ -42,6 +42,7 @@ import {
 } from "./editor-ops/table";
 import { setLanguage, t } from "./i18n/i18n";
 import { COMMANDS, commandById } from "./model/command-table";
+import { loadLocalFonts } from "./model/fonts";
 import {
   DEFAULT_SETTINGS,
   editorMenuEnabled,
@@ -159,6 +160,8 @@ export default class AwesomeFormatBarPlugin extends Plugin {
     addIcon("table-row-delete", TABLE_ROW_DELETE);
     addIcon("table-column-delete", TABLE_COLUMN_DELETE);
     this.registerCommands();
+    // Started early: the drop-down wants the machine's fonts cached.
+    loadLocalFonts();
     this.addSettingTab(new FormatBarSettingTab(this.app, this));
     this.applyEditorExtensions();
     this.registerEditorExtension(this.editorExtensions);

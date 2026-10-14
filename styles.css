@@ -251,6 +251,36 @@
         outline: 2px solid var(--background-modifier-border-focus);
       }
     }
+    /* Shared with the Emoji & Symbols panel; sticky over a list of hundreds. */
+    & .menu-search-wrapper {
+      align-items: center;
+      background: var(--background-modifier-form-field);
+      border: var(--formatbar-border);
+      border-radius: var(--radius-s);
+      block-size: var(--formatbar-search-h);
+      display: flex;
+      flex: 0 0 auto;
+      inset-block-start: 0;
+      padding: 0 var(--size-2-2);
+      position: sticky;
+      z-index: 1;
+    }
+    & .menu-search-icon {
+      color: var(--text-faint);
+      display: inline-flex;
+      margin-inline-end: var(--size-2-1);
+    }
+    & .menu-search-input {
+      background: transparent;
+      border: none;
+      color: var(--text-normal);
+      flex: 1 1 auto;
+      font-size: var(--font-ui-small);
+      padding: var(--size-2-1) 0;
+    }
+    & .menu-item.is-unavailable {
+      color: var(--text-faint);
+    }
     & .table-grid-size {
       color: var(--text-normal);
       padding: var(--size-2-1) var(--size-2-2);
@@ -288,29 +318,6 @@
     overflow: hidden;
     padding: var(--size-4-2);
 
-    & .char-search-wrapper {
-      align-items: center;
-      background: var(--background-modifier-form-field);
-      border: var(--formatbar-border);
-      border-radius: var(--radius-s);
-      block-size: var(--formatbar-search-h);
-      display: flex;
-      flex: 0 0 auto;
-      padding: 0 var(--size-2-2);
-    }
-    & .char-search-icon {
-      color: var(--text-faint);
-      display: inline-flex;
-      margin-inline-end: var(--size-2-1);
-    }
-    & .char-search-input {
-      background: transparent;
-      border: none;
-      color: var(--text-normal);
-      flex: 1 1 auto;
-      font-size: var(--font-ui-small);
-      padding: var(--size-2-1) 0;
-    }
     & .char-source-tabs {
       background: var(--background-modifier-form-field);
       border-radius: var(--radius-s);

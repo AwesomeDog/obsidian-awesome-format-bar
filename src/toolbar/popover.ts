@@ -1,9 +1,12 @@
 import { setTooltip } from "obsidian";
 import Picker from "vanilla-picker/csp";
+import { t } from "../i18n/i18n";
+import { onLocalFonts } from "../model/fonts";
 import { popupSections, type PopupChoice } from "../model/popups";
 import { STANDARD_COLORS } from "../model/palettes";
 import type { CommandSpec } from "../model/types";
-import { openFloatingLayer } from "./floating";
+import { filterSections } from "../model/popups";
+import { openFloatingLayer, type FloatingLayer } from "./floating";
 import type { ToolbarHost } from "./host";
 import { resolveIcon } from "./icons";
 
@@ -18,52 +21,141 @@ export interface PopoverItem {
   readonly label: string;
   readonly icon?: string;
   readonly swatch?: string;
+  /** A CSS font stack: the label is drawn in it. */
+  readonly preview?: string;
+  /** The machine does not have this font. */
+  readonly dim?: boolean;
   readonly disabled?: boolean;
   readonly onChoose: () => void;
 }
+
+interface PopoverLayerOptions {
+  readonly search?: boolean;
+  readonly onDismiss?: () => void;
+  /** Told when the sections change underneath; returns how to stop being told. */
+  readonly watch?: (onChange: () => void) => () => void;
+}
+
+/** What to draw for a search term. A menu without a search box ignores it. */
+type SectionsFor = (query: string) => readonly PopoverSection[];
 
 export function openPopover(
   anchor: HTMLElement,
   sections: readonly PopoverSection[],
   onDismiss?: () => void,
 ): void {
-  const layer = openFloatingLayer(anchor, onDismiss);
+  renderPopover(anchor, () => sections, { onDismiss });
+}
 
-  for (const section of sections) {
-    const sectionEl = layer.el.createDiv({ cls: "menu-section" });
-    if (section.title)
-      sectionEl.createDiv({ cls: "menu-title", text: section.title });
-    // Only the grid needs a wrapper, to hang the column count on.
-    const list = section.grid
-      ? sectionEl.createDiv({ cls: "menu-grid" })
-      : sectionEl;
-    if (section.grid)
-      list.style.setProperty("--formatbar-menu-columns", String(section.grid));
+/** The font drop-down: the same menu with a search box on top. */
+export function openFontPopover(
+  anchor: HTMLElement,
+  sectionsFor: SectionsFor,
+  onDismiss?: () => void,
+): void {
+  renderPopover(anchor, sectionsFor, {
+    onDismiss,
+    search: true,
+    watch: onLocalFonts,
+  });
+}
 
-    for (const item of section.items) {
-      const entry = list.createEl("button", {
-        attr: {
-          "aria-disabled": String(Boolean(item.disabled)),
-          type: "button",
-        },
-        cls: item.swatch ? "swatch" : "menu-item",
-      });
-      entry.disabled = Boolean(item.disabled);
-      if (item.swatch) entry.style.backgroundColor = item.swatch;
-      else {
-        if (item.icon) resolveIcon(entry, item.icon);
-        entry.createSpan({ text: item.label });
-      }
-      setTooltip(entry, item.label);
-      if (!item.disabled)
-        entry.addEventListener("click", () => {
-          layer.close();
-          item.onChoose();
-        });
-    }
+function renderPopover(
+  anchor: HTMLElement,
+  sectionsFor: SectionsFor,
+  options: PopoverLayerOptions,
+): void {
+  // Set once the box exists: Escape clears it before it closes the layer.
+  let clearSearch: (() => boolean) | null = null;
+  let unwatch: (() => void) | null = null;
+  const layer = openFloatingLayer(
+    anchor,
+    options.onDismiss,
+    () => unwatch?.(),
+    () => (clearSearch ? clearSearch() : true),
+  );
+  const searchEl = options.search ? createSearchBox(layer.el) : null;
+  const body = layer.el.createDiv();
+
+  // Redrawn, not pruned: a filter is a new list and drawing one is cheap.
+  const draw = (visible: readonly PopoverSection[]): void => {
+    body.empty();
+    for (const section of visible) addSection(body, section, layer);
+    layer.place();
+  };
+
+  draw(sectionsFor(""));
+
+  if (searchEl) {
+    searchEl.addEventListener("input", () => draw(sectionsFor(searchEl.value)));
+    clearSearch = () => {
+      if (searchEl.value === "") return true;
+      searchEl.value = "";
+      draw(sectionsFor(""));
+      return false;
+    };
+    searchEl.focus();
   }
 
-  layer.place();
+  // The read can land while the menu is open: redraw, or it stays on "reading".
+  if (options.watch)
+    unwatch = options.watch(() => draw(sectionsFor(searchEl?.value ?? "")));
+}
+
+function addSection(
+  parent: HTMLElement,
+  section: PopoverSection,
+  layer: FloatingLayer,
+): void {
+  const sectionEl = parent.createDiv({ cls: "menu-section" });
+  if (section.title)
+    sectionEl.createDiv({ cls: "menu-title", text: section.title });
+  // Only the grid needs a wrapper, to hang the column count on.
+  const list = section.grid
+    ? sectionEl.createDiv({ cls: "menu-grid" })
+    : sectionEl;
+  if (section.grid)
+    list.style.setProperty("--formatbar-menu-columns", String(section.grid));
+
+  for (const item of section.items) {
+    const entry = list.createEl("button", {
+      attr: {
+        "aria-disabled": String(Boolean(item.disabled)),
+        type: "button",
+      },
+      cls: item.swatch ? "swatch" : "menu-item",
+    });
+    entry.disabled = Boolean(item.disabled);
+    if (item.swatch) entry.style.backgroundColor = item.swatch;
+    else {
+      if (item.icon) resolveIcon(entry, item.icon);
+      entry.createSpan({ text: item.label });
+    }
+    if (item.preview) entry.style.fontFamily = item.preview;
+    if (item.dim) entry.addClass("is-unavailable");
+    setTooltip(entry, item.label);
+    if (!item.disabled)
+      entry.addEventListener("click", () => {
+        layer.close();
+        item.onChoose();
+      });
+  }
+}
+
+function createSearchBox(parent: HTMLElement): HTMLInputElement {
+  const wrapper = parent.createDiv({ cls: "menu-search-wrapper" });
+  const icon = wrapper.createSpan({ cls: "menu-search-icon" });
+  resolveIcon(icon, "search");
+  return wrapper.createEl("input", {
+    attr: {
+      "aria-label": t("Search fonts…"),
+      autocomplete: "off",
+      placeholder: t("Search fonts…"),
+      spellcheck: "false",
+      type: "search",
+    },
+    cls: "menu-search-input",
+  });
 }
 
 /** Renders inline in the floating layer rather than in the picker's own popup. */
@@ -119,8 +211,11 @@ function toItem(
         ),
     };
   return {
+    dim: choice.dim,
+    disabled: choice.disabled,
     icon,
     label,
+    preview: choice.preview,
     swatch,
     onChoose: () => host.execute(target, choice.value),
   };
@@ -131,9 +226,11 @@ export function popoverSectionsFor(
   spec: CommandSpec,
   host: ToolbarHost,
   anchor: HTMLElement,
+  query = "",
 ): readonly PopoverSection[] {
-  return popupSections(spec.popup).map((section) => ({
+  return filterSections(popupSections(spec.popup), query).map((section) => ({
     grid: section.grid,
     items: section.items.map((choice) => toItem(spec, host, anchor, choice)),
+    title: section.title,
   }));
 }

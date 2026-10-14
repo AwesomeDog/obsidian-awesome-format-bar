@@ -172,6 +172,16 @@ Both share the same behavior otherwise:
 - No last-used color is remembered; the palette always opens in the same state.
 - Nothing happens without a selection.
 
+### Font Family
+
+A drop-down of named fonts grouped by kind, writing `<span style="font-family:…">`. **Default** clears the property. Nothing happens without a selection.
+
+Groups: **Generic** (Default, then the five CSS generic families), **Serif**, **Sans Serif**, **Monospace**, **Handwriting & Display**, **Chinese**, **Emoji**, and **Local fonts** — every other family the machine reports, desktop only.
+
+Every entry but the generic families carries **one** fallback: the generic family of its kind, which is what each platform resolves to anyway. A typeface going by two names gets one entry per name. The machine's own fonts are the exception: Local Font Access reports no kind, so they are written as a bare name. Names are quoted, since one starting with a digit is invalid CSS unquoted.
+
+On desktop the drop-down reads the machine's fonts and dims those it lacks; a dimmed font stays clickable, and generic families never dim. A read still running shows a placeholder that redraws when it lands; with no API the group is absent. The local list runs to hundreds, so a **search box** filters every group; the editor menu has none and lists the curated fonts only.
+
 ### Emoji & Symbols
 
 One button on **Insert · Symbols** opens a panel of about 2,150 entries in three sources, each split into groups, with one search box over the active source.

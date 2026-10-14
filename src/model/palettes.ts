@@ -129,15 +129,155 @@ export const FONT_SIZES = [
   { label: "3", value: "3em" },
 ] as const;
 
-/** CSS generic families only: a named font renders only where it is installed, and a
- * value must hold no `;`, which `setStyle` splits on — fallbacks take commas. */
-export const FONT_FAMILIES = [
-  { label: "Default", value: "none" },
-  { label: "Serif", value: "serif" },
-  { label: "Sans Serif", value: "sans-serif" },
-  { label: "Monospace", value: "monospace" },
-  { label: "Cursive", value: "cursive" },
-] as const;
+/** One entry of the Font Family drop-down. `stack` is what reaches `font-family`. */
+export interface FontOption {
+  readonly name: string;
+  /** Must hold no `;`, which `setStyle` splits on, and no `"`, which `SPAN_WHOLE`
+   * matches up to — fallbacks take commas, names single quotes. */
+  readonly stack: string;
+}
+
+export interface FontGroup {
+  readonly title: string;
+  readonly fonts: readonly FontOption[];
+  /** Generic families: every machine resolves them, so they never dim. */
+  readonly generic?: boolean;
+}
+
+const NONE: FontOption = { name: "Default", stack: "none" };
+
+const GENERIC: readonly FontOption[] = [
+  NONE,
+  { name: "Serif", stack: "serif" },
+  { name: "Sans Serif", stack: "sans-serif" },
+  { name: "Monospace", stack: "monospace" },
+  { name: "Cursive", stack: "cursive" },
+  { name: "Fantasy", stack: "fantasy" },
+];
+
+/** One named font and one generic family, nothing in between: a longer chain buys
+ * nothing, because the generic family is what each platform resolves to anyway. */
+const named = (name: string, generic: string): FontOption => ({
+  name,
+  stack: `'${name}', ${generic}`,
+});
+
+/** Names are quoted: a family starting with a digit is invalid CSS unquoted. */
+const serif = (name: string): FontOption => named(name, "serif");
+const sans = (name: string): FontOption => named(name, "sans-serif");
+const mono = (name: string): FontOption => named(name, "monospace");
+
+const SERIF: readonly FontOption[] = [
+  "Times New Roman",
+  "Georgia",
+  "Garamond",
+  "Palatino",
+  "Baskerville",
+  "Didot",
+  "Book Antiqua",
+  "Cambria",
+  "Constantia",
+  "Bodoni MT",
+  "Century Schoolbook",
+  "Iowan Old Style",
+  "Charter",
+  "Sitka",
+  "DejaVu Serif",
+  "Liberation Serif",
+  "Noto Serif",
+].map(serif);
+
+const SANS_SERIF: readonly FontOption[] = [
+  "Arial",
+  "Arial Black",
+  "Helvetica",
+  "Helvetica Neue",
+  "Verdana",
+  "Tahoma",
+  "Trebuchet MS",
+  "Segoe UI",
+  "Calibri",
+  "Candara",
+  "Optima",
+  "Futura",
+  "Gill Sans",
+  "Avenir",
+  "Lucida Grande",
+  "DejaVu Sans",
+  "Noto Sans",
+  "Roboto",
+  "Open Sans",
+  "Lato",
+  "Inter",
+  "Ubuntu",
+].map(sans);
+
+const MONOSPACE: readonly FontOption[] = [
+  "Courier New",
+  "Courier",
+  "Consolas",
+  "Menlo",
+  "Monaco",
+  "Andale Mono",
+  "SF Mono",
+  "DejaVu Sans Mono",
+  "Liberation Mono",
+  "Source Code Pro",
+  "JetBrains Mono",
+  "Fira Code",
+  "IBM Plex Mono",
+  "Ubuntu Mono",
+  "Cascadia Mono",
+].map(mono);
+
+const HANDWRITING: readonly FontOption[] = [
+  "Comic Sans MS",
+  "Comic Neue",
+  "Bradley Hand",
+  "Chalkboard",
+  "Brush Script MT",
+  "Lucida Handwriting",
+  "Segoe Script",
+  "Papyrus",
+  "Impact",
+  "Copperplate",
+].map((name) => named(name, name === "Impact" ? "sans-serif" : "cursive"));
+
+/** Each platform's own name for the typeface is an entry of its own. */
+const CHINESE: readonly FontOption[] = [
+  ...[
+    "PingFang SC",
+    "Microsoft YaHei",
+    "Heiti SC",
+    "SimHei",
+    "Source Han Sans SC",
+  ].map(sans),
+  ...["Songti SC", "SimSun", "Kaiti SC", "KaiTi", "Source Han Serif SC"].map(
+    serif,
+  ),
+];
+
+/** The browser reaches the system's emoji font anyway, so one name is enough. */
+const EMOJI: readonly FontOption[] = [
+  "Apple Color Emoji",
+  "Segoe UI Emoji",
+  "Noto Color Emoji",
+].map(sans);
+
+export const FONT_GROUPS: readonly FontGroup[] = [
+  { title: "Generic", fonts: GENERIC, generic: true },
+  { title: "Serif", fonts: SERIF },
+  { title: "Sans Serif", fonts: SANS_SERIF },
+  { title: "Monospace", fonts: MONOSPACE },
+  { title: "Handwriting & Display", fonts: HANDWRITING },
+  { title: "Chinese", fonts: CHINESE },
+  { title: "Emoji", fonts: EMOJI },
+];
+
+/** Every curated font, in the order the drop-down lists them. */
+export const ALL_FONTS: readonly FontOption[] = FONT_GROUPS.flatMap(
+  (group) => group.fonts,
+);
 
 /** Label and mode travel together, so they cannot drift apart. */
 export const CASE_OPTIONS = [

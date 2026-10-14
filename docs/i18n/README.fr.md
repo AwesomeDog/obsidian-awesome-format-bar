@@ -248,6 +248,9 @@ Non. Gras, titres, listes, liens, tableaux, encadrés, blocs de code et formules
 **Qu'est-ce qui est exactement écrit dans mes notes ?**  
 Du Markdown standard et du Markdown saveur Obsidian. Six des 16 couleurs de surlignage utilisent la syntaxe de surlignage coloré propre à Obsidian et restent donc du Markdown pur. Ce n'est que là où le Markdown n'a pas de syntaxe —— souligné, exposant, indice, alignement des paragraphes, couleur du texte, les dix autres couleurs de surlignage, police et taille de police, lettrine —— que le plugin émet quelques balises HTML en ligne standard, qu'Obsidian affiche nativement.
 
+**La police choisie s'affichera-t-elle pareil sur un autre appareil ?**  
+Les cinq familles génériques oui : elles sont résolues sur toutes les machines. Une police nommée ne s'affiche que là où elle est installée ; chacune est donc écrite avec une police de repli : sur une machine qui ne l'a pas, la note reste lue en serif, sans-serif ou monospace. Sur ordinateur, le menu liste aussi les polices installées sur la machine et grise celles qu'elle n'a pas.  
+
 **Puis-je continuer à utiliser mes raccourcis clavier ?**  
 Oui. 172 des 190 commandes apparaissent dans la palette de commandes et peuvent être associées à n'importe quel raccourci.
 

@@ -1,5 +1,5 @@
 /** One floating layer at a time: positioning and dismissal, nothing else. */
-interface FloatingLayer {
+export interface FloatingLayer {
   readonly el: HTMLElement;
   /** Re-measure once the content is in: the rect is empty before that. */
   place(): void;

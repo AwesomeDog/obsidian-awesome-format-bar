@@ -246,6 +246,9 @@ No. Bold, headings, lists, links, tables, callouts, code blocks and math are all
 **What exactly gets written into my notes?**  
 Standard Markdown and Obsidian-flavoured Markdown. Six of the 16 highlight colors use Obsidian's own colored-highlight syntax, so they stay plain Markdown. Only where Markdown has no syntax — underline, superscript, subscript, paragraph alignment, text color, the other ten highlight colors, font family and font size, drop cap — does the plugin emit small, standard inline HTML tags, which Obsidian renders natively.
 
+**Will a font I pick look the same on another device?**  
+The five generic families do — every machine resolves them. A named font renders only where it is installed, so each is written with a fallback: on a machine without it the note still reads as a serif, a sans or a mono. On desktop the drop-down also lists the fonts installed on the machine you are on, and dims those it does not have.  
+
 **Can I keep using my keyboard shortcuts?**  
 Yes. 172 of the 190 commands appear in the command palette and can be bound to any hotkey.
 

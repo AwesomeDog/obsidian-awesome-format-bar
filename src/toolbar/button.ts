@@ -3,7 +3,7 @@ import type { CommandSpec } from "../model/types";
 import type { ToolbarHost } from "./host";
 import { resolveIcon } from "./icons";
 import { openCharPanel } from "./char-panel";
-import { openPopover, popoverSectionsFor } from "./popover";
+import { openFontPopover, openPopover, popoverSectionsFor } from "./popover";
 import { openTableGrid } from "./table-grid";
 
 /** Matches how Obsidian labels its own commands: `Bold (⌘ B)`. */
@@ -11,8 +11,8 @@ function withHotkey(name: string, hotkey: string): string {
   return hotkey ? `${name} (${hotkey})` : name;
 }
 
-/** Where a click goes: the two pop-ups that draw a layer of their own, then the drop-downs,
- * then a command that acts at once — every entry point a button has comes through here. */
+/** Where a click goes: the panels drawing a layer of their own, then the font
+ * drop-down, the other drop-downs, then a command acting at once. */
 export function runCommand(
   anchor: HTMLElement,
   spec: CommandSpec,
@@ -20,6 +20,12 @@ export function runCommand(
 ): void {
   if (spec.popup === "character-panel") void openCharPanel(anchor, spec, host);
   else if (spec.popup === "table-grid") openTableGrid(anchor, spec, host);
+  else if (spec.popup === "font-family")
+    openFontPopover(
+      anchor,
+      (query) => popoverSectionsFor(spec, host, anchor, query),
+      () => host.focusEditor(),
+    );
   else if (spec.popup)
     openPopover(anchor, popoverSectionsFor(spec, host, anchor), () =>
       host.focusEditor(),

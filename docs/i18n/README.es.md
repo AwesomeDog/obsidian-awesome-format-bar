@@ -248,6 +248,9 @@ No. Negrita, títulos, listas, vínculos, tablas, recuadros, bloques de código 
 **¿Qué se escribe exactamente en mis notas?**  
 Markdown estándar y Markdown con sabor a Obsidian. Seis de los 16 colores de resaltado usan la sintaxis de resaltado con color propia de Obsidian, así que siguen siendo Markdown puro. Solo donde Markdown no tiene sintaxis ——subrayado, superíndice, subíndice, alineación de párrafo, color del texto, los otros diez colores de resaltado, fuente y tamaño de fuente, letra capital—— el plugin emite pequeñas etiquetas HTML en línea estándar, que Obsidian renderiza de forma nativa.
 
+**¿Se verá la fuente que elija igual en otro dispositivo?**  
+Las cinco familias genéricas sí: se resuelven en cualquier máquina. Una fuente con nombre solo se muestra donde está instalada, por lo que cada una se escribe con una alternativa: en un equipo que no la tenga, la nota seguirá leyéndose como serif, sans-serif o monoespaciada. En el escritorio el desplegable también lista las fuentes instaladas en el equipo y atenúa las que no tiene.  
+
 **¿Puedo seguir usando mis atajos de teclado?**  
 Sí. 172 de los 190 comandos aparecen en la paleta de comandos y se pueden asociar a cualquier atajo.
 

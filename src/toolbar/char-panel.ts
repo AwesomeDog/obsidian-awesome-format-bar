@@ -65,8 +65,8 @@ export async function openCharPanel(
   pruneUsage(usage);
 
   // 1. Search Box with Icon and Clear Button
-  const searchWrapper = layer.el.createDiv({ cls: "char-search-wrapper" });
-  const searchIconEl = searchWrapper.createSpan({ cls: "char-search-icon" });
+  const searchWrapper = layer.el.createDiv({ cls: "menu-search-wrapper" });
+  const searchIconEl = searchWrapper.createSpan({ cls: "menu-search-icon" });
   resolveIcon(searchIconEl, "search");
 
   const searchEl = searchWrapper.createEl("input", {
@@ -77,7 +77,7 @@ export async function openCharPanel(
       spellcheck: "false",
       type: "search",
     },
-    cls: "char-search-input",
+    cls: "menu-search-input",
   });
 
   const clearBtn = searchWrapper.createEl("button", {
@@ -86,7 +86,7 @@ export async function openCharPanel(
       tabindex: "-1",
       type: "button",
     },
-    cls: "char-search-clear is-hidden",
+    cls: "menu-search-clear is-hidden",
   });
   resolveIcon(clearBtn, "x");
 
