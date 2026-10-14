@@ -332,44 +332,22 @@ export function moveListItem(
   const index = siblings.indexOf(target);
   if (index < 0) return NO_CHANGE;
 
-  let moved = false;
-  if (direction < 0) {
-    const previous = siblings[index - 1];
-    if (previous) {
-      siblings[index - 1] = target;
-      siblings[index] = previous;
-      moved = true;
-    } else if (target.parent) {
-      const parentSiblings = target.parent.parent?.children ?? roots;
-      const parentIndex = parentSiblings.indexOf(target.parent);
-      const previousParent = parentSiblings[parentIndex - 1];
-      if (previousParent) {
-        siblings.splice(index, 1);
-        previousParent.children.push(target);
-        target.parent = previousParent;
-        moved = true;
-      }
-    }
+  const neighbor = siblings[index + direction];
+  if (neighbor) {
+    siblings[index + direction] = target;
+    siblings[index] = neighbor;
   } else {
-    const next = siblings[index + 1];
-    if (next) {
-      siblings[index + 1] = target;
-      siblings[index] = next;
-      moved = true;
-    } else if (target.parent) {
-      const parentSiblings = target.parent.parent?.children ?? roots;
-      const parentIndex = parentSiblings.indexOf(target.parent);
-      const nextParent = parentSiblings[parentIndex + 1];
-      if (nextParent) {
-        siblings.splice(index, 1);
-        nextParent.children.unshift(target);
-        target.parent = nextParent;
-        moved = true;
-      }
-    }
+    const parent = target.parent;
+    if (!parent) return NO_CHANGE;
+    // Out of siblings: leave the parent and join the uncle on that side.
+    const uncles = parent.parent?.children ?? roots;
+    const uncle = uncles[uncles.indexOf(parent) + direction];
+    if (!uncle) return NO_CHANGE;
+    siblings.splice(index, 1);
+    if (direction < 0) uncle.children.push(target);
+    else uncle.children.unshift(target);
+    target.parent = uncle;
   }
-
-  if (!moved) return NO_CHANGE;
 
   const flattened = flattenOutline(roots, target);
   const result = renumber(flattened.lines.join("\n"));
