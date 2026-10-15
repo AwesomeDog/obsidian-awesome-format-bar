@@ -134,6 +134,19 @@ export class ToolbarSurface {
     setTooltip(caret, label);
   }
 
+  /** One group: its buttons, then its caption under them. */
+  private renderGroup(
+    panel: HTMLElement,
+    label: string,
+    specs: readonly CommandSpec[],
+  ): void {
+    const groupEl = panel.createDiv({ cls: "group" });
+    const row = groupEl.createDiv({ cls: "group-buttons" });
+    for (const spec of specs)
+      this.buttons.set(createButton(row, spec, this.host), spec);
+    groupEl.createDiv({ cls: "group-name", text: label });
+  }
+
   private renderGroups(panel: HTMLElement): void {
     panel.empty();
     if (this.activeTab === PINNED_TAB.id) {
@@ -144,18 +157,8 @@ export class ToolbarSurface {
       BUILT_IN_COMMAND_TABS.find(
         (candidate) => candidate.id === this.activeTab,
       ) ?? BUILT_IN_COMMAND_TABS[0];
-    for (const group of tab.groups as readonly RibbonGroup[]) {
-      const groupEl = panel.createDiv({ cls: "group" });
-      const row = groupEl.createDiv({ cls: "group-buttons" });
-      for (const id of group.commands) {
-        const spec = commandById(id);
-        this.buttons.set(createButton(row, spec, this.host), spec);
-      }
-      groupEl.createDiv({
-        cls: "group-name",
-        text: group.name,
-      });
-    }
+    for (const group of tab.groups as readonly RibbonGroup[])
+      this.renderGroup(panel, group.name, group.commands.map(commandById));
     this.refresh();
   }
 
@@ -191,13 +194,8 @@ export class ToolbarSurface {
       const groupEl = panel.createDiv({ cls: "group" });
       groupEl.createDiv({ cls: "group-empty", text: t(PINNED_EMPTY) });
     }
-    for (const { label, specs } of groups) {
-      const groupEl = panel.createDiv({ cls: "group" });
-      const row = groupEl.createDiv({ cls: "group-buttons" });
-      for (const spec of specs)
-        this.buttons.set(createButton(row, spec, this.host), spec);
-      groupEl.createDiv({ cls: "group-name", text: label });
-    }
+    for (const { label, specs } of groups)
+      this.renderGroup(panel, label, specs);
     this.refresh();
   }
 
