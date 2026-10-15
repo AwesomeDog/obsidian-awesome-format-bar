@@ -9,6 +9,7 @@ import { filterSections } from "../model/popups";
 import { openFloatingLayer, type FloatingLayer } from "./floating";
 import type { ToolbarHost } from "./host";
 import { resolveIcon } from "./icons";
+import { createSearchBox, type SearchBox } from "./search-box";
 
 /** Sections of the plain menu: the overflow list, both color palettes, and case. */
 export interface PopoverSection {
@@ -65,41 +66,42 @@ function renderPopover(
   sectionsFor: SectionsFor,
   options: PopoverLayerOptions,
 ): void {
-  // Set once the box exists: Escape clears it before it closes the layer.
-  let clearSearch: (() => boolean) | null = null;
+  let query = "";
+  let search: SearchBox | null = null;
   let unwatch: (() => void) | null = null;
   const layer = openFloatingLayer(
     anchor,
     options.onDismiss,
     () => unwatch?.(),
-    () => (clearSearch ? clearSearch() : true),
+    () => (search ? search.dismiss() : true),
   );
-  const searchEl = options.search ? createSearchBox(layer.el) : null;
+  // Before the body: the box is sticky at the top of the scrolling menu.
+  if (options.search) {
+    search = createSearchBox(layer.el, {
+      label: t("Search fonts…"),
+      onChange: (value) => {
+        query = value;
+        draw(sectionsFor(value));
+      },
+      placeholder: t("Search fonts…"),
+    });
+  }
+
   const body = layer.el.createDiv();
 
   // Redrawn, not pruned: a filter is a new list and drawing one is cheap.
-  const draw = (visible: readonly PopoverSection[]): void => {
+  // A declaration, not a const: the search box above draws through it.
+  function draw(visible: readonly PopoverSection[]): void {
     body.empty();
     for (const section of visible) addSection(body, section, layer);
     layer.place();
-  };
-
-  draw(sectionsFor(""));
-
-  if (searchEl) {
-    searchEl.addEventListener("input", () => draw(sectionsFor(searchEl.value)));
-    clearSearch = () => {
-      if (searchEl.value === "") return true;
-      searchEl.value = "";
-      draw(sectionsFor(""));
-      return false;
-    };
-    searchEl.focus();
   }
 
+  draw(sectionsFor(query));
+  search?.el.focus();
+
   // The read can land while the menu is open: redraw, or it stays on "reading".
-  if (options.watch)
-    unwatch = options.watch(() => draw(sectionsFor(searchEl?.value ?? "")));
+  if (options.watch) unwatch = options.watch(() => draw(sectionsFor(query)));
 }
 
 function addSection(
@@ -140,22 +142,6 @@ function addSection(
         item.onChoose();
       });
   }
-}
-
-function createSearchBox(parent: HTMLElement): HTMLInputElement {
-  const wrapper = parent.createDiv({ cls: "menu-search-wrapper" });
-  const icon = wrapper.createSpan({ cls: "menu-search-icon" });
-  resolveIcon(icon, "search");
-  return wrapper.createEl("input", {
-    attr: {
-      "aria-label": t("Search fonts…"),
-      autocomplete: "off",
-      placeholder: t("Search fonts…"),
-      spellcheck: "false",
-      type: "search",
-    },
-    cls: "menu-search-input",
-  });
 }
 
 /** Renders inline in the floating layer rather than in the picker's own popup. */

@@ -12,7 +12,7 @@ import type { CommandSpec } from "../model/types";
 import { createTabButton } from "./button";
 import { openFloatingLayer } from "./floating";
 import type { ToolbarHost } from "./host";
-import { resolveIcon } from "./icons";
+import { createSearchBox, type SearchBox } from "./search-box";
 
 /** Chip label: the word it replaced was several times wider than the rest. */
 const FREQUENT = "🕘";
@@ -34,6 +34,7 @@ export async function openCharPanel(
   const sources = await loadCharSources();
 
   let query = "";
+  let search: SearchBox | null = null;
   let focusIndex = -1; // -1 is the search box
   let columns = 8;
   let items: readonly CharEntry[] = [];
@@ -47,14 +48,8 @@ export async function openCharPanel(
     anchor,
     () => host.focusEditor(),
     undefined,
-    () => {
-      // If search has text, Escape clears search first instead of closing the panel.
-      if (query.trim() !== "") {
-        clearSearch();
-        return false;
-      }
-      return true;
-    },
+    // Escape empties the box before it closes the panel; `onClear` refocuses it.
+    () => (search ? search.dismiss() : true),
   );
 
   // The window the panel lives in: a pop-out has one of its own.
@@ -65,30 +60,18 @@ export async function openCharPanel(
   pruneUsage(usage);
 
   // 1. Search Box with Icon and Clear Button
-  const searchWrapper = layer.el.createDiv({ cls: "menu-search-wrapper" });
-  const searchIconEl = searchWrapper.createSpan({ cls: "menu-search-icon" });
-  resolveIcon(searchIconEl, "search");
-
-  const searchEl = searchWrapper.createEl("input", {
-    attr: {
-      "aria-label": t("Search characters"),
-      autocomplete: "off",
-      placeholder: t("Search…"),
-      spellcheck: "false",
-      type: "search",
+  search = createSearchBox(layer.el, {
+    clearButton: true,
+    label: t("Search characters"),
+    onChange: (value) => {
+      query = value;
+      focusIndex = -1;
+      render();
     },
-    cls: "menu-search-input",
+    onClear: (el) => focusEl(el),
+    placeholder: t("Search…"),
   });
-
-  const clearBtn = searchWrapper.createEl("button", {
-    attr: {
-      "aria-label": t("Clear search"),
-      tabindex: "-1",
-      type: "button",
-    },
-    cls: "menu-search-clear is-hidden",
-  });
-  resolveIcon(clearBtn, "x");
+  const searchEl = search.el;
 
   // 2. Top-level Source Tabs (Segmented Control: Emoji / Kaomoji / Symbols)
   const sourceTabsEl = layer.el.createDiv({
@@ -169,16 +152,6 @@ export async function openCharPanel(
   function focusEl(el: HTMLElement): void {
     if (Platform.isMobileApp && el === searchEl) layer.el.focus();
     else el.focus();
-  }
-
-  function clearSearch(): void {
-    if (!query) return;
-    searchEl.value = "";
-    query = "";
-    clearBtn.addClass("is-hidden");
-    focusIndex = -1;
-    render();
-    focusEl(searchEl);
   }
 
   function setFocus(next: number): void {
@@ -310,18 +283,6 @@ export async function openCharPanel(
 
     setFocus(focusIndex);
   }
-
-  searchEl.addEventListener("input", () => {
-    query = searchEl.value;
-    clearBtn.toggleClass("is-hidden", query.length === 0);
-    focusIndex = -1;
-    render();
-  });
-
-  clearBtn.addEventListener("click", (event) => {
-    event.stopPropagation();
-    clearSearch();
-  });
 
   layer.el.addEventListener("keydown", (event) => {
     const inSearch = searchEl.ownerDocument.activeElement === searchEl;
