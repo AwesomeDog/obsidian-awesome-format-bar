@@ -264,6 +264,10 @@
       padding: 0 var(--size-2-2);
       position: sticky;
       z-index: 1;
+      /* The box has no ring of its own, so the wrapper wears the focus. */
+      &:focus-within {
+        border-color: var(--background-modifier-border-focus);
+      }
     }
     & .menu-search-icon {
       color: var(--text-faint);
@@ -273,10 +277,17 @@
     & .menu-search-input {
       background: transparent;
       border: none;
+      box-shadow: none;
       color: var(--text-normal);
       flex: 1 1 auto;
       font-size: var(--font-ui-small);
       padding: var(--size-2-1) 0;
+      /* Obsidian rings every focused input; the wrapper above wears it instead. */
+      &:active,
+      &:focus,
+      &:focus-visible {
+        box-shadow: none;
+      }
     }
     & .menu-item.is-unavailable {
       color: var(--text-faint);
