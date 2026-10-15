@@ -2,7 +2,6 @@ import {
   FuzzySuggestModal,
   Modal,
   setIcon,
-  setTooltip,
   type App,
   type Command,
   type FuzzyMatch,
@@ -15,6 +14,7 @@ import {
   pinnedGroups,
 } from "./model/pinned";
 import type { PinnedCommand } from "./model/types";
+import { createIconButton } from "./toolbar/button";
 import { allIconNames, resolveIcon } from "./toolbar/icons";
 
 const NEW_GROUP = "__new-group__";
@@ -271,13 +271,11 @@ class PinnedManagerModal extends Modal {
       .addEventListener("click", () => {
         void this.actions.add().then(() => this.render());
       });
-    const done = toolbar.createEl("button", {
-      attr: { "aria-label": t("Done"), type: "button" },
-      cls: "clickable-icon",
+    createIconButton(toolbar, {
+      icon: "check",
+      label: t("Done"),
+      onClick: () => this.close(),
     });
-    setIcon(done, "check");
-    setTooltip(done, t("Done"));
-    done.addEventListener("click", () => this.close());
 
     const groups = pinnedGroups(this.actions.entries());
     if (!groups.length) {
@@ -302,17 +300,17 @@ class PinnedManagerModal extends Modal {
     header.draggable = true;
     setIcon(header.createSpan({ cls: "pinned-manager-drag" }), "grip-vertical");
     header.createSpan({ text: pinnedGroupLabel(name) });
-    const rename = header.createEl("button", {
-      attr: { "aria-label": t("Rename group"), type: "button" },
-      cls: "clickable-icon",
-    });
-    setIcon(rename, "pencil");
-    setTooltip(rename, t("Rename group"));
-    rename.addEventListener("click", () => {
-      void askText(this.app, t("Rename group"), name).then((value) => {
-        if (value && value !== name)
-          void this.actions.renameGroup(name, value).then(() => this.render());
-      });
+    createIconButton(header, {
+      icon: "pencil",
+      label: t("Rename group"),
+      onClick: () => {
+        void askText(this.app, t("Rename group"), name).then((value) => {
+          if (value && value !== name)
+            void this.actions
+              .renameGroup(name, value)
+              .then(() => this.render());
+        });
+      },
     });
     this.groupDrag(header, groupIndex);
 
@@ -352,24 +350,20 @@ class PinnedManagerModal extends Modal {
       void this.moveCommand(entry.commandId, group, move);
     });
 
-    const icon = row.createEl("button", {
-      attr: { "aria-label": t("Change icon"), type: "button" },
-      cls: "clickable-icon",
-    });
-    setIcon(icon, "image");
-    setTooltip(icon, t("Change icon"));
-    icon.addEventListener("click", () => {
-      void this.actions.changeIcon(entry.commandId).then(() => this.render());
+    createIconButton(row, {
+      icon: "image",
+      label: t("Change icon"),
+      onClick: () => {
+        void this.actions.changeIcon(entry.commandId).then(() => this.render());
+      },
     });
 
-    const remove = row.createEl("button", {
-      attr: { "aria-label": t("Delete"), type: "button" },
-      cls: "clickable-icon",
-    });
-    setIcon(remove, "trash-2");
-    setTooltip(remove, t("Delete"));
-    remove.addEventListener("click", () => {
-      void this.actions.remove(entry.commandId).then(() => this.render());
+    createIconButton(row, {
+      icon: "trash-2",
+      label: t("Delete"),
+      onClick: () => {
+        void this.actions.remove(entry.commandId).then(() => this.render());
+      },
     });
     this.commandDrag(row, group, index);
   }

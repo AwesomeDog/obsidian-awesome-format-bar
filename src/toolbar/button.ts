@@ -61,6 +61,29 @@ export function createButton(
   return button;
 }
 
+export interface IconButtonOptions {
+  readonly icon: string;
+  readonly label: string;
+  readonly onClick: () => void;
+  /** Extra class beside `clickable-icon`. */
+  readonly cls?: string;
+}
+
+/** An icon-only button: the label is its accessible name and its tooltip both. */
+export function createIconButton(
+  parent: HTMLElement,
+  options: IconButtonOptions,
+): HTMLButtonElement {
+  const button = parent.createEl("button", {
+    attr: { "aria-label": options.label, type: "button" },
+    cls: options.cls ? `clickable-icon ${options.cls}` : "clickable-icon",
+  });
+  resolveIcon(button, options.icon);
+  setTooltip(button, options.label);
+  button.addEventListener("click", options.onClick);
+  return button;
+}
+
 export interface TabButtonOptions {
   cls: string;
   text: string;

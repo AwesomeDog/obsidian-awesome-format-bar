@@ -11,7 +11,12 @@ import {
 } from "../model/layout";
 import { pinnedGroupLabel, pinnedGroups } from "../model/pinned";
 import type { CommandSpec, ToolbarPosition } from "../model/types";
-import { createButton, createTabButton, runCommand } from "./button";
+import {
+  createButton,
+  createIconButton,
+  createTabButton,
+  runCommand,
+} from "./button";
 import type { ToolbarHost } from "./host";
 import { resolveIcon } from "./icons";
 import { openPopover, type PopoverItem, type PopoverSection } from "./popover";
@@ -105,13 +110,13 @@ export class ToolbarSurface {
 
   /** Word's caret: folds the command panel away and leaves the tab row. */
   private renderCollapseToggle(tabs: HTMLElement): void {
-    const caret = tabs.createEl("button", {
-      attr: { type: "button" },
-      cls: "clickable-icon ribbon-collapse",
+    const caret = createIconButton(tabs, {
+      cls: "ribbon-collapse",
+      icon: "chevron-up",
+      label: this.collapsed ? t("Show commands") : t("Hide commands"),
+      onClick: () => this.setCollapsed(!this.collapsed),
     });
-    resolveIcon(caret, "chevron-up");
     caret.addEventListener("pointerdown", (event) => event.preventDefault());
-    caret.addEventListener("click", () => this.setCollapsed(!this.collapsed));
     this.syncCaret();
   }
 
@@ -181,13 +186,11 @@ export class ToolbarSurface {
 
   private renderPinned(panel: HTMLElement): void {
     const actions = panel.createDiv({ cls: "pinned-actions" });
-    const edit = actions.createEl("button", {
-      attr: { "aria-label": t("Manage Pinned"), type: "button" },
-      cls: "clickable-icon",
+    createIconButton(actions, {
+      icon: "pencil",
+      label: t("Manage Pinned"),
+      onClick: () => this.host.editPinned(),
     });
-    resolveIcon(edit, "pencil");
-    setTooltip(edit, t("Manage Pinned"));
-    edit.addEventListener("click", () => this.host.editPinned());
 
     const groups = this.pinnedGroups();
     if (groups.length === 0) {
