@@ -252,14 +252,6 @@ export function nextInlineMarker(
   return { at, closing: tag.closing, kind, length };
 }
 
-let fenced: { doc: string; ranges: readonly Range[] } | null = null;
-
-/** A walk stops at every fence, and they do not move while one runs. */
-function fencesOf(doc: string): readonly Range[] {
-  if (fenced?.doc !== doc) fenced = { doc, ranges: fencedRanges(doc) };
-  return fenced.ranges;
-}
-
 /** Every marker of `doc[from..to)`, in order; fenced code is walked over.
  * `visit` returning false ends the walk. `verbatim` is where a walk that starts
  * mid-document stands; it is carried along as the walk goes. */
@@ -270,7 +262,7 @@ export function scanInline(
   visit: (marker: InlineMarker) => boolean | void,
   verbatim?: VerbatimState,
 ): void {
-  const fences = fencesOf(doc);
+  const fences = fencedRanges(doc);
   const state: VerbatimState = verbatim ?? { code: false, math: false };
   const end = Math.min(to, doc.length);
   let at = Math.max(0, from);
