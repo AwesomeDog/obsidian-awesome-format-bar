@@ -66,15 +66,15 @@ A fixed built-in subset of commands, grouped by dividers. Buttons that don't fit
 
 ## 5. Commands
 
-**190 built-in commands** across 5 tabs and 25 groups, plus the Pinned tab. Drop-down items stay under their parent buttons, while the other commands are registered in the command palette, so users can assign their own shortcuts. That leaves **172** palette entries: the 18 left out are the 17 drop-down parents and the emoji panel, which only open a menu instead of acting.
+**193 built-in commands** across 5 tabs and 25 groups, plus the Pinned tab. Drop-down items stay under their parent buttons, while the other commands are registered in the command palette, so users can assign their own shortcuts. That leaves **175** palette entries: the 18 left out are the 17 drop-down parents and the emoji panel, which only open a menu instead of acting.
 
 ### Tab 1 · Home
 
 - **Clipboard** — Paste, Cut, Copy, Format Painter, Paste as Plain Text, Paste URI as Link
 - **Font** — Font Family, Font Size, Bold, Italic, Underline, Strikethrough, Subscript, Superscript, Inline Code, Inline Math, Highlight, Highlight Color, Font Color, Clear Formatting, Change Case
-- **Paragraph** — Bullet List, Numbered List, Number Headings ▼ (Number Headings 1. 1.1. 1.1.1., Number Headings 1) a) i), Number Headings I. A. 1., No Numbering), Task List, Quote, Decrease Indent, Increase Indent, Renumber List, Sort Lines, Move List Item Up / Down, Swap Line Up / Down, Align Left / Center / Right / Justify, Horizontal Rule
+- **Paragraph** — Bullet List, Numbered List, Number Headings ▼ (Number Headings 1. 1.1. 1.1.1., Number Headings 1) a) i), Number Headings I. A. 1., No Numbering), Task List, Quote, Decrease Indent, Increase Indent, Renumber List, Sort Lines, Move List Item Up / Down, Move Section Up / Down, Swap Line Up / Down, Align Left / Center / Right / Justify, Horizontal Rule
 - **Styles** — Heading 1–6, Remove Heading
-- **Editing** — Undo, Redo, Find and Replace, Select ▼ (Select All, Select Text with Similar Formatting)
+- **Editing** — Undo, Redo, Find and Replace, Select ▼ (Select All, Select Text with Similar Formatting, Select Section)
 
 **Paste URI as Link** reads one URI with a scheme from the clipboard and wraps each selected range as a Markdown link using an angle-bracket destination. It requires a selection and leaves regular Paste unchanged. Word keeps its paste variants in this group too, which is why it sits with Paste as Plain Text rather than with the links on Insert.
 
@@ -85,6 +85,10 @@ A fixed built-in subset of commands, grouped by dividers. Buttons that don't fit
 **Select Text with Similar Formatting** takes the innermost inline mark under the caret as its sample and selects the text of every run wearing it: bold with bold, a yellow highlight with the other yellow highlights but not a red one, and one `<span style="…">` with the spans carrying the same style. A selection works as the sample too, and the innermost mark wins either way — at the italic inside a bold it is the italic that decides. A run is the text between the marks, never the marks themselves, so what the user ends up with is exactly what they can retype. Fenced code is not text to read, and neither is the inside of a code span or of an inline formula: an asterisk there is an asterisk, not an emphasis. Where the caret sits on plain text — or on an asterisk between two spaces — nothing is selected, and a notice says so.
 
 **Move List Item Up / Down** moves the list item at a single collapsed caret together with its continuation lines and every nested item. It swaps with the adjacent sibling; at a sibling boundary, the first child can move to the end of the previous parent and the last child can move to the start of the next parent. It never crosses a blank line, code fence or heading, and does nothing for a heading, non-list text, selection or multiple carets. Ordered lists are renumbered after a move, and the caret follows the moved item.
+
+**Move Section Up / Down** moves the heading at the caret and everything under it — its body and every section nested in it — one place earlier or later among its siblings. It swaps with the adjacent section at its own level; at the ends of a level a nested section leaves its parent and joins the neighbouring one on that side, while a top-level section has nowhere to go and is left alone. The caret keeps its line and column inside the section it moved, and one move is one undo step. Text above the first heading, front matter and anything inside a code fence are not part of the outline, so a caret there does nothing. Numbering written by **Number Headings ▼** travels with the text and is not renumbered: run it again after a move.
+
+**Select Section** selects the heading at the caret and everything under it, so one command hands a whole section to Copy, Delete or another note. Trailing blank lines are left out of the selection. Like the two moves, it does nothing above the first heading or in a note with no headings.
 
 **Number Headings ▼** writes outline numbering on every heading of the note, and **No Numbering** takes it back off. Its scope is the whole note, because numbering that stopped at a selection would carry on from the wrong number below it. Three presets: `1. 1.1. 1.1.1.` (each level shows its ancestors' numbers), and `1) a) i)` and `I. A. 1.` (Word's multilevel list: each level numbered in its own style, without the ancestors). Every number ends in `.` or `)`, and that is what makes a number this plugin wrote findable again: a heading that merely starts with one — `## 2024 in review` — is left alone, and picking another preset replaces the numbers instead of stacking one scheme on top of the last. A level skipped on the way down counts as `1` at every step, so a `##` followed by a `####` is `1.1.1.`. A heading inside a code fence or quoted into a callout is not a heading here, and front matter is skipped so a YAML `# comment` is never numbered. The numbers are written into the heading text itself, so they appear in the outline, in search and in `[[#links]]` — renumbering a note therefore breaks links that point at the old heading text.
 
@@ -140,7 +144,7 @@ Column-level names (*Align Column…*, *Sort Rows…*) distinguish these from th
 
 ### Tab 6 · Pinned
 
-Pin **any command from the command palette** — core commands, other plugins' commands, or this plugin's own 172 — to the toolbar with an icon of your choice. The built-in set is the intersection of what most people use often; the one or two commands a given user can't live without usually fall outside it.
+Pin **any command from the command palette** — core commands, other plugins' commands, or this plugin's own 175 — to the toolbar with an icon of your choice. The built-in set is the intersection of what most people use often; the one or two commands a given user can't live without usually fall outside it.
 
 | Item | Convention |
 |---|---|
@@ -232,7 +236,7 @@ The Table options govern editing behavior and text output, not toolbar layout, s
 - User-created commands — Pinned surfaces existing commands, it doesn't create new ones.
 - Emoji shortcodes: no `:smile:` expansion, no autocomplete while typing; the panel inserts raw characters.
 - Custom emoji sets, user-editable character lists.
-- Reordering, hiding or showing the 190 built-in commands.
+- Reordering, hiding or showing the 193 built-in commands.
 - Toolbar appearance customization: background or icon color pickers, theme variants.
 
 ---
@@ -244,7 +248,8 @@ The Table options govern editing behavior and text output, not toolbar layout, s
 | **Position** | Where a toolbar renders: **Top**, **Following**, **Fixed**. Three independent toggles. |
 | **Layout** | How a position renders: **Ribbon** (Top) or **Compact** (Following / Fixed). |
 | **Tab · Group · Button** | Ribbon structure. A **drop-down** button holds several commands; a Compact **overflow menu** (`⋯`) holds the buttons that don't fit. |
-| **Command** | An action the toolbar runs. **190 built-in commands** plus any **pinned command**. |
+| **Command** | An action the toolbar runs. **193 built-in commands** plus any **pinned command**. |
+| **Section** | A heading, the text under it and every section nested in it, up to the next heading of the same or a higher level. Word's *section* is a section break, which Markdown has no equivalent of. |
 | **Source · Group · Entry** | Emoji & Symbols panel structure: three sources (Emoji, Kaomoji, Symbols) → groups → entries. Picking an entry inserts a character. |
 | **Word terminology** | Display names follow Microsoft Word (*Bold*, *Clear Formatting*), initial capitals, no `Toggle` prefix. |
 | **Plugin icon** | The plugin's icon in Obsidian's left sidebar. "Ribbon" on its own always means the toolbar layout. |

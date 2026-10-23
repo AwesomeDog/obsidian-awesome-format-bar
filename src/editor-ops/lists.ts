@@ -1,8 +1,8 @@
 import {
   NO_CHANGE,
   applyChanges,
-  lineOffset,
   normalizeRanges,
+  offsetAtLine,
   order,
   type Change,
   type Plan,
@@ -20,6 +20,7 @@ import {
 } from "./lines";
 import {
   flattenOutline,
+  outlineAt,
   parseOutline,
   sortOutline,
   type Outline,
@@ -289,25 +290,6 @@ export function sortList(doc: string, ranges: readonly Range[]): Plan {
   return { changes: order(changes) };
 }
 
-function itemAt(items: readonly Outline[], line: number): Outline | null {
-  for (const item of items) {
-    if (line < item.start || line > item.end) continue;
-    return itemAt(item.children, line) ?? item;
-  }
-  return null;
-}
-
-function offsetAtLine(
-  lines: readonly string[],
-  start: number,
-  line: number,
-  ch: number,
-): number {
-  return (
-    start + lineOffset(lines, line) + Math.min(ch, lines[line]?.length ?? 0)
-  );
-}
-
 /** Moves one list item and its subtree, following Outliner's boundary rules. */
 export function moveListItem(
   doc: string,
@@ -325,7 +307,7 @@ export function moveListItem(
 
   const [start, end] = run;
   const roots = itemsIn(lines, start, end);
-  const target = itemAt(roots, cursorLine);
+  const target = outlineAt(roots, cursorLine);
   if (!target) return NO_CHANGE;
 
   const siblings = target.parent?.children ?? roots;

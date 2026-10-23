@@ -10,7 +10,9 @@ import {
   insertBlockReference,
   insertCallout,
   insertChartBlock,
+  moveSection,
   numberHeadings,
+  selectSection,
   sortHeadings,
   tableOfContents,
   toggleDropCap,
@@ -433,6 +435,12 @@ export function planFor(context: CommandContext, id: string): Plan | null {
       return moveListItem(doc, ranges, -1);
     case "move-list-item-down":
       return moveListItem(doc, ranges, 1);
+    case "move-section-up":
+      return moveSection(doc, ranges, -1);
+    case "move-section-down":
+      return moveSection(doc, ranges, 1);
+    case "select-section":
+      return selectSection(doc, ranges);
     case "reverse-lines":
       return reverseLines(doc, ranges);
     case "sort-list":

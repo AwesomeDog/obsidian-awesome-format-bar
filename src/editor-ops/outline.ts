@@ -59,6 +59,18 @@ export function parseOutline(
   return roots;
 }
 
+/** The deepest node covering `line`, or `null` outside the tree. */
+export function outlineAt(
+  nodes: readonly Outline[],
+  line: number,
+): Outline | null {
+  for (const node of nodes) {
+    if (line < node.start || line > node.end) continue;
+    return outlineAt(node.children, line) ?? node;
+  }
+  return null;
+}
+
 /** Sorts every level by `textOf`; a node keeps its own lines and its children. */
 export function sortOutline(
   nodes: readonly Outline[],

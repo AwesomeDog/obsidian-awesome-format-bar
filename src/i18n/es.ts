@@ -42,6 +42,8 @@ export default {
   "Sort Lines": "Ordenar párrafos",
   "Move List Item Up": "Subir elemento de lista",
   "Move List Item Down": "Bajar elemento de lista",
+  "Move Section Up": "Subir sección",
+  "Move Section Down": "Bajar sección",
   "Swap Line Up": "Subir una línea",
   "Swap Line Down": "Bajar una línea",
   "Align Left": "Alinear a la izquierda",
@@ -56,6 +58,7 @@ export default {
   "Select All": "Seleccionar todo",
   "Select Text with Similar Formatting":
     "Seleccionar texto con formato similar",
+  "Select Section": "Seleccionar sección",
   "Internal Link": "Vínculo interno",
   "External Link": "Vínculo externo",
   Embed: "Incrustar",

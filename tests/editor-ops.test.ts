@@ -3,7 +3,9 @@ import {
   insertBlockReference,
   insertCallout,
   insertChartBlock,
+  moveSection,
   numberHeadings,
+  selectSection,
   sortHeadings,
   toggleDropCap,
   toggleParagraphAlignment,
@@ -860,6 +862,111 @@ describe("sortHeadings", () => {
 
   it("does nothing in a note without headings", () => {
     expect(sortNote("b\na")).toBe("b\na");
+  });
+});
+
+describe("moveSection", () => {
+  const moveUp = (doc: string, ranges: Range[]): Plan =>
+    moveSection(doc, ranges, -1);
+  const moveDown = (doc: string, ranges: Range[]): Plan =>
+    moveSection(doc, ranges, 1);
+
+  it("moves a heading and its whole section as one", () => {
+    expect(apply("|# A\nbody A\n# B\nbody B", moveDown)).toBe(
+      "# B\nbody B\n# A\nbody A",
+    );
+  });
+
+  it("carries the sections nested in it along", () => {
+    expect(apply("|# A\n## A1\n# B", moveDown)).toBe("# B\n# A\n## A1");
+  });
+
+  it("moves the innermost section the cursor is in", () => {
+    expect(apply("# A\n|## A1\n## A2", moveDown)).toBe("# A\n## A2\n## A1");
+  });
+
+  it("leaves a first section of the note alone", () => {
+    expect(apply("|# A\n# B", moveUp)).toBe("# A\n# B");
+  });
+
+  it("leaves a last section of the note alone", () => {
+    expect(apply("# A\n|# B", moveDown)).toBe("# A\n# B");
+  });
+
+  it("moves a last child behind the next parent", () => {
+    expect(apply("# A\n|## A1\n# B", moveDown)).toBe("# A\n# B\n## A1");
+  });
+
+  it("moves a first child ahead of the previous parent", () => {
+    expect(apply("# A\n# B\n|## B1", moveUp)).toBe("# A\n## B1\n# B");
+  });
+
+  it("leaves text above the first heading alone", () => {
+    expect(apply("|intro\n# A\n# B", moveDown)).toBe("intro\n# A\n# B");
+  });
+
+  it("leaves front matter alone", () => {
+    expect(apply("---\ntitle: x\n---\n|# A\n# B", moveDown)).toBe(
+      "---\ntitle: x\n---\n# B\n# A",
+    );
+  });
+
+  it("does not read a fenced # as a heading", () => {
+    expect(apply("|# A\n```\n# z\n```\n# B", moveDown)).toBe(
+      "# B\n# A\n```\n# z\n```",
+    );
+  });
+
+  it("does nothing in a note without headings", () => {
+    expect(apply("|b\na", moveDown)).toBe("b\na");
+  });
+
+  it("writes one change, so undo is a single step", () => {
+    const { doc, ranges } = parse("|# A\n# B");
+    expect(moveSection(doc, ranges, 1).changes).toHaveLength(1);
+  });
+
+  it("keeps the cursor in the section it moved", () => {
+    const { doc, ranges } = parse("|# A\nbody\n# B");
+    const plan = moveSection(doc, ranges, 1);
+    const after = run(doc, plan);
+    const at = plan.select?.from ?? -1;
+    expect(after.slice(at, after.indexOf("\n", at))).toBe("# A");
+  });
+
+  it("keeps the cursor's column", () => {
+    const { doc, ranges } = parse("# A\nbo|dy\n# B");
+    const plan = moveSection(doc, ranges, 1);
+    expect(run(doc, plan).slice(plan.select?.from ?? -1)).toBe("dy");
+  });
+});
+
+describe("selectSection", () => {
+  /** The text the command picks, so a case reads like the note. */
+  const picked = (input: string): string => {
+    const { doc, ranges } = parse(input);
+    const range = selectSection(doc, ranges).selections?.[0];
+    return range ? doc.slice(range.from, range.to) : "";
+  };
+
+  it("selects a heading and its body", () => {
+    expect(picked("|# A\nbody A\n\n# B")).toBe("# A\nbody A");
+  });
+
+  it("selects the innermost section the cursor is in", () => {
+    expect(picked("# A\n|## A1\nbody\n\n# B")).toBe("## A1\nbody");
+  });
+
+  it("carries the sections nested in it along", () => {
+    expect(picked("|# A\n## A1\n# B")).toBe("# A\n## A1");
+  });
+
+  it("does nothing above the first heading", () => {
+    expect(picked("|intro\n# A")).toBe("");
+  });
+
+  it("does nothing in a note without headings", () => {
+    expect(picked("|b\na")).toBe("");
   });
 });
 

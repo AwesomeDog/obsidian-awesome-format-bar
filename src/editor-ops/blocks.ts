@@ -1,4 +1,11 @@
-import { NO_CHANGE, order, type Change, type Plan, type Range } from "./plan";
+import {
+  NO_CHANGE,
+  offsetAtLine,
+  order,
+  type Change,
+  type Plan,
+  type Range,
+} from "./plan";
 import {
   blocksFor,
   CJK,
@@ -11,6 +18,7 @@ import {
 } from "./lines";
 import {
   flattenOutline,
+  outlineAt,
   parseOutline,
   sortOutline,
   type Outline,
@@ -142,6 +150,91 @@ export function sortHeadings(doc: string): Plan {
   return result === source
     ? NO_CHANGE
     : { changes: [replaceBlock(lines, start, end, result)] };
+}
+
+/** The line the outline starts on, or -1. Front matter and any text above the
+ * first heading are not part of it, so a move never reaches them. */
+function firstHeading(lines: Lines): number {
+  const levelOf = headingLevelOf(fenceMask(lines));
+  for (let line = firstContentLine(lines); line < lines.count; line++)
+    if (levelOf(lines.at(line), line) !== null) return line;
+  return -1;
+}
+
+/** Moves the section under the cursor one sibling earlier or later, carrying
+ * its subtree. `NO_CHANGE` at the ends of a level. */
+export function moveSection(
+  doc: string,
+  ranges: readonly Range[],
+  direction: -1 | 1,
+): Plan {
+  const lines = new Lines(doc);
+  const range = ranges[0];
+  if (!range) return NO_CHANGE;
+
+  const start = firstHeading(lines);
+  if (start < 0) return NO_CHANGE;
+  const last = lines.count - 1;
+  const roots = sectionsIn(lines, start, last);
+  const cursorLine = lines.lineOf(range.from);
+  const target = outlineAt(roots, cursorLine);
+  if (!target) return NO_CHANGE;
+
+  const siblings = target.parent?.children ?? roots;
+  const index = siblings.indexOf(target);
+  if (index < 0) return NO_CHANGE;
+
+  const neighbor = siblings[index + direction];
+  if (neighbor) {
+    siblings[index + direction] = target;
+    siblings[index] = neighbor;
+  } else {
+    const parent = target.parent;
+    if (!parent) return NO_CHANGE;
+    // Out of siblings: leave the parent and join the uncle on that side.
+    const uncles = parent.parent?.children ?? roots;
+    const uncle = uncles[uncles.indexOf(parent) + direction];
+    if (!uncle) return NO_CHANGE;
+    siblings.splice(index, 1);
+    if (direction < 0) uncle.children.push(target);
+    else uncle.children.unshift(target);
+    target.parent = uncle;
+  }
+
+  const flattened = flattenOutline(roots, target);
+  const result = flattened.lines.join("\n");
+  if (result === lines.slice(start, last)) return NO_CHANGE;
+
+  const resultLines = result.split("\n");
+  const targetLine = flattened.targetLine + (cursorLine - target.start);
+  const ch = range.from - lines.start(cursorLine);
+  const caret = offsetAtLine(resultLines, lines.start(start), targetLine, ch);
+  return {
+    changes: [replaceBlock(lines, start, last, result)],
+    select: { from: caret, to: caret },
+  };
+}
+
+/** Selects the section under the cursor; trailing blank lines stay out of it. */
+export function selectSection(doc: string, ranges: readonly Range[]): Plan {
+  const lines = new Lines(doc);
+  const range = ranges[0];
+  if (!range) return NO_CHANGE;
+
+  const start = firstHeading(lines);
+  if (start < 0) return NO_CHANGE;
+  const target = outlineAt(
+    sectionsIn(lines, start, lines.count - 1),
+    lines.lineOf(range.from),
+  );
+  if (!target) return NO_CHANGE;
+
+  let end = target.end;
+  while (end > target.start && lines.at(end).trim() === "") end--;
+  return {
+    changes: [],
+    selections: [{ from: lines.start(target.start), to: lines.end(end) }],
+  };
 }
 
 /** How to number the note's headings; `null` takes the numbers back off. */

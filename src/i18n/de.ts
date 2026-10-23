@@ -42,6 +42,8 @@ export default {
   "Sort Lines": "Absätze sortieren",
   "Move List Item Up": "Listenelement nach oben verschieben",
   "Move List Item Down": "Listenelement nach unten verschieben",
+  "Move Section Up": "Abschnitt nach oben verschieben",
+  "Move Section Down": "Abschnitt nach unten verschieben",
   "Swap Line Up": "Eine Zeile nach oben",
   "Swap Line Down": "Eine Zeile nach unten",
   "Align Left": "Linksbündig",
@@ -56,6 +58,7 @@ export default {
   "Select All": "Alles auswählen",
   "Select Text with Similar Formatting":
     "Text mit ähnlicher Formatierung auswählen",
+  "Select Section": "Abschnitt auswählen",
   "Internal Link": "Interner Link",
   "External Link": "Externer Link",
   Embed: "Einbetten",

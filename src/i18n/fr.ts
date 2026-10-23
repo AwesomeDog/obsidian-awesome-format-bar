@@ -42,6 +42,8 @@ export default {
   "Sort Lines": "Trier les paragraphes",
   "Move List Item Up": "Monter l’élément de liste",
   "Move List Item Down": "Descendre l’élément de liste",
+  "Move Section Up": "Monter la section",
+  "Move Section Down": "Descendre la section",
   "Swap Line Up": "Monter d'une ligne",
   "Swap Line Down": "Descendre d'une ligne",
   "Align Left": "Aligner à gauche",
@@ -56,6 +58,7 @@ export default {
   "Select All": "Tout sélectionner",
   "Select Text with Similar Formatting":
     "Sélectionner le texte avec une mise en forme similaire",
+  "Select Section": "Sélectionner la section",
   "Internal Link": "Lien interne",
   "External Link": "Lien externe",
   Embed: "Incorporer",

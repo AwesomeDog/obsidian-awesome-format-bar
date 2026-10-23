@@ -242,6 +242,20 @@ export const COMMANDS = [
     icon: "list-down",
     kind: "editor",
   },
+  // Word's Outlining pair, one level up from a list item: a heading and
+  // everything under it move as one.
+  {
+    id: "move-section-up",
+    name: "Move Section Up",
+    icon: "move-up",
+    kind: "editor",
+  },
+  {
+    id: "move-section-down",
+    name: "Move Section Down",
+    icon: "move-down",
+    kind: "editor",
+  },
   {
     id: "swap-line-up",
     name: "Swap Line Up",
@@ -357,6 +371,14 @@ export const COMMANDS = [
     id: "select-similar-formatting",
     name: "Select Text with Similar Formatting",
     icon: "scan-text",
+    kind: "editor",
+  },
+  // A heading and everything under it, so one command can carry a whole
+  // section off to the clipboard or another note.
+  {
+    id: "select-section",
+    name: "Select Section",
+    icon: "text-select",
     kind: "editor",
   },
 
@@ -1301,7 +1323,7 @@ export const DROPDOWN_ITEMS: Readonly<
     "copy-table-as-json",
     "copy-table-as-markdown",
   ],
-  select: ["select-all", "select-similar-formatting"],
+  select: ["select-all", "select-similar-formatting", "select-section"],
   "clean-up": [
     "clean-up-trailing-spaces",
     "clean-up-blank-lines",

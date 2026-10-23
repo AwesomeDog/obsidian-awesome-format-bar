@@ -88,6 +88,19 @@ export function lineOffset(lines: readonly string[], line: number): number {
   return offset;
 }
 
+/** Where `line` and `ch` land in text that starts at `start`. `ch` is clamped
+ * to the line, so a cursor past its end stays on it. */
+export function offsetAtLine(
+  lines: readonly string[],
+  start: number,
+  line: number,
+  ch: number,
+): number {
+  return (
+    start + lineOffset(lines, line) + Math.min(ch, lines[line]?.length ?? 0)
+  );
+}
+
 interface Position {
   readonly line: number;
   readonly ch: number;

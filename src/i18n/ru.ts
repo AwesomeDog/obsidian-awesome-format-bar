@@ -42,6 +42,8 @@ export default {
   "Sort Lines": "Сортировать абзацы",
   "Move List Item Up": "Переместить элемент списка вверх",
   "Move List Item Down": "Переместить элемент списка вниз",
+  "Move Section Up": "Переместить раздел вверх",
+  "Move Section Down": "Переместить раздел вниз",
   "Swap Line Up": "Поднять строку",
   "Swap Line Down": "Опустить строку",
   "Align Left": "По левому краю",
@@ -56,6 +58,7 @@ export default {
   "Select All": "Выделить всё",
   "Select Text with Similar Formatting":
     "Выделить текст с похожим форматированием",
+  "Select Section": "Выделить раздел",
   "Internal Link": "Внутренняя ссылка",
   "External Link": "Внешняя ссылка",
   Embed: "Внедрить",

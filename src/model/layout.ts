@@ -61,6 +61,8 @@ export const BUILT_IN_COMMAND_TABS = [
           "sort-lines",
           "move-list-item-up",
           "move-list-item-down",
+          "move-section-up",
+          "move-section-down",
           "swap-line-up",
           "swap-line-down",
           "align-left",
