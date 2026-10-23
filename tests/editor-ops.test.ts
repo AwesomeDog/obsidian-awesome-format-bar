@@ -7,6 +7,7 @@ import {
   numberHeadings,
   selectSection,
   sortHeadings,
+  tableOfContents,
   toggleDropCap,
   toggleParagraphAlignment,
   type HeadingNumbering,
@@ -862,6 +863,29 @@ describe("sortHeadings", () => {
 
   it("does nothing in a note without headings", () => {
     expect(sortNote("b\na")).toBe("b\na");
+  });
+
+  it("does not read a YAML comment as a heading", () => {
+    expect(sortNote("---\ntitle: x\n# note\n---\n# B\n# A")).toBe(
+      "---\ntitle: x\n# note\n---\n# A\n# B",
+    );
+  });
+});
+
+describe("tableOfContents", () => {
+  const toc = (doc: string, ranges: Range[]): Plan =>
+    tableOfContents(doc, ranges, "Contents");
+
+  it("lists the note's headings in order", () => {
+    expect(apply("# B\n# A|", toc)).toBe(
+      "# B\n# A\n\n**Contents**\n\n- [[#B|B]]\n- [[#A|A]]",
+    );
+  });
+
+  it("does not read a YAML comment as a heading", () => {
+    expect(apply("---\ntitle: x\n# note\n---\n# B\n# A|", toc)).toBe(
+      "---\ntitle: x\n# note\n---\n# B\n# A\n\n**Contents**\n\n- [[#B|B]]\n- [[#A|A]]",
+    );
   });
 });
 

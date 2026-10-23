@@ -111,12 +111,13 @@ function headingLevelOf(
   };
 }
 
-/** The note's outline: its first heading through its last line of content. */
+/** The note's outline: its first heading through its last line of content.
+ * Front matter is not part of it, so a YAML comment is not a heading. */
 function outlineRange(lines: Lines): [number, number] | null {
   const fenced = fenceMask(lines);
   let start = -1;
   let end = -1;
-  for (let line = 0; line < lines.count; line++) {
+  for (let line = firstContentLine(lines); line < lines.count; line++) {
     const text = lines.at(line);
     if (fenced[line]) continue;
     if (HEADING.test(text)) {
@@ -155,10 +156,7 @@ export function sortHeadings(doc: string): Plan {
 /** The line the outline starts on, or -1. Front matter and any text above the
  * first heading are not part of it, so a move never reaches them. */
 function firstHeading(lines: Lines): number {
-  const levelOf = headingLevelOf(fenceMask(lines));
-  for (let line = firstContentLine(lines); line < lines.count; line++)
-    if (levelOf(lines.at(line), line) !== null) return line;
-  return -1;
+  return outlineRange(lines)?.[0] ?? -1;
 }
 
 /** Moves the section under the cursor one sibling earlier or later, carrying
