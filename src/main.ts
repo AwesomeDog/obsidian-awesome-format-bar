@@ -66,6 +66,12 @@ import type {
 } from "./model/types";
 import { openPinnedManager, pickIcon, pickPinnedCommand } from "./pin";
 import { sortTableOnHeaderClick } from "./reading-table";
+import {
+  isRecording,
+  pollRecording,
+  recordingClock,
+  toggleRecording,
+} from "./recording";
 import { FormatBarSettingTab } from "./settings";
 import type { ToolbarHost, ToolbarState } from "./toolbar/host";
 import { missingIcons } from "./toolbar/icons";
@@ -89,6 +95,10 @@ const PAINTER_CLASS = "awesome-format-bar-painter";
 
 /** Word latches its painter on a double click; this is that window. */
 const DOUBLE_CLICK_MS = 400;
+
+/** How often the bar asks the recorder what it is doing: it keeps its state to
+ * itself, and its own microphone button can start and stop one too. */
+const RECORDING_POLL_MS = 1000;
 
 /** A keyboard selection ends on a keyup, so navigation keys paint too. */
 const NAVIGATION_KEYS = new Set([
@@ -193,6 +203,12 @@ export default class AwesomeFormatBarPlugin extends Plugin {
       }),
     );
     this.bindDocument(document);
+    // The recorder is not ours, so the only way to follow it is to ask.
+    this.registerInterval(
+      window.setInterval(() => {
+        if (pollRecording(this.app)) this.queueRefresh();
+      }, RECORDING_POLL_MS),
+    );
     this.register(() => closeFloating());
     this.register(() => exitFullscreen());
 
@@ -398,6 +414,11 @@ export default class AwesomeFormatBarPlugin extends Plugin {
         if (spec.commandPalette === false) return "";
         return registeredHotkey(this.app, `${this.manifest.id}:${spec.id}`);
       },
+      labelFor: (spec: CommandSpec): string =>
+        // The one button whose name carries state: how long it has been running.
+        spec.id === "record-audio" && isRecording(this.app)
+          ? t("Stop Recording · {time}", { time: recordingClock() })
+          : spec.name,
       get positions(): readonly ToolbarPosition[] {
         return enabledToolbarPositions(settings(), Platform.isMobile);
       },
@@ -421,7 +442,9 @@ export default class AwesomeFormatBarPlugin extends Plugin {
             (spec.id === "show-whitespace" && this.settings.showWhitespace) ||
             (spec.id === "typewriter-mode" && isTypewriterModeEnabled()) ||
             (spec.id === "zen-mode" && isZenModeOn(view)) ||
-            (spec.id === "focus-mode" && isFocusModeOn(this.app)),
+            (spec.id === "focus-mode" && isFocusModeOn(this.app)) ||
+            // A recording runs app-wide, so every bar lights, not just this one.
+            (spec.id === "record-audio" && isRecording(this.app)),
         };
       },
     };
@@ -584,6 +607,12 @@ export default class AwesomeFormatBarPlugin extends Plugin {
     // Word's painter is one button with two roles, so it carries its own state.
     if (spec.id === "format-painter") {
       this.runPainter(view);
+      return;
+    }
+    // One button for both halves of the recorder's start/stop pair.
+    if (spec.id === "record-audio") {
+      toggleRecording(this.app);
+      this.queueRefresh();
       return;
     }
     // View commands must run in Reading view without focusing the editor.

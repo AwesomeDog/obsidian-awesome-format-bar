@@ -101,6 +101,7 @@ export default {
   "Convert Syntax": "構文を変換",
   Footnote: "脚注",
   "Attach File": "ファイルの添付",
+  "Record Audio": "音声を録音",
   "Emoji & Symbols": "絵文字と記号",
   "Date and Time": "日付と時刻",
   "Drop Cap": "ドロップキャップ",
@@ -207,6 +208,7 @@ export default {
   Links: "リンク",
   Tables: "テーブル",
   Illustrations: "図",
+  Media: "メディア",
   Comments: "コメント",
   Text: "テキスト",
   Symbols: "記号",
@@ -300,6 +302,7 @@ export default {
   "Search commands to pin": "ピン留めするコマンドを検索",
   "Icon for {name}": "{name} のアイコン",
   "{tab} · {group}": "{tab} · {group}",
+  "Stop Recording · {time}": "録音を停止 · {time}",
 
   "{columns} × {rows} Table": "{columns} × {rows} の表",
 
@@ -325,4 +328,6 @@ export default {
     "コピーする書式のテキストを先に選択してください。",
   "Format painter stays on. Press Esc when you are done.":
     "書式のコピーは継続します。終わったら Esc を押してください。",
+  "Recording did not start. Check that Obsidian may use the microphone.":
+    "録音を開始できませんでした。Obsidian がマイクを使用できるか確認してください。",
 } satisfies Record<string, string>;

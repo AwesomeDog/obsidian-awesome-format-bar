@@ -1,5 +1,9 @@
 import type { CommandPopup, CommandSpec } from "./types";
 
+/** Obsidian's own recorder, whose `stop` command answers only while it runs.
+ * See `../recording`: the pair of commands is the only state it exposes. */
+export const RECORD_START = "audio-recorder:start";
+
 /** Adding a command starts here; everything else reads it through `commandById`. */
 export const COMMANDS = [
   // Home · Clipboard
@@ -670,6 +674,18 @@ export const COMMANDS = [
     kind: "editor",
   },
   { id: "chart-venn", name: "Venn Diagram", icon: "percent", kind: "editor" },
+
+  // Insert · Media
+  // Word's recording lands in the document; Obsidian's saves an attachment and
+  // embeds it at the caret. The id is the start command, which the recorder
+  // answers only when it is idle — the button toggles, see `../recording`.
+  {
+    id: "record-audio",
+    name: "Record Audio",
+    icon: "mic",
+    kind: "registered",
+    registeredCommandId: RECORD_START,
+  },
 
   // Insert · Links
   {

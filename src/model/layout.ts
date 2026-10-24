@@ -112,6 +112,7 @@ export const BUILT_IN_COMMAND_TABS = [
           "chart",
         ],
       },
+      { name: "Media", commands: ["record-audio"] },
       {
         name: "Links",
         commands: [

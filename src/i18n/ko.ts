@@ -101,6 +101,7 @@ export default {
   "Convert Syntax": "구문 변환",
   Footnote: "각주",
   "Attach File": "파일 첨부",
+  "Record Audio": "오디오 녹음",
   "Emoji & Symbols": "이모지 및 기호",
   "Date and Time": "날짜 및 시간",
   "Drop Cap": "첫 글자 확대",
@@ -207,6 +208,7 @@ export default {
   Links: "링크",
   Tables: "표",
   Illustrations: "그림",
+  Media: "미디어",
   Comments: "메모",
   Text: "텍스트",
   Symbols: "기호",
@@ -299,6 +301,7 @@ export default {
   "Search commands to pin": "고정할 명령 검색",
   "Icon for {name}": "{name}의 아이콘",
   "{tab} · {group}": "{tab} · {group}",
+  "Stop Recording · {time}": "녹음 중지 · {time}",
 
   "{columns} × {rows} Table": "{columns} × {rows} 표",
 
@@ -322,4 +325,6 @@ export default {
     "서식을 복사할 텍스트를 먼저 선택하세요.",
   "Format painter stays on. Press Esc when you are done.":
     "서식 복사가 계속 켜져 있습니다. 끝나면 Esc를 누르세요.",
+  "Recording did not start. Check that Obsidian may use the microphone.":
+    "녹음이 시작되지 않았습니다. Obsidian이 마이크를 사용할 수 있는지 확인하세요.",
 } satisfies Record<string, string>;

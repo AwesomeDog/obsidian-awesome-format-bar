@@ -101,6 +101,7 @@ export default {
   "Convert Syntax": "轉換語法",
   Footnote: "腳注",
   "Attach File": "附加檔案",
+  "Record Audio": "錄製音訊",
   "Emoji & Symbols": "表情符號與符號",
   "Date and Time": "日期與時間",
   "Drop Cap": "首字下沉",
@@ -207,6 +208,7 @@ export default {
   Links: "連結",
   Tables: "表格",
   Illustrations: "插圖",
+  Media: "媒體",
   Comments: "批註",
   Text: "文字",
   Symbols: "符號",
@@ -298,6 +300,7 @@ export default {
   "Search commands to pin": "搜尋要釘選的命令",
   "Icon for {name}": "{name}的圖示",
   "{tab} · {group}": "{tab} · {group}",
+  "Stop Recording · {time}": "停止錄音 · {time}",
 
   "{columns} × {rows} Table": "{columns} × {rows} 表格",
 
@@ -319,4 +322,6 @@ export default {
     "請先選取要複製格式的文字。",
   "Format painter stays on. Press Esc when you are done.":
     "複製格式會持續開啟，完成後請按 Esc。",
+  "Recording did not start. Check that Obsidian may use the microphone.":
+    "錄音未開始。請檢查 Obsidian 是否被允許使用麥克風。",
 } satisfies Record<string, string>;

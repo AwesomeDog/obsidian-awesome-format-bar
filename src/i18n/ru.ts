@@ -102,6 +102,7 @@ export default {
   "Convert Syntax": "Преобразовать синтаксис",
   Footnote: "Сноска",
   "Attach File": "Вложить файл",
+  "Record Audio": "Записать аудио",
   "Emoji & Symbols": "Эмодзи и символы",
   "Date and Time": "Дата и время",
   "Drop Cap": "Буквица",
@@ -208,6 +209,7 @@ export default {
   Links: "Ссылки",
   Tables: "Таблицы",
   Illustrations: "Иллюстрации",
+  Media: "Медиа",
   Comments: "Примечания",
   Text: "Текст",
   Symbols: "Символы",
@@ -301,6 +303,7 @@ export default {
   "Search commands to pin": "Поиск команд для закрепления",
   "Icon for {name}": "Значок для {name}",
   "{tab} · {group}": "{tab} · {group}",
+  "Stop Recording · {time}": "Остановить запись · {time}",
 
   "{columns} × {rows} Table": "Таблица {columns} × {rows}",
 
@@ -325,4 +328,6 @@ export default {
     "Сначала выделите текст, формат которого нужно скопировать.",
   "Format painter stays on. Press Esc when you are done.":
     "Формат по образцу остаётся включённым. Нажмите Esc, когда закончите.",
+  "Recording did not start. Check that Obsidian may use the microphone.":
+    "Запись не началась. Проверьте, что Obsidian разрешено использовать микрофон.",
 } satisfies Record<string, string>;

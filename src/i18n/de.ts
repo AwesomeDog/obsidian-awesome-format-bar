@@ -102,6 +102,7 @@ export default {
   "Convert Syntax": "Syntax umwandeln",
   Footnote: "Fußnote",
   "Attach File": "Datei anfügen",
+  "Record Audio": "Audio aufnehmen",
   "Emoji & Symbols": "Emoji und Symbole",
   "Date and Time": "Datum und Uhrzeit",
   "Drop Cap": "Initial",
@@ -208,6 +209,7 @@ export default {
   Links: "Links",
   Tables: "Tabellen",
   Illustrations: "Illustrationen",
+  Media: "Medien",
   Comments: "Kommentare",
   Text: "Text",
   Symbols: "Symbole",
@@ -302,6 +304,7 @@ export default {
   "Search commands to pin": "Befehle zum Anheften suchen",
   "Icon for {name}": "Symbol für {name}",
   "{tab} · {group}": "{tab} · {group}",
+  "Stop Recording · {time}": "Aufnahme stoppen · {time}",
 
   "{columns} × {rows} Table": "{columns} × {rows} Tabelle",
 
@@ -327,4 +330,6 @@ export default {
     "Markiere zuerst den Text, dessen Format du kopieren willst.",
   "Format painter stays on. Press Esc when you are done.":
     "Format übertragen bleibt aktiv. Drücke Esc, wenn du fertig bist.",
+  "Recording did not start. Check that Obsidian may use the microphone.":
+    "Die Aufnahme wurde nicht gestartet. Prüfe, ob Obsidian das Mikrofon verwenden darf.",
 } satisfies Record<string, string>;

@@ -51,7 +51,7 @@ export function createButton(
   button.addEventListener("pointerover", () => {
     button.setAttribute(
       "aria-label",
-      withHotkey(spec.name, host.hotkeyFor(spec)),
+      withHotkey(host.labelFor(spec), host.hotkeyFor(spec)),
     );
   });
 
