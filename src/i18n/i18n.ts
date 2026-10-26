@@ -13,7 +13,6 @@ type Dict = Readonly<Record<string, string>>;
 /** `as const` freezes these tables at compile time only, so they can be renamed. */
 type Named = { name: string };
 
-/** Keyed by what `getLanguage()` returns; English is the source text. */
 const DICTS: Record<string, Dict> = {
   de,
   es,
@@ -28,7 +27,6 @@ const DICTS: Record<string, Dict> = {
 const EMPTY: Dict = {};
 let current: Dict = EMPTY;
 
-/** Every row whose `name` is display text, gathered once at import. */
 const ROWS: readonly Named[] = [
   ...COMMANDS,
   ...BUILT_IN_COMMAND_TABS.flatMap((tab) => [tab, ...tab.groups]),
@@ -46,7 +44,6 @@ export function setLanguage(code: string): void {
   }
 }
 
-/** Text no table owns: UI literals and notices, keyed by their own English. */
 export function t(text: string, vars?: Record<string, string>): string {
   const template = current[text] || text;
   if (!vars) return template;

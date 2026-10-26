@@ -7,7 +7,6 @@ import type {
   ToolbarVisibility,
 } from "./types";
 
-/** Defaults, migration, and which Positions exist right now. */
 export const CURRENT_SETTINGS_VERSION = 1;
 
 export const DEFAULT_SETTINGS = {
@@ -25,7 +24,6 @@ export const DEFAULT_SETTINGS = {
 
 export const TOOLBAR_POSITIONS = ["top", "following", "fixed"] as const;
 
-/** The three Positions and the editor menu, in the order the row shows them. */
 export const TOOLBAR_TOGGLES = [
   ...TOOLBAR_POSITIONS,
   "editorMenu",
@@ -63,7 +61,6 @@ function normalizePinned(raw: unknown): PinnedCommand[] {
   for (const entry of raw) {
     const source = (entry ?? {}) as Record<string, unknown>;
     const commandId = source["commandId"];
-    // One button per command: a duplicate pin would only ever run twice.
     if (
       typeof commandId !== "string" ||
       commandId === "" ||
@@ -94,7 +91,6 @@ function normalizeFlag(raw: unknown, key: keyof Settings): boolean {
   return typeof raw === "boolean" ? raw : (DEFAULT_SETTINGS[key] as boolean);
 }
 
-/** Same for `charUsage`: a bump would be worse than an empty map. */
 export function normalizeSettings(raw: unknown): Settings {
   const source = (raw ?? {}) as Record<string, unknown>;
   if (source["version"] !== CURRENT_SETTINGS_VERSION)
@@ -122,7 +118,6 @@ export function normalizeSettings(raw: unknown): Settings {
   };
 }
 
-/** The toggles in force now, or `null` when mobile is off: nothing shows there. */
 function visibilityFor(
   settings: Settings,
   isMobile: boolean,
@@ -131,7 +126,6 @@ function visibilityFor(
   return isMobile ? settings.mobile : settings.desktop;
 }
 
-/** Which toolbar positions should exist now. Never mutates stored settings. */
 export function enabledToolbarPositions(
   settings: Settings,
   isMobile: boolean,
@@ -142,7 +136,6 @@ export function enabledToolbarPositions(
     : [];
 }
 
-/** Same master switch: mobile off means the editor menu goes with the bars. */
 export function editorMenuEnabled(
   settings: Settings,
   isMobile: boolean,

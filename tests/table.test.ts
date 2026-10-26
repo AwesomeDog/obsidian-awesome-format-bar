@@ -48,7 +48,6 @@ function run(input: string, fn: (doc: string, at: number) => Plan): string {
   return applyChanges(doc, fn(doc, offset).changes);
 }
 
-/** `removeDuplicateRows` also reports how many rows it dropped. */
 function dedupe(input: string): { text: string; removed: number | null } {
   const { doc, offset } = caret(input);
   const { plan, removed } = removeDuplicateRows(doc, offset, TIGHT);
@@ -112,7 +111,6 @@ describe("formatTable", () => {
   });
 
   it("ignores the size pipe of an embed below the table", () => {
-    // `![[a.png|100]]` held a pipe, so the scan swallowed it as a body row.
     expect(
       run("|a|b|\n|-|-|\n|c^|d|\n![[a.png|100]]", (doc, at) =>
         formatTable(doc, at, PADDED),
@@ -135,7 +133,6 @@ describe("formatTable", () => {
   });
 
   it("does not leave a one-line $$ block open", () => {
-    // Paired `$$` on one line: a miscount disables every table below it.
     const doc = ["$$ a + b = c $$", "", "|a|b|", "|-|-|", "|^c|d|"].join("\n");
     expect(run(doc, (text, at) => formatTable(text, at, PADDED))).toBe(
       [
@@ -149,7 +146,6 @@ describe("formatTable", () => {
   });
 
   it("keeps the indentation of a table nested in a list item", () => {
-    // Rewriting it flush left would pull the table out of the list.
     const doc = ["- item", "  |a|b|", "  |-|-|", "  |^c|d|"].join("\n");
     expect(run(doc, (text, at) => formatTable(text, at, PADDED))).toBe(
       ["- item", "  | a   | b   |", "  | --- | --- |", "  | c   | d   |"].join(
@@ -222,7 +218,6 @@ describe("insertRowAbove", () => {
         "| e   | f   |",
       ].join("\n"),
     );
-    // Start of the first cell of the inserted row, which is rendered line 2.
     expect(plan.select).toEqual({ from: 30, to: 30 });
   });
 });
@@ -467,8 +462,7 @@ describe("alignColumn", () => {
     );
   });
 
-  // A selection is linear, so dragging over two columns of two rows also
-  // covers what lies between them on the first row.
+  // A selection is linear, so it covers what lies between its ends.
   it("aligns every column the selection touches on any of its rows", () => {
     expect(
       alignSelection("|a|b|c|\n|-|-|-|\n|^[1|2|3|\n|4|5]|6|", "left"),
@@ -561,7 +555,6 @@ describe("sortRows", () => {
   });
 
   it("treats the column as text once one cell is not a number", () => {
-    // `1.5` before `1.10` is text order; read as numbers they would swap.
     expect(
       run("|v|\n|-|\n|1.5|\n|^1.10|\n|x|", (doc, at) =>
         sortRows(doc, at, TIGHT, false),
@@ -586,7 +579,6 @@ describe("removeDuplicateRows", () => {
   });
 
   it("reads a row as a whole: one cell apart and both stay", () => {
-    // Nothing to drop, so the table is not even re-rendered.
     const { text, removed } = dedupe("|a|b|\n|-|-|\n|^1|x|\n|1|y|");
     expect(text).toBe("|a|b|\n|-|-|\n|1|x|\n|1|y|");
     expect(removed).toBe(0);
@@ -618,7 +610,6 @@ describe("planTableEnter", () => {
     expect(applyChanges(doc, plan?.changes ?? [])).toBe(
       ["| a   | b   |", "| --- | --- |", "| c   | d   |"].join("\n"),
     );
-    // Start of the "c" cell: line 3 of the rendered text, first character.
     expect(plan?.select).toEqual({ from: 30, to: 30 });
   });
 
@@ -936,7 +927,6 @@ describe("tableToText", () => {
 });
 
 describe("insertCellBreak", () => {
-  /** `[` … `]` is the selection, a bare `[` a caret. */
   function breakAt(input: string): string | null {
     const from = input.indexOf("[");
     const to = input.indexOf("]");
@@ -1025,7 +1015,6 @@ describe("emptyTable", () => {
   });
 });
 
-/** `^` marks a collapsed caret; the table goes in as a block of its own. */
 function block(input: string, table: string): { text: string; caret: number } {
   const { doc, offset } = caret(input);
   const plan = insertTableBlock(doc, [{ from: offset, to: offset }], table);

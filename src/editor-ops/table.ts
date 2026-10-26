@@ -24,9 +24,8 @@ export interface TableFormat {
 
 export interface MarkdownTable {
   readonly lines: Lines;
-  /** Header line; the delimiter row is `start + 1`. */
+  /** Header line; `start + 1` is the delimiter row, `rows[0]` the header. */
   readonly start: number;
-  /** Header first, body after. The delimiter row is not a row. */
   readonly rows: readonly (readonly string[])[];
   readonly align: readonly ColumnAlignment[];
 }
@@ -61,7 +60,6 @@ function splitCells(text: string): string[] {
   return cells;
 }
 
-/** Cells of one row, outer pipes dropped, `\|` unescaped, each cell trimmed. */
 function splitRow(line: string): string[] {
   let text = line.trim();
   if (text.startsWith("|")) text = text.slice(1);
@@ -100,7 +98,6 @@ function parseBlock(
   };
 }
 
-/** Shared by the caret lookup and the document scan, so both agree on a table. */
 function tableScan(
   lines: Lines,
   fenced: readonly boolean[],
@@ -147,7 +144,6 @@ function escapeCell(text: string): string {
   return text.replace(/\|/g, "\\|").replace(/\r?\n/g, "<br>");
 }
 
-/** The column count is the widest row; short rows pad with empty cells. */
 export function renderTable(
   rows: readonly (readonly string[])[],
   align: readonly ColumnAlignment[],
@@ -158,7 +154,6 @@ export function renderTable(
     Array.from({ length: columns }, (_, i) => escapeCell(row[i] ?? "")),
   );
 
-  // Widths once per column: `draw` would re-scan the column on every cell.
   const widths = Array.from({ length: columns }, (_, column) =>
     format.padWidth
       ? Math.max(3, ...cells.map((row) => displayWidth(row[column] ?? "")))
@@ -195,7 +190,6 @@ export function renderTable(
   return out.join("\n");
 }
 
-/** A grid pick arrives as `3x4`: columns first, the way Word labels them. */
 export function parseTableSize(
   optionValue: string,
 ): { columns: number; rows: number } | null {
@@ -207,7 +201,6 @@ export function parseTableSize(
   return columns >= 1 && rows >= 2 ? { columns, rows } : null;
 }
 
-/** `rows` counts the header, so a Markdown table is never shorter than two. */
 export function emptyTable(
   columns: number,
   rows: number,
@@ -219,7 +212,6 @@ export function emptyTable(
   return renderTable(blank, [], format);
 }
 
-/** Insert `table` as a block of its own, replacing `ranges`. */
 export function insertTableBlock(
   doc: string,
   ranges: readonly Range[],
@@ -229,7 +221,6 @@ export function insertTableBlock(
   return insertBlock(doc, ranges, table, "| ".length);
 }
 
-/** Word's Convert to Text: one tab-separated line per row, header included. */
 interface TableEditContext {
   readonly cell: TableCellPosition;
   readonly columns: number;
@@ -269,8 +260,7 @@ function findTableEditContext(
   };
 }
 
-/** Every table op looks the caret's table up the same way; `miss` is the answer when
- * there is none: `NO_CHANGE` for a command, `null` to let Enter and Tab through. */
+/** Every table op looks the caret's table up the same way; `miss` answers when there is none. */
 function withTable<T>(
   doc: string,
   offset: number,
@@ -306,7 +296,6 @@ function edit(
   };
 }
 
-/** Deletes the block, taking the newline above it when it ends the file. */
 function dropBlock(table: MarkdownTable): Plan {
   const { lines } = table;
   const last = table.start + table.rows.length;
@@ -339,7 +328,7 @@ function swapAt<T>(list: readonly T[], a: number, b: number): T[] {
   }
   return out;
 }
-/** A blank row at row `at`, with the caret in its first cell. */
+
 function insertRowAt(
   doc: string,
   offset: number,
@@ -353,7 +342,6 @@ function insertRowAt(
   });
 }
 
-/** Above the header is impossible: the header is the first line by definition. */
 export function insertRowAbove(
   doc: string,
   offset: number,
@@ -362,7 +350,6 @@ export function insertRowAbove(
   return insertRowAt(doc, offset, format, (row) => Math.max(1, row));
 }
 
-/** Below the last row appends; below the header is the first body row. */
 export function insertRowBelow(
   doc: string,
   offset: number,
@@ -371,7 +358,6 @@ export function insertRowBelow(
   return insertRowAt(doc, offset, format, (row) => row + 1);
 }
 
-/** A blank column at column `at`, `delta` cells from the caret's own. */
 function insertColumnAt(
   doc: string,
   offset: number,
@@ -397,7 +383,6 @@ export function insertColumnLeft(
   return insertColumnAt(doc, offset, format, 0);
 }
 
-/** Right of the last column appends. */
 export function insertColumnRight(
   doc: string,
   offset: number,
@@ -406,7 +391,6 @@ export function insertColumnRight(
   return insertColumnAt(doc, offset, format, 1);
 }
 
-/** Deleting the last row deletes the table: a header alone is not a table. */
 export function deleteRow(
   doc: string,
   offset: number,
@@ -441,7 +425,6 @@ export function deleteColumn(
   );
 }
 
-/** Word's Delete Table: the whole block goes, newlines and all. */
 export function deleteTable(doc: string, offset: number): Plan {
   const found = tableAt(doc, offset);
   return found ? dropBlock(found) : NO_CHANGE;
@@ -478,8 +461,6 @@ export function moveColumn(
   });
 }
 
-/** The columns a selection touches: aligning a span of cells aligns them all,
- * the way Word does. A selection inside one cell still yields one column. */
 function columnsInRange(table: MarkdownTable, range: Range): number[] {
   const { lines } = table;
   const last = table.start + table.rows.length;
@@ -547,7 +528,6 @@ export function formatAllTables(doc: string, format: TableFormat): Plan {
   return { changes: order(changes) };
 }
 
-/** Sorts the body by the column under the caret. The header never moves. */
 export function sortRows(
   doc: string,
   offset: number,
@@ -566,8 +546,6 @@ export function sortRows(
   });
 }
 
-/** Excel's Remove Duplicates: whole rows, header excluded. `removed` is what the
- * caller reports; `null` means there was no table at all. */
 export function removeDuplicateRows(
   doc: string,
   offset: number,
@@ -596,8 +574,7 @@ export function removeDuplicateRows(
   );
 }
 
-/** Shift+Enter inside a cell: GFM keeps a row on one line, so the break has to be `<br>`.
- * `null` outside a table, so the editor keeps its own Shift+Enter there. */
+/** GFM keeps a row on one line, so a break inside a cell is `<br>`. */
 export function insertCellBreak(
   doc: string,
   ranges: readonly Range[],
@@ -606,7 +583,6 @@ export function insertCellBreak(
   return cells.length === 0 ? null : insertText(doc, cells, "<br>");
 }
 
-/** Transposes the header and body while regenerating the delimiter row. */
 export function transposeTable(
   doc: string,
   offset: number,
@@ -624,7 +600,6 @@ export function transposeTable(
       { length: table.rows.length },
       () => "none" as const,
     );
-    // Keep the caret in the corresponding logical cell: (row, column) -> (column, row).
     const targetRow = Math.min(cell.column, rows.length - 1);
     const targetColumn = Math.min(cell.row, table.rows.length - 1);
     return withCaretAt(
@@ -635,7 +610,6 @@ export function transposeTable(
   });
 }
 
-/** Offset of the first character of `column` on rendered line `line`. */
 function cellOffset(rendered: string, line: number, column: number): number {
   const lines = rendered.split("\n");
   const target = lines[line] ?? "";
@@ -655,7 +629,6 @@ function cellOffset(rendered: string, line: number, column: number): number {
   return before + target.length;
 }
 
-/** `plan` with a collapsed caret in the `column` cell of rendered `line`. */
 function withCaretAt(plan: Plan, line: number, column: number): Plan {
   const change = plan.changes[0];
   if (!change) return plan;
@@ -677,7 +650,6 @@ export function planTableEnter(
   });
 }
 
-/** Tab moves horizontally; the right edge grows the table by one column. */
 export function planTableTab(
   doc: string,
   offset: number,

@@ -6,11 +6,9 @@ import {
   type Range,
 } from "./plan";
 
-/** A fence is a divider for renumbering, sorting, joining and splitting alike.
- * The marker is captured, so a ``` block never closes on `~~~`; `$` counts too. */
+/** Captured, so a ``` block never closes on `~~~`. */
 export const FENCE = /^\s*(`{3,}|~{3,}|\${2,})/;
 
-/** True for a fence marker and every line it holds, so a selection starting inside one is protected. */
 export function fenceMask(lines: Lines): boolean[] {
   const out = new Array<boolean>(lines.count).fill(false);
   let open = "";
@@ -46,8 +44,7 @@ const LATIN = new Intl.Collator("en-US", {
   sensitivity: "base",
 });
 
-/** Han only sorts by pinyin under `zh`; latin, hangul and cyrillic come out
- * the same under either, so the script decides which collator to ask. */
+/** Han sorts by pinyin under `zh`; the script picks the collator. */
 const HAN = new Intl.Collator("zh-Hans-CN", {
   numeric: true,
   sensitivity: "base",
@@ -61,18 +58,16 @@ export function compareText(a: string, b: string): number {
   return collator.compare(a, b);
 }
 
-/** A number as a spreadsheet writes one: `1.5`, `-3`, `¥1,200`, `87%`. */
+/** A number as a spreadsheet writes one: `1.5`, `-3`, `$1,200`, `87%`. */
 const NUMBER = /^[-+]?\p{Sc}?\d[\d,]*(?:\.\d+)?%?$/u;
 
-/** Numbers for a whole column of them, else `null`: one `n/a` and the column
- * is text again, because half a column sorted numerically is just wrong. */
+/** Null if any value is not a number: half a column sorted numerically is wrong. */
 export function asNumbers(values: readonly string[]): readonly number[] | null {
   if (!values.every((value) => NUMBER.test(value))) return null;
   return values.map((value) => parseFloat(value.replace(/[\p{Sc}%,]/gu, "")));
 }
 
-/** `items` in the order `valueOf` puts them: numbers numerically, else by text; ties keep order.
- * Shared by Sort Rows and the header click, so clicking agrees with the command. */
+/** Shared by Sort Rows and the header click, so clicking agrees with the command. */
 export function sortByText<T>(
   items: readonly T[],
   valueOf: (item: T) => string,
@@ -172,7 +167,6 @@ export function blocksFor(
   return out;
 }
 
-/** Replacement covering lines `a..b` without touching the trailing newline. */
 export function replaceBlock(
   lines: Lines,
   a: number,
@@ -182,7 +176,6 @@ export function replaceBlock(
   return { from: lines.start(a), to: lines.end(b), text };
 }
 
-/** Removes a whole line including the newline that attaches it. */
 export function removeLine(lines: Lines, line: number): Change {
   if (line + 1 < lines.count)
     return { from: lines.start(line), to: lines.start(line + 1), text: "" };
@@ -193,8 +186,7 @@ export function removeLine(lines: Lines, line: number): Change {
   };
 }
 
-/** A block written beside a paragraph stops being a block: a table renders as
- * plain text, and so does a Mermaid diagram. Both need a blank line around. */
+/** A block written beside a paragraph stops being one; both need a blank line. */
 export function breakBefore(text: string): string {
   if (text === "") return "";
   if (text.endsWith("\n\n")) return "";
@@ -207,8 +199,7 @@ export function breakAfter(text: string): string {
   return text.startsWith("\n") ? "\n" : "\n\n";
 }
 
-/** Writes `text` as its own block over `ranges`, caret left at `caretInText`.
- * Several cursors keep the editor's own selections: no single caret to name. */
+/** Caret at `caretInText`; several cursors keep the selections the editor made. */
 export function insertBlock(
   doc: string,
   ranges: readonly Range[],

@@ -13,14 +13,12 @@ import type { CommandPopup } from "../src/model/types";
 const itemsOf = (popup: CommandPopup | undefined, options?: PopupOptions) =>
   popupSections(popup, options).flatMap((section) => section.items);
 
-/** A machine holding one curated font and one of its own. */
 const MACHINE: LocalFonts = {
   extra: ["MonoLisa"],
   installed: new Set(["georgia", "monolisa"]),
   kind: "ready",
 };
 
-/** A machine that cannot be read: the curated fonts, and nothing else. */
 const CURATED_ONLY: PopupOptions = { localFonts: { kind: "unsupported" } };
 
 describe("popupSections", () => {
@@ -28,7 +26,6 @@ describe("popupSections", () => {
     for (const [popup, ids] of Object.entries(DROPDOWN_ITEMS)) {
       const items = itemsOf(popup as CommandPopup);
       expect(items.map((item) => item.command?.id)).toEqual([...ids]);
-      // A drop-down item is a command of its own: no option value of the popup's.
       for (const item of items) expect(item.value).toBeUndefined();
     }
   });
@@ -40,7 +37,6 @@ describe("popupSections", () => {
       swatch: "#c00000",
       value: "color:#c00000",
     });
-    // No Color last but one, then the picker the editor menu cannot draw.
     expect(colors[colors.length - 2]).toMatchObject({
       icon: "ban",
       value: "color:none",
@@ -61,7 +57,6 @@ describe("popupSections", () => {
         expect(item.value?.startsWith(`${property}:`)).toBe(true);
   });
 
-  // A `;` or `"` in the stack would write a span nothing can read back.
   it("gives every font a stack the span can carry", () => {
     for (const item of itemsOf("font-family", CURATED_ONLY)) {
       const value = item.value ?? "";
@@ -71,7 +66,6 @@ describe("popupSections", () => {
     }
   });
 
-  // One name and one generic family: a longer chain buys nothing.
   it("follows every font with one generic family and nothing else", () => {
     const bare = [
       "none",
@@ -98,7 +92,6 @@ describe("popupSections", () => {
     expect(item?.preview).toBeUndefined();
   });
 
-  // A font's own name has to reach the note as the machine spells it.
   it("translates the generic families and leaves a font's own name alone", () => {
     const labels = (section?: PopupSection): string[] =>
       (section?.items ?? []).map((choice) => choice.label);

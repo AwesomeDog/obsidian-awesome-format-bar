@@ -33,20 +33,17 @@ export function registeredCommandAvailable(app: App, id: string): boolean {
   return registry !== null && registry.findCommand(id) !== undefined;
 }
 
-/** Whether a command would run right now: `checkCallback` gates it. */
 export function registeredCommandEnabled(app: App, id: string): boolean {
   const command = commandRegistry(app)?.findCommand(id);
   if (!command) return false;
   return command.checkCallback ? command.checkCallback(true) === true : true;
 }
 
-/** Every palette command, other plugins' included. */
 export function registeredCommands(app: App): Command[] {
   const registry = commandRegistry(app);
   return registry?.commands ? Object.values(registry.commands) : [];
 }
 
-/** Live label of a command, or `undefined` when nothing is registered under it. */
 export function registeredCommandName(
   app: App,
   id: string,
@@ -61,7 +58,6 @@ export function executeRegisteredCommand(app: App, id: string): void {
     throw new Error(`Registered command unavailable: ${id}`);
 }
 
-/** Forwarded IDs the command table references but the registry does not have. */
 export function missingForwardedCommands(
   app: App,
   specs: readonly CommandSpec[],

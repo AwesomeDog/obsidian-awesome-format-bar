@@ -1,23 +1,16 @@
 import { compareText, type Lines } from "./lines";
 
-/** One node of the outline Sort Headings and Sort List both walk: the lines it
- * owns, and the ones nested under it. */
+/** One node of the outline: its own lines, and the ones nested under it. */
 export interface Outline {
-  /** What nests a node under another: a heading's level, or an item's indent. */
   readonly level: number;
-  /** The line it opens on, and the last line its subtree covers. */
   readonly start: number;
   end: number;
-  /** Its own line, plus every line that opens no node of its own. */
   readonly lines: string[];
   readonly children: Outline[];
-  /** Moved by the sort and by moving an item: which node it sits under. */
   parent: Outline | null;
 }
 
-/** Parses `from..to` into a tree: `levelOf` gives the depth of a line that opens
- * a node, or `null` for one that rides with the node already open. A node is
- * closed by the next line at its own depth or a shallower one. */
+/** `levelOf` gives a line depth, or `null` for one that rides with the open node. */
 export function parseOutline(
   lines: Lines,
   from: number,
@@ -30,7 +23,6 @@ export function parseOutline(
   for (let line = from; line <= to; line++) {
     const text = lines.at(line);
     const level = levelOf(text, line);
-    // Rides with the node on top of the stack; with none open, it is dropped.
     if (level === null) {
       stack[stack.length - 1]?.lines.push(text);
       continue;
@@ -39,7 +31,6 @@ export function parseOutline(
     while (stack.length > 0) {
       const current = stack[stack.length - 1];
       if (!current || current.level < level) break;
-      // The line above this one was its last: that closes its subtree.
       current.end = line - 1;
       stack.pop();
     }
@@ -59,7 +50,6 @@ export function parseOutline(
   return roots;
 }
 
-/** The deepest node covering `line`, or `null` outside the tree. */
 export function outlineAt(
   nodes: readonly Outline[],
   line: number,
@@ -71,7 +61,6 @@ export function outlineAt(
   return null;
 }
 
-/** Sorts every level by `textOf`; a node keeps its own lines and its children. */
 export function sortOutline(
   nodes: readonly Outline[],
   textOf: (node: Outline) => string,
@@ -81,10 +70,8 @@ export function sortOutline(
     .sort((a, b) => compareText(textOf(a), textOf(b)));
 }
 
-/** Moves `node` one place `direction` inside its level, carrying its subtree;
- * out of siblings at the end of a level, it leaves its parent for the uncle on
- * that side. `null` when it cannot move: at the ends of the outline. Shared by
- * Move Section and Move List Item, so both agree on what a step is. */
+/** Moves `node` one place `direction`, carrying its subtree; out of siblings it joins
+ * the uncle on that side. Shared by Move Section and Move List Item. */
 export function moveOutline(
   roots: Outline[],
   node: Outline,
@@ -103,7 +90,6 @@ export function moveOutline(
 
   const parent = node.parent;
   if (!parent) return null;
-  // Out of siblings: leave the parent and join the uncle on that side.
   const uncles = parent.parent?.children ?? roots;
   const uncle = uncles[uncles.indexOf(parent) + direction];
   if (!uncle) return null;
@@ -114,8 +100,7 @@ export function moveOutline(
   return flattenOutline(roots, node);
 }
 
-/** Depth-first, a node before its children. `targetLine` is where `target`
- * landed: the index of its first line, or -1 when it is not in the tree. */
+/** Depth-first, a node before its children; `targetLine` is where `target` landed. */
 export function flattenOutline(
   nodes: readonly Outline[],
   target?: Outline,

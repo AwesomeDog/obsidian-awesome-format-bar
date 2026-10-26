@@ -3,15 +3,12 @@ import type { CommandSpec } from "../model/types";
 import { openFloatingLayer } from "./floating";
 import type { ToolbarHost } from "./host";
 
-/** Word's grid: ten columns by eight rows, swept with the mouse. */
 const COLUMNS = 10;
 const ROWS = 8;
-/** Cell indices, one below the size `choose` sends: the smallest table is one
- * column by two rows — a header alone is not a table, but a single column is. */
+/** One below the size `choose` sends: the smallest table is one column, two rows. */
 const MIN_COLUMN = 0;
 const MIN_ROW = 1;
-/** Nothing is under the pointer yet, so the grid opens on 2 × 2 and the sweep
- * takes it from there, down to one column if that is where it lands. */
+/** The grid opens on 2 x 2; the sweep takes it down to one column. */
 const START_COLUMN = 1;
 const START_ROW = 1;
 
@@ -23,7 +20,6 @@ const ARROWS: Readonly<Record<string, readonly [number, number]>> = {
   ArrowDown: [0, 1],
 };
 
-/** The size grid: the only popup that keeps a state while the pointer moves. */
 export function openTableGrid(
   anchor: HTMLElement,
   spec: CommandSpec,
@@ -34,7 +30,6 @@ export function openTableGrid(
   const grid = layer.el.createDiv({ cls: "table-grid" });
   grid.style.setProperty("--formatbar-grid-columns", String(COLUMNS));
 
-  // Zero-based cell under the pointer, which is also the size: `3x4` is (2, 3).
   let column = START_COLUMN;
   let row = START_ROW;
   const cells: HTMLButtonElement[] = [];
@@ -50,10 +45,8 @@ export function openTableGrid(
       if (!cell) continue;
       const picked = at % COLUMNS <= column && Math.floor(at / COLUMNS) <= row;
       cell.toggleClass("is-picked", picked);
-      // One tab stop: the size is the focus, not each of the eighty cells.
       cell.tabIndex = picked && at === row * COLUMNS + column ? 0 : -1;
     }
-    // Only the focused cell is ever announced, so it is the one to name.
     cells[row * COLUMNS + column]?.setAttribute("aria-label", size);
   };
 
@@ -76,8 +69,7 @@ export function openTableGrid(
     });
     const atColumn = at % COLUMNS;
     const atRow = Math.floor(at / COLUMNS);
-    // Hover previews on the desktop; a touch has no hover, so the tap itself
-    // has to set the size before the click chooses it.
+    // A touch has no hover, so the tap sets the size before the click chooses it.
     cell.addEventListener("mouseenter", () => move(atColumn, atRow));
     cell.addEventListener("pointerdown", () => move(atColumn, atRow));
     cell.addEventListener("click", choose);

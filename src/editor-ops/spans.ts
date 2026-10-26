@@ -9,7 +9,6 @@ import {
   type Range,
 } from "./plan";
 
-/** One writer for all four: Font Color, Highlight Color, Font Size, Font Family. */
 export type SpanProperty = "color" | "background" | "font-size" | "font-family";
 
 const SPAN_OPEN_BEFORE = /<span style="([^"]*)">$/;
@@ -19,7 +18,6 @@ interface Declaration {
   readonly value: string;
 }
 
-/** The declarations of an inline `style`, in the order they are written. */
 function declarations(style: string): Declaration[] {
   const out: Declaration[] = [];
   for (const part of style.split(";")) {
@@ -38,7 +36,6 @@ function declarations(style: string): Declaration[] {
   return out;
 }
 
-/** What `style` gives `property`, or `null` when it gives it nothing. */
 export function styleValue(
   style: string,
   property: SpanProperty,
@@ -48,7 +45,6 @@ export function styleValue(
   return null;
 }
 
-/** `style` carrying `property: value`; `null` takes the property out. */
 export function setStyle(
   style: string,
   property: SpanProperty,
@@ -72,7 +68,6 @@ export function applySpanStyle(
     if (range.from === range.to) continue;
     const inner = doc.slice(range.from, range.to);
 
-    // The selection swallows the whole span: rewrite it in place.
     const whole = SPAN_WHOLE.exec(inner);
     if (whole) {
       const style = setStyle(whole[1] ?? "", property, value);
@@ -85,7 +80,6 @@ export function applySpanStyle(
       continue;
     }
 
-    // The selection sits exactly inside a span: rewrite the opening tag.
     const before = SPAN_OPEN_BEFORE.exec(doc.slice(0, range.from));
     if (before && doc.startsWith(SPAN_CLOSE, range.to)) {
       const style = setStyle(before[1] ?? "", property, value);
@@ -118,12 +112,10 @@ export function applySpanStyle(
   return { changes: order(changes) };
 }
 
-/** Obsidian's own colored highlight: a `==` pair with an emoji after the open. */
 const HIGHLIGHT_OPEN = "==";
 const HIGHLIGHT_CLOSE = "==";
 
-/** The `==` opening a highlight whose text starts at `to`, with the emoji it carries.
- * An emoji is one code point outside the BMP, so the marker sits two units back. */
+/** An emoji is one code point outside the BMP, so the marker sits two units back. */
 function highlightOpening(
   doc: string,
   to: number,
@@ -138,8 +130,7 @@ function highlightOpening(
     : null;
 }
 
-/** Highlight Color: the six Obsidian renders go out as `==🟡…==`, the rest as a span.
- * `null` is No Color, which takes the highlight away whole, markers and all. */
+/** The six native colors go out as `==…==`; `null` takes the highlight away whole. */
 export function applyHighlightColor(
   doc: string,
   ranges: readonly Range[],
@@ -151,7 +142,6 @@ export function applyHighlightColor(
   for (const range of normalizeRanges(ranges)) {
     if (range.from === range.to) continue;
 
-    // The selection swallows the whole highlight: rewrite it in place.
     const inner = doc.slice(range.from, range.to);
     if (
       inner.startsWith(HIGHLIGHT_OPEN) &&
@@ -177,7 +167,6 @@ export function applyHighlightColor(
       continue;
     }
 
-    // The selection sits exactly inside a highlight: rewrite its opening.
     const opening = doc.startsWith(HIGHLIGHT_CLOSE, range.to)
       ? highlightOpening(doc, range.from)
       : null;
@@ -197,7 +186,6 @@ export function applyHighlightColor(
             text: `${HIGHLIGHT_OPEN}${native.emoji}`,
           });
       } else {
-        // A span color and an emoji would both color the same text.
         if (opening.emoji)
           changes.push({
             from: range.from - opening.emoji.length,
@@ -216,8 +204,7 @@ export function applyHighlightColor(
       continue;
     }
 
-    // The selection is exactly the body of its span: rewrite the tags in place,
-    // so a background span becomes a highlight instead of nesting one.
+    // Rewriting the tags in place makes a background span a highlight, not a nested one.
     const before = SPAN_OPEN_BEFORE.exec(doc.slice(0, range.from));
     if (before && doc.startsWith(SPAN_CLOSE, range.to)) {
       const style = setStyle(before[1] ?? "", "background", null);
@@ -256,11 +243,7 @@ export function clearOwnedInlineHtml(
   );
   if (selected.length === 0) return { changes: [] };
 
-  const { pairs, orphans } = pairTags(
-    doc,
-    // `<span />` closes itself: there is no tag to pair it with.
-    (tag) => !/\/\s*>$/.test(tag.raw),
-  );
+  const { pairs, orphans } = pairTags(doc, (tag) => !/\/\s*>$/.test(tag.raw));
 
   const changes: Change[] = [];
   for (const { open, close } of pairs) {

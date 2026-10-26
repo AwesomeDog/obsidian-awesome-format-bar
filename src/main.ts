@@ -96,8 +96,7 @@ const PAINTER_CLASS = "awesome-format-bar-painter";
 /** Word latches its painter on a double click; this is that window. */
 const DOUBLE_CLICK_MS = 400;
 
-/** How often the bar asks the recorder what it is doing: it keeps its state to
- * itself, and its own microphone button can start and stop one too. */
+/** The recorder keeps its state to itself, so the bar has to ask. */
 const RECORDING_POLL_MS = 1000;
 
 /** A keyboard selection ends on a keyup, so navigation keys paint too. */
@@ -112,18 +111,13 @@ const NAVIGATION_KEYS = new Set([
   "PageUp",
 ]);
 
-/** Format Painter: the brush outlives the click that picked it up. */
 interface Painter {
-  /** Pure data, so it paints into another pane's note just as well. */
   readonly format: InlineFormat;
-  /** Where it came from: painting the source again is a no-op. */
   source: string;
-  /** Double click: the brush stays on until Esc. */
   continuous: boolean;
   readonly armedAt: number;
 }
 
-/** Identifies a set of selections, so a stray mouseup on them paints nothing. */
 function keyOf(ranges: readonly Range[]): string {
   return ranges.map((range) => `${range.from}:${range.to}`).join(",");
 }
@@ -154,15 +148,12 @@ export default class AwesomeFormatBarPlugin extends Plugin {
   /** Mutable on purpose: Obsidian re-reads this array on `updateOptions()`. */
   private readonly editorExtensions: Extension[] = [];
 
-  /** The armed Format Painter, or `null` when the brush is down. */
   private painter: Painter | null = null;
 
-  /** Tear-down for the document listeners the brush paints through. */
   private painterOff: Array<() => void> = [];
 
   override async onload(): Promise<void> {
     this.settings = normalizeSettings(await this.loadData());
-    // Normalized on load, so nothing downstream ever sees raw data.
     await this.saveData(this.settings);
     // Before anything reads a name: it renames the command table in place.
     setLanguage(getLanguage());
@@ -191,7 +182,6 @@ export default class AwesomeFormatBarPlugin extends Plugin {
         this.addEditorMenu(menu, editor, info),
       ),
     );
-    // Another note is another job: the brush does not follow you there.
     this.registerEvent(
       this.app.workspace.on("file-open", () => this.disarmPainter()),
     );
@@ -219,9 +209,7 @@ export default class AwesomeFormatBarPlugin extends Plugin {
   }
 
   override onunload(): void {
-    // Before the toolbars go: `disarmPainter` refreshes them.
     this.disarmPainter();
-    // The sort arrow is CSS on <body>, and every window we bound may wear it.
     for (const doc of this.boundDocuments.keys())
       doc.body.removeClass(SORTABLE_CLASS);
     for (const off of this.boundDocuments.values()) off();
@@ -236,17 +224,14 @@ export default class AwesomeFormatBarPlugin extends Plugin {
     await this.refreshToolbars();
   }
 
-  /** Every flag below is CSS on <body>, so it has to reach every window we bound. */
   private markBodyClass(cls: string, on: boolean): void {
     for (const doc of this.boundDocuments.keys()) doc.body.toggleClass(cls, on);
   }
 
-  /** The arrow is CSS, so the setting reaches it as a body class. */
   private markSortable(): void {
     this.markBodyClass(SORTABLE_CLASS, this.settings.sortTableOnHeaderClick);
   }
 
-  /** Read once per editor: a toggle reaches it through `updateOptions()`. */
   private applyEditorExtensions(): void {
     this.editorExtensions.length = 0;
     if (this.settings.showWhitespace)
@@ -258,14 +243,12 @@ export default class AwesomeFormatBarPlugin extends Plugin {
     return this.rebuild();
   }
 
-  /** Typewriter parks a line, and Live Preview has none */
   private async enterSourceMode(): Promise<void> {
     const view = this.app.workspace.getActiveViewOfType(MarkdownView);
     if (view?.getState()["source"] === true) return;
     await this.execute(commandById("toggle-live-preview-source"));
   }
 
-  /** A deferred leaf has no view yet; activation picks it up. */
   private async rebuild(): Promise<void> {
     const active = this.app.workspace.getActiveViewOfType(MarkdownView)?.leaf;
     if (active?.isDeferred) await active.loadIfDeferred();
@@ -274,7 +257,6 @@ export default class AwesomeFormatBarPlugin extends Plugin {
     this.app.workspace.iterateAllLeaves((leaf) => {
       if (leaf.isDeferred) return;
       if (!(leaf.view instanceof MarkdownView)) return;
-      // Bound in every mode: Reading view needs the header-click handler too.
       this.bindDocument(leaf.view.contentEl.ownerDocument);
       if (leaf.view.getMode() === "source") views.add(leaf.view);
     });
@@ -295,10 +277,8 @@ export default class AwesomeFormatBarPlugin extends Plugin {
     for (const toolbar of this.toolbars.values()) toolbar.queueRefresh();
   }
 
-  /** Bound per document: pop-out windows fire their own events. */
   private bindDocument(doc: Document): void {
     if (this.boundDocuments.has(doc)) return;
-    // One controller per document: a closed window takes its listeners with it.
     const controller = new AbortController();
     const { signal } = controller;
     this.boundDocuments.set(doc, () => controller.abort());
@@ -318,7 +298,6 @@ export default class AwesomeFormatBarPlugin extends Plugin {
     };
     this.registerDomEvent(doc, "click", onClick, { signal });
     this.markSortable();
-    // A window opened mid-stroke: the brush has to paint there too.
     this.markPainter();
     if (this.painter) this.listenForPaint();
 
@@ -326,7 +305,6 @@ export default class AwesomeFormatBarPlugin extends Plugin {
     if (win) this.registerDomEvent(win, "resize", refresh, { signal });
   }
 
-  /** A window went away: drop its listeners before forgetting the document. */
   private unbindDocument(doc: Document): void {
     const off = this.boundDocuments.get(doc);
     if (!off) return;
@@ -334,8 +312,7 @@ export default class AwesomeFormatBarPlugin extends Plugin {
     this.boundDocuments.delete(doc);
   }
 
-  /** The view an event came from, not the active one: a pop-out and an inactive pane
-   * each hold an editor, and `iterateAllLeaves` reaches the pop-out ones too. */
+  /** The view an event came from, not the active one: pop-outs hold editors too. */
   private viewOf(target: EventTarget | null): MarkdownView | null {
     if (!(target instanceof Element)) return null;
     let found: MarkdownView | null = null;
@@ -348,7 +325,6 @@ export default class AwesomeFormatBarPlugin extends Plugin {
     return found;
   }
 
-  /** Table navigation runs before the editor's normal Enter and Tab behavior. */
   private onTableKeydown(evt: KeyboardEvent): void {
     if (evt.isComposing) return;
     const isEnter = evt.key === "Enter";
@@ -366,8 +342,7 @@ export default class AwesomeFormatBarPlugin extends Plugin {
     const view = this.viewOf(evt.target);
     if (!view || view.getMode() !== "source") return;
     const editor = view.editor;
-    // A selection would be replaced; let Enter do that. Shift+Enter replaces
-    // it with the break instead, or the default newline would break the row.
+    // A selection would be replaced; Enter does that, Shift+Enter breaks the row.
     if (isEnter && !evt.shiftKey && hasSelection(editor)) return;
 
     const doc = editor.getValue();
@@ -435,8 +410,7 @@ export default class AwesomeFormatBarPlugin extends Plugin {
         return {
           inTable: conditions.inTable,
           isEnabled: (spec: CommandSpec): boolean => canRun(spec, conditions),
-          // A mode that stays on until switched off. Zen lit the view it fullscreened, so
-          // only that view's bar lights; the rest are held plugin- or workspace-wide.
+          // Zen lit the view it fullscreened, so only that bar lights.
           isLatched: (spec: CommandSpec): boolean =>
             (spec.id === "format-painter" && this.painter !== null) ||
             (spec.id === "show-whitespace" && this.settings.showWhitespace) ||
@@ -450,15 +424,13 @@ export default class AwesomeFormatBarPlugin extends Plugin {
     };
   }
 
-  /** Right-click in the editor: the whole command table, in Obsidian's menu. */
   private addEditorMenu(
     menu: Menu,
     editor: Editor,
     info: MarkdownView | MarkdownFileInfo,
   ): void {
     if (!editorMenuEnabled(this.settings, Platform.isMobile)) return;
-    // A Canvas card or a hover editor is editable too; a note in Reading view
-    // is not, and there the menu is the only thing that would answer.
+    // A Canvas card or a hover editor is editable; a note in Reading view is not.
     const view = info instanceof MarkdownView ? info : undefined;
     const editable = !view || view.getMode() === "source";
     addCommandsToMenu(menu, {
@@ -474,7 +446,6 @@ export default class AwesomeFormatBarPlugin extends Plugin {
 
   private registerCommands(): void {
     for (const spec of COMMANDS as readonly CommandSpec[]) {
-      // A drop-down button is a container; alone in the palette it does nothing.
       if (spec.commandPalette === false) continue;
       const run = (): void => {
         void this.execute(spec);
@@ -497,14 +468,12 @@ export default class AwesomeFormatBarPlugin extends Plugin {
     this.queueRefresh();
   }
 
-  /** Rebuilt per render, so a label follows the registry. */
   private pinnedSpecs(): CommandSpec[] {
     return pinnedSpecs(this.settings.pinned, (commandId) =>
       registeredCommandName(this.app, commandId),
     );
   }
 
-  /** The manager and the Settings fallback share the same picker. */
   async pinCommand(): Promise<void> {
     const pinnedIds = new Set(
       this.settings.pinned.map((entry) => entry.commandId),
@@ -582,7 +551,6 @@ export default class AwesomeFormatBarPlugin extends Plugin {
     for (const toolbar of this.toolbars.values()) toolbar.rerender();
   }
 
-  /** Every button, popup choice and palette command funnels through here. */
   private async execute(
     spec: CommandSpec,
     view?: MarkdownView,
@@ -594,7 +562,6 @@ export default class AwesomeFormatBarPlugin extends Plugin {
       await this.setShowWhitespace(!this.settings.showWhitespace);
       return;
     }
-    // Same shape as Show Whitespace: state lives in the module, here to reconfigure.
     if (spec.id === "typewriter-mode") {
       toggleTypewriterMode();
       // Only on the way in: leaving should not yank the view back.
@@ -604,7 +571,6 @@ export default class AwesomeFormatBarPlugin extends Plugin {
       this.queueRefresh();
       return;
     }
-    // Word's painter is one button with two roles, so it carries its own state.
     if (spec.id === "format-painter") {
       this.runPainter(view);
       return;
@@ -688,7 +654,6 @@ export default class AwesomeFormatBarPlugin extends Plugin {
     this.disarmPainter();
   }
 
-  /** Arms the brush with whatever the selection at `range.from` is wearing. */
   private armPainter(editor: Editor, ranges: readonly Range[]): void {
     const source = ranges.find((range) => range.from !== range.to);
     if (!source) return;
@@ -713,12 +678,10 @@ export default class AwesomeFormatBarPlugin extends Plugin {
     this.queueRefresh();
   }
 
-  /** The crosshair is CSS, so the flag has to reach every window's body. */
   private markPainter(): void {
     this.markBodyClass(PAINTER_CLASS, this.painter !== null);
   }
 
-  /** One transaction: a multi-cursor paint is still a single undo. */
   private paint(
     editor: Editor,
     ranges: readonly Range[],
@@ -729,11 +692,9 @@ export default class AwesomeFormatBarPlugin extends Plugin {
     painter.source = keyOf(selectionRanges(editor));
   }
 
-  /** Word paints when the drag ends; a keyboard selection ends on a keyup. */
   private paintSelection(target: EventTarget | null): void {
     const painter = this.painter;
     if (!painter) return;
-    // The view the selection was made in, which a pop-out may own.
     const view = this.viewOf(target);
     if (!view || view.getMode() !== "source") return;
     const editor = view.editor;
@@ -745,7 +706,6 @@ export default class AwesomeFormatBarPlugin extends Plugin {
     if (!painter.continuous) this.disarmPainter();
   }
 
-  /** Bound per document: the mouseup that paints may come from any window. */
   private listenForPaint(): void {
     this.stopListeningForPaint();
     const onMouseUp = (evt: MouseEvent): void =>
@@ -774,7 +734,6 @@ export default class AwesomeFormatBarPlugin extends Plugin {
     this.painterOff = [];
   }
 
-  /** One-shot diagnostics for bad icons or missing forwarded commands. */
   private reportStartupGaps(): void {
     const icons = missingIcons();
     if (icons.length)

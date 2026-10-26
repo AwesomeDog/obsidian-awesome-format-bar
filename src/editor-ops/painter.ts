@@ -63,8 +63,7 @@ interface ScanState extends VerbatimState {
   on: Record<PairKey, boolean>;
   openAt: Partial<Record<PairKey, { at: number; length: number }>>;
   spans: SpanOpen[];
-  /** Drop caps seen and not yet closed: walked past, but never reaching `spans`,
-   * which is what keeps a cap's `3.4em` from leaving as a font size. */
+  /** Caps seen and not yet closed: kept out of `spans`, so a cap stays a cap. */
   dropDepth: number;
   /** The color an `==` carries as an emoji, if any. */
   emoji: string | null;
@@ -90,7 +89,6 @@ function freshState(): ScanState {
   };
 }
 
-/** A walk of its own: the same markers, a state of its own. */
 function copyState(state: ScanState): ScanState {
   return {
     ...state,
@@ -102,7 +100,6 @@ function copyState(state: ScanState): ScanState {
 
 function apply(state: ScanState, marker: InlineMarker): void {
   switch (marker.kind) {
-    // Code and math are the walk's own state: it carries `verbatim` along.
     case "escape":
     case "code":
     case "math":
@@ -177,7 +174,6 @@ function peelLayers(doc: string, range: Range, state: ScanState): Range {
     }
     const span = SPAN_WHOLE.exec(doc.slice(inner.from, inner.to));
     if (span && !isDropCapStyle(span[1] ?? "")) {
-      // Whole match less the body and the close tag: just the open tag.
       const openLength =
         span[0].length - SPAN_CLOSE.length - (span[2] ?? "").length;
       state.spans.push({
@@ -195,7 +191,6 @@ function peelLayers(doc: string, range: Range, state: ScanState): Range {
   }
 }
 
-/** `range.from` sits inside every marker that is in force there. */
 function capture(
   doc: string,
   range: Range,
@@ -214,7 +209,6 @@ function capture(
   return { state, inner: peelLayers(doc, range, state) };
 }
 
-/** Where `key` stops being in force, or `null` before the paragraph ends. */
 function closingOffset(
   doc: string,
   state: ScanState,
@@ -240,8 +234,7 @@ function closingOffset(
   return found;
 }
 
-/** What the selection carries: `whole` begins and ends inside it, `opened` runs past an
- * edge, `closed` began before one. A straddling run is reported, never cut in half. */
+/** `whole` sits inside, `opened` runs past an edge, `closed` began before one. */
 interface Enclosed {
   readonly whole: InlineMarker[];
   readonly opened: InlineMarker[];
@@ -261,8 +254,7 @@ function enclosedMarkers(
   const scan = copyState(state);
   const pending = new Map<PairKey, InlineMarker[]>();
   const openSpans: InlineMarker[] = [];
-  /** Drop caps opened in this walk: their close tags pair with these, not
-   *  with `openSpans`, and neither is reported as a marker to cut. */
+  /** Caps opened here pair with these, not with `openSpans`. */
   let dropOpen = 0;
   const whole: InlineMarker[] = [];
   const opened: InlineMarker[] = [];
@@ -295,7 +287,6 @@ function enclosedMarkers(
       return true;
     }
     const stack = pending.get(marker.kind) ?? [];
-    // `apply` has just toggled the flag: on means this marker opened the run.
     if (scan.on[marker.kind]) {
       if (within) stack.push(marker);
       pending.set(marker.kind, stack);
@@ -313,7 +304,6 @@ function enclosedMarkers(
   return { whole, opened, closed };
 }
 
-/** Markers opening on the selection's first character: that character's format. */
 function leadingMarkers(doc: string, at: number, state: ScanState): void {
   let cursor = at;
   for (;;) {
@@ -373,8 +363,7 @@ function spanStyleOf(state: ScanState): string {
 
 export function captureFormat(doc: string, range: Range): InlineFormat {
   const { state } = capture(doc, range);
-  // A selection may open on its own marker: `**bold** plain` starts bold even
-  // though the marker sits inside the selection, not in front of it.
+  // A selection may open on its own marker, so `**bold** plain` starts bold.
   leadingMarkers(doc, range.from, state);
   return {
     bold: state.on.bold,
@@ -398,8 +387,7 @@ export function paintFormat(
   format: InlineFormat,
 ): Plan {
   const changes: Change[] = [];
-  // A color Obsidian renders natively rides on the `==` marker, so it never reaches
-  // the span: the two must disagree for a background span to become a highlight.
+  // A native color rides on the `==` marker, so it never reaches the span.
   const wantedStyle = styleText({
     ...format,
     background: nativeHighlightOf(format.background ?? "")
@@ -413,8 +401,7 @@ export function paintFormat(
     const open: string[] = [];
     const close: string[] = [];
     const cuts: Change[] = [];
-    // A close marker starting on the tail rides on the tail change: two changes at one
-    // offset would overlap, which CodeMirror rejects. Same at the head.
+    // Two changes at one offset overlap, which CodeMirror rejects.
     let tail = inner.to;
     let head = inner.from;
 
@@ -426,12 +413,10 @@ export function paintFormat(
     const enclosed = enclosedMarkers(doc, state, inner.from, inner.to);
     const spans = [...state.spans];
 
-    // Formatting that begins and ends inside the selection is part of its
-    // text: it all comes off, so one format covers the whole selection.
+    // Formatting inside the selection is part of its text, so it all comes off.
     for (const marker of enclosed.whole) cut(marker);
 
-    // A run the selection cuts in half keeps its formatting outside: the marker moves
-    // to the edge. Word splits the run the same way — only the selected text changes.
+    // A cut run keeps its formatting outside: the marker moves to the edge.
     for (const marker of enclosed.opened) {
       cut(marker);
       close.push(doc.slice(marker.at, marker.at + marker.length));
@@ -442,8 +427,7 @@ export function paintFormat(
       if (marker.kind === "span") spans.pop();
     }
 
-    // A highlight carrying one of the native six carries its color in the marker;
-    // any other color has no native syntax and goes out as a span.
+    // A highlight in the native six carries its color in the marker.
     const native = nativeHighlightOf(format.background ?? "");
 
     for (const pair of PAIRS) {
@@ -451,8 +435,7 @@ export function paintFormat(
         pair.key === "highlight"
           ? format.highlight && (!format.background || Boolean(native))
           : format[pair.key];
-      // After the cuts above the selection wears `state.on[key]` uniformly,
-      // unless a run ended inside it and was closed at the near edge instead.
+      // After the cuts the selection wears the flag uniformly, unless a run ended inside.
       const carries =
         state.on[pair.key] &&
         !enclosed.closed.some((marker) => marker.kind === pair.key);
@@ -469,12 +452,8 @@ export function paintFormat(
       const start = state.openAt[pair.key];
       if (!start) continue;
       const end = closingOffset(doc, state, inner.to, pair.key);
-      // Ending on the far edge, the run stops there; otherwise it carries on
-      // past the selection and needs its marker back.
       if (end && end.at === inner.to) tail = end.at + end.length;
       else close.push(pair.open);
-      // A run opening with the selection moves out of it wholesale; one reaching back
-      // past the near edge is closed there, so only the selected characters change.
       if (start.at + start.length === inner.from) cut(start);
       else open.unshift(pair.close);
     }
@@ -482,7 +461,6 @@ export function paintFormat(
     const outer = spanStyleOf({ ...state, spans });
     if (wantedStyle !== outer) {
       const span = spans[spans.length - 1];
-      // The selection is the whole body of its span: rewrite that tag in place.
       if (
         span &&
         span.end === inner.from &&
@@ -492,17 +470,12 @@ export function paintFormat(
         if (wantedStyle) open.push(`<span style="${wantedStyle}">`);
         else tail = inner.to + SPAN_CLOSE.length;
       } else if (wantedStyle) {
-        // Inside a longer span: Font Color wraps the selection the same way.
         open.push(`<span style="${wantedStyle}">`);
         close.unshift(SPAN_CLOSE);
       } else if (span) {
-        // Nothing to wrap in: step out of the span instead of nesting one. Ending on the
-        // far edge it stops there; otherwise it carries on and needs its tag back.
         if (doc.startsWith(SPAN_CLOSE, inner.to))
           tail = inner.to + SPAN_CLOSE.length;
         else close.push(doc.slice(span.at, span.end));
-        // Opening with the selection, the tag moves out wholesale; reaching
-        // back past the near edge, it is closed there instead.
         if (span.end === inner.from)
           cuts.push({ from: span.at, to: span.end, text: "" });
         else open.unshift(SPAN_CLOSE);

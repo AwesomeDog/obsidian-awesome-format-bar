@@ -1,14 +1,7 @@
 #!/usr/bin/env node
-/**
- * Renders the GitHub social preview card — the 1280×640 image GitHub shows
- * when this repository is linked (Settings → General → Social preview).
+/** Renders the GitHub social preview card: the SVG is built in memory, then rasterized.
  *
  *   node scripts/social-preview.mjs
- *
- * The card is an SVG (docs/img/social-preview.svg) built in memory with the
- * README screenshot embedded, then rasterized to docs/img/social-preview.png.
- * Only the copy below and the screenshot path are hard-coded; everything else
- * is derived.
  */
 import { execFileSync } from "node:child_process";
 import { readFileSync, writeFileSync } from "node:fs";
@@ -35,9 +28,7 @@ const BG = { from: "#1b1032", to: "#2a1a4f" };
 const ACCENT = "#a78bfa";
 const FONT = "Helvetica Neue, Helvetica, Arial, sans-serif";
 
-// The screenshot is cropped to its window chrome, ribbon, floating bar and
-// sample table — the rest of the editor is empty. The cut lands in the blank
-// line under the table, never mid-row.
+// Cropped to window chrome, ribbon, bar and table; the cut lands in a blank line.
 const shot = { w: 1576, h: 867, crop: 560 };
 const box = { w: 980, bottom: 44 };
 box.h = Math.round((box.w * shot.crop) / shot.w);
@@ -48,8 +39,7 @@ const badge = { y: 44, h: 30, w: 300, size: 13 };
 const title = { y: 156, size: 56 };
 const lines = { y: 198, lh: 26, size: 20 };
 
-// The screenshot is a hand-written SVG, so it is nested as-is rather than
-// rasterized into a data URL — the card stays vector end to end.
+// Nested as-is, so the card stays vector end to end.
 const shotBody = readFileSync(SHOT_PATH, "utf8")
   .replace(/^[\s\S]*?<svg[^>]*>/, "")
   .replace(/<\/svg>\s*$/, "");

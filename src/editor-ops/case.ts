@@ -10,7 +10,6 @@ export type CaseMode =
   | "snake"
   | "kebab";
 
-/** The four modes that re-join words instead of rewriting them in place. */
 type JoinMode = "camel" | "pascal" | "snake" | "kebab";
 
 const WORD = /\p{L}[\p{L}\p{M}\p{Nd}'’]*/gu;

@@ -23,7 +23,6 @@ import {
   type CommandContext,
 } from "./dispatch";
 
-/** The one place a CommandSpec becomes an effect. */
 /** Resolved once per refresh, not once per button. */
 interface RunConditions {
   readonly app: App;
@@ -38,7 +37,6 @@ export function runConditions(app: App, editor: Editor | null): RunConditions {
     app,
     hasEditor: editor !== null,
     hasSelection: editor !== null && hasSelection(editor),
-    // One line, not the document: enough to grey buttons out.
     inTable:
       editor !== null && isTableLine(editor.getLine(editor.getCursor().line)),
     inImage:
@@ -67,7 +65,6 @@ export async function executeSpec(
   context: CommandContext,
 ): Promise<void> {
   try {
-    // A popup command with no choice yet is a no-op: the popup does the work.
     if (spec.popup && context.optionValue === undefined) return;
 
     if (spec.kind === "clipboard") {
@@ -129,7 +126,6 @@ export async function executeSpec(
   }
 }
 
-/** Context for the editor being edited right now, or `null` if there is none. */
 export function resolveContext(
   app: App,
   format: TableFormat,
@@ -142,8 +138,7 @@ export function resolveContext(
     : { app, editor, format, optionValue };
 }
 
-// The editor with focus, or `null`: `getActiveViewOfType` misses Canvas cards and
-// hover editors, and a note in Reading view is a MarkdownView in a mode that is not source.
+// `getActiveViewOfType` misses Canvas cards and hover editors.
 function focusedEditor(app: App): Editor | null {
   const owner = app.workspace.activeEditor;
   if (owner && !(owner instanceof MarkdownView)) return owner.editor ?? null;

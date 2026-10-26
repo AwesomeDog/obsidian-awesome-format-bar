@@ -45,7 +45,6 @@ const ICON_FALLBACKS: Readonly<Record<string, readonly string[]>> = {
   "rows-3": ["rows", "list"],
 };
 
-/** Obsidian registers its own Lucide set under a `lucide-` prefix. */
 function known(): Set<string> {
   knownIcons ??= new Set(getIconIds().map((id) => id.replace(/^lucide-/, "")));
   return knownIcons;
@@ -61,7 +60,6 @@ export function allIconNames(): string[] {
   return sortedIcons;
 }
 
-/** First name in the chain this Obsidian has. */
 export function resolveIconName(icon: string): string {
   if (iconExists(icon)) return icon;
   return (ICON_FALLBACKS[icon] ?? []).find(iconExists) ?? PLACEHOLDER_ICON;
@@ -71,7 +69,6 @@ export function resolveIcon(el: HTMLElement, icon: string): void {
   setIcon(el, resolveIconName(icon));
 }
 
-/** Icons that fall through to the placeholder. */
 export function missingIcons(): string[] {
   return COMMANDS.filter(
     (spec) => resolveIconName(spec.icon) === PLACEHOLDER_ICON,

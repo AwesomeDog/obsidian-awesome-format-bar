@@ -1,5 +1,3 @@
-/** `keywords` is searched, never displayed; `name` is the tooltip. */
-
 /** [char, name, keywords] */
 type SymbolEntry = readonly [string, string, string];
 

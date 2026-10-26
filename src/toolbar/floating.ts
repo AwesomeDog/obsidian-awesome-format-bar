@@ -1,4 +1,3 @@
-/** One floating layer at a time: positioning and dismissal, nothing else. */
 export interface FloatingLayer {
   readonly el: HTMLElement;
   /** Re-measure once the content is in: the rect is empty before that. */
@@ -19,11 +18,8 @@ export function closeFloating(): void {
 /** Opening one closes the other: two layers cannot share Escape. */
 export function openFloatingLayer(
   anchor: HTMLElement,
-  /** Escape only: the caret goes back because the menu closed without acting. */
   onDismiss?: () => void,
-  /** Every close, dismissal included, for callers holding something outside. */
   onClose?: () => void,
-  /** Return false to prevent closing on Escape (e.g. to clear input first). */
   canDismiss?: (event: KeyboardEvent) => boolean,
 ): FloatingLayer {
   closeFloating();
@@ -33,7 +29,6 @@ export function openFloatingLayer(
     doc.fullscreenElement instanceof HTMLElement
       ? doc.fullscreenElement
       : doc.body;
-  // Carries the base class: the layer lives outside the bar.
   const el = host.createDiv({
     cls: "awesome-format-bar awesome-format-bar--menu",
   });

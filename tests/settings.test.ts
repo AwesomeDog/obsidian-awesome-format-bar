@@ -30,7 +30,6 @@ import { readSettingKey, writeSettingKey } from "../src/settings";
 
 const full = (): Settings => structuredClone(DEFAULT_SETTINGS);
 
-/** The built-in tabs are deeply readonly; widen once for test iteration. */
 const allGroups = (): RibbonGroup[] =>
   BUILT_IN_COMMAND_TABS.flatMap((tab) => [
     ...(tab.groups as readonly RibbonGroup[]),
@@ -294,7 +293,6 @@ describe("command table contract", () => {
   });
 
   it("places every ribbon command in exactly one group", () => {
-    // Drop-down items live in the popover, so no group lists them.
     const inDropdown = new Set(Object.values(DROPDOWN_ITEMS).flat());
     const expected = COMMANDS.map((spec) => spec.id).filter(
       (id) => !inDropdown.has(id),
@@ -305,9 +303,7 @@ describe("command table contract", () => {
     expect([...placed].sort()).toEqual([...expected].sort());
   });
 
-  // Both the popover and the editor menu read a drop-down's items out of
-  // DROPDOWN_ITEMS, so a button listed nowhere there opens empty. The pop-ups
-  // that carry their own data are the exceptions.
+  // Both the popover and the editor menu read items out of DROPDOWN_ITEMS.
   it("gives every drop-down button items to show", () => {
     const ownData = new Set([
       "case",
@@ -333,8 +329,6 @@ describe("command table contract", () => {
     expect(BUILT_IN_COMMAND_TABS[3]?.groups.map((group) => group.name)).toEqual(
       ["Rows & Columns", "Format", "Alignment", "Data"],
     );
-    // Paste as Table is the one table command that stays live anywhere, so it
-    // sits on Insert · Tables with the other two ways to get a table.
     expect(BUILT_IN_COMMAND_TABS[1]?.groups[0]?.commands).toContain(
       "paste-as-table",
     );
@@ -353,7 +347,6 @@ describe("command table contract", () => {
         expect(spec.registeredCommandId).toBeTruthy();
   });
 
-  /** Drop-down buttons are containers; off the palette, but with real items. */
   it("keeps dropdown buttons off the command palette", () => {
     for (const spec of COMMANDS as readonly CommandSpec[]) {
       if (!spec.popup) {

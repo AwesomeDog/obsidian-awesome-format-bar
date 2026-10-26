@@ -19,9 +19,6 @@ import { allIconNames, resolveIcon } from "./toolbar/icons";
 
 const NEW_GROUP = "__new-group__";
 
-/** Pick a command, then an icon; both are `FuzzySuggestModal`. */
-
-/** An empty note gets no element, or every row grows a line. */
 function renderRow(
   el: HTMLElement,
   title: string,
@@ -57,7 +54,6 @@ abstract class Picker<T> extends FuzzySuggestModal<T> {
     super.selectSuggestion(value, evt);
   }
 
-  /** Only a modal that closes without a choice ends the flow. */
   override onClose(): void {
     if (!this.chosen) this.onDismiss();
   }
@@ -128,7 +124,6 @@ class IconPicker extends Picker<string> {
   }
 }
 
-/** Resolves with the finished entry, or `null` when the user backs out. */
 export function pickPinnedCommand(
   app: App,
   pinnedIds: ReadonlySet<string>,
@@ -144,7 +139,6 @@ export function pickPinnedCommand(
         const finish = (icon: string): void => {
           resolve({ commandId: command.id, icon, name: command.name });
         };
-        // Backing out keeps the pin: the icon has a default.
         new IconPicker(app, command.name, finish, () => {
           finish(DEFAULT_PIN_ICON);
         }).open();
@@ -154,7 +148,6 @@ export function pickPinnedCommand(
   });
 }
 
-/** Resolves with the new icon, or `null` when the user backs out. */
 export function pickIcon(
   app: App,
   commandName: string,
@@ -237,7 +230,6 @@ function askText(
   );
 }
 
-/** What the pointer is carrying: a whole group, or one command inside one. */
 type Drag =
   | { kind: "group"; index: number }
   | { kind: "command"; group: string; index: number };
@@ -386,8 +378,7 @@ class PinnedManagerModal extends Modal {
     this.render();
   }
 
-  /** The four drag events one row needs; `accepts` is asked twice, to arm the drop
-   * and to take it, so a row showing no drop target never takes one. */
+  /** `accepts` is asked twice: once to arm the drop, once to take it. */
   private dragRow(
     el: HTMLElement,
     start: () => Drag,
@@ -417,7 +408,6 @@ class PinnedManagerModal extends Modal {
     this.dragRow(
       el,
       () => ({ kind: "group", index }),
-      // Onto itself is not a move, so it is not a drop target either.
       (drag) => drag.kind === "group" && drag.index !== index,
       (from) => this.actions.moveGroup(from, index),
     );
@@ -427,7 +417,6 @@ class PinnedManagerModal extends Modal {
     this.dragRow(
       el,
       () => ({ kind: "command", group, index }),
-      // Only within the group it started in: moving across groups is the menu.
       (drag) =>
         drag.kind === "command" && drag.group === group && drag.index !== index,
       (from) => this.actions.moveCommand(group, from, index),

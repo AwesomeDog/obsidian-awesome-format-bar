@@ -6,8 +6,7 @@ interface LocalFontData {
 
 type QueryLocalFonts = () => Promise<readonly LocalFontData[]>;
 
-/** Hangs off `window`, not `navigator.fonts`: that form does not exist in
- * Obsidian's renderer. Desktop only. */
+/** Off `window`, not `navigator.fonts`: that form does not exist in Obsidian. */
 function queryLocalFonts(): QueryLocalFonts | undefined {
   const candidate = (window as unknown as { queryLocalFonts?: unknown })
     .queryLocalFonts;
@@ -16,15 +15,13 @@ function queryLocalFonts(): QueryLocalFonts | undefined {
     : undefined;
 }
 
-/** `pending` is a read still running; `unsupported` is mobile, an old renderer,
- * or a read that failed. */
+/** `pending` is a read still running; `unsupported` is mobile or a failed read. */
 export type LocalFonts =
   | { readonly kind: "unsupported" }
   | { readonly kind: "pending" }
   | {
       readonly kind: "ready";
       readonly installed: ReadonlySet<string>;
-      /** Those minus the curated groups. */
       readonly extra: readonly string[];
     };
 
@@ -33,7 +30,6 @@ let started = false;
 
 const waiting = new Set<() => void>();
 
-/** Reads the machine's fonts once, in the background; nothing awaits it. */
 export function loadLocalFonts(): void {
   if (started) return;
   started = true;
@@ -52,7 +48,6 @@ function accept(data: readonly LocalFontData[]): void {
   settle({ kind: "ready", installed, extra });
 }
 
-/** Settle happens once, so listeners are dropped as they fire. */
 function settle(next: LocalFonts): void {
   state = next;
   const listeners = [...waiting];
@@ -60,13 +55,11 @@ function settle(next: LocalFonts): void {
   for (const listener of listeners) listener();
 }
 
-/** Called when the read lands; returns how to stop being called. */
 export function onLocalFonts(listener: () => void): () => void {
   waiting.add(listener);
   return () => waiting.delete(listener);
 }
 
-/** Every family once, lowercased; `extra` is those the curated groups lack. */
 export function splitLocalFonts(families: readonly string[]): {
   readonly installed: ReadonlySet<string>;
   readonly extra: readonly string[];
@@ -85,8 +78,7 @@ export function splitLocalFonts(families: readonly string[]): {
   return { installed, extra };
 }
 
-/** `setStyle` splits declarations on `;` and `SPAN_WHOLE` matches up to the first
- * `"`, so a family carrying either would write a span nothing can read back. */
+/** A family with `;` or `"` would write a span nothing can read back. */
 export function isSafeFamily(name: string): boolean {
   return name !== "" && !/['";\\<>]/.test(name);
 }

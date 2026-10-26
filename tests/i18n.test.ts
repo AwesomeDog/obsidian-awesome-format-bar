@@ -11,7 +11,6 @@ import ru from "../src/i18n/ru";
 import zh from "../src/i18n/zh";
 import zhTW from "../src/i18n/zh-TW";
 
-/** Keys are English source text, so an entry no source contains is an orphan. */
 function sourceText(dir: string): string {
   return readdirSync(dir, { withFileTypes: true })
     .flatMap((entry) => {

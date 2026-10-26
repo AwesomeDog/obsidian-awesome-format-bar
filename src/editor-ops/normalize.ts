@@ -9,7 +9,6 @@ import {
 /** A URL is copied verbatim: an em dash where `--` was stops it resolving. */
 const ADDRESS = /[a-z][a-z0-9+.-]*:\/\/[^\s<>()"']+/giu;
 
-/** Runs `edit` over everything but the URLs, which pass through untouched. */
 function outsideUrls(text: string, edit: (chunk: string) => string): string {
   let out = "";
   let at = 0;
@@ -21,7 +20,6 @@ function outsideUrls(text: string, edit: (chunk: string) => string): string {
   return out + edit(text.slice(at));
 }
 
-/** The one walk over fenced code: `editable` is false inside a fence; `null` drops the line. */
 function editLines(
   text: string,
   edit: (line: string, editable: boolean) => string | null,
@@ -36,7 +34,6 @@ function editLines(
   return kept.join("\n");
 }
 
-/** Character-level: an editable line is split around its inline code. */
 function mapEditable(
   text: string,
   transform: (part: string) => string,
@@ -64,8 +61,7 @@ export function smartPunctuation(doc: string, ranges: readonly Range[]): Plan {
       // Outside the URL walk, so a URL never resets which quote is opening.
       let opening = true;
       const edit = (chunk: string): string =>
-        // Three or more hyphens are a rule, frontmatter or a table delimiter;
-        // only a bare pair is an em dash.
+        // Three or more hyphens are a rule or a delimiter; only a bare pair is an em dash.
         chunk
           .replace(/\.\.\./g, "…")
           .replace(/-{2,}/g, (run) => (run.length === 2 ? "—" : run))
@@ -82,7 +78,6 @@ export function smartPunctuation(doc: string, ranges: readonly Range[]): Plan {
 }
 
 export function cjkSpacing(doc: string, ranges: readonly Range[]): Plan {
-  // `CJK.source` already is a character class, brackets included.
   const cjk = CJK.source;
   const latin = `[A-Za-z0-9]`;
   return transformRanges(doc, scope(doc, ranges), (text) =>
@@ -139,8 +134,7 @@ function normalizeBullets(text: string): string {
   );
 }
 
-// ZWSP, word joiner, BOM and soft hyphen: nothing in a note can want them. ZWJ and ZWNJ
-// are left alone — an emoji family needs one, Persian needs the other.
+// ZWJ and ZWNJ stay: an emoji family needs one, Persian the other.
 const INVISIBLE = /[\u00ad\u200b\u2060\ufeff]/gu;
 
 /** NBSP turns into a plain space; every other odd space is someone's layout. */

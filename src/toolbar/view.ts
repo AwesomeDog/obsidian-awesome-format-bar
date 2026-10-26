@@ -2,7 +2,6 @@ import type { ToolbarPosition } from "../model/types";
 import type { ToolbarHost } from "./host";
 import { ToolbarSurface } from "./surface";
 
-/** One toolbar per view, owning 0-3 surfaces. */
 export class ViewToolbar {
   private readonly surfaces = new Map<ToolbarPosition, ToolbarSurface>();
   private readonly host: ToolbarHost;
@@ -32,7 +31,6 @@ export class ViewToolbar {
     this.queueRefresh();
   }
 
-  /** Pinned changes while running, and the Ribbon cannot patch its groups. */
   rerender(): void {
     for (const surface of this.surfaces.values()) surface.rerender();
   }

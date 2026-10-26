@@ -65,7 +65,6 @@ import {
 } from "../src/editor-ops/spans";
 import { formatDate, formatDateTime } from "../src/editor-ops/text";
 
-/** Applies a plan the way the editor would, so tests assert on text. */
 function run(doc: string, plan: Plan): string {
   return applyChanges(doc, plan.changes);
 }
@@ -102,12 +101,10 @@ function apply(
   return run(doc, fn(doc, ranges));
 }
 
-/** `sortHeadings` works on the note as a whole, so it takes no range. */
 function sortNote(doc: string): string {
   return run(doc, sortHeadings(doc));
 }
 
-/** `numberHeadings` works on the note as a whole, so it takes no range. */
 function numberNote(doc: string, scheme: HeadingNumbering): string {
   return run(doc, numberHeadings(doc, scheme));
 }
@@ -208,7 +205,6 @@ describe("selectAll", () => {
   });
 });
 
-/** The text each range covers, so a selection reads as text and not offsets. */
 function selected(input: string): string[] | undefined {
   const { doc, ranges } = parse(input);
   return selectSimilarFormatting(doc, ranges).selections?.map((range) =>
@@ -333,7 +329,6 @@ describe("normalization", () => {
     expect(apply("[a -- b --- c ---- d]", smartPunctuation)).toBe(
       "a — b --- c ---- d",
     );
-    // No selection means the whole note, so a rule must survive untouched.
     for (const doc of [
       "a\n\n---\n\nb",
       "---\ntitle: x\n---\n\nbody",
@@ -503,13 +498,10 @@ describe("applySpanStyle", () => {
   });
 });
 
-/** The emoji are the subject here, not filler: they are what 1.14 writes. */
 describe("applyHighlightColor", () => {
-  /** The palette's own first six, in its own order. */
   const YELLOW = "#ffff00";
   const RED = "#ff0000";
   const GREEN = "#008000";
-  /** Word's other ten: no native syntax, so a span. */
   const LIME = "#00ff00";
 
   it("writes a native color as Obsidian's own marked highlight", () => {
@@ -628,7 +620,6 @@ describe("clearOwnedInlineHtml", () => {
   });
 
   it("takes a drop cap off", () => {
-    // What Clear Formatting relies on to reach the plugin's own HTML.
     expect(apply(`[${cap("3.4em")}O</span>nce]`, clearOwnedInlineHtml)).toBe(
       "Once",
     );
@@ -966,7 +957,6 @@ describe("moveSection", () => {
 });
 
 describe("selectSection", () => {
-  /** The text the command picks, so a case reads like the note. */
   const picked = (input: string): string => {
     const { doc, ranges } = parse(input);
     const range = selectSection(doc, ranges).selections?.[0];
@@ -1096,7 +1086,6 @@ describe("mergeLines", () => {
     expect(apply("[中文\n中文]", mergeLines)).toBe("中文中文");
   });
 
-  // Kana and hangul are CJK too: a space beside them reads as noise as well.
   it("joins kana and hangul without inserting a space", () => {
     expect(apply("[ひらがな\n한국어]", mergeLines)).toBe("ひらがな한국어");
   });
@@ -1149,7 +1138,6 @@ describe("duplicate", () => {
     );
   });
 
-  /** VS Code joins a selection spanning lines the same way; no line break. */
   it("selects the copy of a selection", () => {
     const { doc, ranges } = parse("[ab]cd");
     expect(duplicate(doc, ranges).select).toEqual({ from: 2, to: 4 });
@@ -1162,7 +1150,6 @@ describe("duplicate", () => {
 
   it("duplicates each cursor's line", () => {
     const { doc, ranges } = parse("a|\nb|");
-    // `Plan.select` holds one range, so the editor maps the cursors itself.
     expect(duplicate(doc, ranges).select).toBeUndefined();
     expect(run(doc, duplicate(doc, ranges))).toBe("a\na\nb\nb");
   });
@@ -1190,7 +1177,6 @@ describe("toggleParagraphAlignment", () => {
   });
 
   it("removes an empty wrapper without overlapping changes", () => {
-    // Touching lines share a newline; removing them separately overlaps.
     const { doc, ranges } = parse('<div style="text-align: center">\n|</div>');
     const plan = toggleParagraphAlignment(doc, ranges, "center");
     plan.changes.forEach((change, index) => {
@@ -1203,7 +1189,6 @@ describe("toggleParagraphAlignment", () => {
   });
 });
 
-/** The wrapper a drop cap writes, latin and full-width. */
 function cap(size: string): string {
   return `<span style="float:left;font-size:${size};line-height:.85;padding-right:.06em">`;
 }
@@ -1223,8 +1208,6 @@ describe("toggleDropCap", () => {
   });
 
   it("uses a smaller size for a full-width character", () => {
-    // The character is what is under test: a full-width glyph reads far
-    // larger than a latin one at the same `em`.
     expect(apply("|中文 and the rest", (d, r) => toggleDropCap(d, r))).toBe(
       `${cap("2.2em")}中</span>文 and the rest`,
     );
@@ -1259,8 +1242,7 @@ describe("toggleDropCap", () => {
   });
 
   it("takes one off after the paragraph became a heading", () => {
-    // Taking off must not depend on the line still being running text, or a
-    // cap written before the heading marker would be stuck there for good.
+    // Taking one off must not depend on the line still being running text.
     const doc = `# ${cap("3.4em")}O</span>nce`;
     expect(apply(`|${doc}`, (d, r) => toggleDropCap(d, r))).toBe("# Once");
   });
@@ -1280,8 +1262,7 @@ describe("toggleDropCap", () => {
   });
 
   it("moves a whole selection one way", () => {
-    // Half added and half removed is not a thing anyone asked for: the first
-    // paragraph decides.
+    // Half added and half removed is not a thing: the first paragraph decides.
     const { doc, ranges } = parse(`[${cap("3.4em")}A</span>lpha]\n\n[Beta]`);
     expect(run(doc, toggleDropCap(doc, ranges))).toBe("Alpha\n\nBeta");
   });
@@ -1309,8 +1290,7 @@ describe("insertions", () => {
     ).toHaveLength(0);
   });
 
-  // A diagram has no empty form: an empty block renders as an error, so this
-  // writes the smallest diagram of the kind, never a fence waiting to be typed.
+  // An empty block renders as an error, so the smallest diagram is written.
   it("writes a Mermaid block of its own", () => {
     expect(
       apply("|", (d, r) => insertChartBlock(d, r, "flowchart", TODAY)),
@@ -1356,8 +1336,7 @@ describe("insertions", () => {
     );
   });
 
-  // Mermaid's radar grammar wants the brace on the label's own line; a line
-  // break between them is a parse error, so the shape is worth pinning down.
+  // The radar brace belongs on the label line; a break there is a parse error.
   it("keeps a radar curve's brace on the label line", () => {
     expect(apply("|", (d, r) => insertChartBlock(d, r, "radar", TODAY))).toBe(
       [
@@ -1429,7 +1408,6 @@ describe("setImageSize", () => {
     expect(size("![alt|200](https://x/y.png)", 0, null)).toBe(
       "![alt](https://x/y.png)",
     );
-    // A bare width with no alt text is Obsidian's own short form.
     expect(size("![](https://x/y.png)", 0, "200")).toBe(
       "![200](https://x/y.png)",
     );
@@ -1452,8 +1430,6 @@ describe("setImageSize", () => {
     expect(size("![[a.png|fig 1]]", 0, "300")).toBe("![[a.png|fig 1|300]]");
     expect(size("![[a.png|fig 1|300]]", 0, "400")).toBe("![[a.png|fig 1|400]]");
     expect(size("![[a.png|fig 1|300]]", 0, null)).toBe("![[a.png|fig 1]]");
-    // Obsidian only reads the last segment, so a size that is not last is
-    // alias text: the width goes after it rather than replacing it.
     expect(size("![[a.png|300|fig 1]]", 0, "400")).toBe(
       "![[a.png|300|fig 1|400]]",
     );
@@ -1654,7 +1630,6 @@ describe("insertImageCaption", () => {
 });
 
 describe("format painter", () => {
-  /** `captureFormat` on the first [selection] of `input`. */
   function brush(input: string): InlineFormat {
     const { doc, ranges } = parse(input);
     const range = ranges[0];
@@ -1662,13 +1637,11 @@ describe("format painter", () => {
     return captureFormat(doc, range);
   }
 
-  /** Paints onto every [selection] of `input`. */
   function paint(input: string, format: InlineFormat): string {
     const { doc, ranges } = parse(input);
     return run(doc, paintFormat(doc, ranges, format));
   }
 
-  /** Nothing selected is nothing worn: the brush that clears formatting. */
   const plain = brush("[plain]");
 
   it("captures the layer a double-clicked word sits in", () => {
@@ -1744,8 +1717,7 @@ describe("format painter", () => {
   });
 
   it("does not carry a drop cap's size away as a font size", () => {
-    // A drop cap decorates the paragraph, not the character: its 3.4em is
-    // not a font size to pass on to the next one.
+    // A drop cap decorates the paragraph: its size is not a font size to pass on.
     const capped = `${cap("3.4em")}O</span>nce`;
     expect(brush(`[${capped}]`).fontSize).toBeNull();
     expect(paint("[word]", brush(`[${capped}]`))).toBe("word");
@@ -1786,10 +1758,8 @@ describe("format painter", () => {
   });
 
   it("splits a run the selection cuts in half", () => {
-    // Only the selected characters change; the run carries on around them.
     expect(paint("x **[bol]d** y", plain)).toBe("x bol**d** y");
     expect(paint("[x **bol]d** y", plain)).toBe("x bol**d** y");
-    // The run ends on the far edge, or inside the selection: same result.
     expect(paint("x **bo[ld]** y", plain)).toBe("x **bo**ld y");
     expect(paint("x **bo[ld**] y", plain)).toBe("x **bo**ld y");
   });
@@ -1802,7 +1772,6 @@ describe("format painter", () => {
     expect(paint(`x ${size}b[ig</span>] y`, plain)).toBe(
       `x ${size}b</span>ig y`,
     );
-    // A strict sub-range: the size comes off the middle only.
     expect(paint(`x ${size}b[ig]g</span> y`, plain)).toBe(
       `x ${size}b</span>ig${size}g</span> y`,
     );

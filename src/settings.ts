@@ -113,7 +113,6 @@ export class FormatBarSettingTab extends PluginSettingTab {
     ];
   }
 
-  /** Independent toggles, not one choice: Positions combine freely. */
   private platformRow(platform: PlatformKey): SettingGroupItem {
     return {
       name: t(platform === "desktop" ? "Desktop" : "Mobile"),

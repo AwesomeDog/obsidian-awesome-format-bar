@@ -14,7 +14,6 @@ import { openFloatingLayer } from "./floating";
 import type { ToolbarHost } from "./host";
 import { createSearchBox, type SearchBox } from "./search-box";
 
-/** Chip label: the word it replaced was several times wider than the rest. */
 const FREQUENT = "🕘";
 
 /** Kaomoji are whole sentences; two columns is the only readable layout. */
@@ -24,13 +23,11 @@ const COLUMNS: Readonly<Record<string, number>> = {
   symbols: 8,
 };
 
-/** Inserting does not close the panel, so several entries can go in a row. */
 export async function openCharPanel(
   anchor: HTMLElement,
   spec: CommandSpec,
   host: ToolbarHost,
 ): Promise<void> {
-  // Awaited before the layer opens: there is nothing to draw without it.
   const sources = await loadCharSources();
 
   let query = "";
@@ -52,14 +49,12 @@ export async function openCharPanel(
     () => (search ? search.dismiss() : true),
   );
 
-  // The window the panel lives in: a pop-out has one of its own.
   const win = layer.el.ownerDocument.defaultView ?? window;
   layer.el.addClass("is-char-panel");
   layer.el.setAttr("tabindex", "-1");
   const usage = host.charUsage();
   pruneUsage(usage);
 
-  // 1. Search Box with Icon and Clear Button
   search = createSearchBox(layer.el, {
     clearButton: true,
     label: t("Search characters"),
@@ -73,13 +68,11 @@ export async function openCharPanel(
   });
   const searchEl = search.el;
 
-  // 2. Top-level Source Tabs (Segmented Control: Emoji / Kaomoji / Symbols)
   const sourceTabsEl = layer.el.createDiv({
     attr: { role: "tablist" },
     cls: "char-source-tabs",
   });
 
-  // 3. Category Navigation (Single-row horizontal scrollable chips)
   const categoryNavEl = layer.el.createDiv({
     attr: { "aria-label": t("Categories"), role: "tablist" },
     cls: "char-category-nav",
@@ -97,10 +90,8 @@ export async function openCharPanel(
     { passive: false },
   );
 
-  // 4. Character Grid
   const gridEl = layer.el.createDiv({ cls: "menu-grid" });
 
-  // 5. Preview & Details Footer
   const footerEl = layer.el.createDiv({
     attr: { "aria-live": "polite" },
     cls: "char-preview-footer",
@@ -181,7 +172,6 @@ export async function openCharPanel(
 
     updatePreview(candidate, "Inserted");
 
-    // Only Frequently used can reorder, so a search needs no rebuild.
     if (!query.trim()) render();
   }
 
@@ -198,7 +188,6 @@ export async function openCharPanel(
     const frequent = searching ? [] : frequentlyUsed(source.entries, usage);
     const activeGroup =
       group || (frequent.length > 0 ? FREQUENT : (names[0] ?? ""));
-    // Sticky, or the first pick makes Frequently used appear under the cursor.
     group = activeGroup;
 
     items = searching
@@ -207,7 +196,6 @@ export async function openCharPanel(
         ? frequent
         : source.entries.filter((c) => c.group === activeGroup);
 
-    // 1. Render Segmented Source Tabs
     sourceTabsEl.replaceChildren();
     for (let i = 0; i < sources.length; i++) {
       const candidateSource = sources[i];
@@ -226,7 +214,6 @@ export async function openCharPanel(
       });
     }
 
-    // 2. Render Category Navigation Chips (hidden when searching)
     categoryNavEl.replaceChildren();
     if (searching) {
       categoryNavEl.addClass("is-hidden");
@@ -260,7 +247,6 @@ export async function openCharPanel(
       }
     }
 
-    // 3. Render Character Grid
     gridEl.replaceChildren();
     cells = [];
     if (items.length === 0) {
@@ -352,7 +338,6 @@ export async function openCharPanel(
         break;
       }
       default:
-        // Typing reaches the search box wherever focus currently sits.
         if (
           !inSearch &&
           event.key.length === 1 &&

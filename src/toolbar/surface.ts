@@ -21,7 +21,6 @@ import type { ToolbarHost } from "./host";
 import { resolveIcon } from "./icons";
 import { openPopover, type PopoverItem, type PopoverSection } from "./popover";
 
-/** One Position's bar; the Position decides the Layout. */
 const FOLLOWING_GAP = 8;
 /** Mirrors the `--size-4-4` inline margin both Compact bars get in styles.css. */
 const SIDE_MARGIN = 16;
@@ -74,7 +73,6 @@ export class ToolbarSurface {
     this.el.remove();
   }
 
-  /** Pinned buttons change while running; the rest of the Ribbon is built once. */
   rerender(): void {
     this.buttons.clear();
     this.measuredWidth = -1;
@@ -108,7 +106,6 @@ export class ToolbarSurface {
     this.renderGroups(panel);
   }
 
-  /** Word's caret: folds the command panel away and leaves the tab row. */
   private renderCollapseToggle(tabs: HTMLElement): void {
     const caret = createIconButton(tabs, {
       cls: "ribbon-collapse",
@@ -120,7 +117,6 @@ export class ToolbarSurface {
     this.syncCaret();
   }
 
-  /** Folded state rides on `<body>`: every Ribbon shares it, and it is not a setting. */
   private get collapsed(): boolean {
     return this.el.ownerDocument.body.hasClass(RIBBON_COLLAPSED);
   }
@@ -139,7 +135,6 @@ export class ToolbarSurface {
     setTooltip(caret, label);
   }
 
-  /** One group: its buttons, then its caption under them. */
   private renderGroup(
     panel: HTMLElement,
     label: string,
@@ -167,8 +162,7 @@ export class ToolbarSurface {
     this.refresh();
   }
 
-  /** Pinned entries, grouped and resolved to the specs their commands name.
-   * Rebuilt on every open: a pinned command's plugin may have gone since. */
+  /** Rebuilt on every open: a pinned command may have gone since. */
   private pinnedGroups(): readonly {
     label: string;
     specs: readonly CommandSpec[];
@@ -219,9 +213,7 @@ export class ToolbarSurface {
     return true;
   }
 
-  /** A tab the user picked: the Table tab stops following the caret. */
   private pickTab(id: TabId): void {
-    // Word unfolds the Ribbon when a tab is picked while it is folded away.
     if (this.collapsed) this.setCollapsed(false);
     this.autoSwitched = false;
     this.selectTab(id);
@@ -264,7 +256,6 @@ export class ToolbarSurface {
   }
 
   private renderCompact(): void {
-    // Flat siblings, no per-group wrapper: keeps the fold pass one loop.
     const main = this.el.createDiv({ cls: "button-row" });
     this.mainEl = main;
     COMPACT_GROUPS.forEach((group, index) => {
@@ -287,7 +278,6 @@ export class ToolbarSurface {
     this.refresh();
   }
 
-  /** The view's width, not the bar's: a Compact bar hugs its content. */
   private availableWidth(): number {
     const container = this.host.containerEl;
     const style = container.ownerDocument.defaultView
@@ -313,7 +303,6 @@ export class ToolbarSurface {
     for (const [button] of this.buttons) button.removeClass("is-hidden");
     overflow.removeClass("is-hidden");
 
-    // Never folded away: the only route to commands outside COMPACT_ORDER.
     const budget = width - overflow.offsetWidth - 12;
     const children = Array.from(main.children) as HTMLElement[];
     let used = 0;
@@ -327,7 +316,6 @@ export class ToolbarSurface {
       if (spec) this.overflowed.push(spec);
     }
 
-    // A separator is only earned once a visible button precedes and follows it.
     let seenVisible = false;
     let pending: HTMLElement | null = null;
     for (const child of children) {
@@ -343,7 +331,6 @@ export class ToolbarSurface {
     }
   }
 
-  /** Folded buttons first, then every Tab · Group, then Pinned. */
   private openOverflow(anchor: HTMLButtonElement): void {
     const state = this.host.state();
     const foldedIds = new Set(this.overflowed.map((spec) => spec.id));

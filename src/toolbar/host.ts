@@ -4,31 +4,23 @@ import type {
   ToolbarPosition,
 } from "../model/types";
 
-/** The contract a view hands to its toolbar. */
-
-/** The toolbar never inspects the editor itself. */
 export interface ToolbarState {
   readonly isEnabled: (spec: CommandSpec) => boolean;
   /** A mode this command has switched on: its button stays lit until it ends. */
   readonly isLatched: (spec: CommandSpec) => boolean;
-  /** The Ribbon switches to its Table tab on the edge where this flips. */
   readonly inTable: boolean;
 }
 
 export interface ToolbarHost {
   readonly containerEl: HTMLElement;
   readonly positions: readonly ToolbarPosition[];
-  /** Rebuilt when the Pinned tab or overflow menu is drawn, not every refresh. */
   pinnedSpecs(): readonly CommandSpec[];
   pinnedCommands(): readonly PinnedCommand[];
   editPinned(): void;
   state(): ToolbarState;
   execute(spec: CommandSpec, optionValue?: string): void;
-  /** The key the button's command is bound to, or `""` when it has none. */
   hotkeyFor(spec: CommandSpec): string;
-  /** The button's name as it stands now; one command's carries live state. */
   labelFor(spec: CommandSpec): string;
-  /** Hands the caret back after a menu closes without running anything. */
   focusEditor(): void;
   /** The live settings map: the panel prunes it in place. */
   charUsage(): Record<string, number>;

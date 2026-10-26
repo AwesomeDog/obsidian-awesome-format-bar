@@ -9,9 +9,7 @@ const MARKDOWN_IMAGE = /!\[[^\]]*\]\([^)]*\)/g;
 const IMAGE_EXTENSION = /\.(?:png|jpe?g|gif|svg|webp|bmp|avif|tiff?)$/i;
 /** Obsidian's own size grammar: a width, or a width and a height. */
 const SIZE = /^\d+(?:x\d+)?$/;
-/** One emphasis wrapping nothing but text: the caption someone wrote by hand. */
 const EMPHASIS_LINE = /^\s*(?:\*([^*\n]+)\*|_([^_\n]+)_)\s*$/;
-/** What a row may hold before its first cell: whitespace, quotes, cell pipes. */
 const ROW_PREFIX = /^[\s>|]*$/;
 
 /** A row splits on pipes, so a size inside one needs `\|`: stricter than `isTableLine`. */
@@ -20,7 +18,6 @@ function isRowLine(line: string): boolean {
   return at >= 0 && ROW_PREFIX.test(line.slice(0, at));
 }
 
-/** The pipe as this line needs it. */
 function pipe(line: string): string {
   return isRowLine(line) ? "\\|" : "|";
 }
@@ -48,12 +45,10 @@ function embedsIn(line: string): Embed[] {
   return out.sort((a, b) => a.from - b.from);
 }
 
-/** A wiki link's file part: what is left of `#` and `^`. */
 function fileOf(target: string): string {
   return (target.split("#")[0] ?? "").split("^")[0]?.trim() ?? "";
 }
 
-/** True when the line holds a picture, so the Picture commands light up. */
 export function isImageLine(line: string): boolean {
   for (const embed of embedsIn(line)) {
     if (!embed.wiki) return true;
@@ -65,7 +60,6 @@ export function isImageLine(line: string): boolean {
   return false;
 }
 
-/** The embed the caret sits in, else the one after it, else the last one. */
 function caretEmbed(embeds: readonly Embed[], column: number): Embed | null {
   return (
     embeds.find((embed) => column <= embed.to) ??
@@ -75,15 +69,12 @@ function caretEmbed(embeds: readonly Embed[], column: number): Embed | null {
 }
 
 interface Parts {
-  /** `![[target]]` / `![](url)`: what the picture points at. */
   readonly target: string;
-  /** The alias after the first pipe, or the alt text inside `[]`. */
   readonly alt: string;
   readonly size: string | null;
 }
 
-// Obsidian reads the width from the **last** pipe, so `![[a.png|alias|300]]` keeps
-// its size: a size that is not last is not a size at all.
+// Obsidian reads the size from the **last** pipe; any other is not a size.
 function wikiParts(inner: string, marker: string): Parts {
   const segments = inner.split(marker);
   const target = segments[0] ?? "";
@@ -103,8 +94,7 @@ function wikiEmbed(parts: Parts, marker: string): string {
 
 const MARKDOWN_PARTS = /^!\[([^\]]*)\]\((.*)\)$/;
 
-// The width rides in the **alt text**, not the URL: `![alt|300](url)` or `![300](url)`.
-// Obsidian reads the size from the last pipe; with no pipe a bare width still counts.
+// The width rides in the alt text: `![alt|300](url)`, or a bare `![300](url)`.
 function linkParts(text: string, marker: string): Parts | null {
   const parsed = MARKDOWN_PARTS.exec(text);
   if (!parsed) return null;
@@ -128,18 +118,15 @@ function linkEmbed(parts: Parts, marker: string): string {
   return `![${alt.join(marker)}](${parts.target})`;
 }
 
-/** One embed of `line`, parsed; `null` when it is not a picture. */
 function partsIn(line: string, embed: Embed, marker: string): Parts | null {
   const text = line.slice(embed.from, embed.to);
   if (embed.wiki) {
     const parts = wikiParts(text.slice(3, -2), marker);
-    // A wiki embed can point at a note, a PDF or a sound: only a picture has one.
     return IMAGE_EXTENSION.test(fileOf(parts.target)) ? parts : null;
   }
   return linkParts(text, marker);
 }
 
-/** The picture the caret is on: where its text is, and what it carries. */
 interface Picture {
   readonly start: number;
   readonly end: number;
@@ -148,7 +135,6 @@ interface Picture {
   readonly parts: Parts;
 }
 
-/** `null` outside a picture, or on a wiki embed that is not one. */
 function caretPicture(doc: string, ranges: readonly Range[]): Picture | null {
   const range = ranges[0];
   if (!range) return null;
@@ -169,7 +155,6 @@ function caretPicture(doc: string, ranges: readonly Range[]): Picture | null {
   };
 }
 
-/** The picture's own span, rewritten in the grammar it is already written in. */
 function rewrite(picture: Picture, parts: Parts): Plan {
   const { start, end, wiki, marker } = picture;
   return {
@@ -196,8 +181,7 @@ export function setImageSize(
     : NO_CHANGE;
 }
 
-/** The same width on every picture: ignores the caret, so it runs from anywhere.
- * Fenced code is skipped — a note about Markdown may well show an embed. */
+/** Ignores the caret; fenced code is skipped, since a note may show an embed. */
 export function setAllImageSizes(doc: string, width: string | null): Plan {
   const lines = new Lines(doc);
   const fenced = fenceMask(lines);
@@ -224,7 +208,6 @@ export function setAllImageSizes(doc: string, width: string | null): Plan {
   return changes.length === 0 ? NO_CHANGE : { changes: order(changes) };
 }
 
-/** Writes the alt text and selects it; alt text already there is selected, not duplicated. */
 export function insertImageAlt(
   doc: string,
   ranges: readonly Range[],
@@ -234,8 +217,7 @@ export function insertImageAlt(
   if (!picture) return NO_CHANGE;
   const { parts, wiki, marker } = picture;
   const alt = parts.alt === "" ? placeholder : parts.alt;
-  // Where the alt text starts: past `![[target|` in a wiki embed, past `![` in a
-  // Markdown image, where the size comes after the alt rather than before it.
+  // Past `![[target|` or past `![`; the size comes after the alt.
   const from =
     picture.start + (wiki ? `![[${parts.target}${marker}`.length : "![".length);
   return {
@@ -244,7 +226,6 @@ export function insertImageAlt(
   };
 }
 
-/** Word's Reset Picture: drops the size and the alt text, keeps the picture. */
 export function resetImage(doc: string, ranges: readonly Range[]): Plan {
   const picture = caretPicture(doc, ranges);
   if (!picture) return NO_CHANGE;
@@ -287,7 +268,6 @@ export function convertImageSyntax(
   };
 }
 
-/** A caption is an emphasis line of its own, right under the picture. */
 function captionBody(line: string): Range | null {
   const match = EMPHASIS_LINE.exec(line);
   if (!match) return null;
@@ -296,7 +276,6 @@ function captionBody(line: string): Range | null {
   return at < 0 ? null : { from: at, to: at + body.length };
 }
 
-/** Writes `*placeholder*` under the picture and selects it; a caption already there is selected. */
 export function insertImageCaption(
   doc: string,
   ranges: readonly Range[],
@@ -308,8 +287,7 @@ export function insertImageCaption(
   const line = lines.lineOf(range.from);
   if (!isImageLine(lines.at(line))) return NO_CHANGE;
 
-  // Written at the picture's own line end, so a centred picture keeps its
-  // caption inside the wrapping `<div>`.
+  // At the line end, so a centred picture keeps its caption inside the wrapping div.
   const next = line + 1;
   if (next < lines.count) {
     const existing = captionBody(lines.at(next));

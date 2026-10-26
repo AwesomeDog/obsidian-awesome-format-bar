@@ -2,7 +2,6 @@ import type { EmojiMartData } from "@emoji-mart/data";
 import kaomojiData from "./kaomoji.json";
 import { SYMBOL_GROUPS } from "./symbols";
 
-/** One Emoji & Symbols entry; `words` is the lowercase haystack. */
 export interface CharEntry {
   readonly char: string;
   readonly name: string;
@@ -95,10 +94,8 @@ export function groupsOf(entries: readonly CharEntry[]): readonly string[] {
 
 const RESULT_LIMIT = 120;
 
-/** Two rows of eight; past that the row is no faster to scan than a group. */
 export const FREQUENT_LIMIT = 16;
 
-/** 3 = name starts with it, 2 = a word starts with it, 1 = anywhere, 0 = no. */
 function score(candidate: CharEntry, tokens: readonly string[]): number {
   let lowest = 3;
   for (const token of tokens) {
@@ -112,7 +109,6 @@ function score(candidate: CharEntry, tokens: readonly string[]): number {
   return lowest;
 }
 
-/** Every token must match; ties keep dataset order. */
 export function searchCharacters(
   entries: readonly CharEntry[],
   query: string,

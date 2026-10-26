@@ -8,13 +8,11 @@ import {
   type ViewUpdate,
 } from "@codemirror/view";
 
-/** The caret line parks at half the editor height. */
 const OFFSET_RATIO = 0.5;
 
 const EDITOR_CLASS = "awesome-format-bar-typewriter";
 const LINE_CLASS = "awesome-format-bar-current-line";
 
-/** In memory only, like Zen Mode: a reload turns it off. */
 let enabled = false;
 
 export function isTypewriterModeEnabled(): boolean {
@@ -44,8 +42,7 @@ class Typewriter {
     // Geometry is the observer's job; reacting to it here would loop.
     if (!update.selectionSet && !update.docChanged) return;
     this.decorate();
-    // A click parks the caret where it was put: highlighting follows, the
-    // scroll does not. Typing and keyboard moves still recenter.
+    // A click parks the caret where it was put; typing still recenters.
     if (!update.transactions.some((tr) => tr.isUserEvent("select.pointer")))
       this.center();
   }
@@ -63,10 +60,8 @@ class Typewriter {
     this.decorations = Decoration.set(currentLine.range(line.from));
   }
 
-  /** Room above and below, so the first and last line still reach the middle;
-   * the height comes from a measure: `update()` runs before the DOM is resynced. */
+  /** The height comes from a measure: `update()` runs before the DOM is resynced. */
   private center(): void {
-    // The window the editor lives in: a pop-out has one of its own.
     const win = this.view.dom.ownerDocument.defaultView ?? window;
     this.view.requestMeasure({
       read: (view) => ({

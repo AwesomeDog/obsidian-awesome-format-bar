@@ -6,13 +6,11 @@ import { openCharPanel } from "./char-panel";
 import { openFontPopover, openPopover, popoverSectionsFor } from "./popover";
 import { openTableGrid } from "./table-grid";
 
-/** Matches how Obsidian labels its own commands: `Bold (⌘ B)`. */
 function withHotkey(name: string, hotkey: string): string {
   return hotkey ? `${name} (${hotkey})` : name;
 }
 
-/** Where a click goes: the panels drawing a layer of their own, then the font
- * drop-down, the other drop-downs, then a command acting at once. */
+/** Panels with a layer of their own, then drop-downs, then a command at once. */
 export function runCommand(
   anchor: HTMLElement,
   spec: CommandSpec,
@@ -33,7 +31,6 @@ export function runCommand(
   else host.execute(spec);
 }
 
-/** The single button renderer shared by both layouts. */
 export function createButton(
   parent: HTMLElement,
   spec: CommandSpec,
@@ -46,8 +43,7 @@ export function createButton(
   resolveIcon(button, spec.icon);
   if (spec.popup) button.addClass("has-menu");
   setTooltip(button, spec.name, { placement: "top" });
-  // Tooltips read `aria-label` on every pointerover, and this listener runs
-  // before the delegated one, so a key rebound in Settings shows up at once.
+  // This listener runs before the delegated one, so a rebound key shows at once.
   button.addEventListener("pointerover", () => {
     button.setAttribute(
       "aria-label",
@@ -65,11 +61,9 @@ export interface IconButtonOptions {
   readonly icon: string;
   readonly label: string;
   readonly onClick: () => void;
-  /** Extra class beside `clickable-icon`. */
   readonly cls?: string;
 }
 
-/** An icon-only button: the label is its accessible name and its tooltip both. */
 export function createIconButton(
   parent: HTMLElement,
   options: IconButtonOptions,
@@ -93,7 +87,6 @@ export interface TabButtonOptions {
   onKeydown?: (event: KeyboardEvent) => void;
 }
 
-/** Helper for segmented controls and tabs ensuring proper ARIA roles and styling. */
 export function createTabButton(
   parent: HTMLElement,
   options: TabButtonOptions,

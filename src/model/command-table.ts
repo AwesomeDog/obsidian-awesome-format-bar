@@ -1,12 +1,11 @@
 import type { CommandPopup, CommandSpec } from "./types";
 
-/** Obsidian's own recorder, whose `stop` command answers only while it runs.
- * See `../recording`: the pair of commands is the only state it exposes. */
+/** The recorder stop command answers only while it runs; see `../recording`. */
 export const RECORD_START = "audio-recorder:start";
 
 /** Adding a command starts here; everything else reads it through `commandById`. */
 export const COMMANDS = [
-  // Home · Clipboard
+  // Home - Clipboard
   { id: "paste", name: "Paste", icon: "clipboard-paste", kind: "clipboard" },
   {
     id: "copy",
@@ -28,8 +27,7 @@ export const COMMANDS = [
     icon: "clipboard-type",
     kind: "clipboard",
   },
-  // The other half of Paste: the URI comes from the clipboard, the text to
-  // wrap comes from the selection, so it needs both.
+  // The other half of Paste: the URI from the clipboard, the text from the selection.
   {
     id: "paste-uri-as-link",
     name: "Paste URI as Link",
@@ -45,7 +43,7 @@ export const COMMANDS = [
     desktopOnly: true,
   },
 
-  // Home · Font
+  // Home - Font
   {
     id: "font-family",
     name: "Font Family",
@@ -107,7 +105,6 @@ export const COMMANDS = [
     kind: "registered",
     registeredCommandId: "editor:toggle-code",
   },
-  // Local: it wraps a pair, like Underline and Superscript.
   { id: "inline-math", name: "Inline Math", icon: "sigma", kind: "editor" },
   {
     id: "font-color",
@@ -145,7 +142,7 @@ export const COMMANDS = [
     commandPalette: false,
   },
 
-  // Home · Paragraph
+  // Home - Paragraph
   {
     id: "bullet-list",
     name: "Bullet List",
@@ -160,8 +157,7 @@ export const COMMANDS = [
     kind: "registered",
     registeredCommandId: "editor:toggle-numbered-list",
   },
-  // Each scheme ends in `.` or `)`, which is what the next run recognizes and what
-  // keeps a heading that merely starts with a number out of it.
+  // Every scheme ends in `.` or `)`, which is what a later run recognizes.
   {
     id: "number-headings",
     name: "Number Headings",
@@ -188,8 +184,7 @@ export const COMMANDS = [
     icon: "heading",
     kind: "editor",
   },
-  // Word's multilevel gallery has a None; here it doubles as the only way back
-  // out, since numbering lives in the text and cannot be switched off by view.
+  // None doubles as the only way back out: numbering lives in the text.
   {
     id: "no-heading-numbering",
     name: "No Numbering",
@@ -246,8 +241,7 @@ export const COMMANDS = [
     icon: "list-down",
     kind: "editor",
   },
-  // Word's Outlining pair, one level up from a list item: a heading and
-  // everything under it move as one.
+  // A heading and everything under it move as one.
   {
     id: "move-section-up",
     name: "Move Section Up",
@@ -301,7 +295,7 @@ export const COMMANDS = [
     registeredCommandId: "editor:insert-horizontal-rule",
   },
 
-  // Home · Styles
+  // Home - Styles
   {
     id: "heading-1",
     name: "Heading 1",
@@ -352,7 +346,7 @@ export const COMMANDS = [
     registeredCommandId: "editor:set-heading-0",
   },
 
-  // Home · Editing
+  // Home - Editing
   { id: "undo", name: "Undo", icon: "undo", kind: "editor" },
   { id: "redo", name: "Redo", icon: "redo", kind: "editor" },
   {
@@ -377,8 +371,6 @@ export const COMMANDS = [
     icon: "scan-text",
     kind: "editor",
   },
-  // A heading and everything under it, so one command can carry a whole
-  // section off to the clipboard or another note.
   {
     id: "select-section",
     name: "Select Section",
@@ -386,7 +378,7 @@ export const COMMANDS = [
     kind: "editor",
   },
 
-  // Insert · Tables
+  // Insert - Tables
   {
     id: "table",
     name: "Table",
@@ -402,7 +394,6 @@ export const COMMANDS = [
     kind: "editor",
     requiresSelection: true,
   },
-  // The same conversion again, fed from the clipboard instead of the selection.
   {
     id: "paste-as-table",
     name: "Paste as Table",
@@ -410,7 +401,7 @@ export const COMMANDS = [
     kind: "clipboard",
   },
 
-  // Insert · Illustrations
+  // Insert - Illustrations
   {
     id: "attach-file",
     name: "Attach File",
@@ -427,8 +418,7 @@ export const COMMANDS = [
     requiresImage: true,
     commandPalette: false,
   },
-  // Drop-down items: the widths Word offers, plus a way back to the file's own
-  // size. Obsidian scales on width alone, so no `WxH` variants.
+  // Obsidian scales on width alone, so there are no `WxH` variants.
   {
     id: "image-size-100",
     name: "100 px",
@@ -471,8 +461,7 @@ export const COMMANDS = [
     kind: "editor",
     requiresImage: true,
   },
-  // The same widths again, for every picture in the note at once. It ignores
-  // the caret, so it stays live wherever the editor is.
+  // Every picture at once; it ignores the caret, so it stays live.
   {
     id: "image-size-all",
     name: "All Images",
@@ -517,8 +506,6 @@ export const COMMANDS = [
     icon: "a-large-small",
     kind: "editor",
   },
-  // Word writes this into a panel; here it is written in place and selected,
-  // the way Caption is, because both are text a note carries itself.
   {
     id: "image-alt",
     name: "Alt Text",
@@ -526,8 +513,7 @@ export const COMMANDS = [
     kind: "editor",
     requiresImage: true,
   },
-  // The caption goes on the line below the picture; centring the picture is
-  // `align-center`, which already wraps the block it sits on.
+  // The caption sits below the picture; centring is `align-center` on the block.
   {
     id: "image-caption",
     name: "Caption",
@@ -550,8 +536,7 @@ export const COMMANDS = [
     requiresImage: true,
   },
 
-  // Obsidian renders Mermaid but gives no command to write it, so the whole list sits
-  // here; each item is the smallest diagram of its kind that renders.
+  // Obsidian renders Mermaid but has no command to write it.
   {
     id: "chart",
     name: "Chart",
@@ -675,10 +660,8 @@ export const COMMANDS = [
   },
   { id: "chart-venn", name: "Venn Diagram", icon: "percent", kind: "editor" },
 
-  // Insert · Media
-  // Word's recording lands in the document; Obsidian's saves an attachment and
-  // embeds it at the caret. The id is the start command, which the recorder
-  // answers only when it is idle — the button toggles, see `../recording`.
+  // Insert - Media
+  // The recorder start command answers only while idle, so the button toggles.
   {
     id: "record-audio",
     name: "Record Audio",
@@ -687,7 +670,7 @@ export const COMMANDS = [
     registeredCommandId: RECORD_START,
   },
 
-  // Insert · Links
+  // Insert - Links
   {
     id: "internal-link",
     name: "Internal Link",
@@ -723,7 +706,7 @@ export const COMMANDS = [
     kind: "editor",
   },
 
-  // Insert · Comments
+  // Insert - Comments
   {
     id: "comment",
     name: "Comment",
@@ -732,7 +715,7 @@ export const COMMANDS = [
     registeredCommandId: "editor:toggle-comments",
   },
 
-  // Insert · Text
+  // Insert - Text
   {
     id: "callout",
     name: "Callout",
@@ -741,8 +724,7 @@ export const COMMANDS = [
     popup: "callout",
     commandPalette: false,
   },
-  // One command per callout type, in Obsidian's order. Aliases write the same type
-  // under another name, so they get no button of their own.
+  // One command per callout type; aliases get no button of their own.
   {
     id: "callout-note",
     name: "Note Callout",
@@ -813,11 +795,9 @@ export const COMMANDS = [
     icon: "calendar-clock",
     kind: "editor",
   },
-  // Word puts Drop Cap here too. It reads the paragraph under the cursor, so
-  // it needs no selection: the caret alone is enough to drop a cap.
   { id: "drop-cap", name: "Drop Cap", icon: "text-initial", kind: "editor" },
 
-  // Insert · Symbols
+  // Insert - Symbols
   {
     id: "math-block",
     name: "Math Block",
@@ -833,7 +813,7 @@ export const COMMANDS = [
     popup: "character-panel",
     commandPalette: false,
   },
-  // Insert · Reference
+  // Insert - Reference
   {
     id: "toc",
     name: "Table of Contents",
@@ -848,7 +828,7 @@ export const COMMANDS = [
     registeredCommandId: "editor:insert-footnote",
   },
 
-  // View · Views
+  // View - Views
   {
     id: "toggle-live-preview-source",
     name: "Live Preview/Source",
@@ -857,16 +837,14 @@ export const COMMANDS = [
     registeredCommandId: "editor:toggle-source",
   },
 
-  // View · Immersive
+  // View - Immersive
   {
     id: "focus-mode",
     name: "Focus Mode",
     icon: "fold-horizontal",
     kind: "view",
   },
-  // Real fullscreen on the view, so Obsidian's own layout is left alone.
   { id: "zen-mode", name: "Zen Mode", icon: "maximize", kind: "view" },
-  // Parks the caret line mid-editor, highlights it and dims the rest.
   {
     id: "typewriter-mode",
     name: "Typewriter Mode",
@@ -874,7 +852,7 @@ export const COMMANDS = [
     kind: "view",
   },
 
-  // View · Show
+  // View - Show
   {
     id: "show-whitespace",
     name: "Show Whitespace",
@@ -888,7 +866,6 @@ export const COMMANDS = [
     kind: "registered",
     registeredCommandId: "editor:toggle-line-numbers",
   },
-  // Office has no equivalent: Page Width there is a zoom level, not a text width.
   {
     id: "readable-line-length",
     name: "Readable Line Length",
@@ -896,7 +873,6 @@ export const COMMANDS = [
     kind: "registered",
     registeredCommandId: "editor:toggle-readable-line-length",
   },
-  // Word's Outline is a view mode; its side panel of headings is this one.
   {
     id: "navigation-pane",
     name: "Navigation Pane",
@@ -905,7 +881,7 @@ export const COMMANDS = [
     registeredCommandId: "outline:open",
   },
 
-  // View · Zoom
+  // View - Zoom
   {
     id: "zoom-in",
     name: "Zoom In",
@@ -920,7 +896,6 @@ export const COMMANDS = [
     kind: "registered",
     registeredCommandId: "window:zoom-out",
   },
-  // Word's Zoom group calls this 100%.
   {
     id: "zoom-reset",
     name: "100%",
@@ -929,7 +904,7 @@ export const COMMANDS = [
     registeredCommandId: "window:reset-zoom",
   },
 
-  // View · Window
+  // View - Window
   {
     id: "split-right",
     name: "Split Right",
@@ -945,7 +920,7 @@ export const COMMANDS = [
     registeredCommandId: "workspace:split-horizontal",
   },
 
-  // View · Outlining
+  // View - Outlining
   {
     id: "collapse",
     name: "Collapse",
@@ -976,7 +951,7 @@ export const COMMANDS = [
     registeredCommandId: "editor:unfold-all",
   },
 
-  // Table · Rows & Columns
+  // Table - Rows & Columns
   {
     id: "table-delete",
     name: "Delete",
@@ -1064,7 +1039,7 @@ export const COMMANDS = [
     requiresTable: true,
   },
 
-  // Table · Format
+  // Table - Format
   {
     id: "table-format",
     name: "Format Tables",
@@ -1089,7 +1064,7 @@ export const COMMANDS = [
     requiresTable: true,
   },
 
-  // Table · Alignment
+  // Table - Alignment
   {
     id: "table-align-column-left",
     name: "Align Column Left",
@@ -1112,7 +1087,7 @@ export const COMMANDS = [
     requiresTable: true,
   },
 
-  // Table · Data
+  // Table - Data
   {
     id: "table-sort",
     name: "Sort Rows",
@@ -1157,7 +1132,7 @@ export const COMMANDS = [
     kind: "editor",
     requiresTable: true,
   },
-  // The table out again in four formats, on the clipboard rather than in the
+  // On the clipboard: a table dumped into a note as text is noise.
   // note: a table dumped into a note as text is just noise.
   {
     id: "table-copy-as",
@@ -1197,7 +1172,7 @@ export const COMMANDS = [
     requiresTable: true,
   },
 
-  // Utilities · Lines
+  // Utilities - Lines
   { id: "merge-lines", name: "Merge Lines", icon: "merge", kind: "editor" },
   { id: "split-lines", name: "Split Lines", icon: "split", kind: "editor" },
   {
@@ -1206,11 +1181,9 @@ export const COMMANDS = [
     icon: "arrow-up-down",
     kind: "editor",
   },
-  // VS Code's Duplicate Selection: a line below the caret, or a copy of the
-  // selection right after it.
   { id: "duplicate", name: "Duplicate", icon: "copy-plus", kind: "editor" },
 
-  // Utilities · Sort
+  // Utilities - Sort
   {
     id: "sort-list",
     name: "Sort List",
@@ -1224,7 +1197,7 @@ export const COMMANDS = [
     kind: "editor",
   },
 
-  // Utilities · Normalize
+  // Utilities - Normalize
   {
     id: "smart-punctuation",
     name: "Smart Punctuation",
@@ -1285,8 +1258,7 @@ export const COMMANDS = [
 
 export type CommandId = (typeof COMMANDS)[number]["id"];
 
-/** Drop-down items: no Ribbon group lists them, but each has a palette entry.
- * Keyed by `CommandPopup`, so a new pop-up that forgets its items is a type error. */
+/** Keyed by `CommandPopup`, so a pop-up without items is a type error. */
 export const DROPDOWN_ITEMS: Readonly<
   Partial<Record<CommandPopup, readonly CommandId[]>>
 > = {
@@ -1348,7 +1320,6 @@ export const DROPDOWN_ITEMS: Readonly<
     "clean-up-bullet-style",
     "clean-up-invisible-characters",
   ],
-  // Mermaid's own order: the types it documents first, the newer ones last.
   chart: [
     "chart-flowchart",
     "chart-sequence",

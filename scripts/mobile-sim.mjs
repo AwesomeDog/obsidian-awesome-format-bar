@@ -1,11 +1,6 @@
 // Launch Obsidian in mobile-emulation mode and leave it open for you to use.
 //
 //   npm run mobile -- <vault-path> [--size phone|tablet|WxH]
-//
-// Needs Node 22+ (built-in WebSocket) and no extra dependency: it only talks to
-// CDP long enough to switch on `EmulateMobile` and to force the viewport, since
-// Obsidian's window can't get narrow enough to look like a phone on its own.
-// Obsidian stays open until Ctrl-C.
 import { execSync, spawn } from "node:child_process";
 import { createHash } from "node:crypto";
 import { mkdir, writeFile } from "node:fs/promises";
@@ -20,8 +15,7 @@ const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 const argv = process.argv.slice(2);
 const vault =
   argv.find((arg) => !arg.startsWith("--")) || process.env.OBSIDIAN_VAULT;
-// Obsidian picks phone vs tablet from `(min-width: 600px) and (min-height: 600px)`,
-// so the requested size is what decides the layout.
+// Obsidian picks phone vs tablet from a 600px media query, so the size decides.
 const presets = { phone: "412x915", tablet: "834x1194" };
 const requested = (
   argv.find((arg) => arg.startsWith("--size=")) ?? "--size=phone"
@@ -38,9 +32,7 @@ if (!vault) {
   const kill = () => {
     try {
       execSync(`pkill -f "user-data-dir=${profile}"`, { stdio: "ignore" });
-    } catch {
-      // Nothing running for this profile.
-    }
+    } catch {}
   };
 
   try {
@@ -83,8 +75,7 @@ if (!vault) {
         candidate.addEventListener("error", reject, { once: true });
       });
 
-    // Obsidian is still wiring up the renderer, and a dying instance can leave a
-    // stale target behind, so keep asking until a socket actually opens.
+    // A dying instance can leave a stale target, so keep asking for a socket.
     let socket;
     const deadline = Date.now() + 60_000;
     for (;;) {
@@ -99,9 +90,7 @@ if (!vault) {
           socket = await connect(target.webSocketDebuggerUrl);
           break;
         }
-      } catch {
-        // Not ready, or the previous instance is still shutting down.
-      }
+      } catch {}
       if (Date.now() > deadline) throw new Error("No Obsidian page on CDP");
       await sleep(500);
     }

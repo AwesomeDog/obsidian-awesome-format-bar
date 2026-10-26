@@ -21,20 +21,17 @@ declare module "obsidian" {
 
 export interface EditorMenuOptions {
   readonly app: App;
-  /** `null` outside an editable editor: everything that writes goes grey. */
   readonly editor: Editor | null;
   readonly pinned: readonly PinnedCommand[];
   readonly title: string;
   readonly execute: (spec: CommandSpec, optionValue?: string) => void;
 }
 
-/** The state behind one menu: what can run, and how a choice runs. */
 interface Build {
   readonly conditions: ReturnType<typeof runConditions>;
   readonly execute: EditorMenuOptions["execute"];
 }
 
-/** The whole command table, under one item of the menu Obsidian just built. */
 export function addCommandsToMenu(
   menu: Menu,
   options: EditorMenuOptions,
@@ -77,7 +74,6 @@ export function addCommandsToMenu(
   });
 }
 
-/** A group is a caption: two levels is deep enough without a third. */
 function addGroup(
   menu: Menu,
   name: string,
@@ -147,7 +143,6 @@ function choiceTitle(choice: PopupChoice): string | DocumentFragment {
     : swatchTitle(choice.label, choice.swatch);
 }
 
-/** A dot and the hex: `MenuItem` has no swatch of its own. */
 function swatchTitle(label: string, color: string): DocumentFragment {
   return createFragment((fragment) => {
     const dot = createSpan();
@@ -165,8 +160,7 @@ function previewTitle(label: string, stack: string): DocumentFragment {
   });
 }
 
-/** A pop-up button's choices in the popover's order, minus the picker: a menu has
- * no anchor for it, and no search box for hundreds of the machine's own fonts. */
+/** The popover order minus the picker: a menu has no anchor for it. */
 function choiceSectionsFor(spec: CommandSpec): readonly PopupSection[] {
   return popupSections(spec.popup, { localFonts: { kind: "unsupported" } });
 }

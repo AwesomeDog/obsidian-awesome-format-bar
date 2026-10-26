@@ -14,8 +14,7 @@ export const STANDARD_COLORS = [
   "#7030a0",
 ] as const;
 
-/** Word's highlighter palette plus Orange. The first six Obsidian renders as `==🟡…==`;
- * the other ten have no native syntax and go out as `<span style="background:…">`. */
+/** The first six Obsidian renders as `==🟡…==`; the other ten go out as a span. */
 export const HIGHLIGHT_COLORS: readonly string[] = [
   "#ffff00", // Yellow   → ==🟡…==
   "#ff0000", // Red      → ==🔴…==
@@ -81,8 +80,7 @@ export const NATIVE_HIGHLIGHTS = [
 
 export type NativeHighlight = (typeof NATIVE_HIGHLIGHTS)[number];
 
-/** Every highlight emoji: the six circles Obsidian writes, the six squares it accepts.
- * Values index into `HIGHLIGHT_COLORS`. */
+/** The six circles Obsidian writes, the six squares it accepts. */
 const HIGHLIGHT_EMOJI: Readonly<Record<string, number>> = {
   "\u{1F7E1}": 0,
   "\u{1F7E8}": 0,
@@ -98,12 +96,10 @@ const HIGHLIGHT_EMOJI: Readonly<Record<string, number>> = {
   "\u{1F7EA}": 5,
 };
 
-/** The native highlight `hex` stands for, or `undefined` for the other ten. */
 export function nativeHighlightOf(hex: string): NativeHighlight | undefined {
   return NATIVE_HIGHLIGHTS.find((entry) => entry.hex === hex);
 }
 
-/** The highlight emoji at `at`: the hex it stands for, and how wide it is. */
 export function highlightEmojiAt(
   doc: string,
   at: number,
@@ -129,18 +125,15 @@ export const FONT_SIZES = [
   { label: "3", value: "3em" },
 ] as const;
 
-/** One entry of the Font Family drop-down. `stack` is what reaches `font-family`. */
 export interface FontOption {
   readonly name: string;
-  /** Must hold no `;`, which `setStyle` splits on, and no `"`, which `SPAN_WHOLE`
-   * matches up to — fallbacks take commas, names single quotes. */
+  /** No `;` (`setStyle` splits on it) and no `"` (`SPAN_WHOLE` matches to it). */
   readonly stack: string;
 }
 
 export interface FontGroup {
   readonly title: string;
   readonly fonts: readonly FontOption[];
-  /** Generic families: every machine resolves them, so they never dim. */
   readonly generic?: boolean;
 }
 
@@ -155,8 +148,7 @@ const GENERIC: readonly FontOption[] = [
   { name: "Fantasy", stack: "fantasy" },
 ];
 
-/** One named font and one generic family, nothing in between: a longer chain buys
- * nothing, because the generic family is what each platform resolves to anyway. */
+/** One named font and one generic family: a longer chain buys nothing. */
 const named = (name: string, generic: string): FontOption => ({
   name,
   stack: `'${name}', ${generic}`,
@@ -243,7 +235,6 @@ const HANDWRITING: readonly FontOption[] = [
   "Copperplate",
 ].map((name) => named(name, name === "Impact" ? "sans-serif" : "cursive"));
 
-/** Each platform's own name for the typeface is an entry of its own. */
 const CHINESE: readonly FontOption[] = [
   ...[
     "PingFang SC",
@@ -257,7 +248,6 @@ const CHINESE: readonly FontOption[] = [
   ),
 ];
 
-/** The browser reaches the system's emoji font anyway, so one name is enough. */
 const EMOJI: readonly FontOption[] = [
   "Apple Color Emoji",
   "Segoe UI Emoji",
@@ -274,12 +264,10 @@ export const FONT_GROUPS: readonly FontGroup[] = [
   { title: "Emoji", fonts: EMOJI },
 ];
 
-/** Every curated font, in the order the drop-down lists them. */
 export const ALL_FONTS: readonly FontOption[] = FONT_GROUPS.flatMap(
   (group) => group.fonts,
 );
 
-/** Label and mode travel together, so they cannot drift apart. */
 export const CASE_OPTIONS = [
   { label: "UPPERCASE", mode: "upper" },
   { label: "lowercase", mode: "lower" },

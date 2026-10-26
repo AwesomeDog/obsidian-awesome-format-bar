@@ -100,8 +100,7 @@ export function insertCallout(
 
 const HEADING = /^(#{1,6})\s/;
 
-/** A fenced `#` is code, not a heading: it opens no section, but it still rides
- * with the one above it. */
+/** A fenced `#` is code, not a heading, but it rides with the section above. */
 function headingLevelOf(
   fenced: readonly boolean[],
 ): (text: string, line: number) => number | null {
@@ -112,8 +111,7 @@ function headingLevelOf(
   };
 }
 
-/** The note's outline: its first heading through its last line of content.
- * Front matter is not part of it, so a YAML comment is not a heading. */
+/** First heading through the last line of content; front matter excluded. */
 function outlineRange(lines: Lines): [number, number] | null {
   const fenced = fenceMask(lines);
   let start = -1;
@@ -129,17 +127,14 @@ function outlineRange(lines: Lines): [number, number] | null {
   return start < 0 ? null : [start, end];
 }
 
-/** The outline's own text: the heading line, markers off. */
 function headingText(section: Outline): string {
   return (section.lines[0] ?? "").replace(HEADING, "").trim();
 }
 
-/** Every heading in the note, nested by its level. */
 function sectionsIn(lines: Lines, from: number, to: number): Outline[] {
   return parseOutline(lines, from, to, headingLevelOf(fenceMask(lines)));
 }
 
-/** Reorders each level of the note's outline; a section keeps its own body. */
 export function sortHeadings(doc: string): Plan {
   const lines = new Lines(doc);
   const range = outlineRange(lines);
@@ -154,14 +149,11 @@ export function sortHeadings(doc: string): Plan {
     : { changes: [replaceBlock(lines, start, end, result)] };
 }
 
-/** The line the outline starts on, or -1. Front matter and any text above the
- * first heading are not part of it, so a move never reaches them. */
+/** The first heading, or -1: text above it is not part of the outline. */
 function firstHeading(lines: Lines): number {
   return outlineRange(lines)?.[0] ?? -1;
 }
 
-/** Moves the section under the cursor one sibling earlier or later, carrying
- * its subtree. `NO_CHANGE` at the ends of a level. */
 export function moveSection(
   doc: string,
   ranges: readonly Range[],
@@ -197,7 +189,6 @@ export function moveSection(
   };
 }
 
-/** Selects the section under the cursor; trailing blank lines stay out of it. */
 export function selectSection(doc: string, ranges: readonly Range[]): Plan {
   const lines = new Lines(doc);
   const range = ranges[0];
@@ -227,9 +218,7 @@ type NumberStyle = "1" | "a" | "i" | "A" | "I";
 interface NumberingScheme {
   /** One style per level; a level past the end starts over from the first. */
   readonly styles: readonly NumberStyle[];
-  /** Show the ancestors' numbers too: `1.1.` rather than a bare `a)`. */
   readonly path: boolean;
-  /** Written right after the number, which is what makes a prefix findable. */
   readonly separator: string;
 }
 
@@ -327,13 +316,11 @@ function frontMatter(lines: Lines): Block | null {
   return null;
 }
 
-/** Front matter comes first: a YAML comment `# note` is not a heading. */
 function firstContentLine(lines: Lines): number {
   const matter = frontMatter(lines);
   return matter ? matter[1] + 1 : 0;
 }
 
-/** Numbers every heading, or takes it off with `null`; a selection would carry on from the wrong number. */
 export function numberHeadings(doc: string, scheme: HeadingNumbering): Plan {
   const lines = new Lines(doc);
   const changes: Change[] = [];
@@ -348,8 +335,7 @@ export function numberHeadings(doc: string, scheme: HeadingNumbering): Plan {
     const level = (marker[1] ?? "").length;
     while (counters.length > level) counters.pop();
     if (counters.length < level) {
-      // A level skipped on the way down counts as `1` at every step, so `##`
-      // then `####` is `1.1.1.` rather than `1.0.1.`
+      // A level skipped on the way down counts as `1` at every step.
       while (counters.length < level) counters.push(1);
     } else {
       counters[level - 1] = (counters[level - 1] ?? 0) + 1;
@@ -370,7 +356,6 @@ export function numberHeadings(doc: string, scheme: HeadingNumbering): Plan {
   return changes.length === 0 ? NO_CHANGE : { changes: order(changes) };
 }
 
-/** One `- [[#Heading|Heading]]` per heading, indented two spaces per level. */
 function outlineEntries(sections: readonly Outline[], depth: number): string[] {
   return sections.flatMap((section) => {
     const text = headingText(section);
@@ -380,7 +365,6 @@ function outlineEntries(sections: readonly Outline[], depth: number): string[] {
   });
 }
 
-/** A note's outline as links, under a bold title, after the current paragraph. */
 export function tableOfContents(
   doc: string,
   ranges: readonly Range[],
@@ -404,7 +388,6 @@ export function tableOfContents(
   };
 }
 
-/** Appends `^id` to the block under the cursor, Obsidian block-reference style. */
 export function insertBlockReference(
   doc: string,
   ranges: readonly Range[],
@@ -425,8 +408,7 @@ export function insertBlockReference(
   };
 }
 
-// `float` wraps the lines around the cap and the reduced `line-height` lets them
-// come back up beside it; without the float the first character is only large.
+// The float and the reduced line-height are what wrap the lines around the cap.
 function dropCapStyle(character: string): string {
   // A full-width glyph reads far larger than a latin one at the same `em`.
   const size = CJK.test(character) ? "2.2em" : "3.4em";
@@ -435,20 +417,17 @@ function dropCapStyle(character: string): string {
 
 const DROP_CAP_OPEN = /^<span style="float:left[^"]*">([^<]*)<\/span>/;
 
-/** Only a letter or a digit can be dropped: no punctuation, no markers. */
 const DROPPABLE = /[\p{L}\p{N}]/u;
 
 /** Markers a paragraph may wear; stripped before the search, so a cap behind one is still found. */
 const BLOCK_PREFIX = /^(?:> ?(?:\[![\w-]+\]\s*)?|#{1,6}\s|[-*+]\s|\d+[.)]\s)+/;
 
-/** `true` for the style a drop cap writes, whatever else it carries. */
 export function isDropCapStyle(style: string): boolean {
   return /float:\s*left/.test(style);
 }
 
 interface DropCapTarget {
   readonly line: number;
-  /** Offset of the text's first character, markers stripped. */
   readonly at: number;
   readonly has: boolean;
 }
@@ -475,8 +454,7 @@ function dropCapTargets(
       out.push({ line, at, has: true });
       continue;
     }
-    // Adding never starts on a heading, a list item or a quote: a drop cap
-    // belongs to running text. Taking one off still works there.
+    // Adding never starts on a heading, list item or quote; taking one off still does.
     if (marked > 0) continue;
     const character = Array.from(rest)[0];
     if (character === undefined || !DROPPABLE.test(character)) continue;
@@ -485,7 +463,6 @@ function dropCapTargets(
   return out;
 }
 
-/** Word's drop cap on the paragraph under the cursor, and off again. */
 export function toggleDropCap(doc: string, ranges: readonly Range[]): Plan {
   const lines = new Lines(doc);
   const targets = dropCapTargets(
@@ -497,8 +474,7 @@ export function toggleDropCap(doc: string, ranges: readonly Range[]): Plan {
   const first = targets[0];
   if (!first) return NO_CHANGE;
 
-  // One direction for the whole selection: a drop cap decorates the paragraph,
-  // and half added and half removed is not a thing anyone asked for.
+  // One direction for the whole selection: half on and half off is not a thing.
   const removing = first.has;
   const changes: Change[] = [];
   for (const target of targets) {
@@ -524,7 +500,6 @@ export function toggleDropCap(doc: string, ranges: readonly Range[]): Plan {
   return { changes: order(changes) };
 }
 
-/** Every diagram type in the Mermaid Obsidian bundles, one command each. */
 export type ChartKind =
   | "flowchart"
   | "sequence"
@@ -551,8 +526,7 @@ export type ChartKind =
   | "ishikawa"
   | "venn";
 
-/** A diagram has no empty form, so each kind starts as the smallest one that renders.
- * `{date}` is today, written in by `insertChartBlock`. */
+/** Each kind starts as the smallest diagram that renders; `{date}` is today. */
 const CHART_EXAMPLES: Readonly<Record<ChartKind, string>> = {
   flowchart: "flowchart LR\n  A --> B",
   sequence: "sequenceDiagram\n  Alice->>Bob: Hello\n  Bob-->>Alice: Hi",
@@ -603,8 +577,7 @@ const CHART_EXAMPLES: Readonly<Record<ChartKind, string>> = {
   ].join("\n"),
   packet: 'packet-beta\n  0-15: "Source Port"\n  16-31: "Destination Port"',
   kanban: "kanban\n  Todo\n    Task A\n  Done\n    Task B",
-  // The brace follows the label on the same line: Mermaid's radar grammar
-  // has no newline there, and a line break is a parse error.
+  // Mermaid radar grammar takes no newline before the brace.
   radar: [
     "radar-beta",
     "  axis A, B, C",
@@ -644,7 +617,6 @@ const CHART_EXAMPLES: Readonly<Record<ChartKind, string>> = {
   ].join("\n"),
 };
 
-/** Insert a Mermaid diagram as a block of its own, replacing `ranges`. */
 export function insertChartBlock(
   doc: string,
   ranges: readonly Range[],

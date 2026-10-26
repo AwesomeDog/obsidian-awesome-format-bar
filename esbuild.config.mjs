@@ -17,7 +17,6 @@ const slimEmojiData = {
         const emojis = {};
         for (const [id, emoji] of Object.entries(data.emojis)) {
           const native = emoji.skins?.[0]?.native;
-          // `buildEmoji()` skips an id it cannot resolve anyway.
           if (!native) continue;
           emojis[id] = {
             keywords: emoji.keywords,

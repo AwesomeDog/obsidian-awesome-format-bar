@@ -11,7 +11,6 @@ import type { ToolbarHost } from "./host";
 import { resolveIcon } from "./icons";
 import { createSearchBox, type SearchBox } from "./search-box";
 
-/** Sections of the plain menu: the overflow list, both color palettes, and case. */
 export interface PopoverSection {
   readonly title?: string;
   readonly items: readonly PopoverItem[];
@@ -22,9 +21,7 @@ export interface PopoverItem {
   readonly label: string;
   readonly icon?: string;
   readonly swatch?: string;
-  /** A CSS font stack: the label is drawn in it. */
   readonly preview?: string;
-  /** The machine does not have this font. */
   readonly dim?: boolean;
   readonly disabled?: boolean;
   readonly onChoose: () => void;
@@ -33,11 +30,9 @@ export interface PopoverItem {
 interface PopoverLayerOptions {
   readonly search?: boolean;
   readonly onDismiss?: () => void;
-  /** Told when the sections change underneath; returns how to stop being told. */
   readonly watch?: (onChange: () => void) => () => void;
 }
 
-/** What to draw for a search term. A menu without a search box ignores it. */
 type SectionsFor = (query: string) => readonly PopoverSection[];
 
 export function openPopover(
@@ -48,7 +43,6 @@ export function openPopover(
   renderPopover(anchor, () => sections, { onDismiss });
 }
 
-/** The font drop-down: the same menu with a search box on top. */
 export function openFontPopover(
   anchor: HTMLElement,
   sectionsFor: SectionsFor,
@@ -89,8 +83,7 @@ function renderPopover(
 
   const body = layer.el.createDiv();
 
-  // Redrawn, not pruned: a filter is a new list and drawing one is cheap.
-  // A declaration, not a const: the search box above draws through it.
+  // Redrawn, not pruned; a declaration, so the search box above draws through it.
   function draw(visible: readonly PopoverSection[]): void {
     body.empty();
     for (const section of visible) addSection(body, section, layer);
@@ -112,7 +105,6 @@ function addSection(
   const sectionEl = parent.createDiv({ cls: "menu-section" });
   if (section.title)
     sectionEl.createDiv({ cls: "menu-title", text: section.title });
-  // Only the grid needs a wrapper, to hang the column count on.
   const list = section.grid
     ? sectionEl.createDiv({ cls: "menu-grid" })
     : sectionEl;
@@ -144,7 +136,6 @@ function addSection(
   }
 }
 
-/** Renders inline in the floating layer rather than in the picker's own popup. */
 function openColorPicker(
   anchor: HTMLElement,
   host: ToolbarHost,
@@ -163,7 +154,6 @@ function openColorPicker(
     color: STANDARD_COLORS[0],
     parent: layer.el,
     popup: false,
-    // `hex` keeps eight digits even with alpha off.
     onDone: (color) => {
       onPick(color.hex.slice(0, 7));
       layer.close();
@@ -176,7 +166,6 @@ function openColorPicker(
   layer.place();
 }
 
-/** One choice as the popover draws it. */
 function toItem(
   spec: CommandSpec,
   host: ToolbarHost,
@@ -185,7 +174,6 @@ function toItem(
 ): PopoverItem {
   const target = choice.command ?? spec;
   const { icon, label, swatch } = choice;
-  // The picker is the one choice that needs an anchor of its own.
   const property = choice.picker;
   if (property !== undefined)
     return {
@@ -207,7 +195,6 @@ function toItem(
   };
 }
 
-/** The Emoji & Symbols panel is not here: it needs a search box. */
 export function popoverSectionsFor(
   spec: CommandSpec,
   host: ToolbarHost,

@@ -93,7 +93,6 @@ import { CASE_OPTIONS } from "../model/palettes";
 import type { CommandPopup } from "../model/types";
 import { commit, selectionRanges } from "./apply";
 
-/** One drop-down's items to `optionValue`; `DROPDOWN_ITEMS` names them, not this. */
 function optionValues<T extends string | null>(
   popup: CommandPopup,
   valueOf: (id: string) => T,
@@ -108,14 +107,12 @@ function widthOf(prefix: string): (id: string) => string | null {
   return (id) => (id.endsWith("-original") ? null : id.slice(prefix.length));
 }
 
-/** Context for local commands; registered commands forward to Obsidian. */
 export interface CommandContext {
   readonly app: App;
   /** Absent for an embedded editor: a Canvas card has no view of its own. */
   readonly view?: MarkdownView;
   readonly editor: Editor;
   readonly format: TableFormat;
-  /** The popup choice: a color, a case mode, or an Emoji & Symbols entry. */
   readonly optionValue?: string;
 }
 const CASE_MODES = new Set<string>(CASE_OPTIONS.map((option) => option.mode));
@@ -146,10 +143,8 @@ function parseSpanOptionValue(
 /** Tracked so unload can leave fullscreen even if the user never toggles back. */
 let fullscreenEl: HTMLElement | null = null;
 
-/** Zen fullscreens the view itself, so Obsidian's layout survives untouched. */
 function toggleFullscreen(context: CommandContext): void {
   const view = context.view;
-  // Zen fullscreens a view; an embedded editor has none to fullscreen.
   if (!view) return;
   const { containerEl } = view;
   const doc = containerEl.ownerDocument;
@@ -169,20 +164,16 @@ export function isZenModeOn(view: MarkdownView): boolean {
   return view.containerEl.ownerDocument.fullscreenElement === view.containerEl;
 }
 
-/** What Focus Mode closed, so exit brings back only those two sides. */
 let focusRestore: { left: boolean; right: boolean } | null = null;
 
-/** Both sidebars closed is Focus Mode, so collapsing them by hand lights the button. */
 export function isFocusModeOn(app: App): boolean {
   const { leftSplit, rightSplit } = app.workspace;
   return leftSplit.collapsed && rightSplit.collapsed;
 }
 
-/** Closes both sidebars through Obsidian's own split state */
 function toggleFocusMode(app: App): void {
   const { leftSplit, rightSplit } = app.workspace;
   if (isFocusModeOn(app)) {
-    // No memory after a reload while focused: bring both back, never no-op.
     const back = focusRestore ?? { left: true, right: true };
     if (back.left) leftSplit.expand();
     if (back.right) rightSplit.expand();
@@ -227,8 +218,7 @@ function nativePaste(plain: boolean): boolean {
   return true;
 }
 
-/** The Copy as drop-down; Markdown re-renders through `renderTable`, so the
- * clipboard gets a valid table. `label` names a file format, so it stays untranslated. */
+/** Markdown re-renders through `renderTable`; `label` is a file format, so untranslated. */
 const COPY_TABLE_AS: Readonly<
   Record<
     string,
@@ -333,7 +323,6 @@ export async function runClipboard(
     return;
   }
 
-  // Native paste first: it converts `text/html` and keeps list continuation.
   if (nativePaste(id === "paste-plain-text")) return;
 
   const text = await navigator.clipboard.readText();
@@ -356,27 +345,22 @@ const PARAGRAPH_ALIGNMENTS: Readonly<Record<string, ParagraphAlignment>> = {
   "align-right": "right",
 };
 
-/** Obsidian's twelve callout types, one command each under the Callout button. */
 const CALLOUT_TYPES = optionValues("callout", (id) =>
   id.slice("callout-".length),
 );
 
-/** The widths Word offers; `null` clears the size back to the file's own. */
 const IMAGE_WIDTHS = optionValues("image-size", widthOf("image-size-"));
 
-/** The same widths, applied to every picture in the note. */
 const ALL_IMAGE_WIDTHS = optionValues(
   "image-size-all",
   widthOf("image-size-all-"),
 );
 
-/** One Mermaid diagram type per item under the Chart button. */
 const CHART_KINDS = optionValues(
   "chart",
   (id) => id.slice("chart-".length) as ChartKind,
 );
 
-/** Word's own multilevel schemes; the one off-scheme id takes them back off. */
 const HEADING_NUMBERINGS = optionValues(
   "number-headings",
   (id) =>
@@ -385,13 +369,11 @@ const HEADING_NUMBERINGS = optionValues(
       : id.slice("number-headings-".length)) as HeadingNumbering,
 );
 
-/** The local half of the command table; registered commands forward instead. */
 export function planFor(context: CommandContext, id: string): Plan | null {
   const { editor, format, optionValue } = context;
   const doc = editor.getValue();
   const ranges = selectionRanges(editor);
-  // Table ops read the caret: a selection spanning cells has no single meaning.
-  // Aligning is the one that still wants the selection — see `alignColumn`.
+  // Table ops read the caret; aligning is the one that wants the selection.
   const caret = editor.posToOffset(editor.getCursor());
 
   const pair = INLINE_PAIRS[id];
@@ -554,7 +536,6 @@ export function planFor(context: CommandContext, id: string): Plan | null {
     case "table-convert-to-text":
       return tableToText(doc, caret);
     case "convert-text-to-table": {
-      // One table needs one block of text, so extra cursors are ignored.
       const range = ranges[0];
       if (!range) return NO_CHANGE;
       const table = tableFromDelimited(doc.slice(range.from, range.to), format);

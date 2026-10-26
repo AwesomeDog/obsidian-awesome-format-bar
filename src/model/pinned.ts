@@ -1,11 +1,9 @@
 import { t } from "../i18n/i18n";
 import type { CommandSpec, PinnedCommand } from "./types";
 
-/** Pinned buttons are user data, rebuilt as specs that forward. */
 export const DEFAULT_PIN_ICON = "command";
 export const DEFAULT_PIN_GROUP = "General";
 
-/** The built-in group is a key; a user group is displayed as typed. */
 export function pinnedGroupLabel(name: string): string {
   return name === DEFAULT_PIN_GROUP ? t("General") : name;
 }
@@ -15,10 +13,8 @@ export interface PinnedGroup {
   commands: PinnedCommand[];
 }
 
-/**
- * Groups are a view of the flat data; first appearance fixes their order.
- * The command arrays are built here, so a caller may splice them freely.
- */
+/** Groups are a view of the flat data; first appearance fixes their order.
+ * The arrays are built here, so a caller may splice them freely. */
 export function pinnedGroups(pinned: readonly PinnedCommand[]): PinnedGroup[] {
   const groups = new Map<string, PinnedCommand[]>();
   for (const entry of pinned) {
@@ -30,7 +26,6 @@ export function pinnedGroups(pinned: readonly PinnedCommand[]): PinnedGroup[] {
   return [...groups].map(([name, commands]) => ({ name, commands }));
 }
 
-/** Rewrites a grouped view into the single persisted order. */
 export function flattenPinnedGroups(
   groups: readonly PinnedGroup[],
 ): PinnedCommand[] {
@@ -42,7 +37,6 @@ function groupValue(name: string): string | undefined {
   return trimmed === "" || trimmed === DEFAULT_PIN_GROUP ? undefined : trimmed;
 }
 
-/** Moves one entry inside a list, clamping the target; false if nothing moved. */
 function moveWithin<T>(list: T[], from: number, to: number): boolean {
   const [moved] = list.splice(from, 1);
   if (moved === undefined) return false;
@@ -120,7 +114,6 @@ export function pinnedSpecs(
     icon: entry.icon || DEFAULT_PIN_ICON,
     id: `pinned:${entry.commandId}`,
     kind: "registered",
-    // The registry is live: a command renamed by an update keeps its label.
     name: nameOf(entry.commandId) ?? entry.name,
   }));
 }

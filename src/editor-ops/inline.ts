@@ -9,7 +9,6 @@ import {
   type Range,
 } from "./plan";
 
-/** Un-wraps a pair that encloses only part of the selection. */
 function enclosingPair(
   doc: string,
   range: Range,
@@ -84,13 +83,11 @@ export function toggleInlinePair(
     : { changes: order(changes) };
 }
 
-/** Word's Select All: the whole note, the way Ctrl+A reads it. */
 export function selectAll(doc: string): Plan {
   return { changes: [], selections: [{ from: 0, to: doc.length }] };
 }
 
-/** Every run wearing what the cursor wears; a red highlight never selects a yellow one.
- * Fenced code, code spans and inline formulas are never scanned for marks. */
+/** Every run wearing what the cursor wears; fenced code is never scanned. */
 export function selectSimilarFormatting(
   doc: string,
   ranges: readonly Range[],
@@ -115,14 +112,11 @@ export function selectSimilarFormatting(
   };
 }
 
-/** One run of inline formatting: the text between its marks. */
 interface InlineRun extends Range {
   readonly kind: InlineKind;
-  /** What tells two runs of a kind apart: a highlight's color, a span's style. */
   readonly variant: string;
 }
 
-/** Fenced code: nothing it holds is a mark, however it reads. */
 function fencedRanges(doc: string): Range[] {
   const lines = new Lines(doc);
   const fenced = fenceMask(lines);
@@ -133,7 +127,6 @@ function fencedRanges(doc: string): Range[] {
       if (open < 0) open = lines.start(line);
       continue;
     }
-    // The line above closed the block; `end` is its terminator.
     if (open >= 0) {
       out.push({ from: open, to: lines.end(line - 1) });
       open = -1;
@@ -143,7 +136,6 @@ function fencedRanges(doc: string): Range[] {
   return out;
 }
 
-/** What a walk of the inline syntax can find. */
 export type InlineKind =
   | "escape"
   | "code"
@@ -163,15 +155,11 @@ export interface InlineMarker {
   readonly at: number;
   readonly length: number;
   readonly open?: boolean;
-  /** On a tag: whether it closes one. */
   readonly closing?: boolean;
-  /** The `style` of a `<span>`. */
   readonly style?: string;
-  /** The hex a `==` carries as an emoji, if any. */
   readonly color?: string | null;
 }
 
-/** Whether the walk stands inside a code span or an inline formula. */
 export interface VerbatimState {
   code: boolean;
   math: boolean;
@@ -180,9 +168,7 @@ export interface VerbatimState {
 const WORD_CHAR = /[\p{L}\p{N}]/u;
 const WHITESPACE = /\s/;
 
-/** `*` and `_` the way CommonMark reads them: neither opens before a space, and
- * `_` never emphasizes inside a word. `null` is no marker at all, `undefined`
- * is one that reads either way. */
+/** CommonMark: neither opens before a space; `_` never emphasizes inside a word. */
 function direction(
   doc: string,
   at: number,
@@ -199,8 +185,7 @@ function direction(
   return opens === closes ? undefined : opens;
 }
 
-/** The marker starting at `at`, or `null`. The one reading of the inline syntax:
- * the runs below and the Format Painter both walk it. */
+/** The one reading of the inline syntax: the runs below and the painter walk it. */
 export function nextInlineMarker(
   doc: string,
   at: number,
@@ -252,9 +237,7 @@ export function nextInlineMarker(
   return { at, closing: tag.closing, kind, length };
 }
 
-/** Every marker of `doc[from..to)`, in order; fenced code is walked over.
- * `visit` returning false ends the walk. `verbatim` is where a walk that starts
- * mid-document stands; it is carried along as the walk goes. */
+/** Every marker in order; `verbatim` carries where a mid-document walk stands. */
 export function scanInline(
   doc: string,
   from: number,
@@ -295,7 +278,6 @@ function variantOf(marker: InlineMarker): string {
   return "";
 }
 
-/** Every run of inline formatting in the note, outermost and innermost alike. */
 function inlineRuns(doc: string): InlineRun[] {
   const runs: InlineRun[] = [];
   const open = new Map<InlineKind, InlineMarker[]>();
@@ -303,7 +285,6 @@ function inlineRuns(doc: string): InlineRun[] {
   scanInline(doc, 0, doc.length, (marker) => {
     if (marker.kind === "escape") return;
     const stack = open.get(marker.kind) ?? [];
-    // A tag knows its direction; the rest toggle, so an empty stack opens.
     const opens =
       marker.open ??
       (marker.closing === undefined ? stack.length === 0 : !marker.closing);
@@ -328,24 +309,20 @@ function inlineRuns(doc: string): InlineRun[] {
 export const SPAN_CLOSE = "</span>";
 export const SPAN_WHOLE = /^<span style="([^"]*)">([\s\S]*)<\/span>$/;
 
-/** One of the four, as written in the note. */
 export interface InlineTag {
   readonly from: number;
   readonly to: number;
   /** Lowercased: an HTML tag name carries its case in the file, not in meaning. */
   readonly name: string;
   readonly closing: boolean;
-  /** The `style` attribute of a `<span>`; empty on the other three. */
   readonly style: string;
-  /** The tag itself, markers included. */
   readonly raw: string;
 }
 
 const INLINE_TAG = /<(\/?)(span|u|sub|sup)\b[^>]*>/i;
 const SPAN_STYLE = /style="([^"]*)"/i;
 
-/** One instance per walk: both below drive `lastIndex`, so neither may move
- * the other's. */
+/** One instance per walk: both below drive `lastIndex`. */
 function tagPattern(): RegExp {
   return new RegExp(INLINE_TAG, "gi");
 }
@@ -364,12 +341,10 @@ function tagOf(match: RegExpMatchArray): InlineTag {
   };
 }
 
-/** Every one of the four in `doc`, in document order. */
 export function inlineTags(doc: string): InlineTag[] {
   return [...doc.matchAll(tagPattern())].map(tagOf);
 }
 
-/** The one starting exactly at `at`, or `null` when none does. */
 export function inlineTagAt(doc: string, at: number): InlineTag | null {
   const pattern = tagPattern();
   pattern.lastIndex = at;
@@ -378,14 +353,12 @@ export function inlineTagAt(doc: string, at: number): InlineTag | null {
   return tagOf(match);
 }
 
-/** An opening tag with the closing tag that ended it. */
 export interface InlineWrapper {
   readonly open: InlineTag;
   readonly close: InlineTag;
 }
 
-/** Pairs each closing tag with the last tag of its name still open; nearer wins.
- * `opens` rules a tag out of opening one; whatever is left comes back in `orphans`. */
+/** Pairs each closing tag with the last open one of its name; nearer wins. */
 export function pairTags(
   doc: string,
   opens: (tag: InlineTag) => boolean,

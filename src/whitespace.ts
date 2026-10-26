@@ -16,13 +16,11 @@ export const ODD_SPACE = /[\u00a0\u1680\u2000-\u200a\u202f\u205f\u3000]/g;
 /** SHY, ZWSP/ZWNJ/ZWJ, LRM/RLM, word joiner, invisible math operators, BOM. */
 export const INVISIBLE = /[\u00ad\u200b-\u200f\u2060-\u2064\ufeff]/g;
 
-/** One character per match, so a run of odd spaces draws one dot each. */
 const oddSpaces = new MatchDecorator({
   regexp: ODD_SPACE,
   decoration: Decoration.mark({ class: "cm-highlightOddSpace" }),
 });
 
-/** Stands in for a character that has no width of its own to paint on. */
 class InvisibleMark extends WidgetType {
   constructor(private readonly codepoint: string) {
     super();
@@ -32,11 +30,9 @@ class InvisibleMark extends WidgetType {
     return other.codepoint === this.codepoint;
   }
 
-  /** Built off the editor root: a widget is handed to CodeMirror parentless. */
   toDOM(view: EditorView): HTMLElement {
     return view.dom.createSpan({
       cls: "cm-highlightInvisible",
-      // The only way to tell which character it is: on screen they look alike.
       title: this.codepoint,
     });
   }

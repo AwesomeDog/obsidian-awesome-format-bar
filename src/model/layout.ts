@@ -1,6 +1,5 @@
 import type { CommandId } from "./command-table";
 
-/** The Ribbon's tabs and groups, plus the fixed Compact subset. */
 export interface RibbonGroup {
   readonly name: string;
   readonly commands: readonly CommandId[];
@@ -108,7 +107,6 @@ export const BUILT_IN_COMMAND_TABS = [
           "image-caption",
           "image-reset",
           "image-convert-syntax",
-          // Chart last, the way Word ends its own Illustrations group with it.
           "chart",
         ],
       },
@@ -225,7 +223,6 @@ export const RIBBON_TABS = [...BUILT_IN_COMMAND_TABS, PINNED_TAB] as const;
 
 export type TabId = (typeof RIBBON_TABS)[number]["id"];
 
-/** Compact subset: fixed in code, grouped by the separators between runs. */
 export const COMPACT_GROUPS = [
   ["bold", "italic", "underline", "strikethrough", "highlight"],
   [

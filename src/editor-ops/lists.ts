@@ -27,23 +27,19 @@ import {
   type Outline,
 } from "./outline";
 
-/** Renumbering, sorting, joining and splitting are local; headings and lists are not. */
 const ORDERED = /^(\s*)(\d+)([.)])(\s+)(.*)$/;
 const BULLET = /^(\s*)([-*+])(\s+)(.*)$/;
 function isListLine(text: string): boolean {
   return ORDERED.test(text) || BULLET.test(text);
 }
 
-/** A line indented under an item: its lazy continuation. */
 const INDENTED = /^\s{2,}\S/;
 
 function continues(text: string): boolean {
   return isListLine(text) || INDENTED.test(text);
 }
 
-/** The list `a..b` belongs to, walking outwards from it. `bridge` crosses one
- * blank line when a list line waits on the other side; `fence` ends the walk at
- * a fence an item has indented into itself. */
+/** The list `a..b` belongs to; `bridge` crosses one blank line, `fence` ends the walk. */
 function listRun(
   lines: Lines,
   a: number,
@@ -94,7 +90,6 @@ function listRun(
   return [start, end];
 }
 
-/** Renumbering and sorting take the whole list, blank line and all. */
 function listBlock(lines: Lines, a: number, b: number): Block {
   return listRun(lines, a, b, true, false);
 }
@@ -132,7 +127,6 @@ export function renumberList(doc: string, ranges: readonly Range[]): Plan {
       const ordered = ORDERED.exec(text);
       const bullet = ordered ? null : BULLET.exec(text);
       if (!ordered && !bullet) {
-        // Indented text is a lazy continuation of the item above it.
         if (stack.length > 0 && /^\s{2,}/.test(text)) {
           blanks = 0;
           continue;
@@ -175,7 +169,6 @@ export function renumberList(doc: string, ranges: readonly Range[]): Plan {
   return { changes: order(changes) };
 }
 
-/** Reorders each run of lines; blank lines and fenced code stay put. */
 function reorderRuns(
   lines: Lines,
   ranges: readonly Range[],
@@ -185,7 +178,6 @@ function reorderRuns(
   const fenced = fenceMask(lines);
 
   for (const [a, b] of blocksFor(lines, ranges, "collapsed-paragraph")) {
-    // One line has nothing to reorder or to join.
     if (a === b) continue;
     const source: string[] = [];
     for (let line = a; line <= b; line++) source.push(lines.at(line));
@@ -197,7 +189,6 @@ function reorderRuns(
       run = [];
     };
     for (const [index, text] of source.entries()) {
-      // A fence and everything it holds is copied, never reordered.
       if ((fenced[a + index] ?? false) || text.trim() === "") {
         flush();
         result.push(text);
@@ -213,7 +204,6 @@ function reorderRuns(
   return { changes: order(changes) };
 }
 
-/** Sorts runs of non-blank lines; blank lines and fences stay put as dividers. */
 export function sortLines(doc: string, ranges: readonly Range[]): Plan {
   return reorderRuns(new Lines(doc), ranges, (run) =>
     run.slice().sort((x, y) => compareText(x.trim(), y.trim())),
@@ -224,13 +214,11 @@ export function reverseLines(doc: string, ranges: readonly Range[]): Plan {
   return reorderRuns(new Lines(doc), ranges, (run) => run.slice().reverse());
 }
 
-/** An item's depth is its indent; a line that opens no item rides with one. */
 function itemLevelOf(text: string): number | null {
   const marker = ORDERED.exec(text) ?? BULLET.exec(text);
   return marker ? (marker[1] ?? "").length : null;
 }
 
-/** Items begin at a marker; any other line rides with the item above it. */
 function itemsIn(lines: Lines, from: number, to: number): Outline[] {
   return parseOutline(lines, from, to, itemLevelOf);
 }
@@ -242,26 +230,22 @@ function itemText(item: Outline): string {
   return (ITEM_TEXT.exec(item.lines[0] ?? "")?.[1] ?? "").trim();
 }
 
-/** Moving one item stays in its own run: a blank line or a fence ends it. */
 function moveRun(lines: Lines, line: number): Block | null {
   if (!continues(lines.at(line))) return null;
   return listRun(lines, line, line, false, true);
 }
 
-/** Sorting leaves ordered items out of sequence, so they are renumbered. */
 function renumber(text: string): string {
   const changes = renumberList(text, [{ from: 0, to: text.length }]).changes;
   return applyChanges(text, changes);
 }
 
-/** The first list item in `a..b`, or -1 when there is none to sort. */
 function firstListLine(lines: Lines, a: number, b: number): number {
   for (let line = a; line <= b; line++)
     if (isListLine(lines.at(line))) return line;
   return -1;
 }
 
-/** Sorts a list level by level; each item keeps its own lines and its children. */
 export function sortList(doc: string, ranges: readonly Range[]): Plan {
   const lines = new Lines(doc);
   const changes: Change[] = [];
@@ -284,14 +268,12 @@ export function sortList(doc: string, ranges: readonly Range[]): Plan {
       );
       if (result !== source)
         changes.push(replaceBlock(lines, start, end, result));
-      // Skip the blank line that ends this run.
       start = firstListLine(lines, end + 2, last);
     }
   }
   return { changes: order(changes) };
 }
 
-/** Moves one list item and its subtree, following Outliner's boundary rules. */
 export function moveListItem(
   doc: string,
   ranges: readonly Range[],
@@ -333,7 +315,6 @@ export function moveListItem(
 /** Only marks that cannot end a sentence, so prose never shatters. */
 const SEPARATORS = ["、", "，", ",", ";", "；", "|", "·"] as const;
 
-/** The separator the selection uses most; ties go to the earliest. */
 function pickSeparator(text: string): string | null {
   let best: string | null = null;
   let most = 0;
@@ -347,7 +328,6 @@ function pickSeparator(text: string): string | null {
   return best;
 }
 
-/** A line without the separator is left alone, so nothing trims in passing. */
 export function splitLines(doc: string, ranges: readonly Range[]): Plan {
   const lines = new Lines(doc);
   const fenced = fenceMask(lines);
@@ -363,7 +343,6 @@ export function splitLines(doc: string, ranges: readonly Range[]): Plan {
     const result = source
       .split("\n")
       .flatMap((text, index) => {
-        // A fence and everything it holds is copied, never split.
         if (fenced[a + index] ?? false) return [text];
         const parts = text.split(separator);
         return parts.length > 1 ? parts.map((part) => part.trim()) : [text];
@@ -387,7 +366,6 @@ function joinRun(run: readonly string[]): string {
   return out;
 }
 
-/** VS Code's Duplicate Selection: the line under the caret, or the selection. */
 export function duplicate(doc: string, ranges: readonly Range[]): Plan {
   const lines = new Lines(doc);
   const list = normalizeRanges(ranges);
@@ -424,7 +402,6 @@ export function duplicate(doc: string, ranges: readonly Range[]): Plan {
   return { changes, select: { from: caret, to: caret } };
 }
 
-/** Blank lines and fenced code stay put, so a paragraph stays a paragraph. */
 export function mergeLines(doc: string, ranges: readonly Range[]): Plan {
   return reorderRuns(new Lines(doc), ranges, (run) =>
     run.length > 1 ? [joinRun(run)] : [...run],

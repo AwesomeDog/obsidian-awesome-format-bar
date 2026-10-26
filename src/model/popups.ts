@@ -18,31 +18,22 @@ import type { CommandPopup, CommandSpec } from "./types";
 export interface PopupChoice {
   readonly label: string;
   readonly icon?: string;
-  /** A CSS color: the dot in front of the label, for the color palettes. */
   readonly swatch?: string;
-  /** A CSS font stack: draws the label in that font, for the font drop-down. */
   readonly preview?: string;
-  /** Greyed out: the machine does not have this font. It stays clickable. */
   readonly dim?: boolean;
-  /** The `optionValue` the command runs with. */
   readonly value?: string;
-  /** A command of its own: what the drop-downs whose items are commands carry. */
   readonly command?: CommandSpec;
-  /** The property the color picker writes. It needs an anchor, so only the
-   * popover draws this choice; the editor menu leaves it out. */
+  /** Needs an anchor, so only the popover draws it. */
   readonly picker?: string;
-  /** Shown but not clickable: a placeholder standing in for what is still loading. */
   readonly disabled?: boolean;
 }
 
 export interface PopupSection {
   readonly items: readonly PopupChoice[];
   readonly title?: string;
-  /** Columns. The editor menu lists the items flat and ignores it. */
   readonly grid?: number;
 }
 
-/** No Color and the picker: the same two entries under either palette. */
 function colorExtras(property: string): PopupSection {
   return {
     items: [
@@ -52,8 +43,7 @@ function colorExtras(property: string): PopupSection {
   };
 }
 
-/** One font as the drop-down offers it. A generic family never dims — every
- * machine resolves it — and its name is the one label here that translates. */
+/** A generic family never dims; its name is the one label that translates. */
 function fontChoice(
   font: FontOption,
   fonts: LocalFonts,
@@ -67,8 +57,7 @@ function fontChoice(
   };
 }
 
-/** The families the machine reported, under one group of their own. Absent where
- * there is no API to read them, and a placeholder while the read is running. */
+/** Absent with no API to read them; a placeholder while the read runs. */
 function localSection(fonts: LocalFonts): PopupSection | null {
   if (fonts.kind === "unsupported") return null;
   const title = t("Local fonts");
@@ -87,7 +76,6 @@ function localSection(fonts: LocalFonts): PopupSection | null {
   };
 }
 
-/** Curated fonts grouped by kind, then whatever else the machine has. */
 function fontSections(fonts: LocalFonts): readonly PopupSection[] {
   const sections: PopupSection[] = FONT_GROUPS.map((group) => ({
     items: group.fonts.map((font) =>
@@ -100,7 +88,6 @@ function fontSections(fonts: LocalFonts): readonly PopupSection[] {
   return sections;
 }
 
-/** Lowercase substring anywhere in a label; a section left with nothing drops out. */
 export function filterSections(
   sections: readonly PopupSection[],
   query: string,
@@ -118,11 +105,9 @@ export function filterSections(
 }
 
 export interface PopupOptions {
-  /** Defaults to the cache filled at startup; the editor menu passes `unsupported`. */
   readonly localFonts?: LocalFonts;
 }
 
-/** The sections `popup` opens; `undefined` is no drop-down at all and yields nothing. */
 export function popupSections(
   popup: CommandPopup | undefined,
   options: PopupOptions = {},
@@ -141,8 +126,7 @@ export function popupSections(
         colorExtras("color"),
       ];
     case "highlight-color": {
-      // The leading six are Obsidian's own, and the theme variable is what renders:
-      // showing the hex would promise a color the editor never paints.
+      // The theme variable is what renders; a hex would promise another color.
       const native = (entry: NativeHighlight): PopupChoice => ({
         label: entry.hex,
         swatch: `var(${entry.variable})`,
@@ -179,8 +163,7 @@ export function popupSections(
           })),
         },
       ];
-    // Everything else that is a drop-down at all: one item per command listed
-    // under it. Nothing here names a pop-up, so a new one needs no case.
+    // One item per command; nothing here names a pop-up.
     default: {
       const ids = popup ? (DROPDOWN_ITEMS[popup] ?? []) : [];
       if (ids.length === 0) return [];

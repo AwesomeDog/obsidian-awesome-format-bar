@@ -8,7 +8,6 @@ import {
   type CharEntry,
 } from "../src/model/characters";
 
-/** The dataset is loaded lazily now, so every suite below shares one load. */
 const sources = await loadCharSources();
 
 function makeEntry(
@@ -38,7 +37,6 @@ describe("searchCharacters", () => {
   });
 
   it("ranks a name prefix above a word prefix above a substring", () => {
-    // B and C start with "fir"; D merely contains the word "fire".
     expect(searchCharacters(entries, "fir").map((e) => e.char)).toEqual([
       "B",
       "C",
@@ -97,7 +95,6 @@ describe("pruneUsage", () => {
 
     pruneUsage(usage);
 
-    // The only kaomoji: a single global ranking would have starved it.
     expect(usage[kaomoji]).toBe(1);
   });
 });
@@ -111,8 +108,7 @@ describe("charSources", () => {
     expect(emoji.length).toBeGreaterThan(1000);
     for (const entry of emoji) {
       expect(entry.char.length).toBeGreaterThan(0);
-      // Groups are translated from emoji-mart's bare category ids, so an
-      // untranslated id means a new category appeared upstream.
+      // An untranslated group id means a new category appeared upstream.
       expect(entry.group).toMatch(/^[A-Z]/);
     }
   });

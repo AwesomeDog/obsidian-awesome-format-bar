@@ -27,7 +27,6 @@ export function deleteRanges(ranges: readonly Range[]): Plan {
     ),
   };
 }
-/** A fixed en-US formatter — no locale drift. */
 function parts(date: Date, options: Intl.DateTimeFormatOptions) {
   const formatted = new Intl.DateTimeFormat("en-US", options).formatToParts(
     date,
@@ -50,7 +49,6 @@ export function formatDateTime(date: Date): string {
   return `${get("year")}-${get("month")}-${get("day")} ${hour}:${get("minute")}`;
 }
 
-/** `YYYY-MM-DD`, the form a Gantt chart dates its tasks in. */
 export function formatDate(date: Date): string {
   const get = parts(date, {
     day: "2-digit",

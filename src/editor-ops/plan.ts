@@ -12,12 +12,10 @@ export interface Change {
 export interface Plan {
   readonly changes: readonly Change[];
   readonly select?: Range;
-  /** Several ranges at once, for the commands that only move the cursor. */
   readonly selections?: readonly Range[];
 }
 
 export const NO_CHANGE: Plan = { changes: [] };
-/** Ascending, non-overlapping, duplicate cursors collapsed. */
 export function normalizeRanges(ranges: readonly Range[]): Range[] {
   const sorted = ranges
     .map((range) => ({
@@ -48,14 +46,12 @@ export function touches(
   return ranges.some((range) => from < range.to && to > range.from);
 }
 
-/** CodeMirror requires sorted, non-overlapping changes. Sorted into a copy:
- * callers keep building the array they passed in. */
+/** CodeMirror requires sorted, non-overlapping changes; sorted into a copy. */
 export function order(changes: readonly Change[]): Change[] {
   return [...changes].sort((a, b) => a.from - b.from);
 }
 
-/** One change per range `transform` moved. Shared by every command that rewrites
- * the selected text and leaves the rest of the document alone. */
+/** Shared by every command that rewrites the selected text only. */
 export function transformRanges(
   doc: string,
   ranges: readonly Range[],
@@ -81,15 +77,13 @@ export function applyChanges(text: string, changes: readonly Change[]): string {
   return out + text.slice(cursor);
 }
 
-/** Offset of `line`'s first character. `offsetToPosition` is the way back. */
 export function lineOffset(lines: readonly string[], line: number): number {
   let offset = 0;
   for (let i = 0; i < line; i++) offset += (lines[i]?.length ?? 0) + 1;
   return offset;
 }
 
-/** Where `line` and `ch` land in text that starts at `start`. `ch` is clamped
- * to the line, so a cursor past its end stays on it. */
+/** `ch` is clamped to the line, so a cursor past its end stays on it. */
 export function offsetAtLine(
   lines: readonly string[],
   start: number,
