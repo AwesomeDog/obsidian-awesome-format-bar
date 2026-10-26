@@ -81,6 +81,39 @@ export function sortOutline(
     .sort((a, b) => compareText(textOf(a), textOf(b)));
 }
 
+/** Moves `node` one place `direction` inside its level, carrying its subtree;
+ * out of siblings at the end of a level, it leaves its parent for the uncle on
+ * that side. `null` when it cannot move: at the ends of the outline. Shared by
+ * Move Section and Move List Item, so both agree on what a step is. */
+export function moveOutline(
+  roots: Outline[],
+  node: Outline,
+  direction: -1 | 1,
+): { lines: readonly string[]; targetLine: number } | null {
+  const siblings = node.parent?.children ?? roots;
+  const index = siblings.indexOf(node);
+  if (index < 0) return null;
+
+  const neighbor = siblings[index + direction];
+  if (neighbor) {
+    siblings[index + direction] = node;
+    siblings[index] = neighbor;
+    return flattenOutline(roots, node);
+  }
+
+  const parent = node.parent;
+  if (!parent) return null;
+  // Out of siblings: leave the parent and join the uncle on that side.
+  const uncles = parent.parent?.children ?? roots;
+  const uncle = uncles[uncles.indexOf(parent) + direction];
+  if (!uncle) return null;
+  siblings.splice(index, 1);
+  if (direction < 0) uncle.children.push(node);
+  else uncle.children.unshift(node);
+  node.parent = uncle;
+  return flattenOutline(roots, node);
+}
+
 /** Depth-first, a node before its children. `targetLine` is where `target`
  * landed: the index of its first line, or -1 when it is not in the tree. */
 export function flattenOutline(

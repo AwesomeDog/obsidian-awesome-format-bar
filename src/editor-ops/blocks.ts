@@ -18,6 +18,7 @@ import {
 } from "./lines";
 import {
   flattenOutline,
+  moveOutline,
   outlineAt,
   parseOutline,
   sortOutline,
@@ -178,35 +179,18 @@ export function moveSection(
   const target = outlineAt(roots, cursorLine);
   if (!target) return NO_CHANGE;
 
-  const siblings = target.parent?.children ?? roots;
-  const index = siblings.indexOf(target);
-  if (index < 0) return NO_CHANGE;
-
-  const neighbor = siblings[index + direction];
-  if (neighbor) {
-    siblings[index + direction] = target;
-    siblings[index] = neighbor;
-  } else {
-    const parent = target.parent;
-    if (!parent) return NO_CHANGE;
-    // Out of siblings: leave the parent and join the uncle on that side.
-    const uncles = parent.parent?.children ?? roots;
-    const uncle = uncles[uncles.indexOf(parent) + direction];
-    if (!uncle) return NO_CHANGE;
-    siblings.splice(index, 1);
-    if (direction < 0) uncle.children.push(target);
-    else uncle.children.unshift(target);
-    target.parent = uncle;
-  }
-
-  const flattened = flattenOutline(roots, target);
-  const result = flattened.lines.join("\n");
+  const moved = moveOutline(roots, target, direction);
+  if (!moved) return NO_CHANGE;
+  const result = moved.lines.join("\n");
   if (result === lines.slice(start, last)) return NO_CHANGE;
 
-  const resultLines = result.split("\n");
-  const targetLine = flattened.targetLine + (cursorLine - target.start);
-  const ch = range.from - lines.start(cursorLine);
-  const caret = offsetAtLine(resultLines, lines.start(start), targetLine, ch);
+  const targetLine = moved.targetLine + (cursorLine - target.start);
+  const caret = offsetAtLine(
+    result.split("\n"),
+    lines.start(start),
+    targetLine,
+    range.from - lines.start(cursorLine),
+  );
   return {
     changes: [replaceBlock(lines, start, last, result)],
     select: { from: caret, to: caret },

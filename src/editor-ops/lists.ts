@@ -20,6 +20,7 @@ import {
 } from "./lines";
 import {
   flattenOutline,
+  moveOutline,
   outlineAt,
   parseOutline,
   sortOutline,
@@ -310,41 +311,22 @@ export function moveListItem(
   const target = outlineAt(roots, cursorLine);
   if (!target) return NO_CHANGE;
 
-  const siblings = target.parent?.children ?? roots;
-  const index = siblings.indexOf(target);
-  if (index < 0) return NO_CHANGE;
-
-  const neighbor = siblings[index + direction];
-  if (neighbor) {
-    siblings[index + direction] = target;
-    siblings[index] = neighbor;
-  } else {
-    const parent = target.parent;
-    if (!parent) return NO_CHANGE;
-    // Out of siblings: leave the parent and join the uncle on that side.
-    const uncles = parent.parent?.children ?? roots;
-    const uncle = uncles[uncles.indexOf(parent) + direction];
-    if (!uncle) return NO_CHANGE;
-    siblings.splice(index, 1);
-    if (direction < 0) uncle.children.push(target);
-    else uncle.children.unshift(target);
-    target.parent = uncle;
-  }
-
-  const flattened = flattenOutline(roots, target);
-  const result = renumber(flattened.lines.join("\n"));
+  const moved = moveOutline(roots, target, direction);
+  if (!moved) return NO_CHANGE;
+  // Sorting leaves ordered items out of sequence, so they are renumbered.
+  const result = renumber(moved.lines.join("\n"));
   if (result === lines.slice(start, end)) return NO_CHANGE;
 
-  const resultLines = result.split("\n");
-  const relativeLine = cursorLine - target.start;
-  const targetLine = flattened.targetLine + relativeLine;
-  const cursorCh = range.from - lines.start(cursorLine);
+  const targetLine = moved.targetLine + (cursorLine - target.start);
+  const caret = offsetAtLine(
+    result.split("\n"),
+    lines.start(start),
+    targetLine,
+    range.from - lines.start(cursorLine),
+  );
   return {
     changes: [replaceBlock(lines, start, end, result)],
-    select: {
-      from: offsetAtLine(resultLines, lines.start(start), targetLine, cursorCh),
-      to: offsetAtLine(resultLines, lines.start(start), targetLine, cursorCh),
-    },
+    select: { from: caret, to: caret },
   };
 }
 
