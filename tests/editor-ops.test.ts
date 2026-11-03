@@ -10,6 +10,7 @@ import {
   tableOfContents,
   toggleDropCap,
   toggleParagraphAlignment,
+  type ChartKind,
   type HeadingNumbering,
 } from "../src/editor-ops/blocks";
 import { changeCase, convertCase } from "../src/editor-ops/case";
@@ -1334,6 +1335,25 @@ describe("insertions", () => {
     expect(apply("|", (d, r) => insertChartBlock(d, r, "gantt", TODAY))).toBe(
       "```mermaid\ngantt\n  title Project\n  section Phase\n  Task :a1, 2026-10-07, 7d\n```",
     );
+  });
+
+  it("starts every Mermaid 12 type with its own keyword", () => {
+    const firstLines: Readonly<Partial<Record<ChartKind, string>>> = {
+      swimlane: "swimlane-beta",
+      agentflow: "agentflow-beta TB",
+      usecase: "usecase-beta",
+      "tree-view": "treeView-beta",
+      railroad: "railroad-ebnf-beta",
+      cynefin: "cynefin-beta",
+      wardley: "wardley-beta",
+      "event-modeling": "eventmodeling",
+    };
+    for (const [kind, first] of Object.entries(firstLines)) {
+      const block = apply("|", (d, r) =>
+        insertChartBlock(d, r, kind as ChartKind, TODAY),
+      );
+      expect(block.split("\n")[1]).toBe(first);
+    }
   });
 
   // The radar brace belongs on the label line; a break there is a parse error.

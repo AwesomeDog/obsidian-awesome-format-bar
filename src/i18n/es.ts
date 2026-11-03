@@ -194,6 +194,14 @@ export default {
   "C4 Diagram": "Diagrama C4",
   "Ishikawa Diagram": "Diagrama de Ishikawa",
   "Venn Diagram": "Diagrama de Venn",
+  "Swimlane Diagram": "Diagrama de carriles",
+  "Agent Flow": "Flujo de agentes",
+  "Use Case Diagram": "Diagrama de casos de uso",
+  "Tree View": "Vista de árbol",
+  "Railroad Diagram": "Diagrama de ferrocarril",
+  "Cynefin Framework": "Marco Cynefin",
+  "Wardley Map": "Mapa de Wardley",
+  "Event Modeling": "Modelado de eventos",
 
   // Tabs and groups
   Home: "Inicio",

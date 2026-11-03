@@ -194,6 +194,14 @@ export default {
   "C4 Diagram": "Диаграмма C4",
   "Ishikawa Diagram": "Диаграмма Исикавы",
   "Venn Diagram": "Диаграмма Венна",
+  "Swimlane Diagram": "Диаграмма дорожек",
+  "Agent Flow": "Поток агентов",
+  "Use Case Diagram": "Диаграмма вариантов использования",
+  "Tree View": "Древовидное представление",
+  "Railroad Diagram": "Синтаксическая диаграмма",
+  "Cynefin Framework": "Рамка Cynefin",
+  "Wardley Map": "Карта Уордли",
+  "Event Modeling": "Моделирование событий",
 
   // Tabs and groups
   Home: "Главная",

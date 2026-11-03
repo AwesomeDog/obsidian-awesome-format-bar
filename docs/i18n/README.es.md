@@ -8,7 +8,7 @@
 [![Obsidian](https://img.shields.io/badge/Obsidian-1.14%2B-7C3AED)](https://obsidian.md)
 [![GitHub release](https://img.shields.io/github/v/release/AwesomeDog/obsidian-awesome-format-bar)](https://github.com/AwesomeDog/obsidian-awesome-format-bar/releases/latest)
 [![Downloads](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fobsidianmd%2Fobsidian-releases%2Fmaster%2Fcommunity-plugin-stats.json&query=%24%5B%22awesome-format-bar%22%5D.downloads&label=downloads&color=573E7A)](https://obsidian.md/plugins?id=awesome-format-bar)
-[![Commands](https://img.shields.io/badge/commands-194+-informational)](#full-command-reference)
+[![Commands](https://img.shields.io/badge/commands-200+-informational)](#full-command-reference)
 [![i18n](https://img.shields.io/badge/languages-9-success)]()
 [![Stars](https://img.shields.io/github/stars/AwesomeDog/obsidian-awesome-format-bar?style=social)](https://github.com/AwesomeDog/obsidian-awesome-format-bar/stargazers)
 
@@ -56,7 +56,7 @@ Obsidian es rápido **si** ya hablas Markdown. Para todos los demás ——estud
 - **Texto plano para siempre.** Nada de formato propietario, ni base de datos, ni cautividad: tus notas siguen siendo simples archivos `.md`.
 - **Sin conexión y privado.** Sin llamadas de red, sin cuentas, sin telemetría. La biblioteca de unos 2.150 emoji viaja dentro del plugin.
 - **Tu propio lanzador, si lo quieres.** La pestaña **Anclado** guarda cualquier comando que elijas ——del núcleo, de este plugin o de otro——, así que la barra se adapta a ti sin convertirse en un proyecto de configuración.
-- **También para el teclado.** Desactiva las cuatro posiciones de la barra y la interfaz desaparece por completo: los 176 comandos registrados en la paleta siguen disponibles y puedes asignarles tus propios atajos. Y cuando la barra **está activa**, al pasar el cursor por un botón su tooltip muestra el atajo asignado ahora mismo a ese comando ——el tuyo o el predeterminado de Obsidian. Si lo cambias en **Configuración → Atajos de teclado**, el tooltip lo sigue al instante, sin reiniciar.
+- **También para el teclado.** Desactiva las cuatro posiciones de la barra y la interfaz desaparece por completo: los 184 comandos registrados en la paleta siguen disponibles y puedes asignarles tus propios atajos. Y cuando la barra **está activa**, al pasar el cursor por un botón su tooltip muestra el atajo asignado ahora mismo a ese comando ——el tuyo o el predeterminado de Obsidian. Si lo cambias en **Configuración → Atajos de teclado**, el tooltip lo sigue al instante, sin reiniciar.
 
 ---
 
@@ -65,10 +65,10 @@ Obsidian es rápido **si** ya hablas Markdown. Para todos los demás ——estud
 |                     |                                                                          |
 | ------------------- | ------------------------------------------------------------------------ |
 | **Posiciones**      | Cinta superior, barra flotante sobre la selección, barra inferior fija, menú del editor (clic derecho) —— cuatro interruptores independientes, combinables libremente |
-| **Comandos**        | **194** integrados, **176** disponibles en la paleta de comandos para atajos propios |
+| **Comandos**        | **202** integrados, **184** disponibles en la paleta de comandos para atajos propios |
 | **Pestañas**        | Inicio · Insertar · Vista · Tabla · Utilidades · **Anclado**               |
 | **Recuadros**       | Los 12 tipos de recuadro de Obsidian en un solo desplegable               |
-| **Gráficos**        | 24 tipos de diagramas Mermaid — diagrama de flujo, diagrama de secuencia, diagrama de clases, diagrama de estados, diagrama entidad-relación, diagrama de Gantt, gráfico circular, mapa mental, línea de tiempo, gráfico de Git, tablero Kanban, diagrama de arquitectura, diagrama C4, diagrama de Sankey y más — insertados como un bloque de código editable al instante |
+| **Gráficos**        | 32 tipos de diagramas Mermaid — diagrama de flujo, diagrama de secuencia, diagrama de clases, diagrama de estados, diagrama entidad-relación, diagrama de Gantt, gráfico circular, mapa mental, línea de tiempo, gráfico de Git, tablero Kanban, diagrama de arquitectura, diagrama C4, diagrama de Sankey y más — insertados como un bloque de código editable al instante |
 | **Emoji y símbolos** | Unos 2.150 emoji, kaomoji y símbolos, totalmente sin conexión            |
 | **Edición de tablas** | Insertar / eliminar / mover filas y columnas, alinear, ordenar, quitar filas duplicadas, transponer, reformatear, convertir en texto, **pegar como tabla** (directamente desde Excel, Numbers o Sheets), copiar como TSV / CSV / JSON |
 | **Edición de imágenes** | alinear, tamaño (una sola imagen o **todas las imágenes de la nota a la vez**), texto alternativo, título, restablecer imagen, convertir `![[…]] ⇄ ![](…)` |
@@ -91,11 +91,11 @@ Obsidian es rápido **si** ya hablas Markdown. Para todos los demás ——estud
 
 Cada una de las cuatro se activa de forma independiente; Escritorio y Móvil tienen su propio conjunto de interruptores.
 
-### 🅰️ 194 comandos de formato en una distribución conocida
+### 🅰️ 202 comandos de formato en una distribución conocida
 
 Negrita, cursiva, subrayado, tachado, código en línea, fórmula en línea, resaltar（con color）, color de fuente, **fuente**, **tamaño de fuente**, borrar formato, cambiar mayúsculas y minúsculas, títulos 1–6, viñetas / numeración / lista de tareas, cita, sangría, línea horizontal, deshacer / rehacer, buscar y reemplazar, alineación de párrafo —— agrupados exactamente donde un usuario de Word los espera.
 
-Las imágenes tienen su propio grupo en **Insertar · Ilustraciones**: **Tamaño de imagen ▼** fija un ancho de 100–600 px ——o devuelve el tamaño propio del archivo——, **Todas las imágenes ▼** aplica el mismo ancho a todas las imágenes de la nota a la vez, **Texto alternativo** escribe el texto alternativo y lo selecciona, y **Título** escribe una línea de título debajo de la imagen y la selecciona, lista para escribir encima. **Restablecer imagen** descarta el ancho y el texto alternativo, y **Convertir sintaxis** cambia la imagen entre `![[a.png]]` y `![](a.png)`. **Gráfico ▼** escribe un diagrama Mermaid, una entrada por tipo de diagrama: Obsidian renderiza los veinticuatro y no ofrece ningún comando para empezar uno.
+Las imágenes tienen su propio grupo en **Insertar · Ilustraciones**: **Tamaño de imagen ▼** fija un ancho de 100–600 px ——o devuelve el tamaño propio del archivo——, **Todas las imágenes ▼** aplica el mismo ancho a todas las imágenes de la nota a la vez, **Texto alternativo** escribe el texto alternativo y lo selecciona, y **Título** escribe una línea de título debajo de la imagen y la selecciona, lista para escribir encima. **Restablecer imagen** descarta el ancho y el texto alternativo, y **Convertir sintaxis** cambia la imagen entre `![[a.png]]` y `![](a.png)`. **Gráfico ▼** escribe un diagrama Mermaid, una entrada por tipo de diagrama: Obsidian renderiza los treinta y dos y no ofrece ningún comando para empezar uno.
 
 ### 💬 Selector de recuadros —— los 12 tipos de Obsidian
 
@@ -141,7 +141,7 @@ Es una compensación deliberada, no una función que falta. Una barra que te dej
 
 ## Referencia completa de comandos
 
-176 de los 194 comandos están registrados en la **paleta de comandos**, así que puedes asignarles tus propios atajos de teclado. （Los contenedores desplegables y el panel de emoji y símbolos solo existen en la barra.）
+184 de los 202 comandos están registrados en la **paleta de comandos**, así que puedes asignarles tus propios atajos de teclado. （Los contenedores desplegables y el panel de emoji y símbolos solo existen en la barra.）
 
 ### Inicio
 
@@ -154,7 +154,7 @@ Es una compensación deliberada, no una función que falta. Una barra que te dej
 ### Insertar
 
 - **Tablas** —— Tabla, Convertir texto en tabla, Pegar como tabla
-- **Ilustraciones** —— Adjuntar archivo, Tamaño de imagen ▼（100 px, 200 px, 300 px, 400 px, 600 px, Tamaño original）, Todas las imágenes ▼（Todas las imágenes 100 px, Todas las imágenes 200 px, Todas las imágenes 300 px, Todas las imágenes 400 px, Todas las imágenes 600 px, Todas las imágenes Tamaño original）, Texto alternativo, Título, Restablecer imagen, Convertir sintaxis, Gráfico ▼ （Diagrama de flujo, Diagrama de secuencia, Diagrama de clases, Diagrama de estados, Diagrama entidad-relación, Recorrido del usuario, Diagrama de Gantt, Gráfico circular, Gráfico de cuadrantes, Diagrama de requisitos, Gráfico de Git, Mapa mental, Línea de tiempo, Diagrama de Sankey, Gráfico XY, Diagrama de bloques, Diagrama de arquitectura, Diagrama de paquetes, Tablero Kanban, Gráfico de radar, Treemap, Diagrama C4, Diagrama de Ishikawa, Diagrama de Venn）
+- **Ilustraciones** —— Adjuntar archivo, Tamaño de imagen ▼（100 px, 200 px, 300 px, 400 px, 600 px, Tamaño original）, Todas las imágenes ▼（Todas las imágenes 100 px, Todas las imágenes 200 px, Todas las imágenes 300 px, Todas las imágenes 400 px, Todas las imágenes 600 px, Todas las imágenes Tamaño original）, Texto alternativo, Título, Restablecer imagen, Convertir sintaxis, Gráfico ▼ （Diagrama de flujo, Diagrama de secuencia, Diagrama de clases, Diagrama de estados, Diagrama entidad-relación, Recorrido del usuario, Diagrama de Gantt, Gráfico circular, Gráfico de cuadrantes, Diagrama de requisitos, Gráfico de Git, Mapa mental, Línea de tiempo, Diagrama de Sankey, Gráfico XY, Diagrama de bloques, Diagrama de arquitectura, Diagrama de paquetes, Tablero Kanban, Gráfico de radar, Treemap, Diagrama C4, Diagrama de Ishikawa, Diagrama de Venn, Diagrama de carriles, Flujo de agentes, Diagrama de casos de uso, Vista de árbol, Diagrama de ferrocarril, Marco Cynefin, Mapa de Wardley, Modelado de eventos）
 - **Medios** —— Grabar audio
 - **Vínculos** —— Vínculo interno, Vínculo externo, Incrustar, Etiqueta, Referencia de bloque
 - **Comentarios** —— Comentario
@@ -215,7 +215,7 @@ Configuración → **Plugins de la comunidad** → **Explorar** → busca **“A
 2. La **cinta（Superior）** tiene seis pestañas; la última, **Anclado**, guarda los comandos que ancles tú. Mientras está vacía muestra un aviso para añadir; usa el botón de edición para gestionar los comandos y los grupos.
 3. Las **barras compactas**（Flotante / Inferior）llevan un subconjunto fijo de comandos; los botones que no caben en el ancho disponible se recogen en el menú de desbordamiento `⋯`, que también enumera todos los demás comandos agrupados por pestaña, y los que tengas anclados.
 4. Abre el botón de edición de **Anclado** para añadir comandos, elegir iconos, crear un grupo nuevo o cambiar el nombre del grupo, arrastrar para reordenar, mover comandos o eliminarlos. Configuración conserva una entrada alternativa que abre ese mismo gestor. Los comandos anclados se comportan exactamente igual que sus equivalentes en la paleta de comandos.
-5. ¿Prefieres el teclado? Desactiva **los cuatro interruptores** y el plugin no añade nada a tu pantalla, mientras los **176 comandos registrados en la paleta** siguen funcionando y puedes asignarles tus propios atajos en **Configuración → Atajos de teclado**. Dicho de otro modo: puedes usarlo como un paquete puro de comandos y atajos sin pulsar un solo botón.
+5. ¿Prefieres el teclado? Desactiva **los cuatro interruptores** y el plugin no añade nada a tu pantalla, mientras los **184 comandos registrados en la paleta** siguen funcionando y puedes asignarles tus propios atajos en **Configuración → Atajos de teclado**. Dicho de otro modo: puedes usarlo como un paquete puro de comandos y atajos sin pulsar un solo botón.
 
 ---
 
@@ -253,10 +253,10 @@ Markdown estándar y Markdown con sabor a Obsidian. Seis de los 16 colores de re
 Las cinco familias genéricas sí: se resuelven en cualquier máquina. Una fuente con nombre solo se muestra donde está instalada, por lo que cada una se escribe con una alternativa: en un equipo que no la tenga, la nota seguirá leyéndose como serif, sans-serif o monoespaciada. En el escritorio el desplegable también lista las fuentes instaladas en el equipo y atenúa las que no tiene.  
 
 **¿Puedo seguir usando mis atajos de teclado?**  
-Sí. 176 de los 194 comandos aparecen en la paleta de comandos y se pueden asociar a cualquier atajo.
+Sí. 184 de los 202 comandos aparecen en la paleta de comandos y se pueden asociar a cualquier atajo.
 
 **Soy de teclado ——¿puedo ocultar la barra por completo?**  
-Sí, y no pierdes nada por hacerlo. Desactiva las cuatro posiciones（**Superior / Flotante / Inferior / Menú del editor**）en **Configuración → Awesome Format Bar** y el plugin no deja rastro en la pantalla: ni cinta, ni barra flotante, ni barra inferior, ni entrada en el menú contextual. Los **176 comandos registrados en la paleta** siguen funcionando todos, desde la paleta de comandos o desde un atajo que asignes en **Configuración → Atajos de teclado** ——incluidos comandos para los que Obsidian no tiene atajo propio, como el color de fuente, el color de resaltado, cambiar mayúsculas y minúsculas, los recuadros, ordenar tablas y las utilidades de líneas——. Piénsalo como una capa opcional solo de teclado que puedes activar cuando el ratón empiece a sentirse lento.
+Sí, y no pierdes nada por hacerlo. Desactiva las cuatro posiciones（**Superior / Flotante / Inferior / Menú del editor**）en **Configuración → Awesome Format Bar** y el plugin no deja rastro en la pantalla: ni cinta, ni barra flotante, ni barra inferior, ni entrada en el menú contextual. Los **184 comandos registrados en la paleta** siguen funcionando todos, desde la paleta de comandos o desde un atajo que asignes en **Configuración → Atajos de teclado** ——incluidos comandos para los que Obsidian no tiene atajo propio, como el color de fuente, el color de resaltado, cambiar mayúsculas y minúsculas, los recuadros, ordenar tablas y las utilidades de líneas——. Piénsalo como una capa opcional solo de teclado que puedes activar cuando el ratón empiece a sentirse lento.
 
 **¿Puedo añadir botones para comandos de otros plugins?**  
 Sí ——para eso está la pestaña **Anclado**——. Ancla cualquier comando de la paleta y elige un icono. Si el plugin propietario está desactivado, el botón se atenúa y el anclado se conserva.

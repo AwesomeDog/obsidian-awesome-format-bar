@@ -8,7 +8,7 @@
 [![Obsidian](https://img.shields.io/badge/Obsidian-1.14%2B-7C3AED)](https://obsidian.md)
 [![GitHub release](https://img.shields.io/github/v/release/AwesomeDog/obsidian-awesome-format-bar)](https://github.com/AwesomeDog/obsidian-awesome-format-bar/releases/latest)
 [![Downloads](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fobsidianmd%2Fobsidian-releases%2Fmaster%2Fcommunity-plugin-stats.json&query=%24%5B%22awesome-format-bar%22%5D.downloads&label=downloads&color=573E7A)](https://obsidian.md/plugins?id=awesome-format-bar)
-[![Commands](https://img.shields.io/badge/commands-194+-informational)](#full-command-reference)
+[![Commands](https://img.shields.io/badge/commands-200+-informational)](#full-command-reference)
 [![i18n](https://img.shields.io/badge/languages-9-success)]()
 [![Stars](https://img.shields.io/github/stars/AwesomeDog/obsidian-awesome-format-bar?style=social)](https://github.com/AwesomeDog/obsidian-awesome-format-bar/stargazers)
 
@@ -56,7 +56,7 @@ Obsidian est rapide **à condition** de déjà parler Markdown. Pour tous les au
 - **Du texte brut pour toujours.** Pas de format propriétaire, pas de base de données, pas d'enfermement —— vos notes restent de simples fichiers `.md`.
 - **Hors ligne et privé.** Aucun appel réseau, aucun compte, aucune télémétrie. La bibliothèque d'environ 2 150 emoji est livrée dans le plugin.
 - **Votre propre lanceur, si vous en voulez un.** L'onglet **Épinglé** accueille n'importe quelle commande de votre choix —— du cœur d'Obsidian, de ce plugin ou d'un autre —— pour que la barre se plie à vous au lieu de devenir un projet de configuration.
-- **Aussi pensé pour le clavier.** Désactivez les quatre positions de la barre et l'interface disparaît complètement —— les 176 commandes enregistrées dans la palette restent disponibles et peuvent être associées à vos propres raccourcis. Et quand la barre **est affichée**, passer la souris sur un bouton affiche dans son infobulle le raccourci actuellement associé à cette commande —— le vôtre ou celui d'Obsidian. Modifiez-le dans **Paramètres → Raccourcis** et l'infobulle suit immédiatement, sans redémarrage.
+- **Aussi pensé pour le clavier.** Désactivez les quatre positions de la barre et l'interface disparaît complètement —— les 184 commandes enregistrées dans la palette restent disponibles et peuvent être associées à vos propres raccourcis. Et quand la barre **est affichée**, passer la souris sur un bouton affiche dans son infobulle le raccourci actuellement associé à cette commande —— le vôtre ou celui d'Obsidian. Modifiez-le dans **Paramètres → Raccourcis** et l'infobulle suit immédiatement, sans redémarrage.
 
 ---
 
@@ -65,10 +65,10 @@ Obsidian est rapide **à condition** de déjà parler Markdown. Pour tous les au
 |                        |                                                                          |
 | ---------------------- | ------------------------------------------------------------------------ |
 | **Positions**          | Ruban en haut, barre flottante au-dessus de la sélection, barre en bas, menu de l'éditeur (clic droit) —— quatre interrupteurs indépendants, à combiner librement |
-| **Commandes**          | **194** intégrées, dont **176** dans la palette de commandes pour des raccourcis personnalisés |
+| **Commandes**          | **202** intégrées, dont **184** dans la palette de commandes pour des raccourcis personnalisés |
 | **Onglets**            | Accueil · Insertion · Affichage · Tableau · Utilitaires · **Épinglé**      |
 | **Encadrés**           | Les 12 types d'encadrés Obsidian dans une seule liste déroulante            |
-| **Graphiques**         | 24 types de diagrammes Mermaid — diagramme de flux, diagramme de séquence, diagramme de classes, diagramme d'états, diagramme entité-relation, diagramme de Gantt, graphique circulaire, carte mentale, chronologie, graphique Git, tableau Kanban, diagramme d'architecture, diagramme C4, diagramme de Sankey et plus — insérés comme un bloc de code directement modifiable |
+| **Graphiques**         | 32 types de diagrammes Mermaid — diagramme de flux, diagramme de séquence, diagramme de classes, diagramme d'états, diagramme entité-relation, diagramme de Gantt, graphique circulaire, carte mentale, chronologie, graphique Git, tableau Kanban, diagramme d'architecture, diagramme C4, diagramme de Sankey et plus — insérés comme un bloc de code directement modifiable |
 | **Emoji et symboles**  | Environ 2 150 emoji, kaomoji et symboles, entièrement hors ligne            |
 | **Édition de tableau** | Insérer / supprimer / déplacer lignes et colonnes, aligner, trier, supprimer les lignes en double, transposer, remettre en forme, convertir en texte, **coller en tant que tableau** (directement depuis Excel, Numbers ou Sheets), copier en TSV / CSV / JSON |
 | **Édition d’image**    | aligner, taille (une seule image ou **toutes les images de la note d'un coup**), texte alternatif, légende, réinitialiser l’image, convertir `![[…]] ⇄ ![](…)` |
@@ -91,11 +91,11 @@ Obsidian est rapide **à condition** de déjà parler Markdown. Pour tous les au
 
 Chacune des quatre s'active indépendamment ; Bureau et Mobile ont chacun leur jeu d'interrupteurs.
 
-### 🅰️ 194 commandes de mise en forme dans une disposition familière
+### 🅰️ 202 commandes de mise en forme dans une disposition familière
 
 Gras, Italique, Souligné, Barré, Code en ligne, Formule en ligne, Surligner（avec couleur）, Couleur de police, **Police**, **Taille de police**, Effacer la mise en forme, Modifier la casse, Titre 1 à 6, listes à puces / numérotées / de tâches, Citation, retraits, Ligne horizontale, Annuler / Rétablir, Rechercher et remplacer, alignement des paragraphes —— regroupés exactement là où un utilisateur de Word les attend.
 
-Les images ont leur propre groupe sur **Insertion · Illustrations** : **Taille de l’image ▼** définit une largeur de 100 à 600 px —— ou rétablit la taille propre du fichier ——, **Toutes les images ▼** applique la même largeur à toutes les images de la note d’un coup, **Texte alternatif** écrit le texte alternatif et le sélectionne, et **Légende** écrit une ligne de légende sous l'image et la sélectionne, prête à accueillir votre texte. **Réinitialiser l’image** retire la largeur et le texte alternatif, et **Convertir la syntaxe** fait passer l’image de `![[a.png]]` à `![](a.png)` et inversement. **Graphique ▼** écrit un diagramme Mermaid, une entrée par type de diagramme : Obsidian affiche les vingt-quatre et n’offre aucune commande pour en commencer un.
+Les images ont leur propre groupe sur **Insertion · Illustrations** : **Taille de l’image ▼** définit une largeur de 100 à 600 px —— ou rétablit la taille propre du fichier ——, **Toutes les images ▼** applique la même largeur à toutes les images de la note d’un coup, **Texte alternatif** écrit le texte alternatif et le sélectionne, et **Légende** écrit une ligne de légende sous l'image et la sélectionne, prête à accueillir votre texte. **Réinitialiser l’image** retire la largeur et le texte alternatif, et **Convertir la syntaxe** fait passer l’image de `![[a.png]]` à `![](a.png)` et inversement. **Graphique ▼** écrit un diagramme Mermaid, une entrée par type de diagramme : Obsidian affiche les trente-deux et n’offre aucune commande pour en commencer un.
 
 ### 💬 Sélecteur d'encadrés —— les 12 types d'encadrés Obsidian
 
@@ -141,7 +141,7 @@ C'est un compromis délibéré, pas une fonction manquante. Une barre qui vous l
 
 ## Liste complète des commandes
 
-176 des 194 commandes sont enregistrées dans la **palette de commandes**, vous pouvez donc leur attribuer vos propres raccourcis clavier.（Les conteneurs déroulants et le panneau Emoji et symboles n'existent que dans la barre d'outils.）
+184 des 202 commandes sont enregistrées dans la **palette de commandes**, vous pouvez donc leur attribuer vos propres raccourcis clavier.（Les conteneurs déroulants et le panneau Emoji et symboles n'existent que dans la barre d'outils.）
 
 ### Accueil
 
@@ -154,7 +154,7 @@ C'est un compromis délibéré, pas une fonction manquante. Une barre qui vous l
 ### Insertion
 
 - **Tableaux** —— Tableau, Convertir le texte en tableau, Coller en tant que tableau
-- **Illustrations** —— Joindre un fichier, Taille de l’image ▼（100 px, 200 px, 300 px, 400 px, 600 px, Taille d’origine）, Toutes les images ▼（Toutes les images 100 px, Toutes les images 200 px, Toutes les images 300 px, Toutes les images 400 px, Toutes les images 600 px, Toutes les images Taille d’origine）, Texte alternatif, Légende, Réinitialiser l’image, Convertir la syntaxe, Graphique ▼ （Diagramme de flux, Diagramme de séquence, Diagramme de classes, Diagramme d'états, Diagramme entité-relation, Parcours utilisateur, Diagramme de Gantt, Graphique circulaire, Graphique en quadrants, Diagramme des exigences, Graphique Git, Carte mentale, Chronologie, Diagramme de Sankey, Graphique XY, Diagramme en blocs, Diagramme d'architecture, Diagramme de paquets, Tableau Kanban, Graphique en radar, Treemap, Diagramme C4, Diagramme d'Ishikawa, Diagramme de Venn）
+- **Illustrations** —— Joindre un fichier, Taille de l’image ▼（100 px, 200 px, 300 px, 400 px, 600 px, Taille d’origine）, Toutes les images ▼（Toutes les images 100 px, Toutes les images 200 px, Toutes les images 300 px, Toutes les images 400 px, Toutes les images 600 px, Toutes les images Taille d’origine）, Texte alternatif, Légende, Réinitialiser l’image, Convertir la syntaxe, Graphique ▼ （Diagramme de flux, Diagramme de séquence, Diagramme de classes, Diagramme d'états, Diagramme entité-relation, Parcours utilisateur, Diagramme de Gantt, Graphique circulaire, Graphique en quadrants, Diagramme des exigences, Graphique Git, Carte mentale, Chronologie, Diagramme de Sankey, Graphique XY, Diagramme en blocs, Diagramme d'architecture, Diagramme de paquets, Tableau Kanban, Graphique en radar, Treemap, Diagramme C4, Diagramme d'Ishikawa, Diagramme de Venn, Diagramme de couloirs, Flux d'agents, Diagramme de cas d'utilisation, Arborescence, Diagramme de chemin de fer, Cadre Cynefin, Carte de Wardley, Modélisation d'événements）
 - **Média** —— Enregistrer un audio
 - **Liens** —— Lien interne, Lien externe, Incorporer, Étiquette, Référence de bloc
 - **Commentaires** —— Commentaire
@@ -215,7 +215,7 @@ Paramètres → **Plugins communautaires** → **Parcourir** → recherchez **«
 2. Le **ruban（Haut）** comporte six onglets ; le dernier, **Épinglé**, contient les commandes que vous épinglez vous-même. Tant qu'il est vide, il affiche une invite à ajouter une commande ; utilisez le bouton d'édition pour gérer les commandes et les groupes.
 3. Les **barres compactes**（Flottante / Bas）n'emportent qu'un sous-ensemble fixe de commandes ; les boutons qui ne tiennent pas dans la largeur disponible se replient dans le menu de débordement `⋯`, qui liste aussi toutes les autres commandes regroupées par onglet, ainsi que vos commandes épinglées.
 4. Ouvrez le bouton d'édition de l'onglet **Épinglé** pour ajouter des commandes, choisir des icônes, créer un nouveau groupe ou renommer un groupe, glisser pour réorganiser, déplacer une commande vers un autre groupe, ou les supprimer. Les paramètres conservent une entrée de repli —— « Gérer les commandes et groupes épinglés. » —— qui ouvre le même gestionnaire. Les commandes épinglées se comportent exactement comme leurs équivalents de la palette de commandes.
-5. Vous préférez le clavier ? Désactivez **les quatre interrupteurs** et le plugin n'ajoute alors plus rien à votre écran, tandis que les **176 commandes enregistrées dans la palette** continuent de fonctionner et peuvent être associées à vos propres raccourcis dans **Paramètres → Raccourcis**. Autrement dit : vous pouvez l'utiliser comme un simple lot de commandes et de raccourcis, sans jamais cliquer sur un bouton.
+5. Vous préférez le clavier ? Désactivez **les quatre interrupteurs** et le plugin n'ajoute alors plus rien à votre écran, tandis que les **184 commandes enregistrées dans la palette** continuent de fonctionner et peuvent être associées à vos propres raccourcis dans **Paramètres → Raccourcis**. Autrement dit : vous pouvez l'utiliser comme un simple lot de commandes et de raccourcis, sans jamais cliquer sur un bouton.
 
 ---
 
@@ -253,10 +253,10 @@ Du Markdown standard et du Markdown saveur Obsidian. Six des 16 couleurs de surl
 Les cinq familles génériques oui : elles sont résolues sur toutes les machines. Une police nommée ne s'affiche que là où elle est installée ; chacune est donc écrite avec une police de repli : sur une machine qui ne l'a pas, la note reste lue en serif, sans-serif ou monospace. Sur ordinateur, le menu liste aussi les polices installées sur la machine et grise celles qu'elle n'a pas.  
 
 **Puis-je continuer à utiliser mes raccourcis clavier ?**  
-Oui. 176 des 194 commandes apparaissent dans la palette de commandes et peuvent être associées à n'importe quel raccourci.
+Oui. 184 des 202 commandes apparaissent dans la palette de commandes et peuvent être associées à n'importe quel raccourci.
 
 **Je suis un adepte du clavier —— puis-je masquer complètement la barre d'outils ?**  
-Oui, et vous ne perdez rien à le faire. Désactivez les quatre positions（**Haut / Flottante / Bas / Menu de l'éditeur**）dans **Paramètres → Awesome Format Bar** et le plugin ne laisse aucune trace à l'écran : ni ruban, ni barre flottante, ni barre en bas, ni entrée dans le menu contextuel. Les **176 commandes enregistrées dans la palette** fonctionnent toutes encore, depuis la palette de commandes ou depuis un raccourci que vous attribuez dans **Paramètres → Raccourcis** —— y compris des commandes pour lesquelles Obsidian n'a aucun raccourci intégré, comme la Couleur de police, la Couleur de surlignage, Modifier la casse, les Encadrés, Trier les lignes et les utilitaires de lignes. Voyez-y une couche clavier facultative, à activer dès que la souris commence à sembler lente.
+Oui, et vous ne perdez rien à le faire. Désactivez les quatre positions（**Haut / Flottante / Bas / Menu de l'éditeur**）dans **Paramètres → Awesome Format Bar** et le plugin ne laisse aucune trace à l'écran : ni ruban, ni barre flottante, ni barre en bas, ni entrée dans le menu contextuel. Les **184 commandes enregistrées dans la palette** fonctionnent toutes encore, depuis la palette de commandes ou depuis un raccourci que vous attribuez dans **Paramètres → Raccourcis** —— y compris des commandes pour lesquelles Obsidian n'a aucun raccourci intégré, comme la Couleur de police, la Couleur de surlignage, Modifier la casse, les Encadrés, Trier les lignes et les utilitaires de lignes. Voyez-y une couche clavier facultative, à activer dès que la souris commence à sembler lente.
 
 **Puis-je ajouter des boutons pour les commandes d'autres plugins ?**  
 Oui —— c'est l'onglet **Épinglé**. Épinglez n'importe quelle commande de la palette et choisissez une icône. Si le plugin propriétaire est désactivé, le bouton se grise et l'épingle est conservée.

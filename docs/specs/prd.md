@@ -66,7 +66,7 @@ A fixed built-in subset of commands, grouped by dividers. Buttons that don't fit
 
 ## 5. Commands
 
-**194 built-in commands** across 5 tabs and 26 groups, plus the Pinned tab. Drop-down items stay under their parent buttons, while the other commands are registered in the command palette, so users can assign their own shortcuts. That leaves **176** palette entries: the 18 left out are the 17 drop-down parents and the emoji panel, which only open a menu instead of acting.
+**202 built-in commands** across 5 tabs and 26 groups, plus the Pinned tab. Drop-down items stay under their parent buttons, while the other commands are registered in the command palette, so users can assign their own shortcuts. That leaves **184** palette entries: the 18 left out are the 17 drop-down parents and the emoji panel, which only open a menu instead of acting.
 
 ### Tab 1 · Home
 
@@ -95,7 +95,7 @@ A fixed built-in subset of commands, grouped by dividers. Buttons that don't fit
 ### Tab 2 · Insert
 
 - **Tables** — Table ▼, Convert Text to Table, Paste as Table
-- **Illustrations** — Attach File, Image Size ▼ (100 px, 200 px, 300 px, 400 px, 600 px, Original Size), All Images ▼ (All Images 100 px, All Images 200 px, All Images 300 px, All Images 400 px, All Images 600 px, All Images Original Size), Alt Text, Caption, Reset Picture, Convert Syntax, **Chart ▼** (Flowchart, Sequence Diagram, Class Diagram, State Diagram, Entity Relationship, User Journey, Gantt, Pie Chart, Quadrant Chart, Requirement Diagram, Git Graph, Mindmap, Timeline, Sankey Diagram, XY Chart, Block Diagram, Architecture Diagram, Packet Diagram, Kanban Board, Radar Chart, Treemap, C4 Diagram, Ishikawa Diagram, Venn Diagram)
+- **Illustrations** — Attach File, Image Size ▼ (100 px, 200 px, 300 px, 400 px, 600 px, Original Size), All Images ▼ (All Images 100 px, All Images 200 px, All Images 300 px, All Images 400 px, All Images 600 px, All Images Original Size), Alt Text, Caption, Reset Picture, Convert Syntax, **Chart ▼** (Flowchart, Sequence Diagram, Class Diagram, State Diagram, Entity Relationship, User Journey, Gantt, Pie Chart, Quadrant Chart, Requirement Diagram, Git Graph, Mindmap, Timeline, Sankey Diagram, XY Chart, Block Diagram, Architecture Diagram, Packet Diagram, Kanban Board, Radar Chart, Treemap, C4 Diagram, Ishikawa Diagram, Venn Diagram, Swimlane Diagram, Agent Flow, Use Case Diagram, Tree View, Railroad Diagram, Cynefin Framework, Wardley Map, Event Modeling)
 - **Media** — Record Audio
 - **Links** — Internal Link, External Link, Embed, Tag, Block Reference
 - **Comments** — Comment
@@ -105,7 +105,7 @@ A fixed built-in subset of commands, grouped by dividers. Buttons that don't fit
 
 Every Illustrations command except **Attach File** and **All Images ▼** acts on the picture the caret is on and greys out when the line holds none: `![alt](url)` always counts as one, and `![[file]]` counts when its extension is an image one, so an embedded note, PDF or audio leaves them dark. **Image Size ▼** writes or replaces Obsidian's own width (`![[a.png|300]]`), and **Original Size** drops it; the width is whichever pipe segment looks like a size, so an alias written by hand is kept and the size goes after it (`![[a.png|pic 1|300]]`), and inside a table cell the pipe is escaped as `\|`. **All Images ▼** writes the same width on every picture in the note, so it ignores the caret and never greys out. **Alt Text** writes the alt text of one picture and selects it — the first pipe segment of a wiki embed, the brackets of a Markdown image — or selects the one already there; the width is kept either way, and **Reset Picture** drops both again. **Convert Syntax** swaps one picture between `![[a.png]]` and `![](a.png)`, carrying the alt text and the width across and trading a space for `%20` so the link stays valid; an external URL cannot become a wiki embed, so those are left alone. **Caption** writes `*Caption*` on the line below the picture and selects it, or selects the caption already there instead of writing a second one; written at the picture's own line end, it lands inside the `<div>` a centred picture is wrapped in. Centring a picture needs no command of its own: a picture alone on a line *is* a paragraph, so **Align Center** (Home · Paragraph) does it.
 
-**Chart ▼** writes a `mermaid` block. Obsidian renders every Mermaid diagram itself and registers no command to write one, so the button is the entry point. Each of the twenty-four items is one diagram type, and each writes the smallest diagram of that type that renders: an empty `mermaid` block is not a blank waiting to be filled in but a parse error, which is why nothing here writes one. The block is written as a block of its own, with blank lines added on either side when the neighbours are not already blank, and it replaces the selection — text selected beforehand is not wrapped, because Markdown is not diagram source. The caret is left at the end of the last line inside the block, not after the closing fence, and several cursors write one diagram each. **Gantt** is the one item that is not fixed text: its task is dated with today's date, `YYYY-MM-DD`. The twenty-four types are the whole of the Mermaid Obsidian bundles (11.13.0); the last eleven, from **Sankey Diagram** on, are the ones Mermaid still calls beta, and **C4**, **Ishikawa** and **Venn** are newer than those, so their syntax may move under a future Obsidian. Nothing is remembered between uses and nothing is validated: what Mermaid makes of the text is Mermaid's business. A vault that has never allowed diagrams shows Obsidian's own one-time prompt where the first diagram would be — that switch is Obsidian's, remembered per vault, and this plugin never touches it.
+**Chart ▼** writes a `mermaid` block. Obsidian renders every Mermaid diagram itself and registers no command to write one, so the button is the entry point. Each of the thirty-two items is one diagram type, and each writes the smallest diagram of that type that renders: an empty `mermaid` block is not a blank waiting to be filled in but a parse error, which is why nothing here writes one. The block is written as a block of its own, with blank lines added on either side when the neighbours are not already blank, and it replaces the selection — text selected beforehand is not wrapped, because Markdown is not diagram source. The caret is left at the end of the last line inside the block, not after the closing fence, and several cursors write one diagram each. **Gantt** is the one item that is not fixed text: its task is dated with today's date, `YYYY-MM-DD`. The thirty-two types are the diagram types of Mermaid 12.1, the syntax Obsidian 1.15 draws with its own Pele renderer; the last nineteen, from **Sankey Diagram** on, are ones Mermaid still marks beta or added only recently, so their syntax may move under a future Obsidian. Older `-beta` keywords are still accepted — `sankey-beta`, `venn-beta` and the rest are written as they are, not renamed. Nothing is remembered between uses and nothing is validated: what Pele makes of the text is Pele's business. Obsidian 1.15 removed the per-vault prompt that used to gate the first diagram, so there is no switch for this plugin to touch.
 
 **Table ▼** opens Word's size grid: ten columns by eight rows, swept with the pointer, with the size spelled out above it as `3 × 4 Table` — columns first, the way Word labels them. The size counts the header, so the origin cell is 2 × 2, the same table Obsidian's own Insert table writes, and one row — a header alone — is never on offer. The grid is a single tab stop: arrows move the size, Enter or a click inserts it, Esc closes. The table is written as a block of its own, with blank lines added on either side when the neighbours are not already blank, and the caret is left in the first header cell. Nothing is remembered between uses: the grid always opens at 2 × 2.
 
@@ -147,7 +147,7 @@ Column-level names (*Align Column…*, *Sort Rows…*) distinguish these from th
 
 ### Tab 6 · Pinned
 
-Pin **any command from the command palette** — core commands, other plugins' commands, or this plugin's own 176 — to the toolbar with an icon of your choice. The built-in set is the intersection of what most people use often; the one or two commands a given user can't live without usually fall outside it.
+Pin **any command from the command palette** — core commands, other plugins' commands, or this plugin's own 184 — to the toolbar with an icon of your choice. The built-in set is the intersection of what most people use often; the one or two commands a given user can't live without usually fall outside it.
 
 | Item | Convention |
 |---|---|
@@ -239,7 +239,7 @@ The Table options govern editing behavior and text output, not toolbar layout, s
 - User-created commands — Pinned surfaces existing commands, it doesn't create new ones.
 - Emoji shortcodes: no `:smile:` expansion, no autocomplete while typing; the panel inserts raw characters.
 - Custom emoji sets, user-editable character lists.
-- Reordering, hiding or showing the 194 built-in commands.
+- Reordering, hiding or showing the 202 built-in commands.
 - Toolbar appearance customization: background or icon color pickers, theme variants.
 
 ---
@@ -251,7 +251,7 @@ The Table options govern editing behavior and text output, not toolbar layout, s
 | **Position** | Where a toolbar renders: **Top**, **Following**, **Fixed**. Three independent toggles. |
 | **Layout** | How a position renders: **Ribbon** (Top) or **Compact** (Following / Fixed). |
 | **Tab · Group · Button** | Ribbon structure. A **drop-down** button holds several commands; a Compact **overflow menu** (`⋯`) holds the buttons that don't fit. |
-| **Command** | An action the toolbar runs. **194 built-in commands** plus any **pinned command**. |
+| **Command** | An action the toolbar runs. **202 built-in commands** plus any **pinned command**. |
 | **Section** | A heading, the text under it and every section nested in it, up to the next heading of the same or a higher level. Word's *section* is a section break, which Markdown has no equivalent of. |
 | **Source · Group · Entry** | Emoji & Symbols panel structure: three sources (Emoji, Kaomoji, Symbols) → groups → entries. Picking an entry inserts a character. |
 | **Word terminology** | Display names follow Microsoft Word (*Bold*, *Clear Formatting*), initial capitals, no `Toggle` prefix. |

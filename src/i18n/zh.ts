@@ -193,6 +193,14 @@ export default {
   "C4 Diagram": "C4 图",
   "Ishikawa Diagram": "鱼骨图",
   "Venn Diagram": "韦恩图",
+  "Swimlane Diagram": "泳道图",
+  "Agent Flow": "智能体流程图",
+  "Use Case Diagram": "用例图",
+  "Tree View": "树状视图",
+  "Railroad Diagram": "铁路图",
+  "Cynefin Framework": "Cynefin 框架",
+  "Wardley Map": "Wardley 地图",
+  "Event Modeling": "事件建模",
 
   // Tabs and groups
   Home: "开始",

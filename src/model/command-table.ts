@@ -659,6 +659,54 @@ export const COMMANDS = [
     kind: "editor",
   },
   { id: "chart-venn", name: "Venn Diagram", icon: "percent", kind: "editor" },
+  {
+    id: "chart-swimlane",
+    name: "Swimlane Diagram",
+    icon: "columns-3",
+    kind: "editor",
+  },
+  {
+    id: "chart-agentflow",
+    name: "Agent Flow",
+    icon: "bot",
+    kind: "editor",
+  },
+  {
+    id: "chart-usecase",
+    name: "Use Case Diagram",
+    icon: "circle-user-round",
+    kind: "editor",
+  },
+  {
+    id: "chart-tree-view",
+    name: "Tree View",
+    icon: "folder-tree",
+    kind: "editor",
+  },
+  {
+    id: "chart-railroad",
+    name: "Railroad Diagram",
+    icon: "waypoints",
+    kind: "editor",
+  },
+  {
+    id: "chart-cynefin",
+    name: "Cynefin Framework",
+    icon: "pentagon",
+    kind: "editor",
+  },
+  {
+    id: "chart-wardley",
+    name: "Wardley Map",
+    icon: "map",
+    kind: "editor",
+  },
+  {
+    id: "chart-event-modeling",
+    name: "Event Modeling",
+    icon: "layers-3",
+    kind: "editor",
+  },
 
   // Insert - Media
   // The recorder start command answers only while idle, so the button toggles.
@@ -1345,6 +1393,14 @@ export const DROPDOWN_ITEMS: Readonly<
     "chart-c4",
     "chart-ishikawa",
     "chart-venn",
+    "chart-swimlane",
+    "chart-agentflow",
+    "chart-usecase",
+    "chart-tree-view",
+    "chart-railroad",
+    "chart-cynefin",
+    "chart-wardley",
+    "chart-event-modeling",
   ],
 };
 

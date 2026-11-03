@@ -193,6 +193,14 @@ export default {
   "C4 Diagram": "C4 図",
   "Ishikawa Diagram": "石川図",
   "Venn Diagram": "ベン図",
+  "Swimlane Diagram": "スイムレーン図",
+  "Agent Flow": "エージェントフロー図",
+  "Use Case Diagram": "ユースケース図",
+  "Tree View": "ツリービュー",
+  "Railroad Diagram": "レールロード図",
+  "Cynefin Framework": "Cynefin フレームワーク",
+  "Wardley Map": "Wardley マップ",
+  "Event Modeling": "イベントモデリング",
 
   // Tabs and groups
   Home: "ホーム",

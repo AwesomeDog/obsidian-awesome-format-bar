@@ -524,7 +524,15 @@ export type ChartKind =
   | "treemap"
   | "c4"
   | "ishikawa"
-  | "venn";
+  | "venn"
+  | "swimlane"
+  | "agentflow"
+  | "usecase"
+  | "tree-view"
+  | "railroad"
+  | "cynefin"
+  | "wardley"
+  | "event-modeling";
 
 /** Each kind starts as the smallest diagram that renders; `{date}` is today. */
 const CHART_EXAMPLES: Readonly<Record<ChartKind, string>> = {
@@ -614,6 +622,58 @@ const CHART_EXAMPLES: Readonly<Record<ChartKind, string>> = {
     "  set Frontend",
     "  set Backend",
     '  union Frontend,Backend["APIs"]',
+  ].join("\n"),
+  swimlane: [
+    "swimlane-beta",
+    "  subgraph Sales",
+    "    lead[Qualify lead]",
+    "  end",
+    "  subgraph Finance",
+    "    invoice[Raise invoice]",
+    "  end",
+    "  lead --> invoice",
+  ].join("\n"),
+  agentflow: [
+    "agentflow-beta TB",
+    '  flow review["Review"]',
+    '    gather["Gather sources"]@{ shape: task }',
+    '    draft["Write draft"]@{ shape: task }',
+    "  end",
+    "  gather --> draft",
+  ].join("\n"),
+  usecase: ["usecase-beta", "actor User", "Login", "User --> Login"].join("\n"),
+  "tree-view": [
+    "treeView-beta",
+    '    "packages"',
+    '        "mermaid"',
+    '            "src"',
+    '        "parser"',
+  ].join("\n"),
+  railroad: ["railroad-ebnf-beta", 'sign = "+" | "-" ;'].join("\n"),
+  cynefin: [
+    "cynefin-beta",
+    "  title Cynefin Framework",
+    "",
+    "  complex",
+    "  complicated",
+    "  clear",
+    "  chaotic",
+  ].join("\n"),
+  wardley: [
+    "wardley-beta",
+    "title Value Chain",
+    "",
+    "component Need [0.2, 0.8]",
+    "component Platform [0.6, 0.3]",
+    "",
+    "Need -> Platform",
+  ].join("\n"),
+  "event-modeling": [
+    "eventmodeling",
+    "",
+    "tf 01 ui CartUI",
+    "tf 02 cmd AddItem",
+    "tf 03 evt ItemAdded",
   ].join("\n"),
 };
 
