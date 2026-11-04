@@ -16,3 +16,15 @@ export const Platform = {
   isMobileApp: false,
   isMobile: false,
 };
+
+export function setTooltip(
+  _el: unknown,
+  _text: unknown,
+  _options?: unknown,
+): void {}
+
+export function getIconIds(): string[] {
+  return [];
+}
+
+export function setIcon(_el: unknown, _id: unknown): void {}
