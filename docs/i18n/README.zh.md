@@ -3,13 +3,13 @@
 > 加粗、斜体、下划线、高亮、字体、标题、列表、表格、Callout、表情符号 —— **点按钮就行，不用手敲 Markdown 语法**。  
 > **无 AI。不联网。无遥测。无需账号。**
 
-[![Privacy](https://img.shields.io/badge/privacy-no%20AI%20%C2%B7%20no%20network%20%C2%B7%20no%20telemetry-brightgreen)](#compatibility)
-[![Last commit](https://img.shields.io/github/last-commit/AwesomeDog/obsidian-awesome-format-bar?label=last%20commit)](https://github.com/AwesomeDog/obsidian-awesome-format-bar/commits/main)
-[![Obsidian](https://img.shields.io/badge/Obsidian-1.14%2B-7C3AED)](https://obsidian.md)
-[![GitHub release](https://img.shields.io/github/v/release/AwesomeDog/obsidian-awesome-format-bar)](https://github.com/AwesomeDog/obsidian-awesome-format-bar/releases/latest)
-[![Downloads](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fobsidianmd%2Fobsidian-releases%2Fmaster%2Fcommunity-plugin-stats.json&query=%24%5B%22awesome-format-bar%22%5D.downloads&label=downloads&color=573E7A)](https://obsidian.md/plugins?id=awesome-format-bar)
-[![Commands](https://img.shields.io/badge/commands-200+-informational)](#full-command-reference)
-[![i18n](https://img.shields.io/badge/languages-9-success)]()
+[![Privacy](https://img.shields.io/badge/privacy-offline-1a7f37)](#compatibility)
+[![Commit](https://img.shields.io/github/last-commit/AwesomeDog/obsidian-awesome-format-bar?label=commit&color=%2357606a)](https://github.com/AwesomeDog/obsidian-awesome-format-bar/commits/main)
+[![Obsidian](https://img.shields.io/badge/Obsidian-1.15%2B-7C3AED)](https://obsidian.md)
+[![GitHub release](https://img.shields.io/github/v/release/AwesomeDog/obsidian-awesome-format-bar?color=%236e7781)](https://github.com/AwesomeDog/obsidian-awesome-format-bar/releases/latest)
+[![Downloads](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fobsidianmd%2Fobsidian-releases%2Fmaster%2Fcommunity-plugin-stats.json&query=%24%5B%22awesome-format-bar%22%5D.downloads&label=downloads&color=%230e7490)](https://obsidian.md/plugins?id=awesome-format-bar)
+[![Commands](https://img.shields.io/badge/commands-200+-0969da)](#full-command-reference)
+[![i18n](https://img.shields.io/badge/languages-9-9a6700)]()
 [![Stars](https://img.shields.io/github/stars/AwesomeDog/obsidian-awesome-format-bar?style=social)](https://github.com/AwesomeDog/obsidian-awesome-format-bar/stargazers)
 
 [English](../../README.md) · **简体中文（本页）** —— 本页是英文版 README 的中文翻译，**内容以英文版为准**。
@@ -232,7 +232,7 @@
 
 ## 兼容性
 
-- Obsidian **1.14 及以上**
+- Obsidian **1.15 及以上**
 - 适配 Markdown 编辑器，浅色与深色模式下都跟随当前主题。
 - 无 AI、不联网、不要账号、无遥测——一切都在本地运行。
 - 发布物只有三个文件：`main.js`、`manifest.json`、`styles.css`。

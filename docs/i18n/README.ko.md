@@ -3,13 +3,13 @@
 > 굵게, 기울임꼴, 밑줄, 강조 표시, 글꼴, 제목, 목록, 표, 콜아웃, 이모지 —— **Markdown 문법을 입력하지 않고 버튼만 누르면 됩니다**.  
 > **AI 없음. 네트워크 없음. 원격 측정 없음. 계정 없음.**
 
-[![Privacy](https://img.shields.io/badge/privacy-no%20AI%20%C2%B7%20no%20network%20%C2%B7%20no%20telemetry-brightgreen)](#compatibility)
-[![Last commit](https://img.shields.io/github/last-commit/AwesomeDog/obsidian-awesome-format-bar?label=last%20commit)](https://github.com/AwesomeDog/obsidian-awesome-format-bar/commits/main)
-[![Obsidian](https://img.shields.io/badge/Obsidian-1.14%2B-7C3AED)](https://obsidian.md)
-[![GitHub release](https://img.shields.io/github/v/release/AwesomeDog/obsidian-awesome-format-bar)](https://github.com/AwesomeDog/obsidian-awesome-format-bar/releases/latest)
-[![Downloads](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fobsidianmd%2Fobsidian-releases%2Fmaster%2Fcommunity-plugin-stats.json&query=%24%5B%22awesome-format-bar%22%5D.downloads&label=downloads&color=573E7A)](https://obsidian.md/plugins?id=awesome-format-bar)
-[![Commands](https://img.shields.io/badge/commands-200+-informational)](#full-command-reference)
-[![i18n](https://img.shields.io/badge/languages-9-success)]()
+[![Privacy](https://img.shields.io/badge/privacy-offline-1a7f37)](#compatibility)
+[![Commit](https://img.shields.io/github/last-commit/AwesomeDog/obsidian-awesome-format-bar?label=commit&color=%2357606a)](https://github.com/AwesomeDog/obsidian-awesome-format-bar/commits/main)
+[![Obsidian](https://img.shields.io/badge/Obsidian-1.15%2B-7C3AED)](https://obsidian.md)
+[![GitHub release](https://img.shields.io/github/v/release/AwesomeDog/obsidian-awesome-format-bar?color=%236e7781)](https://github.com/AwesomeDog/obsidian-awesome-format-bar/releases/latest)
+[![Downloads](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fobsidianmd%2Fobsidian-releases%2Fmaster%2Fcommunity-plugin-stats.json&query=%24%5B%22awesome-format-bar%22%5D.downloads&label=downloads&color=%230e7490)](https://obsidian.md/plugins?id=awesome-format-bar)
+[![Commands](https://img.shields.io/badge/commands-200+-0969da)](#full-command-reference)
+[![i18n](https://img.shields.io/badge/languages-9-9a6700)]()
 [![Stars](https://img.shields.io/github/stars/AwesomeDog/obsidian-awesome-format-bar?style=social)](https://github.com/AwesomeDog/obsidian-awesome-format-bar/stargazers)
 
 [English](../../README.md) · **한국어** (이 페이지) —— 이 페이지는 영어판 README의 번역이며, **내용은 영어판이 기준**입니다.
@@ -231,7 +231,7 @@
 
 ## 호환성
 
-- Obsidian **1.14 이상**
+- Obsidian **1.15 이상**
 - Markdown 편집기에서 동작하며, 밝은 모드와 어두운 모드 모두 현재 테마에 맞춥니다.
 - AI 없음, 네트워크 접속도, 계정도, 원격 측정도 없습니다——모든 것이 로컬에서 실행됩니다.
 - 릴리스 파일은 정확히 세 개입니다: `main.js`, `manifest.json`, `styles.css`.

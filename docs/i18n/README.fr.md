@@ -3,13 +3,13 @@
 > Gras, italique, souligné, surlignage, police, titres, listes, tableaux, encadrés et emoji —— **un clic sur un bouton suffit, plus besoin de taper la syntaxe Markdown**.  
 > **Pas d'IA. Pas de réseau. Pas de télémétrie. Pas de compte.**
 
-[![Privacy](https://img.shields.io/badge/privacy-no%20AI%20%C2%B7%20no%20network%20%C2%B7%20no%20telemetry-brightgreen)](#compatibility)
-[![Last commit](https://img.shields.io/github/last-commit/AwesomeDog/obsidian-awesome-format-bar?label=last%20commit)](https://github.com/AwesomeDog/obsidian-awesome-format-bar/commits/main)
-[![Obsidian](https://img.shields.io/badge/Obsidian-1.14%2B-7C3AED)](https://obsidian.md)
-[![GitHub release](https://img.shields.io/github/v/release/AwesomeDog/obsidian-awesome-format-bar)](https://github.com/AwesomeDog/obsidian-awesome-format-bar/releases/latest)
-[![Downloads](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fobsidianmd%2Fobsidian-releases%2Fmaster%2Fcommunity-plugin-stats.json&query=%24%5B%22awesome-format-bar%22%5D.downloads&label=downloads&color=573E7A)](https://obsidian.md/plugins?id=awesome-format-bar)
-[![Commands](https://img.shields.io/badge/commands-200+-informational)](#full-command-reference)
-[![i18n](https://img.shields.io/badge/languages-9-success)]()
+[![Privacy](https://img.shields.io/badge/privacy-offline-1a7f37)](#compatibility)
+[![Commit](https://img.shields.io/github/last-commit/AwesomeDog/obsidian-awesome-format-bar?label=commit&color=%2357606a)](https://github.com/AwesomeDog/obsidian-awesome-format-bar/commits/main)
+[![Obsidian](https://img.shields.io/badge/Obsidian-1.15%2B-7C3AED)](https://obsidian.md)
+[![GitHub release](https://img.shields.io/github/v/release/AwesomeDog/obsidian-awesome-format-bar?color=%236e7781)](https://github.com/AwesomeDog/obsidian-awesome-format-bar/releases/latest)
+[![Downloads](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fobsidianmd%2Fobsidian-releases%2Fmaster%2Fcommunity-plugin-stats.json&query=%24%5B%22awesome-format-bar%22%5D.downloads&label=downloads&color=%230e7490)](https://obsidian.md/plugins?id=awesome-format-bar)
+[![Commands](https://img.shields.io/badge/commands-200+-0969da)](#full-command-reference)
+[![i18n](https://img.shields.io/badge/languages-9-9a6700)]()
 [![Stars](https://img.shields.io/github/stars/AwesomeDog/obsidian-awesome-format-bar?style=social)](https://github.com/AwesomeDog/obsidian-awesome-format-bar/stargazers)
 
 [English](../../README.md) · **Français** (cette page) —— Cette page est une traduction du README anglais, **la version anglaise fait foi**.
@@ -231,7 +231,7 @@ Paramètres → **Plugins communautaires** → **Parcourir** → recherchez **«
 
 ## Compatibilité
 
-- Obsidian **1.14 et plus**
+- Obsidian **1.15 et plus**
 - Fonctionne avec l'éditeur Markdown et s'adapte à votre thème actif, en mode clair comme en mode sombre.
 - Pas d'IA, aucun accès réseau, aucun compte, aucune télémétrie —— tout s'exécute localement.
 - La version publiée ne contient que trois fichiers : `main.js`、`manifest.json`、`styles.css`.
