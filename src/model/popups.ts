@@ -104,6 +104,12 @@ export function filterSections(
     .filter((section) => section.items.length > 0);
 }
 
+/** `id` is haystack: a localized name alone cannot match "bold". */
+export function matchesCommand(spec: CommandSpec, query: string): boolean {
+  const needle = query.trim().toLowerCase();
+  return `${spec.name} ${spec.id}`.toLowerCase().includes(needle);
+}
+
 export interface PopupOptions {
   readonly localFonts?: LocalFonts;
 }

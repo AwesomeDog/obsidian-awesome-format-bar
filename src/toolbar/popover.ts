@@ -29,6 +29,7 @@ export interface PopoverItem {
 
 interface PopoverLayerOptions {
   readonly search?: boolean;
+  readonly searchLabel?: string;
   readonly onDismiss?: () => void;
   readonly watch?: (onChange: () => void) => () => void;
 }
@@ -51,7 +52,20 @@ export function openFontPopover(
   renderPopover(anchor, sectionsFor, {
     onDismiss,
     search: true,
+    searchLabel: t("Search fonts…"),
     watch: onLocalFonts,
+  });
+}
+
+export function openSearchPopover(
+  anchor: HTMLElement,
+  sectionsFor: SectionsFor,
+  onDismiss?: () => void,
+): void {
+  renderPopover(anchor, sectionsFor, {
+    onDismiss,
+    search: true,
+    searchLabel: t("Search…"),
   });
 }
 
@@ -69,29 +83,69 @@ function renderPopover(
     () => unwatch?.(),
     () => (search ? search.dismiss() : true),
   );
+  const searchLabel = options.searchLabel ?? t("Search fonts…");
   // Before the body: the box is sticky at the top of the scrolling menu.
   if (options.search) {
     search = createSearchBox(layer.el, {
-      label: t("Search fonts…"),
+      label: searchLabel,
       onChange: (value) => {
         query = value;
         draw(sectionsFor(value));
       },
-      placeholder: t("Search fonts…"),
+      placeholder: searchLabel,
     });
   }
 
   const body = layer.el.createDiv();
+  let active = 0;
+  let entries: HTMLButtonElement[] = [];
+
+  function highlight(): void {
+    entries.forEach((entry, index) =>
+      entry.toggleClass("is-highlighted", index === active),
+    );
+    entries[active]?.scrollIntoView({ block: "nearest" });
+  }
 
   // Redrawn, not pruned; a declaration, so the search box above draws through it.
   function draw(visible: readonly PopoverSection[]): void {
     body.empty();
     for (const section of visible) addSection(body, section, layer);
+    if (options.search && visible.length === 0)
+      body.createDiv({ cls: "menu-title", text: t("No matches") });
+    entries = Array.from(
+      body.querySelectorAll<HTMLButtonElement>("button:not(:disabled)"),
+    );
+    active = 0;
     layer.place();
+    if (options.search) highlight();
   }
 
   draw(sectionsFor(query));
   search?.el.focus();
+
+  if (options.search && search) {
+    // Focus stays in the box: moving it to an entry would swallow the next key.
+    search.el.addEventListener("keydown", (event) => {
+      if (
+        event.key !== "ArrowDown" &&
+        event.key !== "ArrowUp" &&
+        event.key !== "Enter"
+      )
+        return;
+      if (entries.length === 0) {
+        if (event.key === "Enter") event.preventDefault();
+        return;
+      }
+      event.preventDefault();
+      if (event.key === "Enter") entries[active]?.click();
+      else {
+        const step = event.key === "ArrowDown" ? 1 : -1;
+        active = (active + step + entries.length) % entries.length;
+        highlight();
+      }
+    });
+  }
 
   // The read can land while the menu is open: redraw, or it stays on "reading".
   if (options.watch) unwatch = options.watch(() => draw(sectionsFor(query)));

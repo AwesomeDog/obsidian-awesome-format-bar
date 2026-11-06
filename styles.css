@@ -109,10 +109,15 @@
       border-radius: var(--radius-s) var(--radius-s) 0 0;
       padding: var(--size-2-1) var(--size-4-2);
     }
-    & .ribbon-collapse {
+    & .ribbon-collapse,
+    & .ribbon-search {
       block-size: var(--formatbar-hit);
       inline-size: var(--formatbar-hit);
+    }
+    & .ribbon-search {
       margin-inline-start: auto;
+    }
+    & .ribbon-collapse {
       & .svg-icon {
         transition: transform 100ms ease;
       }
@@ -291,6 +296,9 @@
     }
     & .menu-item.is-unavailable {
       color: var(--text-faint);
+    }
+    & .menu-item.is-highlighted {
+      background: var(--background-modifier-hover);
     }
     & .table-grid-size {
       color: var(--text-normal);

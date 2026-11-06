@@ -1,9 +1,10 @@
 import { describe, expect, it } from "vitest";
 import { setLanguage } from "../src/i18n/i18n";
-import { DROPDOWN_ITEMS } from "../src/model/command-table";
+import { commandById, DROPDOWN_ITEMS } from "../src/model/command-table";
 import type { LocalFonts } from "../src/model/fonts";
 import {
   filterSections,
+  matchesCommand,
   popupSections,
   type PopupOptions,
   type PopupSection,
@@ -154,6 +155,30 @@ describe("popupSections", () => {
 
   it("offers nothing for a command with no drop-down", () => {
     expect(itemsOf(undefined)).toEqual([]);
+  });
+});
+
+describe("matchesCommand", () => {
+  it("matches the name and the English id, ignoring case and padding", () => {
+    const spec = commandById("paste-plain-text");
+    expect(matchesCommand(spec, "paste as plain text")).toBe(true);
+    expect(matchesCommand(spec, "PASTE-PLAIN-TEXT")).toBe(true);
+    expect(matchesCommand(spec, "  plain  ")).toBe(true);
+    expect(matchesCommand(spec, "")).toBe(true);
+    expect(matchesCommand(spec, "zzz")).toBe(false);
+  });
+
+  it("keeps the id in the haystack after commands are renamed", () => {
+    const spec = commandById("bold");
+    const english = spec.name;
+    try {
+      setLanguage("zh");
+      expect(spec.name).not.toBe(english);
+      expect(matchesCommand(spec, "bold")).toBe(true);
+      expect(matchesCommand(spec, "BOLD")).toBe(true);
+    } finally {
+      setLanguage("en");
+    }
   });
 });
 

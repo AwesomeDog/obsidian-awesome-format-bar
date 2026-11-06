@@ -10,6 +10,7 @@ import {
   type TabId,
 } from "../model/layout";
 import { pinnedGroupLabel, pinnedGroups } from "../model/pinned";
+import { matchesCommand } from "../model/popups";
 import type { CommandSpec, ToolbarPosition } from "../model/types";
 import {
   createButton,
@@ -19,7 +20,12 @@ import {
 } from "./button";
 import type { ToolbarHost } from "./host";
 import { resolveIcon } from "./icons";
-import { openPopover, type PopoverItem, type PopoverSection } from "./popover";
+import {
+  openPopover,
+  openSearchPopover,
+  type PopoverItem,
+  type PopoverSection,
+} from "./popover";
 
 const FOLLOWING_GAP = 8;
 /** Mirrors the `--size-4-4` inline margin both Compact bars get in styles.css. */
@@ -102,6 +108,7 @@ export class ToolbarSurface {
         text: tab.name,
       });
     }
+    this.renderSearchToggle(tabs);
     this.renderCollapseToggle(tabs);
     this.renderGroups(panel);
   }
@@ -115,6 +122,21 @@ export class ToolbarSurface {
     });
     caret.addEventListener("pointerdown", (event) => event.preventDefault());
     this.syncCaret();
+  }
+
+  private renderSearchToggle(tabs: HTMLElement): void {
+    const button = createIconButton(tabs, {
+      cls: "ribbon-search",
+      icon: "search",
+      label: t("Search…"),
+      onClick: () =>
+        openSearchPopover(
+          button,
+          (query) => this.commandSections(button, query),
+          () => this.host.focusEditor(),
+        ),
+    });
+    button.addEventListener("pointerdown", (event) => event.preventDefault());
   }
 
   private get collapsed(): boolean {
@@ -331,54 +353,59 @@ export class ToolbarSurface {
     }
   }
 
-  private openOverflow(anchor: HTMLButtonElement): void {
-    const state = this.host.state();
-    const foldedIds = new Set(this.overflowed.map((spec) => spec.id));
+  /** Ribbon search and the overflow menu read the same grouped command list. */
+  private commandSections(
+    anchor: HTMLElement,
+    query: string,
+    hidden: readonly CommandSpec[] = [],
+  ): readonly PopoverSection[] {
     const sections: PopoverSection[] = [];
-
+    const state = this.host.state();
+    const hiddenIds = new Set(hidden.map((spec) => spec.id));
     const toItem = (spec: CommandSpec): PopoverItem => ({
       icon: spec.icon,
       label: spec.name,
       onChoose: () => runCommand(anchor, spec, this.host),
     });
+    const visible = (specs: readonly CommandSpec[]): PopoverItem[] =>
+      specs
+        .filter((spec) => state.isEnabled(spec) && matchesCommand(spec, query))
+        .map(toItem);
+    const add = (title: string, items: readonly PopoverItem[]): void => {
+      if (items.length) sections.push({ items, title });
+    };
 
-    if (foldedIds.size) {
-      sections.push({
-        items: this.overflowed
-          .filter((spec) => state.isEnabled(spec))
-          .map(toItem),
-        title: t("Hidden by width"),
-      });
-    }
-
+    if (hidden.length) add(t("Hidden by width"), visible(hidden));
     for (const tab of BUILT_IN_COMMAND_TABS) {
       for (const group of tab.groups as readonly RibbonGroup[]) {
-        const items = group.commands
-          .filter((id) => !foldedIds.has(id))
-          .map((id) => commandById(id))
-          .filter((spec) => state.isEnabled(spec))
-          .map(toItem);
-        if (items.length)
-          sections.push({
-            items,
-            title: t("{tab} · {group}", { tab: tab.name, group: group.name }),
-          });
+        add(
+          t("{tab} · {group}", { tab: tab.name, group: group.name }),
+          visible(
+            group.commands
+              .filter((id) => !hiddenIds.has(id))
+              .map((id) => commandById(id)),
+          ),
+        );
       }
     }
-
     for (const { label, specs } of this.pinnedGroups()) {
-      const items = specs.map((spec) => ({
-        ...toItem(spec),
-        disabled: !state.isEnabled(spec),
-      }));
-      if (items.length)
-        sections.push({
-          items,
-          title: t("{tab} · {group}", { tab: PINNED_TAB.name, group: label }),
-        });
+      add(
+        t("{tab} · {group}", { tab: PINNED_TAB.name, group: label }),
+        specs
+          .filter((spec) => matchesCommand(spec, query))
+          .map((spec) => ({
+            ...toItem(spec),
+            disabled: !state.isEnabled(spec),
+          })),
+      );
     }
+    return sections;
+  }
 
-    openPopover(anchor, sections, () => this.host.focusEditor());
+  private openOverflow(anchor: HTMLButtonElement): void {
+    openPopover(anchor, this.commandSections(anchor, "", this.overflowed), () =>
+      this.host.focusEditor(),
+    );
   }
 
   refresh(): void {

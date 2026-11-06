@@ -1,10 +1,12 @@
 // @vitest-environment happy-dom
-import { describe, expect, it, vi } from "vitest";
-import { COMMANDS } from "../src/model/command-table";
+import { afterEach, describe, expect, it, vi } from "vitest";
+import { commandById, COMMANDS } from "../src/model/command-table";
+import { matchesCommand } from "../src/model/popups";
 import type { CommandSpec } from "../src/model/types";
 import { createButton } from "../src/toolbar/button";
 import { closeFloating } from "../src/toolbar/floating";
 import type { ToolbarHost, ToolbarState } from "../src/toolbar/host";
+import { openSearchPopover, type PopoverSection } from "../src/toolbar/popover";
 
 interface ElOptions {
   readonly cls?: string;
@@ -177,5 +179,124 @@ describe("toolbar UI wiring", () => {
       }
     }
     expect(failed).toEqual([]);
+  });
+});
+
+const SEARCH_SPECS = [
+  commandById("bold"),
+  commandById("italic"),
+  commandById("paste-plain-text"),
+];
+
+function openCommandSearch(): {
+  layer: HTMLElement;
+  input: HTMLInputElement;
+  picked: string[];
+  dismissals: number[];
+} {
+  const picked: string[] = [];
+  const dismissals: number[] = [];
+  const sectionsFor = (query: string): PopoverSection[] => {
+    const items = SEARCH_SPECS.filter((spec) =>
+      matchesCommand(spec, query),
+    ).map((spec) => ({
+      label: spec.name,
+      onChoose: () => picked.push(spec.id),
+    }));
+    return items.length ? [{ items }] : [];
+  };
+  openSearchPopover(document.body.createDiv(), sectionsFor, () =>
+    dismissals.push(1),
+  );
+  const layer = document.querySelector<HTMLElement>(
+    ".awesome-format-bar--menu",
+  );
+  const input = layer?.querySelector<HTMLInputElement>(".menu-search-input");
+  if (!layer || !input) throw new Error("no search layer");
+  return { layer, input, picked, dismissals };
+}
+
+function key(input: HTMLInputElement, name: string): void {
+  input.dispatchEvent(
+    new KeyboardEvent("keydown", {
+      bubbles: true,
+      cancelable: true,
+      key: name,
+    }),
+  );
+}
+
+function typeSearch(input: HTMLInputElement, value: string): void {
+  input.value = value;
+  input.dispatchEvent(new Event("input", { bubbles: true }));
+}
+
+function menuItems(layer: HTMLElement): HTMLButtonElement[] {
+  return Array.from(layer.querySelectorAll<HTMLButtonElement>(".menu-item"));
+}
+
+describe("ribbon command search", () => {
+  afterEach(() => {
+    clearLayers();
+    document.body.replaceChildren();
+  });
+
+  it("highlights the first hit, moves with arrows, and runs on Enter", () => {
+    const { layer, input, picked } = openCommandSearch();
+    expect(menuItems(layer).map((entry) => entry.textContent)).toEqual([
+      "Bold",
+      "Italic",
+      "Paste as Plain Text",
+    ]);
+    expect(menuItems(layer)[0]?.classList.contains("is-highlighted")).toBe(
+      true,
+    );
+    key(input, "ArrowDown");
+    expect(menuItems(layer)[0]?.classList.contains("is-highlighted")).toBe(
+      false,
+    );
+    expect(menuItems(layer)[1]?.classList.contains("is-highlighted")).toBe(
+      true,
+    );
+    key(input, "ArrowUp");
+    expect(menuItems(layer)[0]?.classList.contains("is-highlighted")).toBe(
+      true,
+    );
+    key(input, "Enter");
+    expect(picked).toEqual(["bold"]);
+  });
+
+  it("filters by the English id and resets the highlight", () => {
+    const { layer, input, picked } = openCommandSearch();
+    key(input, "ArrowDown");
+    typeSearch(input, "paste-plain-text");
+    expect(menuItems(layer).map((entry) => entry.textContent)).toEqual([
+      "Paste as Plain Text",
+    ]);
+    expect(menuItems(layer)[0]?.classList.contains("is-highlighted")).toBe(
+      true,
+    );
+    key(input, "Enter");
+    expect(picked).toEqual(["paste-plain-text"]);
+  });
+
+  it("shows an empty state that Enter cannot pick", () => {
+    const { layer, input, picked } = openCommandSearch();
+    typeSearch(input, "zzz");
+    expect(menuItems(layer)).toHaveLength(0);
+    expect(layer.querySelector(".menu-title")?.textContent).toBe("No matches");
+    key(input, "Enter");
+    expect(picked).toEqual([]);
+  });
+
+  it("empties the box on the first Escape and closes on the second", () => {
+    const { input, dismissals } = openCommandSearch();
+    typeSearch(input, "bold");
+    key(input, "Escape");
+    expect(input.value).toBe("");
+    expect(document.querySelector(".awesome-format-bar--menu")).not.toBeNull();
+    key(input, "Escape");
+    expect(document.querySelector(".awesome-format-bar--menu")).toBeNull();
+    expect(dismissals).toHaveLength(1);
   });
 });
