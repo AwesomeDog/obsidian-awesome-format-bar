@@ -226,6 +226,7 @@ Einstellungen → **Community-Plugins** → **Durchsuchen** → nach **„Awesom
 | **Symbolleiste** | Unabhängige Schalter für Oben / Mitlaufend / Unten / Editor-Menü — ein Satz für Desktop, einer für Mobilgeräte                                                          |
 | **Angeheftet**  | Ihre angehefteten Befehle — hinzufügen, Symbol ändern, umordnen, löschen                                    |
 | **Tabelle**     | Eingabetaste wechselt zur nächsten Zeile; Tab / Shift+Tab wechseln zwischen Zellen, und Tab am rechten Rand fügt eine Spalte hinzu; Zellen mit Leerzeichen auffüllen; in der Leseansicht beim Klicken auf die Kopfzeile sortieren (ändert die Datei niemals) |
+| **Editor-Menü** | Fügt die gesamte Befehlstabelle als ein Untermenü pro Registerkarte zum Rechtsklick-Menü der Notiz hinzu; standardmäßig an, beim Ausschalten verschwindet auch dieser Eintrag |
 
 ---
 

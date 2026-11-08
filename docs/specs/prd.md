@@ -211,9 +211,10 @@ The character data ships with the plugin — emoji from `@emoji-mart/data`, kaom
 
 | Section | Contents |
 |---|---|
-| **Toolbar** | Independent toggles for Top / Following / Fixed |
+| **Toolbar** | Independent toggles for Top / Following / Fixed / Editor menu |
 | **Pinned** | Open the Pinned manager to add commands, choose icons, create or rename groups, drag to reorder, move commands, and delete |
 | **Table** | Keyboard navigation: Enter moves down a cell, Tab moves between cells, Tab at the right edge adds a column and Enter on the last row adds a row (on); pad cell width with spaces (on); sort by clicking a header in Reading view (on) |
+| **Editor menu** | Adds the whole command table to the note's right-click menu, one submenu per tab; on by default, switching it off removes the right-click entry too |
 
 Entry usage counts are stored with the settings but have no control: the Emoji & Symbols panel writes and prunes them automatically.
 

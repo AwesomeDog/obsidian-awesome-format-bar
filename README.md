@@ -224,6 +224,7 @@ Settings → **Community plugins** → **Browse** → search for **"Awesome Form
 | **Toolbar** | Independent toggles for Top / Following / Fixed / Editor menu — one set for Desktop, one for Mobile                       |
 | **Pinned**  | Open the Pinned manager to add commands, choose icons, manage groups, reorder, and delete                                  |
 | **Table**   | Keyboard navigation: Enter moves down a cell, Tab / Shift+Tab move between cells, Tab at the right edge adds a column and Enter on the last row adds a row; pad cell width with spaces; sort on header click in Reading view (never modifies the file)   |
+| **Editor menu** | Adds the whole command table to the note's right-click menu as one submenu per tab; on by default, switching it off removes the right-click entry too |
 
 ---
 
