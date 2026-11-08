@@ -105,10 +105,9 @@
         .srow div{font-size:13.5px;color:var(--sub)}
         .srow div strong{display:block;color:var(--ink);font-size:15px;font-weight:600;margin-bottom:2px}
 
-        .three,.four{display:grid;grid-template-columns:repeat(3,1fr);gap:36px;margin-top:46px}
-        .four{grid-template-columns:repeat(4,1fr);margin-top:34px}
-        .three h4,.four h4{font-size:18px;font-weight:600;letter-spacing:-.01em}
-        .three p,.four p{font-size:14.5px;color:var(--sub);margin-top:8px}
+        .three{display:grid;grid-template-columns:repeat(3,1fr);gap:36px;margin-top:46px}
+        .three h4{font-size:18px;font-weight:600;letter-spacing:-.01em}
+        .three p{font-size:14.5px;color:var(--sub);margin-top:8px}
 
         /* install steps */
         .steps{list-style:none;max-width:540px;margin:38px auto 0;text-align:left}
@@ -131,7 +130,7 @@
         .cmdlist span{font-size:12.5px;color:#3a3a40;background:var(--alt);border-radius:6px;padding:4px 9px}
 
         @media(max-width:880px){
-            .ba,.three,.four,.eg{grid-template-columns:1fr}
+            .ba,.three,.eg{grid-template-columns:1fr}
             .srow2{grid-template-columns:1fr;gap:6px}
             .hidem{display:none}
         }
@@ -246,13 +245,12 @@
 <section class="alt" id="settings">
     <div class="wide">
         <p class="kick">Settings</p>
-        <h2>Four sections.<br>That's the whole thing.</h2>
+        <h2>Three sections.<br>That's the whole thing.</h2>
         <p class="lead" style="max-width:760px">Prefer the keyboard? Turn all four toolbar toggles off and the interface disappears completely — no ribbon, no floating bar, no bottom bar, no right-click entry. All 184 palette-registered commands keep working and can be bound to your own shortcuts under Settings → Hotkeys, so the plugin works just as well as a keyboard-only layer.</p>
-        <div class="four">
-            <div><h4>Toolbar</h4><p>Independent toggles for Top, Following, Fixed and Editor menu. Defaults to Top and Editor menu; turn them all off and nothing appears on screen at all — the commands stay reachable from the palette and your hotkeys.</p></div>
+        <div class="three" style="margin-top:34px">
+            <div><h4>Toolbar</h4><p>Independent toggles for Top, Following, Fixed and Editor menu — the last one puts every command into the note's right-click menu, under one submenu per tab. Defaults to Top and Editor menu; turn them all off and nothing appears on screen at all — the commands stay reachable from the palette and your hotkeys.</p></div>
             <div><h4>Pinned</h4><p>Add a command, choose a Lucide icon, drag to reorder, delete. Pinning is one-time, low-frequency setup — so the manager opens from the Pinned tab's edit button, with a fallback entry here in Settings.</p></div>
             <div><h4>Table</h4><p>Keyboard navigation: Enter moves down a cell, Tab and Shift+Tab move between cells, Tab at the right edge adds a column and Enter on the last row adds a row. Pad cell width with spaces. Sort by clicking a header in Reading view. All on by default; all about editing behavior and text output, never toolbar layout.</p></div>
-            <div><h4>Editor menu</h4><p>One toggle puts every command into the note's right-click menu, under one submenu per tab. It's on by default; switch it off with the other toggles and no right-click entry is left either — the commands still run from the palette or a hotkey.</p></div>
         </div>
     </div>
 </section>

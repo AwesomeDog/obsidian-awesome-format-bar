@@ -226,7 +226,6 @@ Configuración → **Plugins de la comunidad** → **Explorar** → busca **“A
 | **Barra de herramientas** | Interruptores independientes para Superior / Flotante / Inferior / Menú del editor — un conjunto para Escritorio y otro para Móvil                               |
 | **Anclado**          | Tus comandos anclados —— agregar, cambiar icono, reordenar, eliminar                                |
 | **Tabla**            | Entrar pasa a la fila siguiente; Tab / Shift+Tab cambian entre celdas y Tab en el borde derecho añade una columna; rellenar celdas con espacios; ordenar al hacer clic en el encabezado en el modo de lectura（nunca modifica el archivo） |
-| **Menú del editor**  | Añade toda la tabla de comandos al menú contextual de la nota, con un submenú por pestaña; activado por defecto, al desactivarlo desaparece también esa entrada |
 
 ---
 

@@ -226,7 +226,6 @@ Paramètres → **Plugins communautaires** → **Parcourir** → recherchez **«
 | **Barre d'outils** | Interrupteurs indépendants pour Haut / Flottante / Bas / Menu de l'éditeur — un jeu pour Bureau, un pour Mobile                                                    |
 | **Épinglé**      | Vos commandes épinglées —— ajouter, changer l'icône, réorganiser, supprimer                                |
 | **Tableau**      | Entrée passe à la ligne suivante ; Tab / Shift+Tab passent d'une cellule à l'autre et Tab au bord droit ajoute une colonne ; Remplir les cellules avec des espaces ; Trier au clic sur l'en-tête en mode lecture（ne modifie jamais le fichier） |
-| **Menu de l'éditeur** | Ajoute toute la table de commandes au menu contextuel de la note, à raison d'un sous-menu par onglet ; activé par défaut, le désactiver supprime aussi cette entrée |
 
 ---
 
