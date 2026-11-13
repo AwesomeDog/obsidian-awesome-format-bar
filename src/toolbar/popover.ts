@@ -118,34 +118,33 @@ function renderPopover(
     );
     active = 0;
     layer.place();
-    if (options.search) highlight();
+    highlight();
   }
 
   draw(sectionsFor(query));
-  search?.el.focus();
-
-  if (options.search && search) {
-    // Focus stays in the box: moving it to an entry would swallow the next key.
-    search.el.addEventListener("keydown", (event) => {
-      if (
-        event.key !== "ArrowDown" &&
-        event.key !== "ArrowUp" &&
-        event.key !== "Enter"
-      )
-        return;
-      if (entries.length === 0) {
-        if (event.key === "Enter") event.preventDefault();
-        return;
-      }
-      event.preventDefault();
-      if (event.key === "Enter") entries[active]?.click();
-      else {
-        const step = event.key === "ArrowDown" ? 1 : -1;
-        active = (active + step + entries.length) % entries.length;
-        highlight();
-      }
-    });
-  }
+  // Focus stays on the target: moving it to an entry would swallow the next key.
+  const keys = search?.el ?? layer.el;
+  if (!search) layer.el.setAttr("tabindex", "-1");
+  keys.focus();
+  keys.addEventListener("keydown", (event) => {
+    if (
+      event.key !== "ArrowDown" &&
+      event.key !== "ArrowUp" &&
+      event.key !== "Enter"
+    )
+      return;
+    if (entries.length === 0) {
+      if (event.key === "Enter") event.preventDefault();
+      return;
+    }
+    event.preventDefault();
+    if (event.key === "Enter") entries[active]?.click();
+    else {
+      const step = event.key === "ArrowDown" ? 1 : -1;
+      active = (active + step + entries.length) % entries.length;
+      highlight();
+    }
+  });
 
   // The read can land while the menu is open: redraw, or it stays on "reading".
   if (options.watch) unwatch = options.watch(() => draw(sectionsFor(query)));

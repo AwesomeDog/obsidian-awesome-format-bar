@@ -6,7 +6,11 @@ import type { CommandSpec } from "../src/model/types";
 import { createButton } from "../src/toolbar/button";
 import { closeFloating } from "../src/toolbar/floating";
 import type { ToolbarHost, ToolbarState } from "../src/toolbar/host";
-import { openSearchPopover, type PopoverSection } from "../src/toolbar/popover";
+import {
+  openPopover,
+  openSearchPopover,
+  type PopoverSection,
+} from "../src/toolbar/popover";
 
 interface ElOptions {
   readonly cls?: string;
@@ -216,8 +220,8 @@ function openCommandSearch(): {
   return { layer, input, picked, dismissals };
 }
 
-function key(input: HTMLInputElement, name: string): void {
-  input.dispatchEvent(
+function key(target: HTMLElement, name: string): void {
+  target.dispatchEvent(
     new KeyboardEvent("keydown", {
       bubbles: true,
       cancelable: true,
@@ -298,5 +302,27 @@ describe("ribbon command search", () => {
     key(input, "Escape");
     expect(document.querySelector(".awesome-format-bar--menu")).toBeNull();
     expect(dismissals).toHaveLength(1);
+  });
+
+  it("navigates a plain drop-down with no search box", () => {
+    const picked: string[] = [];
+    const items = ["Bold", "Italic"].map((label) => ({
+      label,
+      onChoose: () => picked.push(label),
+    }));
+    openPopover(document.body.createDiv(), [{ items }]);
+    const layer = document.querySelector<HTMLElement>(
+      ".awesome-format-bar--menu",
+    );
+    if (!layer) throw new Error("no layer");
+    expect(menuItems(layer)[0]?.classList.contains("is-highlighted")).toBe(
+      true,
+    );
+    key(layer, "ArrowDown");
+    expect(menuItems(layer)[1]?.classList.contains("is-highlighted")).toBe(
+      true,
+    );
+    key(layer, "Enter");
+    expect(picked).toEqual(["Italic"]);
   });
 });
