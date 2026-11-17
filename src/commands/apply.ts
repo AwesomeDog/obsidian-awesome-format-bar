@@ -33,6 +33,13 @@ export function commit(editor: Editor, plan: Plan): void {
     return;
   }
 
+  // CodeMirror applies overlapping changes twice; never let one reach the editor.
+  let maxTo = 0;
+  for (const change of [...plan.changes].sort((a, b) => a.from - b.from)) {
+    if (change.from < maxTo) throw new Error("Overlapping changes");
+    maxTo = Math.max(maxTo, change.to);
+  }
+
   const changes: EditorChange[] = plan.changes.map((change) => ({
     from: editor.offsetToPos(change.from),
     text: change.text,

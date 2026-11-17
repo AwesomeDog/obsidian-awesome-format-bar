@@ -105,9 +105,14 @@ export function renumberList(doc: string, ranges: readonly Range[]): Plan {
   const lines = new Lines(doc);
   const fenced = fenceMask(lines);
   const changes: Change[] = [];
+  const seen = new Set<string>();
 
   for (const [rawStart, rawEnd] of blocksFor(lines, ranges)) {
     const [start, end] = listBlock(lines, rawStart, rawEnd);
+    // Every caret in one list expands to the same block; count it once.
+    const key = `${start}:${end}`;
+    if (seen.has(key)) continue;
+    seen.add(key);
     const stack: ListLevel[] = [];
     let blanks = 0;
 
@@ -249,12 +254,21 @@ function firstListLine(lines: Lines, a: number, b: number): number {
 export function sortList(doc: string, ranges: readonly Range[]): Plan {
   const lines = new Lines(doc);
   const changes: Change[] = [];
+  const blocks: Block[] = [];
 
   for (const range of normalizeRanges(ranges)) {
     const [a, b] = blocksFor(lines, [range])[0] ?? [0, -1];
     // A selection bounds the sort; a bare cursor takes in the whole list.
-    const [first, last] =
-      range.from === range.to ? listBlock(lines, a, b) : [a, b];
+    blocks.push(range.from === range.to ? listBlock(lines, a, b) : [a, b]);
+  }
+  // A caret's whole list already covers a selection inside it; widest wins.
+  blocks.sort((x, y) => x[0] - y[0] || y[1] - x[1]);
+  const chosen: Block[] = [];
+  for (const block of blocks)
+    if (!chosen.some(([start, end]) => start <= block[0] && block[1] <= end))
+      chosen.push(block);
+
+  for (const [first, last] of chosen) {
     let start = firstListLine(lines, first, last);
     while (start >= 0) {
       // A blank line ends a list, so two lists never sort into each other.

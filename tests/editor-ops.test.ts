@@ -1,4 +1,6 @@
 import { describe, expect, it } from "vitest";
+import type { Editor } from "obsidian";
+import { commit } from "../src/commands/apply";
 import {
   insertBlockReference,
   insertCallout,
@@ -54,6 +56,7 @@ import {
 import {
   applyChanges,
   normalizeRanges,
+  order,
   type Plan,
   type Range,
 } from "../src/editor-ops/plan";
@@ -68,6 +71,16 @@ import { formatDate, formatDateTime } from "../src/editor-ops/text";
 
 function run(doc: string, plan: Plan): string {
   return applyChanges(doc, plan.changes);
+}
+
+/** CodeMirror requires sorted, non-overlapping changes. */
+function nonOverlapping(plan: Plan): boolean {
+  let maxTo = 0;
+  for (const change of plan.changes) {
+    if (change.from < maxTo) return false;
+    maxTo = Math.max(maxTo, change.to);
+  }
+  return true;
 }
 
 /** `|` marks a caret, `[` and `]` mark a selection. */
@@ -642,6 +655,65 @@ describe("case", () => {
   });
 });
 
+describe("change contract", () => {
+  const stubEditor = (): { editor: Editor; writes: unknown[] } => {
+    const writes: unknown[] = [];
+    const editor = {
+      offsetToPos: (offset: number) => ({ line: 0, ch: offset }),
+      getValue: () => "abcdefghij",
+      setSelections: () => {},
+      transaction: (transaction: unknown) => writes.push(transaction),
+    } as unknown as Editor;
+    return { editor, writes };
+  };
+
+  it("drops identical changes while keeping distinct ones", () => {
+    expect(
+      order([
+        { from: 0, to: 1, text: "1" },
+        { from: 0, to: 1, text: "1" },
+        { from: 5, to: 6, text: "2" },
+      ]),
+    ).toEqual([
+      { from: 0, to: 1, text: "1" },
+      { from: 5, to: 6, text: "2" },
+    ]);
+  });
+
+  it("leaves changes with the same span but different text for commit to reject", () => {
+    expect(
+      order([
+        { from: 0, to: 1, text: "a" },
+        { from: 0, to: 1, text: "b" },
+      ]),
+    ).toHaveLength(2);
+  });
+
+  it("refuses overlapping changes without writing to the editor", () => {
+    const { editor, writes } = stubEditor();
+    expect(() =>
+      commit(editor, {
+        changes: [
+          { from: 0, to: 9, text: "LONG" },
+          { from: 3, to: 5, text: "X" },
+        ],
+      }),
+    ).toThrow("Overlapping changes");
+    expect(writes).toHaveLength(0);
+  });
+
+  it("writes a well-formed plan", () => {
+    const { editor, writes } = stubEditor();
+    commit(editor, {
+      changes: [
+        { from: 0, to: 1, text: "A" },
+        { from: 5, to: 6, text: "B" },
+      ],
+    });
+    expect(writes).toHaveLength(1);
+  });
+});
+
 describe("renumberList", () => {
   it("fixes a flat run", () => {
     expect(apply("|1. a\n1. b\n1. c", renumberList)).toBe("1. a\n2. b\n3. c");
@@ -665,6 +737,26 @@ describe("renumberList", () => {
     expect(apply("|1. a\n   more text\n1. b", renumberList)).toBe(
       "1. a\n   more text\n2. b",
     );
+  });
+
+  it("numbers a list once with two carets in it", () => {
+    const doc = "3. a\n   cont\n   more\n7. b";
+    const plan = renumberList(doc, [
+      { from: 0, to: 0 },
+      { from: 21, to: 21 },
+    ]);
+    expect(run(doc, plan)).toBe("1. a\n   cont\n   more\n2. b");
+    expect(nonOverlapping(plan)).toBe(true);
+  });
+
+  it("numbers a list once with two selected words in it", () => {
+    const doc = "3. a\n   cont\n   more\n7. b";
+    const plan = renumberList(doc, [
+      { from: 3, to: 4 },
+      { from: 24, to: 25 },
+    ]);
+    expect(run(doc, plan)).toBe("1. a\n   cont\n   more\n2. b");
+    expect(nonOverlapping(plan)).toBe(true);
   });
 });
 
@@ -751,6 +843,36 @@ describe("sortList", () => {
 
   it("leaves a loose list alone rather than moving its blank lines", () => {
     expect(apply("[- d\n\n- c\n\n- b]", sortList)).toBe("- d\n\n- c\n\n- b");
+  });
+
+  it("sorts the whole list once with two carets in it", () => {
+    const doc = "1. b\n2. a\n3. c\n4. d";
+    const plan = sortList(doc, [
+      { from: 0, to: 0 },
+      { from: 5, to: 5 },
+    ]);
+    expect(run(doc, plan)).toBe("1. a\n2. b\n3. c\n4. d");
+    expect(nonOverlapping(plan)).toBe(true);
+  });
+
+  it("sorts once with four carets in the same list", () => {
+    const doc = "1. b\n2. a\n3. c\n4. d";
+    const plan = sortList(
+      doc,
+      [0, 5, 10, 15].map((at) => ({ from: at, to: at })),
+    );
+    expect(run(doc, plan)).toBe("1. a\n2. b\n3. c\n4. d");
+    expect(nonOverlapping(plan)).toBe(true);
+  });
+
+  it("lets a caret's whole list cover a selection inside it", () => {
+    const doc = "1. b\n2. a\n3. c\n4. d";
+    const plan = sortList(doc, [
+      { from: 0, to: 0 },
+      { from: 5, to: 14 },
+    ]);
+    expect(run(doc, plan)).toBe("1. a\n2. b\n3. c\n4. d");
+    expect(nonOverlapping(plan)).toBe(true);
   });
 });
 

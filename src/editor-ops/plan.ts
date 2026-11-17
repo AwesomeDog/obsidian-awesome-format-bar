@@ -46,9 +46,17 @@ export function touches(
   return ranges.some((range) => from < range.to && to > range.from);
 }
 
-/** CodeMirror requires sorted, non-overlapping changes; sorted into a copy. */
+/** CodeMirror requires sorted, non-overlapping changes; drop exact duplicates. */
 export function order(changes: readonly Change[]): Change[] {
-  return [...changes].sort((a, b) => a.from - b.from);
+  const seen = new Set<string>();
+  return [...changes]
+    .sort((a, b) => a.from - b.from)
+    .filter((change) => {
+      const key = `${change.from}:${change.to}:${change.text}`;
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
 }
 
 /** Shared by every command that rewrites the selected text only. */
