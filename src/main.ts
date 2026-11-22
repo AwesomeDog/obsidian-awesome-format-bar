@@ -24,6 +24,7 @@ import {
   runConditions,
 } from "./commands/execute";
 import {
+  activeFormatCommands,
   missingForwardedCommands,
   registeredCommandName,
   registeredHotkey,
@@ -407,6 +408,17 @@ export default class AwesomeFormatBarPlugin extends Plugin {
           this.app,
           editable ? view.editor : null,
         );
+        const focusedEl = view.contentEl.ownerDocument.activeElement;
+        // Mirrors Obsidian's title/properties gate; CSS survives pop-out realms.
+        const inTitleOrProperties =
+          focusedEl !== null &&
+          focusedEl.closest(
+            ".metadata-container, .inline-title, .view-header-title",
+          ) !== null;
+        const active =
+          editable && !inTitleOrProperties
+            ? activeFormatCommands(this.app, view.editor, view)
+            : new Set<string>();
         return {
           inTable: conditions.inTable,
           isEnabled: (spec: CommandSpec): boolean => canRun(spec, conditions),
@@ -418,7 +430,9 @@ export default class AwesomeFormatBarPlugin extends Plugin {
             (spec.id === "zen-mode" && isZenModeOn(view)) ||
             (spec.id === "focus-mode" && isFocusModeOn(this.app)) ||
             // A recording runs app-wide, so every bar lights, not just this one.
-            (spec.id === "record-audio" && isRecording(this.app)),
+            (spec.id === "record-audio" && isRecording(this.app)) ||
+            (spec.registeredCommandId !== undefined &&
+              active.has(spec.registeredCommandId)),
         };
       },
     };
