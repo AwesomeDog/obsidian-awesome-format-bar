@@ -54,7 +54,7 @@ Obsidian es rápido **si** ya hablas Markdown. Para todos los demás ——estud
 - **Descubre lo que Obsidian sabe hacer.** Los recuadros, las referencias de bloque, los elementos incrustados, los bloques de fórmula y las etiquetas tienen botón; funciones que muchos usuarios nunca encuentran en la sintaxis.
 - **Haz lo que Markdown no puede.** Subrayado, superíndice, subíndice, alineación de párrafo, color del texto, fuente y tamaño de fuente, escritos como HTML en línea limpio — más 16 colores de resaltado, seis de los cuales Obsidian renderiza de forma nativa, sin nada de HTML.
 - **Texto plano para siempre.** Nada de formato propietario, ni base de datos, ni cautividad: tus notas siguen siendo simples archivos `.md`.
-- **Sin conexión y privado.** Sin llamadas de red, sin cuentas, sin telemetría. La biblioteca de unos 2.150 emoji viaja dentro del plugin.
+- **Sin conexión y privado.** Sin llamadas de red, sin cuentas, sin telemetría. La biblioteca de unos 2.140 emoji viaja dentro del plugin.
 - **Tu propio lanzador, si lo quieres.** La pestaña **Anclado** guarda cualquier comando que elijas ——del núcleo, de este plugin o de otro——, así que la barra se adapta a ti sin convertirse en un proyecto de configuración.
 - **También para el teclado.** Desactiva las cuatro posiciones de la barra y la interfaz desaparece por completo: los 184 comandos registrados en la paleta siguen disponibles y puedes asignarles tus propios atajos. Y cuando la barra **está activa**, al pasar el cursor por un botón su tooltip muestra el atajo asignado ahora mismo a ese comando ——el tuyo o el predeterminado de Obsidian. Si lo cambias en **Configuración → Atajos de teclado**, el tooltip lo sigue al instante, sin reiniciar.
 
@@ -69,7 +69,7 @@ Obsidian es rápido **si** ya hablas Markdown. Para todos los demás ——estud
 | **Pestañas**        | Inicio · Insertar · Vista · Tabla · Utilidades · **Anclado**               |
 | **Recuadros**       | Los 12 tipos de recuadro de Obsidian en un solo desplegable               |
 | **Gráficos**        | 32 tipos de diagramas Mermaid — diagrama de flujo, diagrama de secuencia, diagrama de clases, diagrama de estados, diagrama entidad-relación, diagrama de Gantt, gráfico circular, mapa mental, línea de tiempo, gráfico de Git, tablero Kanban, diagrama de arquitectura, diagrama C4, diagrama de Sankey y más — insertados como un bloque de código editable al instante |
-| **Emoji y símbolos** | Unos 2.150 emoji, kaomoji y símbolos, totalmente sin conexión            |
+| **Emoji y símbolos** | Unos 2.140 emoji, kaomoji y símbolos, totalmente sin conexión            |
 | **Edición de tablas** | Insertar / eliminar / mover filas y columnas, alinear, ordenar, quitar filas duplicadas, transponer, reformatear, convertir en texto, **pegar como tabla** (directamente desde Excel, Numbers o Sheets), copiar como TSV / CSV / JSON |
 | **Edición de imágenes** | alinear, tamaño (una sola imagen o **todas las imágenes de la nota a la vez**), texto alternativo, título, restablecer imagen, convertir `![[…]] ⇄ ![](…)` |
 | **Lectura y concentración** | Live Preview ⇄ Origen, modo de enfoque, modo zen, modo máquina de escribir, mostrar espacios, números de línea, zoom, dividir, contraer / expandir todo |
@@ -101,7 +101,7 @@ Las imágenes tienen su propio grupo en **Insertar · Ilustraciones**: **Tamaño
 
 Un solo botón **Recuadro** abre un desplegable con `note`、`abstract`、`info`、`tip`、`success`、`question`、`warning`、`failure`、`danger`、`bug`、`example` y `quote`. Se acabó buscar cómo se escribe `> [!tip]`.
 
-### 😀 Selector de emoji, kaomoji y símbolos sin conexión（unos 2.150）
+### 😀 Selector de emoji, kaomoji y símbolos sin conexión（unos 2.140）
 
 Un panel **Emoji y símbolos** con búsqueda y tres fuentes ——emoji, kaomoji y símbolos tipográficos—— incluidas con el plugin. Inserta en el cursor o sobre la selección como un único paso de deshacer, mantiene un grupo de *uso frecuente* por fuente y sigue abierto para insertar varios caracteres seguidos.
 
@@ -262,7 +262,7 @@ Sí, y no pierdes nada por hacerlo. Desactiva las cuatro posiciones（**Superior
 Sí ——para eso está la pestaña **Anclado**——. Ancla cualquier comando de la paleta y elige un icono. Si el plugin propietario está desactivado, el botón se atenúa y el anclado se conserva.
 
 **¿El selector de emoji necesita conexión a internet?**  
-No. Los unos 2.150 emoji, kaomoji y símbolos se incluyen con el plugin.
+No. Los unos 2.140 emoji, kaomoji y símbolos se incluyen con el plugin.
 
 **¿El plugin usa IA o se conecta a algún servidor?**  
 No. No hay ninguna función de IA, ni clave de API, ni petición de red, ni analítica ni telemetría en ninguna parte del código ——el plugin lee y escribe tus archivos `.md` locales y nada más——. La biblioteca de emoji va incluida, así que también funciona en un avión.

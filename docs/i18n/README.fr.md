@@ -54,7 +54,7 @@ Obsidian est rapide **à condition** de déjà parler Markdown. Pour tous les au
 - **Découvrez ce qu'Obsidian sait faire.** Encadrés, références de bloc, incorporations, blocs de formule et étiquettes ont tous un bouton —— des fonctions que bien des utilisateurs ne trouvent jamais dans la syntaxe.
 - **Faites ce que Markdown ne peut pas.** Souligné, exposant, indice, alignement des paragraphes, couleur du texte, police et taille de police, écrits en HTML en ligne propre — plus 16 couleurs de surlignage, dont six sont rendues nativement par Obsidian, sans aucun HTML.
 - **Du texte brut pour toujours.** Pas de format propriétaire, pas de base de données, pas d'enfermement —— vos notes restent de simples fichiers `.md`.
-- **Hors ligne et privé.** Aucun appel réseau, aucun compte, aucune télémétrie. La bibliothèque d'environ 2 150 emoji est livrée dans le plugin.
+- **Hors ligne et privé.** Aucun appel réseau, aucun compte, aucune télémétrie. La bibliothèque d'environ 2 140 emoji est livrée dans le plugin.
 - **Votre propre lanceur, si vous en voulez un.** L'onglet **Épinglé** accueille n'importe quelle commande de votre choix —— du cœur d'Obsidian, de ce plugin ou d'un autre —— pour que la barre se plie à vous au lieu de devenir un projet de configuration.
 - **Aussi pensé pour le clavier.** Désactivez les quatre positions de la barre et l'interface disparaît complètement —— les 184 commandes enregistrées dans la palette restent disponibles et peuvent être associées à vos propres raccourcis. Et quand la barre **est affichée**, passer la souris sur un bouton affiche dans son infobulle le raccourci actuellement associé à cette commande —— le vôtre ou celui d'Obsidian. Modifiez-le dans **Paramètres → Raccourcis** et l'infobulle suit immédiatement, sans redémarrage.
 
@@ -69,7 +69,7 @@ Obsidian est rapide **à condition** de déjà parler Markdown. Pour tous les au
 | **Onglets**            | Accueil · Insertion · Affichage · Tableau · Utilitaires · **Épinglé**      |
 | **Encadrés**           | Les 12 types d'encadrés Obsidian dans une seule liste déroulante            |
 | **Graphiques**         | 32 types de diagrammes Mermaid — diagramme de flux, diagramme de séquence, diagramme de classes, diagramme d'états, diagramme entité-relation, diagramme de Gantt, graphique circulaire, carte mentale, chronologie, graphique Git, tableau Kanban, diagramme d'architecture, diagramme C4, diagramme de Sankey et plus — insérés comme un bloc de code directement modifiable |
-| **Emoji et symboles**  | Environ 2 150 emoji, kaomoji et symboles, entièrement hors ligne            |
+| **Emoji et symboles**  | Environ 2 140 emoji, kaomoji et symboles, entièrement hors ligne            |
 | **Édition de tableau** | Insérer / supprimer / déplacer lignes et colonnes, aligner, trier, supprimer les lignes en double, transposer, remettre en forme, convertir en texte, **coller en tant que tableau** (directement depuis Excel, Numbers ou Sheets), copier en TSV / CSV / JSON |
 | **Édition d’image**    | aligner, taille (une seule image ou **toutes les images de la note d'un coup**), texte alternatif, légende, réinitialiser l’image, convertir `![[…]] ⇄ ![](…)` |
 | **Lecture et concentration** | Aperçu en direct ⇄ Source, mode focus, mode zen, mode machine à écrire, afficher les espaces, numéros de ligne, zoom, fractionner, tout réduire / développer |
@@ -101,7 +101,7 @@ Les images ont leur propre groupe sur **Insertion · Illustrations** : **Taille 
 
 Un seul bouton **Encadré** ouvre une liste déroulante avec `note`、`abstract`、`info`、`tip`、`success`、`question`、`warning`、`failure`、`danger`、`bug`、`example` et `quote`. Fini les recherches sur la syntaxe `> [!tip]`.
 
-### 😀 Sélecteur d'emoji, de kaomoji et de symboles hors ligne（environ 2 150 entrées）
+### 😀 Sélecteur d'emoji, de kaomoji et de symboles hors ligne（environ 2 140 entrées）
 
 Un panneau **Emoji et symboles** recherchable, avec trois sources —— emoji, kaomoji et symboles typographiques —— fournies avec le plugin. L'insertion se fait au curseur ou sur la sélection en une seule étape d'annulation, chaque source conserve son propre groupe « fréquemment utilisés », et le panneau reste ouvert pour insérer plusieurs caractères à la suite.
 
@@ -262,7 +262,7 @@ Oui, et vous ne perdez rien à le faire. Désactivez les quatre positions（**Ha
 Oui —— c'est l'onglet **Épinglé**. Épinglez n'importe quelle commande de la palette et choisissez une icône. Si le plugin propriétaire est désactivé, le bouton se grise et l'épingle est conservée.
 
 **Le sélecteur d'emoji a-t-il besoin d'une connexion Internet ?**  
-Non. Les quelque 2 150 emoji, kaomoji et symboles sont tous fournis avec le plugin.
+Non. Les quelque 2 140 emoji, kaomoji et symboles sont tous fournis avec le plugin.
 
 **Le plugin utilise-t-il l'IA, ou contacte-t-il des serveurs d'une manière ou d'une autre ?**  
 Non. Aucune fonction d'IA, aucune clé d'API, aucune requête réseau, aucune analyse d'usage et aucune télémétrie nulle part dans le code —— le plugin ne fait que lire et écrire vos fichiers `.md` locaux, et rien d'autre. La bibliothèque d'emoji est fournie avec le plugin : il fonctionne donc même en avion.

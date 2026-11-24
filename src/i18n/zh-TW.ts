@@ -52,7 +52,7 @@ export default {
   "Align Justify": "左右對齊",
   "Horizontal Rule": "分隔線",
   Undo: "復原",
-  Redo: "重複",
+  Redo: "重做",
   "Find and Replace": "尋找及取代",
   Select: "選取",
   "Select All": "全選",

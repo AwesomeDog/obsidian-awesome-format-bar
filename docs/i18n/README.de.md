@@ -54,7 +54,7 @@ Obsidian ist schnell — **wenn** Sie bereits Markdown beherrschen. Für alle an
 - **Entdecken, was Obsidian kann.** Callouts, Blockverweise, Einbettungen, Formelblöcke und Tags bekommen je eine Schaltfläche — Funktionen, die viele Nutzer in der Syntax nie finden.
 - **Tun, was Markdown nicht kann.** Unterstreichen, Hochstellen, Tiefstellen, Absatzausrichtung, Schriftfarbe sowie Schriftart und Schriftgröße, geschrieben als sauberes Inline-HTML — dazu 16 Hervorhebungsfarben, von denen sechs Obsidian ganz ohne HTML nativ darstellt.
 - **Für immer reiner Text.** Kein proprietäres Format, keine Datenbank, keine Bindung — Ihre Notizen bleiben schlicht `.md`-Dateien.
-- **Offline und privat.** Keine Netzwerkaufrufe, keine Konten, keine Telemetrie. Die rund 2.150 Einträge der Emoji-Bibliothek werden mit dem Plugin ausgeliefert.
+- **Offline und privat.** Keine Netzwerkaufrufe, keine Konten, keine Telemetrie. Die rund 2.140 Einträge der Emoji-Bibliothek werden mit dem Plugin ausgeliefert.
 - **Ihr eigener Starter, wenn Sie einen wollen.** Die Registerkarte **Angeheftet** nimmt jeden Befehl auf, den Sie auswählen — einen aus dem Kern, aus diesem Plugin oder aus einem anderen —, damit sich die Leiste nach Ihnen richtet, ohne zu einem Konfigurationsprojekt zu werden.
 - **Auch tastaturfreundlich.** Schalten Sie alle vier Leistenpositionen aus und die Oberfläche verschwindet vollständig — alle 184 in der Befehlspalette registrierten Befehle bleiben verfügbar und lassen sich an eigene Tastenkürzel binden. Und wenn die Leiste **eingeschaltet** ist, zeigt der Tooltip beim Überfahren eines Buttons das aktuell gebundene Tastenkürzel —— Ihr eigenes oder das von Obsidian. Ändern Sie die Belegung unter **Einstellungen → Tastenkürzel**, folgt der Tooltip sofort, ohne Neustart.
 
@@ -69,7 +69,7 @@ Obsidian ist schnell — **wenn** Sie bereits Markdown beherrschen. Für alle an
 | **Registerkarten**  | Start · Einfügen · Ansicht · Tabelle · Hilfsprogramme · **Angeheftet**                              |
 | **Callouts**        | Alle 12 Obsidian-Callout-Typen in einem Aufklappmenü                                               |
 | **Diagramme**   | 32 Mermaid-Diagrammtypen — Flussdiagramm, Sequenzdiagramm, Klassendiagramm, Zustandsdiagramm, Entity-Relationship-Diagramm, Gantt-Diagramm, Kreisdiagramm, Mindmap, Zeitstrahl, Git-Graph, Kanban-Board, Architekturdiagramm, C4-Diagramm, Sankey-Diagramm und mehr — als direkt bearbeitbarer Codeblock eingefügt |
-| **Emoji und Symbole** | Rund 2.150 Emoji, Kaomoji und Symbole, vollständig offline                                       |
+| **Emoji und Symbole** | Rund 2.140 Emoji, Kaomoji und Symbole, vollständig offline                                       |
 | **Tabellenbearbeitung** | Zeilen und Spalten einfügen, löschen und verschieben, ausrichten, sortieren, doppelte Zeilen entfernen, transponieren, neu formatieren, in Text umwandeln, **als Tabelle einfügen** (direkt aus Excel, Numbers oder Sheets), als TSV / CSV / JSON kopieren |
 | **Bildbearbeitung** | ausrichten, Größe (ein einzelnes Bild oder **alle Bilder der Notiz auf einmal**), Alternativtext, Beschriftung, Bild zurücksetzen, `![[…]] ⇄ ![](…)` umwandeln |
 | **Lesen und Fokus** | Live Preview ⇄ Quellmodus, Fokusmodus, Zen-Modus, Schreibmaschinen-Modus, Leerzeichen anzeigen, Zeilennummern, Zoom, teilen, alle reduzieren / erweitern |
@@ -101,7 +101,7 @@ Bilder bekommen auf **Einfügen · Illustrationen** ihre eigene Gruppe: **Bildgr
 
 Eine einzige Schaltfläche **Hinweis (Callout)** öffnet ein Aufklappmenü mit `note`, `abstract`, `info`, `tip`, `success`, `question`, `warning`, `failure`, `danger`, `bug`, `example` und `quote`. Nie wieder die Syntax `> [!tip]` nachschlagen.
 
-### 😀 Offline-Auswahl für Emoji, Kaomoji und Symbole mit rund 2.150 Einträgen
+### 😀 Offline-Auswahl für Emoji, Kaomoji und Symbole mit rund 2.140 Einträgen
 
 Ein durchsuchbares Panel **Emoji und Symbole** mit drei Quellen — Emoji, Kaomoji und typografische Symbole — wird mit dem Plugin mitgeliefert. Es fügt an der Cursorposition ein oder ersetzt die Auswahl in einem einzigen Undo-Schritt, führt pro Quelle eine Gruppe *Häufig verwendet* und bleibt geöffnet, damit Sie mehrere Zeichen hintereinander einfügen können.
 
@@ -262,7 +262,7 @@ Ja, und Sie verlieren dabei nichts. Schalten Sie in **Einstellungen → Awesome 
 Ja — dafür ist die Registerkarte **Angeheftet** da. Heften Sie einen beliebigen Befehl aus der Palette an und wählen Sie ein Symbol. Ist das bereitstellende Plugin deaktiviert, wird die Schaltfläche ausgegraut und die Anheftung bleibt erhalten.
 
 **Braucht die Emoji-Auswahl eine Internetverbindung?**  
-Nein. Alle rund 2.150 Emoji, Kaomoji und Symbole sind im Plugin enthalten.
+Nein. Alle rund 2.140 Emoji, Kaomoji und Symbole sind im Plugin enthalten.
 
 **Nutzt das Plugin KI oder telefoniert es in irgendeiner Weise nach Hause?**  
 Nein. Im gesamten Code gibt es keine KI-Funktion, keinen API-Schlüssel, keine Netzwerkanfrage, keine Nutzungsanalyse und keine Telemetrie — das Plugin liest und schreibt Ihre lokalen `.md`-Dateien und sonst nichts. Die Emoji-Bibliothek ist im Plugin enthalten und funktioniert daher auch im Flugzeug.

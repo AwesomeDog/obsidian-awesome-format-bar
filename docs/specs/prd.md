@@ -10,7 +10,7 @@
 
 Obsidian is efficient for people fluent in Markdown, but newcomers face a syntax barrier. The plugin overlays a visual toolbar on the editor that covers high-frequency formatting while keeping notes plain text: everything it produces is standard Markdown, Obsidian Markdown, or — where Markdown falls short — inline HTML.
 
-Markdown also has no syntax for the characters people actually want — an emoji, an arrow, an en dash. So the plugin carries its own: **Emoji & Symbols** is one button that opens a searchable panel of about 2,150 entries, bundled with the plugin and available offline.
+Markdown also has no syntax for the characters people actually want — an emoji, an arrow, an en dash. So the plugin carries its own: **Emoji & Symbols** is one button that opens a searchable panel of about 2,140 entries, bundled with the plugin and available offline.
 
 ---
 
@@ -191,11 +191,11 @@ On desktop the drop-down reads the machine's fonts and dims those it lacks; a di
 
 ### Emoji & Symbols
 
-One button on **Insert · Symbols** opens a panel of about 2,150 entries in three sources, each split into groups, with one search box over the active source.
+One button on **Insert · Symbols** opens a panel of about 2,140 entries in three sources, each split into groups, with one search box over the active source.
 
 | Source | Entries (approx.) | Groups |
 |---|---|---|
-| **Emoji** | ~1,900 | Smileys & People, Animals & Nature, Food & Drink, Activity, Travel & Places, Objects, Symbols, Flags |
+| **Emoji** | ~1,870 | Smileys & People, Animals & Nature, Food & Drink, Activity, Travel & Places, Objects, Symbols, Flags |
 | **Kaomoji** | ~70 | Emotion, Animal, Behavior, People, Holiday, Food |
 | **Symbols** | ~200 | Arrows, Math, Typographic, Currency, Enclosed, Dingbats |
 

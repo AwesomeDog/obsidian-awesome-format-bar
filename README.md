@@ -52,7 +52,7 @@ Obsidian is fast **if** you already speak Markdown. For everyone else — studen
 - **Discover what Obsidian can do.** Callouts, block references, embeds, math blocks and tags all get a button — features many users never find in the syntax.
 - **Do what Markdown can't.** Underline, superscript, subscript, paragraph alignment, text color and font family/size, written as clean inline HTML — plus 16 highlight colors, six of which Obsidian renders natively, with no HTML at all.
 - **Plain text forever.** No proprietary format, no database, no lock-in — your notes are still just `.md` files.
-- **Offline & private.** No network calls, no accounts, no telemetry. The ~2,150-entry emoji library ships inside the plugin.
+- **Offline & private.** No network calls, no accounts, no telemetry. The ~2,140-entry emoji library ships inside the plugin.
 - **Your own launcher, if you want one.** The **Pinned** tab holds any command you pick — core, this plugin's, or another plugin's — so the toolbar bends to you without turning into a settings project.
 - **Keyboard-friendly too.** Switch every toolbar position off and the interface disappears completely — all 184 palette-registered commands stay available and can be bound to your own hotkeys. And while the toolbar *is* on screen, hovering a button shows the shortcut currently bound to that command in its tooltip — the one you assigned, or Obsidian's own default. Rebind it in **Settings → Hotkeys** and the tooltip follows, with no restart.
 
@@ -67,7 +67,7 @@ Obsidian is fast **if** you already speak Markdown. For everyone else — studen
 | **Tabs** | Home · Insert · View · Table · Utilities · **Pinned** |
 | **Callouts** | All 12 Obsidian callout types in one drop-down |
 | **Charts** | 32 Mermaid diagram types — flowchart, sequence, class, state, ER, Gantt, pie, mindmap, timeline, Git graph, Kanban, architecture, C4, Sankey and more — inserted as a ready-to-edit code block |
-| **Emoji & symbols** | ~2,150 emoji, kaomoji and symbols, fully offline |
+| **Emoji & symbols** | ~2,140 emoji, kaomoji and symbols, fully offline |
 | **Table editing** | Insert/delete/move rows & columns, align, sort, remove duplicate rows, transpose, re-format, convert to text, **Paste as Table** from Excel/Numbers/Sheets, copy as TSV / CSV / JSON |
 | **Image editing** | align, size (single picture or **every picture in the note at once**), alt text, caption, reset picture, convert `![[…]]` ⇄ `![](…)` |
 | **Reading & focus** | Live Preview ⇄ Source, Focus Mode, Zen Mode, Typewriter Mode, Show Whitespace, line numbers, zoom, split, collapse / expand all |
@@ -99,7 +99,7 @@ Pictures get their own group on **Insert · Illustrations**: **Image Size ▼** 
 
 One **Callout** button opens a drop-down with `note`, `abstract`, `info`, `tip`, `success`, `question`, `warning`, `failure`, `danger`, `bug`, `example` and `quote`. No more looking up `> [!tip]` syntax.
 
-### 😀 Offline emoji, kaomoji & symbol picker (~2,150 entries)
+### 😀 Offline emoji, kaomoji & symbol picker (~2,140 entries)
 
 A searchable **Emoji & Symbols** panel with three sources — emoji, kaomoji and typographic symbols — bundled with the plugin. Inserts at the caret or over the selection as a single undo step, keeps a *Frequently used* group per source, and stays open for inserting several characters in a row.
 
@@ -260,7 +260,7 @@ Yes, and nothing is lost by doing it. Switch off all four positions (**Top / Fol
 Yes — that's the **Pinned** tab. Pin any command from the palette and choose an icon. If the owning plugin is disabled, the button greys out and the pin is preserved.
 
 **Does the emoji picker need an internet connection?**  
-No. All ~2,150 emoji, kaomoji and symbols are bundled with the plugin.
+No. All ~2,140 emoji, kaomoji and symbols are bundled with the plugin.
 
 **Does the plugin use AI, or phone home in any way?**  
 No. There is no AI feature, no API key, no network request, no analytics and no telemetry anywhere in the code — the plugin reads and writes your local `.md` files and nothing else. The emoji library is bundled, so it works on a plane.
